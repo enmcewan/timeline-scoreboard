@@ -1,0 +1,29 @@
+<div class="match-card">
+    <div class="league-name">${esc(match.league)}</div>
+    <header class="match-header">
+        <div class="ht-cont">
+            <div class="team home">${esc(home.name)}</div>
+            <img class="team-badge" src="${esc(home.badge)}" alt="${esc(home.name)} badge" />
+        </div>
+        <div class="score">
+            <div class="score-home">${esc(match.score.home)}</div>
+            <span class="separator" aria-hidden="true"></span>
+            <div class="score-away">${esc(match.score.away)}</div>
+        </div>
+        <div class="at-cont">
+            <img class="team-badge" src="${esc(away.badge)}" alt="${esc(away.name)} badge" />
+            <div class="team away">${esc(away.name)}</div>
+        </div>
+    </header>
+    <div class="match-status">
+        <span class="full-time">${statusLine}</span>
+        <span class="half-time">${ht}</span>
+    </div>
+    <div class="match-body">${eventsHtml}</div>
+    <footer class="match-footer">
+        <span class="footer-label">Attendance:</span>
+        <span class="footer-data me-1">${attendanceText}</span>
+        <span class="footer-label">Venue:</span>
+        <span class="footer-data">${esc(match.venue)}</span>
+    </footer>
+</div>

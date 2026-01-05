@@ -1,0 +1,102 @@
+{
+  "arsenal": {
+    "name": "Arsenal",
+    "display": "",
+    "badge": "/img/badges/epl/arsenal.svg"
+  },
+  "aston-villa": {
+    "name": "Aston Villa",
+    "display": "",
+    "badge": "/img/badges/epl/aston-villa.svg"
+  },
+  "bournemouth": {
+    "name": "Bournemouth",
+    "display": "AFC Bournemouth",
+    "badge": "/img/badges/epl/bournemouth.svg"
+  },
+  "brentford": {
+    "name": "Brentford",
+    "display": "",
+    "badge": "/img/badges/epl/brentford.svg"
+  },
+  "brighton": {
+    "name": "Brighton",
+    "display": "Brighton & Hove Albion",
+    "badge": "/img/badges/epl/brighton.svg"
+  },
+  "burnley": {
+    "name": "Burnley",
+    "display": "",
+    "badge": "/img/badges/epl/burnley.svg"
+  },
+  "chelsea": {
+    "name": "Chelsea",
+    "display": "",
+    "badge": "/img/badges/epl/chelsea.svg"
+  },
+  "crystal-palace": {
+    "name": "Crystal Palace",
+    "display": "",
+    "badge": "/img/badges/epl/crystal-palace.svg"
+  },
+  "everton": {
+    "name": "Everton",
+    "display": "",
+    "badge": "/img/badges/epl/everton.svg"
+  },
+  "fulham": {
+    "name": "Fulham",
+    "display": "",
+    "badge": "/img/badges/epl/fulham.svg"
+  },
+  "leeds": {
+    "name": "Leeds",
+    "display": "Leeds United",
+    "badge": "/img/badges/epl/leeds-united.svg"
+  },
+  "liverpool": {
+    "name": "Liverpool",
+    "display": "",
+    "badge": "/img/badges/epl/liverpool.svg"
+  },
+  "manchester-city": {
+    "name": "Manchester City",
+    "display": "",
+    "badge": "/img/badges/epl/manchester-city.svg"
+  },
+  "manchester-united": {
+    "name": "Manchester United",
+    "display": "",
+    "badge": "/img/badges/epl/manchester-united.svg"
+  },
+  "newcastle": {
+    "name": "Newcastle",
+    "display": "Newcastle United",
+    "badge": "/img/badges/epl/newcastle.svg"
+  },
+  "nottingham-forest": {
+    "name": "Nottingham Forest",
+    "display": "",
+    "badge": "/img/badges/epl/nottingham-forest.svg"
+  },
+  "sunderland": {
+    "name": "Sunderland",
+    "display": "",
+    "badge": "/img/badges/epl/sunderland.svg"
+  },
+  "tottenham": {
+    "name": "Tottenham",
+    "display": "Tottenham Hotspur",
+    "badge": "/img/badges/epl/tottenham.svg"
+  },
+  "west-ham": {
+    "name": "West Ham",
+    "display": "West Ham United",
+    "badge": "/img/badges/epl/west-ham.svg"
+  },
+  "wolves": {
+    "name": "Wolves",
+    "display": "Wolverhampton Wanderers",
+    "badge": "/img/badges/epl/wolves.svg"
+  }
+}

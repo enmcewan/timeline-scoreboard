@@ -1,0 +1,186 @@
+{
+  "season": 2025,
+  "round": 22,
+  "matches": [
+    {
+      "id": "1379184",
+      "league": "Premier League",
+      "venue": "Old Trafford",
+      "attendance": null,
+      "kickoff": "2026-01-17T12:30:00+00:00",
+      "homeTeamId": "manchester-united",
+      "awayTeamId": "manchester-city",
+      "score": {
+        "home": 0,
+        "away": 0
+      },
+      "status": {
+        "state": "NS",
+        "halfTimeScore": ""
+      },
+      "events": []
+    },
+    {
+      "id": "1379183",
+      "league": "Premier League",
+      "venue": "Anfield",
+      "attendance": null,
+      "kickoff": "2026-01-17T15:00:00+00:00",
+      "homeTeamId": "liverpool",
+      "awayTeamId": "burnley",
+      "score": {
+        "home": 0,
+        "away": 0
+      },
+      "status": {
+        "state": "NS",
+        "halfTimeScore": ""
+      },
+      "events": []
+    },
+    {
+      "id": "1379187",
+      "league": "Premier League",
+      "venue": "Tottenham Hotspur Stadium",
+      "attendance": null,
+      "kickoff": "2026-01-17T15:00:00+00:00",
+      "homeTeamId": "tottenham",
+      "awayTeamId": "west-ham",
+      "score": {
+        "home": 0,
+        "away": 0
+      },
+      "status": {
+        "state": "NS",
+        "halfTimeScore": ""
+      },
+      "events": []
+    },
+    {
+      "id": "1379181",
+      "league": "Premier League",
+      "venue": "Stamford Bridge",
+      "attendance": null,
+      "kickoff": "2026-01-17T15:00:00+00:00",
+      "homeTeamId": "chelsea",
+      "awayTeamId": "brentford",
+      "score": {
+        "home": 0,
+        "away": 0
+      },
+      "status": {
+        "state": "NS",
+        "halfTimeScore": ""
+      },
+      "events": []
+    },
+    {
+      "id": "1379182",
+      "league": "Premier League",
+      "venue": "Elland Road",
+      "attendance": null,
+      "kickoff": "2026-01-17T15:00:00+00:00",
+      "homeTeamId": "leeds",
+      "awayTeamId": "fulham",
+      "score": {
+        "home": 0,
+        "away": 0
+      },
+      "status": {
+        "state": "NS",
+        "halfTimeScore": ""
+      },
+      "events": []
+    },
+    {
+      "id": "1379186",
+      "league": "Premier League",
+      "venue": "Stadium of Light",
+      "attendance": null,
+      "kickoff": "2026-01-17T15:00:00+00:00",
+      "homeTeamId": "sunderland",
+      "awayTeamId": "crystal-palace",
+      "score": {
+        "home": 0,
+        "away": 0
+      },
+      "status": {
+        "state": "NS",
+        "halfTimeScore": ""
+      },
+      "events": []
+    },
+    {
+      "id": "1379185",
+      "league": "Premier League",
+      "venue": "City Ground",
+      "attendance": null,
+      "kickoff": "2026-01-17T17:30:00+00:00",
+      "homeTeamId": "nottingham-forest",
+      "awayTeamId": "arsenal",
+      "score": {
+        "home": 0,
+        "away": 0
+      },
+      "status": {
+        "state": "NS",
+        "halfTimeScore": ""
+      },
+      "events": []
+    },
+    {
+      "id": "1379188",
+      "league": "Premier League",
+      "venue": "Molineux Stadium",
+      "attendance": null,
+      "kickoff": "2026-01-18T14:00:00+00:00",
+      "homeTeamId": "wolves",
+      "awayTeamId": "newcastle",
+      "score": {
+        "home": 0,
+        "away": 0
+      },
+      "status": {
+        "state": "NS",
+        "halfTimeScore": ""
+      },
+      "events": []
+    },
+    {
+      "id": "1379179",
+      "league": "Premier League",
+      "venue": "Villa Park",
+      "attendance": null,
+      "kickoff": "2026-01-18T16:30:00+00:00",
+      "homeTeamId": "aston-villa",
+      "awayTeamId": "everton",
+      "score": {
+        "home": 0,
+        "away": 0
+      },
+      "status": {
+        "state": "NS",
+        "halfTimeScore": ""
+      },
+      "events": []
+    },
+    {
+      "id": "1379180",
+      "league": "Premier League",
+      "venue": "Amex Stadium",
+      "attendance": null,
+      "kickoff": "2026-01-19T20:00:00+00:00",
+      "homeTeamId": "brighton",
+      "awayTeamId": "bournemouth",
+      "score": {
+        "home": 0,
+        "away": 0
+      },
+      "status": {
+        "state": "NS",
+        "halfTimeScore": ""
+      },
+      "events": []
+    }
+  ]
+}
