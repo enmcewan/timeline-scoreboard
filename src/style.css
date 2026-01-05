@@ -1,0 +1,530 @@
+/* THEME TOKENS
+   ----------------------------- */
+:root {
+  /* surfaces */
+  --page-bg: #f3f3f3;
+  --card-bg: #fbfbfb;
+  --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+  --card-shadow-mb: 0 5px 10px rgba(0, 0, 0, 0.04);
+
+  /* text */
+  --text-main: #111;
+  --text-muted: #555;
+  --text-subtle: #777;
+
+  /* accents */
+  --accent-minute: #b07a00;
+  --accent-red: #d8234a;
+  --accent-yellow: #f5c500;
+
+  /* lines */
+  --border-subtle: rgba(0, 0, 0, 0.08);
+  --score-separator: #111;
+}
+
+/* Automatic dark mode based on OS preference */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --page-bg: #05060a;
+    --card-bg: #151621;
+    --card-shadow: 0 20px 45px rgba(0, 0, 0, 0.75);
+
+    --text-main: #f5f5f7;
+    --text-muted: #d5d6de;
+    --text-subtle: #a0a2b2;
+
+    --accent-minute: #f3c548;
+    --accent-red: #ff4b6a;
+
+    --border-subtle: rgba(255, 255, 255, 0.12);
+    --score-separator: #f5f5f7;
+
+    --league-color: #e0c890;
+  }
+
+  .team-badge {
+    filter: brightness(1.12) contrast(1.05);
+  }
+
+}
+
+html {
+  box-sizing: border-box;
+}
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+body.dark-mode {
+  --page-bg: #05060a;
+  --card-bg: #151621;
+  --card-shadow: 0 20px 45px rgba(0, 0, 0, 0.75);
+
+  --text-main: #f5f5f7;
+  --text-muted: #d5d6de;
+  --text-subtle: #a0a2b2;
+
+  --accent-minute: #f3c548;        /* warmer gold for dark */
+  --accent-red: #ff4b6a;
+
+  --border-subtle: rgba(255, 255, 255, 0.12);
+  --score-separator: #f5f5f7;
+}
+
+/* BASE
+   ----------------------------- */
+:root {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+body {
+  margin: 0;
+  background: var(--page-bg);
+  color: var(--text-main);
+}
+
+/* utilities */
+.me-1 {
+  margin-right: 1rem !important;
+}
+
+/* Use #app as the main layout container */
+#app {
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 3rem 1rem;
+}
+
+.match-list {
+  display: grid;
+  gap: 1.5rem;
+}
+
+/* Two columns on wider screens */
+@media (min-width: 960px) {
+  .match-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: flex-start;
+  }
+}
+
+/* Card shell */
+.match-card {
+  max-width: 720px;
+  width: 100%;
+  padding: 1.75rem 2.25rem;
+  border-radius: 0.7rem;
+  background: var(--card-bg);
+  box-shadow: var(--card-shadow);
+  height: 100%;
+}
+
+.league-name {
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  text-transform: capitalize;
+  letter-spacing: 0.08em;
+  color: var(--league-color, var(--text-muted));
+}
+
+/* Header with score centered */
+.match-header {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+}
+
+.ht-cont,
+.at-cont {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.ht-cont {
+  justify-content: flex-end;
+  margin-right: 10px;
+}
+
+.at-cont {
+  justify-content: flex-start;
+  margin-left: 10px;
+}
+
+.at-cont .badge {
+  margin-left: 1rem;
+}
+
+.team-badge {
+  max-width: 2.7rem;
+  max-height: 2.7rem;
+}
+
+.team.away {
+  justify-self: self-start;
+}
+
+.team.home,
+.team.away {
+  text-transform: capitalize;
+  font-size: 1.5em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 90%;
+}
+
+.score {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  grid-template-areas: "home_score  vertical_line  away_score";
+  font-weight: 500;
+  align-items: center;
+  font-size: 2.4rem;
+  line-height: 1.1;
+  padding: 0 4px;
+}
+
+.separator {
+  border-left: 0.125rem solid var(--score-separator);
+  display: inline-block;
+  margin: 0 16px;
+  grid-area: vertical_line;
+  height: 2.2rem;
+}
+
+.match-status,
+.half-time {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  font-weight: 600;
+  margin-top: 0.4rem;
+  margin-bottom: 0.4rem;
+  color: var(--text-subtle);
+  font-size: 0.95rem;
+}
+
+.full-time {
+  margin-right: 0.35rem;
+}
+
+.half-time {
+  font-weight: 400;
+  letter-spacing: 0.03em;
+}
+
+/* Body / events */
+.match-body {
+  padding-top: 0.65rem;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.match-body .row {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  min-height: 1.3rem;
+  margin: 0.12rem 0;
+}
+
+.event.home {
+  text-align: right;
+}
+
+.event.away {
+  text-align: left;
+}
+
+.minute {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  margin: 0 .8rem;
+  font-weight: 600;
+  color: var(--accent-minute);
+  width: 2.625rem;
+  text-align: center;
+}
+
+/* Scorer / assist */
+.player {
+  font-style: normal;
+  font-weight: 600;
+}
+
+.assist, .sub, .sub-arrow {
+  opacity: 0.75;
+}
+
+.assist {
+  margin-left: 0.25rem;
+}
+
+.sub {
+  font-style: italic;
+}
+
+.evt-svg {
+  position: relative;
+  top: 3px;
+}
+
+.sub-arrow {
+  margin: 0 .25rem 0 .25rem;
+}
+
+.goal-ball, .og-goal-ball, .missed-pen-ball, .var-goal-cancelled-icon {
+  margin-left: 0.25rem;
+}
+
+.og-goal-ball {
+  fill: var(--accent-red);
+}
+
+.own-goal-label {
+  color: var(--text-subtle);
+}
+
+.missed-pen-label, .goal-detail {
+  font-style: italic;
+  opacity: 0.7;
+  margin-left: 0.25rem;
+}
+
+.missed-pen-ball svg, .var-goal-cancelled-icon svg {
+  opacity: 0.4;             /* softer than a normal goal */
+  filter: grayscale(100%);  /* optional “missed” vibe */
+}
+
+.var-label {
+  font-style: italic;
+  opacity: 0.8;
+  margin-left: 0.25rem;
+}
+
+.var-player {
+  /* optional: slightly dimmer than normal goals */
+  font-weight: 500;
+}
+
+.card {
+  display: inline-block;
+  width: 10px;
+  height: 14px;
+  margin: 0 0.18rem 0 0.12rem;
+  border-radius: 2px;
+  vertical-align: middle;
+  position: relative;
+  top: -1px;
+}
+
+/* Red card icon */
+.card.red {
+  background: var(--accent-red);
+}
+
+/* Yellow card icon */
+.card.yellow {
+  background: var(--accent-yellow);
+}
+
+.card.yellow.second-yellow {
+  margin-right: -10px;
+}
+/* Footer */
+.match-footer {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  font-size: 0.9rem;
+  font-weight: 300;
+}
+
+.footer-label,
+.footer-data {
+  margin-right: 0.25rem;
+}
+
+.footer-data {
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.timeline-toggle {
+  margin-left: 1rem;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--text-subtle);
+}
+
+/* desktop + general */
+span.player,
+span.var-player {
+  white-space: nowrap;
+}
+
+/* let these be normal by default */
+span.assist,
+span.sub {
+  white-space: normal;
+}
+
+.event-meta {
+  display: inline;
+  white-space: nowrap;
+}
+
+.matchday-control {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 0.75rem;
+  font-size: 0.9rem;
+}
+
+/* Medium screens – just tighten padding & gaps a bit */
+@media (max-width: 720px) {
+  #app {
+    padding: 2rem 0.75rem;
+  }
+
+  .match-card {
+    padding: 1.5rem 1.25rem;
+    border-radius: 16px;
+  }
+
+  .team.home,
+  .team.away {
+    font-size: 1.4rem;
+  }
+
+  .team-badge {
+    max-width: 2.1rem;
+    max-height: 2.1rem;
+  }
+
+  .minute {
+    margin: 0 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  #app {
+    padding: 0.15rem 0.15rem;
+  }
+
+  .match-card {
+    padding: 0.25rem 0.25rem;
+    box-shadow: var(--card-shadow-mb);
+  }
+
+  /* Left side: flip order because markup is name then badge */
+  .ht-cont {
+    flex-direction: column-reverse;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    margin: 0;
+  }
+
+  /* Right side: markup is badge then name already */
+  .at-cont {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    margin: 0;
+  }
+
+  .team-badge {
+    max-width: 2.1rem;
+    max-height: 2.1rem;
+  }
+
+  .team.home,
+  .team.away {
+    font-size: 1rem;
+  }
+
+  .score {
+    font-size: 1.5rem;
+  }
+
+  .separator {
+    margin: 0 8px;
+    height: 1.3rem;
+  }
+
+  .match-header {
+    margin-bottom: 0;
+  }
+
+  .match-status,
+  .half-time {
+    margin-top: 0;
+  }
+
+  .match-footer {
+    margin: 0.5rem 0;
+  }
+
+  /* First line: main player + ball icon stay inline */
+  .event .player,
+  .event .var-player {
+    display: inline;
+    /* white-space: nowrap; */
+  }
+
+  /* Second line: assists, subs, extra labels */
+  .event .assist,
+  .event .sub,
+  .event .missed-pen-label,
+  .event .var-label {
+    display: block;        /* drop to its own line under the player */
+    white-space: normal;
+    margin-left: 0;
+  }
+
+  /* Keep the icons sitting with the player on line 1 */
+  .event .evt-svg.goal-ball,
+  .event .evt-svg.og-goal-ball,
+  .event .evt-svg.missed-pen-ball,
+  .event .evt-svg.var-goal-cancelled-icon,
+  .event .evt-svg.sub-arrow {
+    margin-left: 0.25rem;
+    vertical-align: baseline;
+  }
+
+  .event .event-meta {
+    display: inline-block;
+    /* margin-left: 0.25rem; */
+  }
+
+  /* Inner bits don’t break apart */
+  .event .event-meta .assist,
+  .event .event-meta .sub,
+  .event .event-meta .missed-pen-label,
+  .event .event-meta .var-label {
+    white-space: nowrap;
+  }
+
+  .event .event-meta .evt-svg {
+    margin-left: 0.25rem;
+    vertical-align: baseline;
+  }
+
+  .matchday-control {
+    justify-content: center;
+  }
+
+  .matchday-control select {
+    font-size: 0.9rem;
+    padding: 0.2rem 0.5rem;
+    max-width: 6rem;
+  }
+
+}
