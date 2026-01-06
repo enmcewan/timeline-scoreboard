@@ -2,9 +2,9 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-import fixturesRaw from "../data/dev/fixtures.raw.json" with { type: "json" };
-import eventsRaw from "../data/dev/events.raw.json" with { type: "json" };
-import teams from "../data/leagues/epl/teams.json" with { type: "json" };
+import fixturesRaw from "../../fixtures.raw.json" with { type: "json" };
+import eventsRaw from "../../events.raw.json" with { type: "json" };
+import teams from "../../teams.json" with { type: "json" };
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -14,7 +14,7 @@ const SEASON = 2025;
 const LEAGUE_SLUG = "epl";
 const OUT_DIR = path.join(
   __dirname,
-  `../data/leagues/${LEAGUE_SLUG}/${SEASON}/matchdays`
+  `../../data/leagues/${LEAGUE_SLUG}/${SEASON}/matchdays`
 );
 
 // --------------------------------------------------

@@ -1,5 +1,5 @@
 import "./style.css";
-import teams from "./data/leagues/epl/teams.json";
+import teams from "./data/leagues/epl/2025/teams.json";
 import { esc, sortedEvents } from "./lib/utils.js";
 
 // Load ALL matchdays for 2025 EPL
