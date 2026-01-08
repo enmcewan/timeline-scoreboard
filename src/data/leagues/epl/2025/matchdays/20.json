@@ -931,10 +931,10 @@
           "id": "1379166-0",
           "minute": "19'",
           "team": "home",
-          "kind": "other",
+          "kind": "var-goal-disallowed",
           "player": "A. Gordon",
           "assist": "",
-          "detail": "",
+          "detail": "offside",
           "rawType": "Var",
           "rawDetail": "Goal Disallowed - offside"
         },

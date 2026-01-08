@@ -256,17 +256,17 @@ body {
   font-weight: 600;
 }
 
-.assist, .sub, .sub-arrow {
-  opacity: 0.75;
+.assist, .sub, .sub-arrow, .event-meta {
+  opacity: 0.85;
 }
 
-.assist {
+/* .assist, .var {
   margin-left: 0.25rem;
-}
+} */
 
-.sub {
+/* .sub {
   font-style: italic;
-}
+} */
 
 .evt-svg {
   position: relative;
@@ -278,7 +278,7 @@ body {
 }
 
 .goal-ball, .og-goal-ball, .missed-pen-ball, .var-goal-cancelled-icon {
-  margin-left: 0.25rem;
+  margin: 0 0.25rem 0 0.25rem;
 }
 
 .og-goal-ball {
@@ -290,7 +290,7 @@ body {
 }
 
 .missed-pen-label, .goal-detail {
-  font-style: italic;
+  /* font-style: italic; */
   opacity: 0.7;
   margin-left: 0.25rem;
 }
