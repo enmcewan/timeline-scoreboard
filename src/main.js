@@ -8,7 +8,6 @@ const matchdayModules = import.meta.glob(
   { eager: true, import: "default" }
 );
 
-
 // Build a { roundNumber: matchdayJson } map
 const MATCHDAYS = {};
 
@@ -251,7 +250,7 @@ function renderEventText(evt, mode) {
         const assist = evt.assist ? `<span class="assist">(${esc(evt.assist)})</span>` : "";
         
         let detail = "";
-        if (evt.detail === "pen") {detail = `<span class="goal-detail"> (pen)</span>`;}
+        if (evt.detail === "pen") {detail = `<span class="goal-detail"> (Penalty)</span>`;}
 
         let goalImg = '';
         const isOwnGoal = evt.kind === "own-goal";
@@ -304,7 +303,7 @@ function renderEventText(evt, mode) {
         `;
     }
 
-    if (evt.kind === "var-goal-cancelled") {
+    if (evt.kind === "var-goal-cancelled" || evt.kind === "var-goal-disallowed") {
         const player = esc(evt.player ?? "");
 
         let varIcon = "";
@@ -318,16 +317,47 @@ function renderEventText(evt, mode) {
             `;
         }
 
-        // If player is missing, fall back to generic "Goal"
-        const who = player || "Goal";
+        let varEvent = '(VAR · ';
+
+        const vgc = evt.kind === "var-goal-cancelled"  ? `<span class="var var-no-goal">${varEvent + 'Cancelled'})</span>` : "";
+        const vgd = evt.kind === "var-goal-disallowed" ? `<span class="var var-no-goal">${varEvent + 'Offside'})</span>` : "";
+
+        let metaBits = `${vgc}${vgd}`;
 
         return `
-            <span class="player var-player">${who}</span>
+            <span class="player var-player">${player}</span>
             ${varIcon}
-            <span class="var-label">(Disallowed · VAR)</span>
+            ${metaBits ? ` <span class="event-meta">${metaBits}</span>` : ""}
         `;
     }
 
+    if (evt.kind === "var-pen-cancelled" || evt.kind === "var-pen-confirmed" || evt.kind === "var-card-upgrade") {
+      const player = esc(evt.player ?? "");
+
+      // let varIcon = "";
+      // if (mode === VIEW_MODES.FULL) {
+      //     varIcon = `
+      //     <span class="evt-svg var-goal-cancelled-icon" title="Disallowed (VAR)" aria-label="Goal Disallowed (VAR)">
+      //         <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      //             <use href="/img/misc/ball.svg"></use>
+      //         </svg>
+      //     </span>
+      //     `;
+      // }
+
+      let varEvent = '(VAR · ';
+
+      const vgc = evt.kind === "var-pen-cancelled"  ? `<span class="var var-no-goal">${varEvent + 'PEN Cancelled'})</span>` : "";
+      const vgd = evt.kind === "var-pen-confirmed" ? `<span class="var var-pen-awarded">${varEvent + 'PEN Awarded'})</span>` : "";
+      const vcu = evt.kind === "var-card-upgrade"  ? `<span class="var var-card-upgrade">${varEvent + 'Card Upgraded'})</span>` : "";
+
+      let metaBits = `${vgc}${vgd}${vcu}`;
+
+      return `
+          <span class="player var-player">${player}</span>
+          ${metaBits ? ` <span class="event-meta">${metaBits}</span>` : ""}
+      `;
+    }
 
     // Substitution
     if (evt.kind === "sub") {
