@@ -28,7 +28,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Goal",
-          "rawDetail": "Normal Goal"
+          "rawDetail": "Normal Goal",
+          "elapsed": 4,
+          "extra": 0
         },
         {
           "id": "1379136-1",
@@ -39,7 +41,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Yellow Card"
+          "rawDetail": "Yellow Card",
+          "elapsed": 7,
+          "extra": 0
         },
         {
           "id": "1379136-2",
@@ -50,7 +54,9 @@
           "assist": "A. Gordon",
           "detail": "",
           "rawType": "Goal",
-          "rawDetail": "Normal Goal"
+          "rawDetail": "Normal Goal",
+          "elapsed": 20,
+          "extra": 0
         },
         {
           "id": "1379136-3",
@@ -61,7 +67,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Yellow Card"
+          "rawDetail": "Yellow Card",
+          "elapsed": 27,
+          "extra": 0
         },
         {
           "id": "1379136-4",
@@ -72,7 +80,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Yellow Card"
+          "rawDetail": "Yellow Card",
+          "elapsed": 45,
+          "extra": 0
         },
         {
           "id": "1379136-5",
@@ -83,7 +93,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Goal",
-          "rawDetail": "Normal Goal"
+          "rawDetail": "Normal Goal",
+          "elapsed": 49,
+          "extra": 0
         },
         {
           "id": "1379136-6",
@@ -96,7 +108,9 @@
           "outPlayer": "M. Gusto",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 1"
+          "rawDetail": "Substitution 1",
+          "elapsed": 54,
+          "extra": 0
         },
         {
           "id": "1379136-7",
@@ -107,7 +121,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Yellow Card"
+          "rawDetail": "Yellow Card",
+          "elapsed": 61,
+          "extra": 0
         },
         {
           "id": "1379136-8",
@@ -118,7 +134,9 @@
           "assist": "R. Sanchez",
           "detail": "",
           "rawType": "Goal",
-          "rawDetail": "Normal Goal"
+          "rawDetail": "Normal Goal",
+          "elapsed": 66,
+          "extra": 0
         },
         {
           "id": "1379136-9",
@@ -129,7 +147,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Yellow Card"
+          "rawDetail": "Yellow Card",
+          "elapsed": 70,
+          "extra": 0
         },
         {
           "id": "1379136-10",
@@ -142,7 +162,9 @@
           "outPlayer": "A. Gordon",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 1"
+          "rawDetail": "Substitution 1",
+          "elapsed": 72,
+          "extra": 0
         },
         {
           "id": "1379136-11",
@@ -155,7 +177,9 @@
           "outPlayer": "N. Woltemade",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 2"
+          "rawDetail": "Substitution 2",
+          "elapsed": 73,
+          "extra": 0
         },
         {
           "id": "1379136-12",
@@ -168,7 +192,9 @@
           "outPlayer": "J. Murphy",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 3"
+          "rawDetail": "Substitution 3",
+          "elapsed": 73,
+          "extra": 0
         },
         {
           "id": "1379136-13",
@@ -179,7 +205,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Yellow Card"
+          "rawDetail": "Yellow Card",
+          "elapsed": 77,
+          "extra": 0
         },
         {
           "id": "1379136-14",
@@ -192,7 +220,9 @@
           "outPlayer": "C. Palmer",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 2"
+          "rawDetail": "Substitution 2",
+          "elapsed": 79,
+          "extra": 0
         },
         {
           "id": "1379136-15",
@@ -203,7 +233,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Yellow Card"
+          "rawDetail": "Yellow Card",
+          "elapsed": 82,
+          "extra": 0
         },
         {
           "id": "1379136-16",
@@ -214,7 +246,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Yellow Card"
+          "rawDetail": "Yellow Card",
+          "elapsed": 83,
+          "extra": 0
         },
         {
           "id": "1379136-17",
@@ -225,7 +259,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Yellow Card"
+          "rawDetail": "Yellow Card",
+          "elapsed": 86,
+          "extra": 0
         },
         {
           "id": "1379136-18",
@@ -238,7 +274,9 @@
           "outPlayer": "J. Ramsey",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 4"
+          "rawDetail": "Substitution 4",
+          "elapsed": 89,
+          "extra": 0
         }
       ]
     },
@@ -268,7 +306,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Yellow Card"
+          "rawDetail": "Yellow Card",
+          "elapsed": 38,
+          "extra": 0
         },
         {
           "id": "1379130-1",
@@ -281,7 +321,9 @@
           "outPlayer": "Evanilson",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 1"
+          "rawDetail": "Substitution 1",
+          "elapsed": 63,
+          "extra": 0
         },
         {
           "id": "1379130-2",
@@ -294,7 +336,9 @@
           "outPlayer": "J. Kluivert",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 2"
+          "rawDetail": "Substitution 2",
+          "elapsed": 64,
+          "extra": 0
         },
         {
           "id": "1379130-3",
@@ -307,7 +351,9 @@
           "outPlayer": "Z. Flemming",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 1"
+          "rawDetail": "Substitution 1",
+          "elapsed": 65,
+          "extra": 0
         },
         {
           "id": "1379130-4",
@@ -320,7 +366,9 @@
           "outPlayer": "J. Bruun Larsen",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 2"
+          "rawDetail": "Substitution 2",
+          "elapsed": 66,
+          "extra": 0
         },
         {
           "id": "1379130-5",
@@ -331,7 +379,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Goal",
-          "rawDetail": "Normal Goal"
+          "rawDetail": "Normal Goal",
+          "elapsed": 67,
+          "extra": 0
         },
         {
           "id": "1379130-6",
@@ -342,7 +392,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Yellow Card"
+          "rawDetail": "Yellow Card",
+          "elapsed": 74,
+          "extra": 0
         },
         {
           "id": "1379130-7",
@@ -355,7 +407,9 @@
           "outPlayer": "D. Brooks",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 3"
+          "rawDetail": "Substitution 3",
+          "elapsed": 74,
+          "extra": 0
         },
         {
           "id": "1379130-8",
@@ -368,7 +422,9 @@
           "outPlayer": "J. Anthony",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 3"
+          "rawDetail": "Substitution 3",
+          "elapsed": 77,
+          "extra": 0
         },
         {
           "id": "1379130-9",
@@ -381,7 +437,9 @@
           "outPlayer": "K. Walker",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 4"
+          "rawDetail": "Substitution 4",
+          "elapsed": 77,
+          "extra": 0
         },
         {
           "id": "1379130-10",
@@ -394,7 +452,9 @@
           "outPlayer": "L. Ugochukwu",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 5"
+          "rawDetail": "Substitution 5",
+          "elapsed": 82,
+          "extra": 0
         },
         {
           "id": "1379130-11",
@@ -407,7 +467,9 @@
           "outPlayer": "M. Tavernier",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 4"
+          "rawDetail": "Substitution 4",
+          "elapsed": 90,
+          "extra": 2
         },
         {
           "id": "1379130-12",
@@ -420,7 +482,9 @@
           "outPlayer": "A. Jimenez",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 5"
+          "rawDetail": "Substitution 5",
+          "elapsed": 90,
+          "extra": 3
         },
         {
           "id": "1379130-13",
@@ -431,7 +495,9 @@
           "assist": "M. Edwards",
           "detail": "",
           "rawType": "Goal",
-          "rawDetail": "Normal Goal"
+          "rawDetail": "Normal Goal",
+          "elapsed": 90,
+          "extra": 0
         }
       ]
     },
@@ -461,7 +527,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Yellow Card"
+          "rawDetail": "Yellow Card",
+          "elapsed": 19,
+          "extra": 0
         },
         {
           "id": "1379138-1",
@@ -472,7 +540,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Yellow Card"
+          "rawDetail": "Yellow Card",
+          "elapsed": 24,
+          "extra": 0
         },
         {
           "id": "1379138-2",
@@ -483,7 +553,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Yellow Card"
+          "rawDetail": "Yellow Card",
+          "elapsed": 44,
+          "extra": 0
         },
         {
           "id": "1379138-3",
@@ -494,7 +566,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Yellow Card"
+          "rawDetail": "Yellow Card",
+          "elapsed": 44,
+          "extra": 0
         },
         {
           "id": "1379138-4",
@@ -505,7 +579,9 @@
           "assist": "V. Janelt",
           "detail": "",
           "rawType": "Goal",
-          "rawDetail": "Normal Goal"
+          "rawDetail": "Normal Goal",
+          "elapsed": 63,
+          "extra": 0
         },
         {
           "id": "1379138-5",
@@ -518,7 +594,9 @@
           "outPlayer": "M. Jensen",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 1"
+          "rawDetail": "Substitution 1",
+          "elapsed": 64,
+          "extra": 0
         },
         {
           "id": "1379138-6",
@@ -531,7 +609,9 @@
           "outPlayer": "F. Lopez",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 1"
+          "rawDetail": "Substitution 1",
+          "elapsed": 65,
+          "extra": 0
         },
         {
           "id": "1379138-7",
@@ -542,7 +622,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Yellow Card"
+          "rawDetail": "Yellow Card",
+          "elapsed": 72,
+          "extra": 0
         },
         {
           "id": "1379138-8",
@@ -555,7 +637,9 @@
           "outPlayer": "K. Hoever",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 2"
+          "rawDetail": "Substitution 2",
+          "elapsed": 81,
+          "extra": 0
         },
         {
           "id": "1379138-9",
@@ -566,7 +650,9 @@
           "assist": "M. Damsgaard",
           "detail": "",
           "rawType": "Goal",
-          "rawDetail": "Normal Goal"
+          "rawDetail": "Normal Goal",
+          "elapsed": 83,
+          "extra": 0
         },
         {
           "id": "1379138-10",
@@ -579,7 +665,9 @@
           "outPlayer": "Hwang Hee-Chan",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 3"
+          "rawDetail": "Substitution 3",
+          "elapsed": 89,
+          "extra": 0
         },
         {
           "id": "1379138-11",
@@ -592,7 +680,9 @@
           "outPlayer": "M. Doherty",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 4"
+          "rawDetail": "Substitution 4",
+          "elapsed": 89,
+          "extra": 0
         },
         {
           "id": "1379138-12",
@@ -603,7 +693,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Yellow Card"
+          "rawDetail": "Yellow Card",
+          "elapsed": 90,
+          "extra": 0
         }
       ]
     },
@@ -633,7 +725,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Goal",
-          "rawDetail": "Normal Goal"
+          "rawDetail": "Normal Goal",
+          "elapsed": 5,
+          "extra": 0
         },
         {
           "id": "1379135-1",
@@ -644,7 +738,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Yellow Card"
+          "rawDetail": "Yellow Card",
+          "elapsed": 28,
+          "extra": 0
         },
         {
           "id": "1379135-2",
@@ -655,7 +751,9 @@
           "assist": "E. Haaland",
           "detail": "",
           "rawType": "Goal",
-          "rawDetail": "Normal Goal"
+          "rawDetail": "Normal Goal",
+          "elapsed": 38,
+          "extra": 0
         },
         {
           "id": "1379135-3",
@@ -666,7 +764,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Yellow Card"
+          "rawDetail": "Yellow Card",
+          "elapsed": 41,
+          "extra": 0
         },
         {
           "id": "1379135-4",
@@ -679,7 +779,9 @@
           "outPlayer": "O. Scarles",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 1"
+          "rawDetail": "Substitution 1",
+          "elapsed": 64,
+          "extra": 0
         },
         {
           "id": "1379135-5",
@@ -692,7 +794,9 @@
           "outPlayer": "R. Cherki",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 1"
+          "rawDetail": "Substitution 1",
+          "elapsed": 67,
+          "extra": 0
         },
         {
           "id": "1379135-6",
@@ -705,7 +809,9 @@
           "outPlayer": "Nico",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 2"
+          "rawDetail": "Substitution 2",
+          "elapsed": 67,
+          "extra": 0
         },
         {
           "id": "1379135-7",
@@ -718,7 +824,9 @@
           "outPlayer": "T. Reijnders",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 3"
+          "rawDetail": "Substitution 3",
+          "elapsed": 67,
+          "extra": 0
         },
         {
           "id": "1379135-8",
@@ -729,7 +837,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Goal",
-          "rawDetail": "Normal Goal"
+          "rawDetail": "Normal Goal",
+          "elapsed": 69,
+          "extra": 0
         },
         {
           "id": "1379135-9",
@@ -742,7 +852,9 @@
           "outPlayer": "B. Silva",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 4"
+          "rawDetail": "Substitution 4",
+          "elapsed": 75,
+          "extra": 0
         },
         {
           "id": "1379135-10",
@@ -755,7 +867,9 @@
           "outPlayer": "Lucas Paqueta",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 2"
+          "rawDetail": "Substitution 2",
+          "elapsed": 78,
+          "extra": 0
         },
         {
           "id": "1379135-11",
@@ -768,7 +882,9 @@
           "outPlayer": "F. Potts",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 3"
+          "rawDetail": "Substitution 3",
+          "elapsed": 79,
+          "extra": 0
         },
         {
           "id": "1379135-12",
@@ -781,7 +897,9 @@
           "outPlayer": "C. Summerville",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 4"
+          "rawDetail": "Substitution 4",
+          "elapsed": 79,
+          "extra": 0
         },
         {
           "id": "1379135-13",
@@ -794,7 +912,9 @@
           "outPlayer": "M. Fernandes",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 5"
+          "rawDetail": "Substitution 5",
+          "elapsed": 79,
+          "extra": 0
         }
       ]
     },
@@ -824,7 +944,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Yellow Card"
+          "rawDetail": "Yellow Card",
+          "elapsed": 19,
+          "extra": 0
         },
         {
           "id": "1379131-1",
@@ -835,7 +957,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Yellow Card"
+          "rawDetail": "Yellow Card",
+          "elapsed": 34,
+          "extra": 0
         },
         {
           "id": "1379131-2",
@@ -848,7 +972,9 @@
           "outPlayer": "M. Wieffer",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 1"
+          "rawDetail": "Substitution 1",
+          "elapsed": 46,
+          "extra": 0
         },
         {
           "id": "1379131-3",
@@ -861,7 +987,9 @@
           "outPlayer": "S. Adingra",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 1"
+          "rawDetail": "Substitution 1",
+          "elapsed": 63,
+          "extra": 0
         },
         {
           "id": "1379131-4",
@@ -874,7 +1002,9 @@
           "outPlayer": "M. De Cuyper",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 2"
+          "rawDetail": "Substitution 2",
+          "elapsed": 64,
+          "extra": 0
         },
         {
           "id": "1379131-5",
@@ -887,7 +1017,9 @@
           "outPlayer": "C. Rigg",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 2"
+          "rawDetail": "Substitution 2",
+          "elapsed": 64,
+          "extra": 0
         },
         {
           "id": "1379131-6",
@@ -900,7 +1032,9 @@
           "outPlayer": "Y. Minteh",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 3"
+          "rawDetail": "Substitution 3",
+          "elapsed": 71,
+          "extra": 0
         },
         {
           "id": "1379131-7",
@@ -913,7 +1047,9 @@
           "outPlayer": "J. Hinshelwood",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 4"
+          "rawDetail": "Substitution 4",
+          "elapsed": 71,
+          "extra": 0
         },
         {
           "id": "1379131-8",
@@ -926,7 +1062,9 @@
           "outPlayer": "B. Brobbey",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 3"
+          "rawDetail": "Substitution 3",
+          "elapsed": 72,
+          "extra": 0
         },
         {
           "id": "1379131-9",
@@ -937,7 +1075,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Yellow Card"
+          "rawDetail": "Yellow Card",
+          "elapsed": 79,
+          "extra": 0
         },
         {
           "id": "1379131-10",
@@ -948,7 +1088,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Yellow Card"
+          "rawDetail": "Yellow Card",
+          "elapsed": 86,
+          "extra": 0
         },
         {
           "id": "1379131-11",
@@ -961,7 +1103,9 @@
           "outPlayer": "B. Gruda",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 5"
+          "rawDetail": "Substitution 5",
+          "elapsed": 87,
+          "extra": 0
         }
       ]
     },
@@ -991,7 +1135,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Var",
-          "rawDetail": "Card upgrade"
+          "rawDetail": "Card upgrade",
+          "elapsed": 32,
+          "extra": 0
         },
         {
           "id": "1379137-1",
@@ -1002,7 +1148,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Red Card"
+          "rawDetail": "Red Card",
+          "elapsed": 33,
+          "extra": 0
         },
         {
           "id": "1379137-2",
@@ -1015,7 +1163,9 @@
           "outPlayer": "C. Bradley",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 1"
+          "rawDetail": "Substitution 1",
+          "elapsed": 46,
+          "extra": 0
         },
         {
           "id": "1379137-3",
@@ -1026,7 +1176,9 @@
           "assist": "F. Wirtz",
           "detail": "",
           "rawType": "Goal",
-          "rawDetail": "Normal Goal"
+          "rawDetail": "Normal Goal",
+          "elapsed": 56,
+          "extra": 0
         },
         {
           "id": "1379137-4",
@@ -1039,7 +1191,9 @@
           "outPlayer": "M. Kudus",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 1"
+          "rawDetail": "Substitution 1",
+          "elapsed": 58,
+          "extra": 0
         },
         {
           "id": "1379137-5",
@@ -1052,7 +1206,9 @@
           "outPlayer": "",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 2"
+          "rawDetail": "Substitution 2",
+          "elapsed": 60,
+          "extra": 0
         },
         {
           "id": "1379137-6",
@@ -1063,7 +1219,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Yellow Card"
+          "rawDetail": "Yellow Card",
+          "elapsed": 66,
+          "extra": 0
         },
         {
           "id": "1379137-7",
@@ -1074,7 +1232,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Goal",
-          "rawDetail": "Normal Goal"
+          "rawDetail": "Normal Goal",
+          "elapsed": 66,
+          "extra": 0
         },
         {
           "id": "1379137-8",
@@ -1087,7 +1247,9 @@
           "outPlayer": "A. Gray",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 2"
+          "rawDetail": "Substitution 2",
+          "elapsed": 71,
+          "extra": 0
         },
         {
           "id": "1379137-9",
@@ -1100,7 +1262,9 @@
           "outPlayer": "L. Bergvall",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 3"
+          "rawDetail": "Substitution 3",
+          "elapsed": 71,
+          "extra": 0
         },
         {
           "id": "1379137-10",
@@ -1111,7 +1275,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Yellow Card"
+          "rawDetail": "Yellow Card",
+          "elapsed": 76,
+          "extra": 0
         },
         {
           "id": "1379137-11",
@@ -1124,7 +1290,9 @@
           "outPlayer": "R. Kolo Muani",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 4"
+          "rawDetail": "Substitution 4",
+          "elapsed": 80,
+          "extra": 0
         },
         {
           "id": "1379137-12",
@@ -1135,7 +1303,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Yellow Card"
+          "rawDetail": "Yellow Card",
+          "elapsed": 83,
+          "extra": 0
         },
         {
           "id": "1379137-13",
@@ -1146,7 +1316,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Goal",
-          "rawDetail": "Normal Goal"
+          "rawDetail": "Normal Goal",
+          "elapsed": 83,
+          "extra": 0
         },
         {
           "id": "1379137-14",
@@ -1157,7 +1329,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Yellow Card"
+          "rawDetail": "Yellow Card",
+          "elapsed": 85,
+          "extra": 0
         },
         {
           "id": "1379137-15",
@@ -1168,7 +1342,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Yellow Card"
+          "rawDetail": "Yellow Card",
+          "elapsed": 90,
+          "extra": 11
         },
         {
           "id": "1379137-16",
@@ -1179,7 +1355,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Yellow Card"
+          "rawDetail": "Yellow Card",
+          "elapsed": 90,
+          "extra": 5
         },
         {
           "id": "1379137-17",
@@ -1190,7 +1368,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Yellow Card"
+          "rawDetail": "Yellow Card",
+          "elapsed": 90,
+          "extra": 3
         },
         {
           "id": "1379137-18",
@@ -1201,7 +1381,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Red Card"
+          "rawDetail": "Red Card",
+          "elapsed": 90,
+          "extra": 3
         },
         {
           "id": "1379137-19",
@@ -1212,7 +1394,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Yellow Card"
+          "rawDetail": "Yellow Card",
+          "elapsed": 90,
+          "extra": 7
         },
         {
           "id": "1379137-20",
@@ -1225,7 +1409,9 @@
           "outPlayer": "",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 3"
+          "rawDetail": "Substitution 3",
+          "elapsed": 90,
+          "extra": 0
         },
         {
           "id": "1379137-21",
@@ -1238,7 +1424,9 @@
           "outPlayer": "H. Ekitike",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 4"
+          "rawDetail": "Substitution 4",
+          "elapsed": 90,
+          "extra": 9
         },
         {
           "id": "1379137-22",
@@ -1251,7 +1439,9 @@
           "outPlayer": "F. Wirtz",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 5"
+          "rawDetail": "Substitution 5",
+          "elapsed": 90,
+          "extra": 10
         }
       ]
     },
@@ -1281,7 +1471,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Var",
-          "rawDetail": "Penalty confirmed"
+          "rawDetail": "Penalty confirmed",
+          "elapsed": 24,
+          "extra": 0
         },
         {
           "id": "1379132-1",
@@ -1292,7 +1484,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Yellow Card"
+          "rawDetail": "Yellow Card",
+          "elapsed": 26,
+          "extra": 0
         },
         {
           "id": "1379132-2",
@@ -1303,7 +1497,9 @@
           "assist": "",
           "detail": "pen",
           "rawType": "Goal",
-          "rawDetail": "Penalty"
+          "rawDetail": "Penalty",
+          "elapsed": 27,
+          "extra": 0
         },
         {
           "id": "1379132-3",
@@ -1314,7 +1510,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Yellow Card"
+          "rawDetail": "Yellow Card",
+          "elapsed": 39,
+          "extra": 0
         },
         {
           "id": "1379132-4",
@@ -1325,7 +1523,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Yellow Card"
+          "rawDetail": "Yellow Card",
+          "elapsed": 56,
+          "extra": 0
         },
         {
           "id": "1379132-5",
@@ -1338,7 +1538,9 @@
           "outPlayer": "V. Gyökeres",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 1"
+          "rawDetail": "Substitution 1",
+          "elapsed": 65,
+          "extra": 0
         },
         {
           "id": "1379132-6",
@@ -1351,7 +1553,9 @@
           "outPlayer": "T. Barry",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 1"
+          "rawDetail": "Substitution 1",
+          "elapsed": 66,
+          "extra": 0
         },
         {
           "id": "1379132-7",
@@ -1364,7 +1568,9 @@
           "outPlayer": "D. McNeil",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 2"
+          "rawDetail": "Substitution 2",
+          "elapsed": 75,
+          "extra": 0
         },
         {
           "id": "1379132-8",
@@ -1377,7 +1583,9 @@
           "outPlayer": "C. Alcaraz",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 3"
+          "rawDetail": "Substitution 3",
+          "elapsed": 76,
+          "extra": 0
         },
         {
           "id": "1379132-9",
@@ -1390,7 +1598,9 @@
           "outPlayer": "L. Trossard",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 2"
+          "rawDetail": "Substitution 2",
+          "elapsed": 80,
+          "extra": 0
         },
         {
           "id": "1379132-10",
@@ -1403,7 +1613,9 @@
           "outPlayer": "M. Odegaard",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 3"
+          "rawDetail": "Substitution 3",
+          "elapsed": 88,
+          "extra": 0
         },
         {
           "id": "1379132-11",
@@ -1414,7 +1626,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Yellow Card"
+          "rawDetail": "Yellow Card",
+          "elapsed": 89,
+          "extra": 0
         }
       ]
     },
@@ -1444,7 +1658,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Goal",
-          "rawDetail": "Normal Goal"
+          "rawDetail": "Normal Goal",
+          "elapsed": 38,
+          "extra": 0
         },
         {
           "id": "1379134-1",
@@ -1455,7 +1671,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Yellow Card"
+          "rawDetail": "Yellow Card",
+          "elapsed": 42,
+          "extra": 0
         },
         {
           "id": "1379134-2",
@@ -1466,7 +1684,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Yellow Card"
+          "rawDetail": "Yellow Card",
+          "elapsed": 45,
+          "extra": 2
         },
         {
           "id": "1379134-3",
@@ -1477,7 +1697,9 @@
           "assist": "J. Bijol",
           "detail": "",
           "rawType": "Goal",
-          "rawDetail": "Normal Goal"
+          "rawDetail": "Normal Goal",
+          "elapsed": 45,
+          "extra": 0
         },
         {
           "id": "1379134-4",
@@ -1490,7 +1712,9 @@
           "outPlayer": "W. Hughes",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 1"
+          "rawDetail": "Substitution 1",
+          "elapsed": 46,
+          "extra": 0
         },
         {
           "id": "1379134-5",
@@ -1501,7 +1725,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Goal",
-          "rawDetail": "Normal Goal"
+          "rawDetail": "Normal Goal",
+          "elapsed": 60,
+          "extra": 0
         },
         {
           "id": "1379134-6",
@@ -1514,7 +1740,9 @@
           "outPlayer": "N. Clyne",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 2"
+          "rawDetail": "Substitution 2",
+          "elapsed": 65,
+          "extra": 0
         },
         {
           "id": "1379134-7",
@@ -1527,7 +1755,9 @@
           "outPlayer": "B. Aaronson",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 1"
+          "rawDetail": "Substitution 1",
+          "elapsed": 77,
+          "extra": 0
         },
         {
           "id": "1379134-8",
@@ -1540,7 +1770,9 @@
           "outPlayer": "N. Okafor",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 2"
+          "rawDetail": "Substitution 2",
+          "elapsed": 77,
+          "extra": 0
         },
         {
           "id": "1379134-9",
@@ -1553,7 +1785,9 @@
           "outPlayer": "J. Mateta",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 3"
+          "rawDetail": "Substitution 3",
+          "elapsed": 77,
+          "extra": 0
         },
         {
           "id": "1379134-10",
@@ -1566,7 +1800,9 @@
           "outPlayer": "E. Nketiah",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 4"
+          "rawDetail": "Substitution 4",
+          "elapsed": 77,
+          "extra": 0
         },
         {
           "id": "1379134-11",
@@ -1579,7 +1815,9 @@
           "outPlayer": "J. Bogle",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 3"
+          "rawDetail": "Substitution 3",
+          "elapsed": 80,
+          "extra": 0
         },
         {
           "id": "1379134-12",
@@ -1592,7 +1830,9 @@
           "outPlayer": "Y. Pino",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 5"
+          "rawDetail": "Substitution 5",
+          "elapsed": 86,
+          "extra": 0
         },
         {
           "id": "1379134-13",
@@ -1605,7 +1845,9 @@
           "outPlayer": "E. Ampadu",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 4"
+          "rawDetail": "Substitution 4",
+          "elapsed": 87,
+          "extra": 0
         },
         {
           "id": "1379134-14",
@@ -1618,7 +1860,9 @@
           "outPlayer": "D. Calvert-Lewin",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 5"
+          "rawDetail": "Substitution 5",
+          "elapsed": 87,
+          "extra": 0
         },
         {
           "id": "1379134-15",
@@ -1629,7 +1873,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Yellow Card"
+          "rawDetail": "Yellow Card",
+          "elapsed": 90,
+          "extra": 1
         },
         {
           "id": "1379134-16",
@@ -1640,7 +1886,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Var",
-          "rawDetail": "Penalty cancelled"
+          "rawDetail": "Penalty cancelled",
+          "elapsed": 90,
+          "extra": 10
         },
         {
           "id": "1379134-17",
@@ -1651,7 +1899,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Yellow Card"
+          "rawDetail": "Yellow Card",
+          "elapsed": 90,
+          "extra": 7
         },
         {
           "id": "1379134-18",
@@ -1662,7 +1912,9 @@
           "assist": "",
           "detail": "pen",
           "rawType": "Goal",
-          "rawDetail": "Penalty"
+          "rawDetail": "Penalty",
+          "elapsed": 90,
+          "extra": 0
         },
         {
           "id": "1379134-19",
@@ -1673,7 +1925,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Goal",
-          "rawDetail": "Normal Goal"
+          "rawDetail": "Normal Goal",
+          "elapsed": 90,
+          "extra": 0
         }
       ]
     },
@@ -1703,7 +1957,9 @@
           "assist": "J. McGinn",
           "detail": "",
           "rawType": "Goal",
-          "rawDetail": "Normal Goal"
+          "rawDetail": "Normal Goal",
+          "elapsed": 45,
+          "extra": 0
         },
         {
           "id": "1379129-1",
@@ -1714,7 +1970,9 @@
           "assist": "P. Dorgu",
           "detail": "",
           "rawType": "Goal",
-          "rawDetail": "Normal Goal"
+          "rawDetail": "Normal Goal",
+          "elapsed": 45,
+          "extra": 0
         },
         {
           "id": "1379129-2",
@@ -1727,7 +1985,9 @@
           "outPlayer": "B. Fernandes",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 1"
+          "rawDetail": "Substitution 1",
+          "elapsed": 46,
+          "extra": 0
         },
         {
           "id": "1379129-3",
@@ -1738,7 +1998,9 @@
           "assist": "O. Watkins",
           "detail": "",
           "rawType": "Goal",
-          "rawDetail": "Normal Goal"
+          "rawDetail": "Normal Goal",
+          "elapsed": 57,
+          "extra": 0
         },
         {
           "id": "1379129-4",
@@ -1749,7 +2011,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Yellow Card"
+          "rawDetail": "Yellow Card",
+          "elapsed": 68,
+          "extra": 0
         },
         {
           "id": "1379129-5",
@@ -1760,7 +2024,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Yellow Card"
+          "rawDetail": "Yellow Card",
+          "elapsed": 72,
+          "extra": 0
         },
         {
           "id": "1379129-6",
@@ -1773,7 +2039,9 @@
           "outPlayer": "B. Sesko",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 2"
+          "rawDetail": "Substitution 2",
+          "elapsed": 73,
+          "extra": 0
         },
         {
           "id": "1379129-7",
@@ -1786,7 +2054,9 @@
           "outPlayer": "M. Ugarte",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 3"
+          "rawDetail": "Substitution 3",
+          "elapsed": 73,
+          "extra": 0
         },
         {
           "id": "1379129-8",
@@ -1799,7 +2069,9 @@
           "outPlayer": "I. Maatsen",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 1"
+          "rawDetail": "Substitution 1",
+          "elapsed": 75,
+          "extra": 0
         },
         {
           "id": "1379129-9",
@@ -1812,7 +2084,9 @@
           "outPlayer": "O. Watkins",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 2"
+          "rawDetail": "Substitution 2",
+          "elapsed": 75,
+          "extra": 0
         },
         {
           "id": "1379129-10",
@@ -1825,7 +2099,9 @@
           "outPlayer": "A. Onana",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 3"
+          "rawDetail": "Substitution 3",
+          "elapsed": 84,
+          "extra": 0
         },
         {
           "id": "1379129-11",
@@ -1838,7 +2114,9 @@
           "outPlayer": "J. McGinn",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 4"
+          "rawDetail": "Substitution 4",
+          "elapsed": 84,
+          "extra": 0
         },
         {
           "id": "1379129-12",
@@ -1851,7 +2129,9 @@
           "outPlayer": "L. Yoro",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 4"
+          "rawDetail": "Substitution 4",
+          "elapsed": 84,
+          "extra": 0
         },
         {
           "id": "1379129-13",
@@ -1864,7 +2144,9 @@
           "outPlayer": "B. Kamara",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 5"
+          "rawDetail": "Substitution 5",
+          "elapsed": 88,
+          "extra": 0
         },
         {
           "id": "1379129-14",
@@ -1875,7 +2157,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Yellow Card"
+          "rawDetail": "Yellow Card",
+          "elapsed": 90,
+          "extra": 2
         }
       ]
     },
@@ -1905,7 +2189,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Yellow Card"
+          "rawDetail": "Yellow Card",
+          "elapsed": 45,
+          "extra": 7
         },
         {
           "id": "1379133-1",
@@ -1916,7 +2202,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Yellow Card"
+          "rawDetail": "Yellow Card",
+          "elapsed": 45,
+          "extra": 4
         },
         {
           "id": "1379133-2",
@@ -1927,7 +2215,9 @@
           "assist": "",
           "detail": "pen",
           "rawType": "Goal",
-          "rawDetail": "Penalty"
+          "rawDetail": "Penalty",
+          "elapsed": 45,
+          "extra": 0
         },
         {
           "id": "1379133-3",
@@ -1938,7 +2228,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Yellow Card"
+          "rawDetail": "Yellow Card",
+          "elapsed": 56,
+          "extra": 0
         },
         {
           "id": "1379133-4",
@@ -1951,7 +2243,9 @@
           "outPlayer": "S. Berge",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 1"
+          "rawDetail": "Substitution 1",
+          "elapsed": 66,
+          "extra": 0
         },
         {
           "id": "1379133-5",
@@ -1962,7 +2256,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Yellow Card"
+          "rawDetail": "Yellow Card",
+          "elapsed": 70,
+          "extra": 0
         },
         {
           "id": "1379133-6",
@@ -1975,7 +2271,9 @@
           "outPlayer": "Igor Jesus",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 1"
+          "rawDetail": "Substitution 1",
+          "elapsed": 72,
+          "extra": 0
         },
         {
           "id": "1379133-7",
@@ -1988,7 +2286,9 @@
           "outPlayer": "Douglas Luiz",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 2"
+          "rawDetail": "Substitution 2",
+          "elapsed": 73,
+          "extra": 0
         },
         {
           "id": "1379133-8",
@@ -2001,7 +2301,9 @@
           "outPlayer": "M. Gibbs-White",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 3"
+          "rawDetail": "Substitution 3",
+          "elapsed": 73,
+          "extra": 0
         },
         {
           "id": "1379133-9",
@@ -2012,7 +2314,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Yellow Card"
+          "rawDetail": "Yellow Card",
+          "elapsed": 77,
+          "extra": 0
         },
         {
           "id": "1379133-10",
@@ -2025,7 +2329,9 @@
           "outPlayer": "Kevin",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 2"
+          "rawDetail": "Substitution 2",
+          "elapsed": 78,
+          "extra": 0
         },
         {
           "id": "1379133-11",
@@ -2038,7 +2344,9 @@
           "outPlayer": "N. Savona",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 4"
+          "rawDetail": "Substitution 4",
+          "elapsed": 81,
+          "extra": 0
         },
         {
           "id": "1379133-12",
@@ -2049,7 +2357,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Yellow Card"
+          "rawDetail": "Yellow Card",
+          "elapsed": 82,
+          "extra": 0
         },
         {
           "id": "1379133-13",
@@ -2060,7 +2370,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Yellow Card"
+          "rawDetail": "Yellow Card",
+          "elapsed": 83,
+          "extra": 0
         },
         {
           "id": "1379133-14",
@@ -2073,7 +2385,9 @@
           "outPlayer": "H. Wilson",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 3"
+          "rawDetail": "Substitution 3",
+          "elapsed": 84,
+          "extra": 0
         },
         {
           "id": "1379133-15",
@@ -2086,7 +2400,9 @@
           "outPlayer": "R. Jimenez",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 4"
+          "rawDetail": "Substitution 4",
+          "elapsed": 85,
+          "extra": 0
         },
         {
           "id": "1379133-16",
@@ -2099,7 +2415,9 @@
           "outPlayer": "E. Smith Rowe",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 5"
+          "rawDetail": "Substitution 5",
+          "elapsed": 85,
+          "extra": 0
         },
         {
           "id": "1379133-17",
@@ -2110,7 +2428,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Yellow Card"
+          "rawDetail": "Yellow Card",
+          "elapsed": 90,
+          "extra": 4
         },
         {
           "id": "1379133-18",
@@ -2121,7 +2441,9 @@
           "assist": "",
           "detail": "",
           "rawType": "Card",
-          "rawDetail": "Yellow Card"
+          "rawDetail": "Yellow Card",
+          "elapsed": 90,
+          "extra": 6
         },
         {
           "id": "1379133-19",
@@ -2134,7 +2456,9 @@
           "outPlayer": "C. Hudson-Odoi",
           "detail": "",
           "rawType": "subst",
-          "rawDetail": "Substitution 5"
+          "rawDetail": "Substitution 5",
+          "elapsed": 90,
+          "extra": 2
         }
       ]
     }
