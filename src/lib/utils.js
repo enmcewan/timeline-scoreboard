@@ -42,20 +42,39 @@ export function sortedEvents(events) {
   // clone + remember original index so the sort is stable
   const withIndex = (events || []).map((e, idx) => ({ ...e, __idx: idx }));
 
-  function parseMinute(minStr) {
+  function getTimeParts(evt) {
+    // Prefer numeric fields from the API transform
+    if (typeof evt.elapsed === "number") {
+      const base = evt.elapsed ?? 0;
+      const extra =
+        typeof evt.extra === "number" && evt.extra != null ? evt.extra : 0;
+      return { base, extra };
+    }
+
+    // Fallback: parse from minute string
+    const minStr = evt.minute;
     if (!minStr) return { base: 0, extra: 0 };
-    const m = String(minStr).match(/^(\d+)(?:\+(\d+))?/); // 45', 45+2'
-    const base = m ? parseInt(m[1], 10) : 0;
-    const extra = m && m[2] ? parseInt(m[2], 10) : 0;
+
+    const s = String(minStr);
+
+    // Handle "90'+7", "90'", "90+7"
+    const m =
+      s.match(/^(\d+)(?:'\+(\d+))?/) || // 90'+7 or 90'
+      s.match(/^(\d+)\+(\d+)/) ||       // 90+7
+      s.match(/^(\d+)/);                // plain "90"
+
+    const base = m && m[1] ? parseInt(m[1], 10) || 0 : 0;
+    const extra = m && m[2] ? parseInt(m[2], 10) || 0 : 0;
+
     return { base, extra };
   }
 
   withIndex.sort((a, b) => {
-    const ma = parseMinute(a.minute);
-    const mb = parseMinute(b.minute);
+    const ta = getTimeParts(a);
+    const tb = getTimeParts(b);
 
-    if (ma.base !== mb.base) return ma.base - mb.base;
-    if (ma.extra !== mb.extra) return ma.extra - mb.extra;
+    if (ta.base !== tb.base) return ta.base - tb.base;
+    if (ta.extra !== tb.extra) return ta.extra - tb.extra;
 
     // stable tie-breaker
     return a.__idx - b.__idx;
@@ -82,7 +101,7 @@ export function sortedEvents(events) {
       // Replace the previous yellow with a combined "second yellow + red"
       compressed[compressed.length - 1] = {
         ...evt,
-        secondYellow: true,    // <- NEW flag our UI can use
+        secondYellow: true, // UI flag
       };
     } else {
       compressed.push(evt);
@@ -92,3 +111,4 @@ export function sortedEvents(events) {
   // clean up helper field
   return compressed.map(({ __idx, ...rest }) => rest);
 }
+

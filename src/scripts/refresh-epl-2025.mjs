@@ -124,6 +124,9 @@ function transformEventsForFixture(rawEvents, fixtureId, homeApiId, awayApiId) {
       outPlayer = playerName;
     }
 
+    const elapsed = ev.time?.elapsed ?? 0;
+    const extra = ev.time?.extra ?? 0;
+
     return {
       id: `${fixtureId}-${index}`,
       minute: minuteLabel(ev.time),
@@ -136,6 +139,8 @@ function transformEventsForFixture(rawEvents, fixtureId, homeApiId, awayApiId) {
       detail,
       rawType: ev.type,
       rawDetail: ev.detail,
+      elapsed,
+      extra,
     };
   });
 }
