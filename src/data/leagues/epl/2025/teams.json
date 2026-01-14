@@ -21,7 +21,7 @@
   },
   "brighton": {
     "name": "Brighton",
-    "display": "Brighton & Hove Albion",
+    "display": "",
     "badge": "/img/badges/epl/brighton.svg"
   },
   "burnley": {
@@ -51,7 +51,7 @@
   },
   "leeds": {
     "name": "Leeds",
-    "display": "Leeds United",
+    "display": "Leeds Utd",
     "badge": "/img/badges/epl/leeds-united.svg"
   },
   "liverpool": {
@@ -66,12 +66,12 @@
   },
   "manchester-united": {
     "name": "Manchester United",
-    "display": "",
+    "display": "Manchester Utd",
     "badge": "/img/badges/epl/manchester-united.svg"
   },
   "newcastle": {
     "name": "Newcastle",
-    "display": "Newcastle United",
+    "display": "Newcastle Utd",
     "badge": "/img/badges/epl/newcastle.svg"
   },
   "nottingham-forest": {
@@ -91,12 +91,12 @@
   },
   "west-ham": {
     "name": "West Ham",
-    "display": "West Ham United",
+    "display": "West Ham Utd",
     "badge": "/img/badges/epl/west-ham.svg"
   },
   "wolves": {
     "name": "Wolves",
-    "display": "Wolverhampton Wanderers",
+    "display": "",
     "badge": "/img/badges/epl/wolves.svg"
   }
 }

@@ -78,12 +78,12 @@ function renderAllMatches() {
         <label for="round-select">Matchday:</label>
         <select id="round-select">
           ${Object.keys(MATCHDAYS)
-            .map((round) => {
-              const rNum = Number(round);
-              const selected = rNum === currentRound ? "selected" : "";
-              return `<option value="${rNum}" ${selected}>${rNum}</option>`;
-            })
-            .join("")}
+      .map((round) => {
+        const rNum = Number(round);
+        const selected = rNum === currentRound ? "selected" : "";
+        return `<option value="${rNum}" ${selected}>${rNum}</option>`;
+      })
+      .join("")}
         </select>
       </div>
 
@@ -136,9 +136,9 @@ document.addEventListener("change", (e) => {
 });
 
 function isVisibleInMode(evt, mode) {
-    
+
   if (mode === VIEW_MODES.FULL) {
-    
+
     return true;
 
   }
@@ -156,35 +156,38 @@ function isVisibleInMode(evt, mode) {
 
 function renderMatchCard(match) {
 
-    const home = teams[match.homeTeamId];
-    const away = teams[match.awayTeamId];
+  const home = teams[match.homeTeamId];
+  const away = teams[match.awayTeamId];
 
-    if (!home || !away) {
-        throw new Error(`Unknown team id(s): ${match.homeTeamId}, ${match.awayTeamId}`);
-    }
+  if (!home || !away) {
+    throw new Error(`Unknown team id(s): ${match.homeTeamId}, ${match.awayTeamId}`);
+  }
 
-    const mode = viewModes.get(match.id) ?? VIEW_MODES.COMPACT;
+  const mode = viewModes.get(match.id) ?? VIEW_MODES.COMPACT;
 
-    const statusLine = esc(match.status?.state ?? "");
-    const ht = match.status?.halfTimeScore ? `(${esc(match.status.halfTimeScore)})` : "";
-    
-    const allEvents = sortedEvents(match.events || []);
+  const statusLine = esc(match.status?.state ?? "");
+  const ht = match.status?.halfTimeScore ? `(${esc(match.status.halfTimeScore)})` : "";
 
-    const eventsHtml = allEvents
+  const allEvents = sortedEvents(match.events || []);
+
+  const eventsHtml = allEvents
     .filter((evt) => isVisibleInMode(evt, mode))
     .map((evt) => renderEventRow(evt, mode))
     .join("");
 
+  const kickoffTime = match.kickoff
+    ? new Date(match.kickoff).toLocaleString(undefined, {
+      dateStyle: "medium",
+      timeStyle: "short",
+    })
+    : "TBD";
 
-    // const attendance = Number(match.attendance);
-    // const attendanceText = Number.isFinite(attendance) ? attendance.toLocaleString() : "";
-
-    return `
+  return `
     <div class="match-card" data-match-id="${match.id}">
-        <div class="league-name">${esc(match.league)}</div>
+        <div class="match-date">${esc(kickoffTime)}</div>
         <header class="match-header">
             <div class="ht-cont">
-                <div class="team home">${esc(home.name)}</div>
+                <div class="team home">${esc(home.display || home.name)}</div>
                 <img class="team-badge" src="${esc(home.badge)}" alt="${esc(home.name)} badge" />
             </div>
             <div class="score">
@@ -194,7 +197,7 @@ function renderMatchCard(match) {
             </div>
             <div class="at-cont">
                 <img class="team-badge" src="${esc(away.badge)}" alt="${esc(away.name)} badge" />
-                <div class="team away">${esc(away.name)}</div>
+                <div class="team away">${esc(away.display || away.name)}</div>
             </div>
         </header>
         <div class="match-status">
@@ -213,20 +216,49 @@ function renderMatchCard(match) {
   `;
 }
 
+/**
+ * Formats player names to "F. Lastname".
+ * Returns single names as-is and ignores already formatted names.
+ */
+function formatPlayerName(fullName) {
+  const trimmedName = fullName.trim();
+
+  // 1. Check if the name is already formatted (e.g., "L. Messi")
+  // This regex looks for: Start of string -> One Letter -> A Period -> A Space
+  if (/^[A-Z]\.\s/.test(trimmedName)) {
+    return trimmedName;
+  }
+
+  // 2. Split by any whitespace
+  const parts = trimmedName.split(/\s+/);
+
+  // 3. Handle single-name players (Neymar, Pelé)
+  if (parts.length === 1) {
+    return parts[0];
+  }
+
+  // 4. Extract first initial and combine the rest
+  const [first, ...rest] = parts;
+  const initial = first.charAt(0).toUpperCase();
+  const lastName = rest.join(" ");
+
+  return `${initial}. ${lastName}`;
+}
+
 function renderEventText(evt, mode) {
 
-    const player = esc(evt.player ?? "");
-    const playerIn = esc(evt.inPlayer ?? "");
-    const playerOut = esc(evt.outPlayer ?? "");
+  const player = formatPlayerName(esc(evt.player ?? ""));
+  const playerIn = formatPlayerName(esc(evt.inPlayer ?? ""));
+  const playerOut = formatPlayerName(esc(evt.outPlayer ?? ""));
 
-    if (evt.kind === "red") {
+  if (evt.kind === "red") {
     const second = evt.secondYellow === true;
 
     const yellowIcon = second
-        ? `<span class="card yellow second-yellow"
+      ? `<span class="card yellow second-yellow"
                  title="Second yellow card"
                  aria-label="Second yellow card"></span>`
-        : "";
+      : "";
 
     return `
         <span class="player">${player}</span>
@@ -235,58 +267,56 @@ function renderEventText(evt, mode) {
               title="${second ? "Red card (2nd yellow)" : "Red card"}"
               aria-label="${second ? "Red card (2nd yellow)" : "Red card"}"></span>
     `;
-}
+  }
 
-    if (evt.kind === "yellow") {
-        return `
+  if (evt.kind === "yellow") {
+    return `
             <span class="player">${player}</span>
             <span class="card yellow" title="Yellow card" aria-label="Yellow card"></span>
         `;
-    }
+  }
 
-    // goal
-    if (evt.kind === "goal" || evt.kind === "own-goal") {
+  // goal
+  if (evt.kind === "goal" || evt.kind === "own-goal") {
 
-        const assist = evt.assist ? `<span class="assist">(${esc(evt.assist)})</span>` : "";
-        
-        let detail = "";
-        if (evt.detail === "pen") {detail = `<span class="goal-detail"> (Penalty)</span>`;}
+    const assist = evt.assist ? `<span class="assist">(${formatPlayerName(esc(evt.assist))})</span>` : "";
 
-        let goalImg = '';
-        const isOwnGoal = evt.kind === "own-goal";
-        const label = isOwnGoal
-            ? `<span class="player">${player}</span><span class="own-goal-label" title="Own Goal" aria-label="Own Goal"> (OG)</span>`
-            : `<span class="player">${player}</span>`;
+    let detail = "";
+    if (evt.detail === "pen") { detail = `<span class="goal-detail">(Pen)</span>`; }
 
-        if (mode === VIEW_MODES.FULL){
+    let goalImg = '';
+    const isOwnGoal = evt.kind === "own-goal";
+    const label = isOwnGoal
+      ? `<span class="player">${player}</span><span class="own-goal-label" title="Own Goal" aria-label="Own Goal"> (OG)</span>`
+      : `<span class="player">${player}</span>`;
 
-            const cls = isOwnGoal ? "evt-svg og-goal-ball" : "evt-svg goal-ball";
-            const title = isOwnGoal ? "Own Goal" : "Goal";
+    if (mode === VIEW_MODES.FULL) {
 
-            goalImg = `
+      const cls = isOwnGoal ? "evt-svg og-goal-ball" : "evt-svg goal-ball";
+      const title = isOwnGoal ? "Own Goal" : "Goal";
+
+      goalImg = `
                 <span class="${cls}" title="${title}" aria-label="${title}">
                     <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                         <use href="/img/misc/ball.svg"></use>
                     </svg>
                 </span>`;
-        }
+    }
 
-        const metaBits = `${assist || ""}${detail || ""}`;
+    const metaBits = `${assist || ""}${detail || ""}`;
 
-        return `
+    return `
             ${label}${goalImg}${metaBits ? ` <span class="event-meta">${metaBits}</span>` : ""}
         `;
 
-    }
+  }
 
-    /* NEW: missed penalty */
-    if (evt.kind === "penalty-miss") {
+  /* NEW: missed penalty */
+  if (evt.kind === "penalty-miss") {
 
-        const player = esc(evt.player ?? "");
-
-        let missImg = "";
-        if (mode === VIEW_MODES.FULL){
-            missImg = `
+    let missImg = "";
+    if (mode === VIEW_MODES.FULL) {
+      missImg = `
                 <span class="evt-svg missed-pen-ball" title="Missed penalty" aria-label="Missed penalty">
                     <svg width="16" height="16" viewBox="0 0 16 16"
                         xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -294,75 +324,74 @@ function renderEventText(evt, mode) {
                     </svg>
                 </span>
             `;
-        }
+    }
 
-        return `
+    return `
             <span class="player">${player}</span>
             ${missImg}
             <span class="missed-pen-label">(missed pen)</span>
         `;
-    }
+  }
 
-    if (evt.kind === "var-goal-cancelled" || evt.kind === "var-goal-disallowed") {
-        const player = esc(evt.player ?? "");
+  if (evt.kind === "var-goal-cancelled" || evt.kind === "var-goal-disallowed") {
 
-        let varIcon = "";
-        if (mode === VIEW_MODES.FULL) {
-            varIcon = `
+    let varIcon = "";
+    if (mode === VIEW_MODES.FULL) {
+      varIcon = `
             <span class="evt-svg var-goal-cancelled-icon" title="Disallowed (VAR)" aria-label="Goal Disallowed (VAR)">
                 <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                     <use href="/img/misc/ball.svg"></use>
                 </svg>
             </span>
             `;
-        }
+    }
 
-        let varEvent = '(VAR · ';
+    let varEvent = '(VAR · ';
 
-        const vgc = evt.kind === "var-goal-cancelled"  ? `<span class="var var-no-goal">${varEvent + 'Cancelled'})</span>` : "";
-        const vgd = evt.kind === "var-goal-disallowed" ? `<span class="var var-no-goal">${varEvent + 'Offside'})</span>` : "";
+    const vgc = evt.kind === "var-goal-cancelled" ? `<span class="var var-no-goal">${varEvent + 'Cancelled'})</span>` : "";
+    const vgd = evt.kind === "var-goal-disallowed" ? `<span class="var var-no-goal">${varEvent + 'Offside'})</span>` : "";
 
-        let metaBits = `${vgc}${vgd}`;
+    let metaBits = `${vgc}${vgd}`;
 
-        return `
+    return `
             <span class="player var-player">${player}</span>
             ${varIcon}
             ${metaBits ? ` <span class="event-meta">${metaBits}</span>` : ""}
         `;
-    }
+  }
 
-    if (evt.kind === "var-pen-cancelled" || evt.kind === "var-pen-confirmed" || evt.kind === "var-card-upgrade") {
-      const player = esc(evt.player ?? "");
+  if (evt.kind === "var-pen-cancelled" || evt.kind === "var-pen-confirmed" || evt.kind === "var-card-upgrade") {
 
-      // let varIcon = "";
-      // if (mode === VIEW_MODES.FULL) {
-      //     varIcon = `
-      //     <span class="evt-svg var-goal-cancelled-icon" title="Disallowed (VAR)" aria-label="Goal Disallowed (VAR)">
-      //         <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      //             <use href="/img/misc/ball.svg"></use>
-      //         </svg>
-      //     </span>
-      //     `;
-      // }
 
-      let varEvent = '(VAR · ';
+    // let varIcon = "";
+    // if (mode === VIEW_MODES.FULL) {
+    //     varIcon = `
+    //     <span class="evt-svg var-goal-cancelled-icon" title="Disallowed (VAR)" aria-label="Goal Disallowed (VAR)">
+    //         <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    //             <use href="/img/misc/ball.svg"></use>
+    //         </svg>
+    //     </span>
+    //     `;
+    // }
 
-      const vgc = evt.kind === "var-pen-cancelled"  ? `<span class="var var-no-goal">${varEvent + 'PEN Cancelled'})</span>` : "";
-      const vgd = evt.kind === "var-pen-confirmed" ? `<span class="var var-pen-awarded">${varEvent + 'PEN Awarded'})</span>` : "";
-      const vcu = evt.kind === "var-card-upgrade"  ? `<span class="var var-card-upgrade">${varEvent + 'Card Upgraded'})</span>` : "";
+    let varEvent = '(VAR · ';
 
-      let metaBits = `${vgc}${vgd}${vcu}`;
+    const vgc = evt.kind === "var-pen-cancelled" ? `<span class="var var-no-goal">${varEvent + 'Pen Cancelled'})</span>` : "";
+    const vgd = evt.kind === "var-pen-confirmed" ? `<span class="var var-pen-awarded">${varEvent + 'Pen Awarded'})</span>` : "";
+    const vcu = evt.kind === "var-card-upgrade" ? `<span class="var var-card-upgrade">${varEvent + 'Card Upgraded'})</span>` : "";
 
-      return `
+    let metaBits = `${vgc}${vgd}${vcu}`;
+
+    return `
           <span class="player var-player">${player}</span>
           ${metaBits ? ` <span class="event-meta">${metaBits}</span>` : ""}
       `;
-    }
+  }
 
-    // Substitution
-    if (evt.kind === "sub") {
-        
-        return `
+  // Substitution
+  if (evt.kind === "sub") {
+
+    return `
             <span class="player">${playerOut}</span>
             <span class="evt-svg sub-arrow" aria-hidden="true">
                 <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -373,7 +402,7 @@ function renderEventText(evt, mode) {
                 <span class="sub">${playerIn}</span>
             </span>
         `;
-    }
+  }
 
 }
 
@@ -383,9 +412,9 @@ function renderEventRow(evt, mode) {
   const homeCell = evt.team === "home" ? renderEventText(evt, mode) : "";
   const awayCell = evt.team === "away" ? renderEventText(evt, mode) : "";
 
-  if (evt.kind !== "var" && evt.detail !== "penalty confirmed") 
+  if (evt.kind !== "var" && evt.detail !== "penalty confirmed")
 
-  return `
+    return `
     <div class="row">
       <div class="event home">${homeCell}</div>
       <div class="minute">${minute}</div>

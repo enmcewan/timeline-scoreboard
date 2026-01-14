@@ -2,7 +2,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-import fixturesRaw from "../../data/dev/fixtures.raw.json" with { type: "json" };
+import fixturesRaw from "../data/dev/fixtures.raw.json" with { type: "json" };
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -71,7 +71,7 @@ async function main() {
     }
 
     // small delay to be nice to the API
-    await new Promise((r) => setTimeout(r, 150));
+    await new Promise((r) => setTimeout(r, 50));
   }
 
   const outJson = {
