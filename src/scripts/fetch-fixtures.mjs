@@ -60,7 +60,7 @@ async function main() {
 
   const data = await fetchJson(fixturesUrl);
 
-  writeJson("src/data/dev/fixtures.raw.json", data);
+  writeJson("../data/dev/fixtures.raw.json", data);
 
   console.log("Done.");
 }

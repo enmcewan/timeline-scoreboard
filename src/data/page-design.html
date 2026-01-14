@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Timeline Scoreboard – EPL 2025</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Chronological football match timelines with goals, cards, VAR and substitutions for the 2025 Premier League season."
+    />
+
+    <!-- Optional: favicon when you're ready -->
+    <!-- <link rel="icon" type="image/svg+xml" href="/favicon.svg" /> -->
+  </head>
+
+  <body>
+    <header class="site-header">
+        <div class="site-header-inner">
+        <h1 class="site-title">Timeline Scoreboard</h1>
+        <p class="site-tagline">Premier League 2025 match timelines</p>
+        </div>
+    </header>
+
+    <main id="main-content">
+      <!-- JS will take over this container -->
+      <div id="app" aria-live="polite">
+        <!-- You can put a simple “loading” message as a progressive enhancement -->
+        <p class="app-loading">Loading matchday data…</p>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <small>
+        Data powered by API-Football · This is an unofficial project.
+      </small>
+    </footer>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
