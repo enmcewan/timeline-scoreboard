@@ -93,6 +93,7 @@ function normaliseEventKind(type, detail) {
     if (d.includes("penalty confirmed")) return { kind: "var-pen-confirmed", detail: "" };
     if (d.includes("goal disallowed - offside")) return { kind: "var-goal-disallowed", detail: "offside" }; 
     if (d.includes("card upgrade")) return { kind: "var-card-upgrade", detail: "" };
+    if (d.includes("goal confirmed")) return { kind: "var-goal-confirmed", detail: "" };
   }
 
   return { kind: "other", detail: "" };

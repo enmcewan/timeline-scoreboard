@@ -333,7 +333,7 @@ function renderEventText(evt, mode) {
         `;
   }
 
-  if (evt.kind === "var-goal-cancelled" || evt.kind === "var-goal-disallowed") {
+  if (evt.kind.startsWith("var-goal-")) {
 
     let varIcon = "";
     if (mode === VIEW_MODES.FULL) {
@@ -350,14 +350,28 @@ function renderEventText(evt, mode) {
 
     const vgc = evt.kind === "var-goal-cancelled" ? `<span class="var var-no-goal">${varEvent + 'Cancelled'})</span>` : "";
     const vgd = evt.kind === "var-goal-disallowed" ? `<span class="var var-no-goal">${varEvent + 'Offside'})</span>` : "";
+    const vga = evt.kind === "var-goal-confirmed" ? `<span class="var var-goal-confirmed">${varEvent + 'Confirmed'})</span>` : "";
 
-    let metaBits = `${vgc}${vgd}`;
+    let metaBits = `${vgc}${vgd}${vga}`;
 
-    return `
-            <span class="player var-player">${player}</span>
-            ${varIcon}
-            ${metaBits ? ` <span class="event-meta">${metaBits}</span>` : ""}
-        `;
+    if (vgc || vgd) {
+
+        return `
+          <span class="player var-player">${player}</span>
+          ${varIcon}
+          ${metaBits ? ` <span class="event-meta">${metaBits}</span>` : ""}
+      `;
+
+    }
+
+    if (vga) {
+
+      return `
+        ${metaBits ? ` <span class="event-meta">${metaBits}</span>` : ""}
+    `;
+
+    }
+
   }
 
   if (evt.kind === "var-pen-cancelled" || evt.kind === "var-pen-confirmed" || evt.kind === "var-card-upgrade") {
@@ -377,7 +391,7 @@ function renderEventText(evt, mode) {
     let varEvent = '(VAR · ';
 
     const vgc = evt.kind === "var-pen-cancelled" ? `<span class="var var-no-goal">${varEvent + 'Pen Cancelled'})</span>` : "";
-    const vgd = evt.kind === "var-pen-confirmed" ? `<span class="var var-pen-awarded">${varEvent + 'Pen Awarded'})</span>` : "";
+    const vgd = evt.kind === "var-pen-confirmed" ? `<span class="var var-pen-awarded">${varEvent + 'Pen Confirmed'})</span>` : "";
     const vcu = evt.kind === "var-card-upgrade" ? `<span class="var var-card-upgrade">${varEvent + 'Card Upgraded'})</span>` : "";
 
     let metaBits = `${vgc}${vgd}${vcu}`;
