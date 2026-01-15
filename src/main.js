@@ -188,7 +188,7 @@ function renderMatchCard(match) {
         <header class="match-header">
             <div class="ht-cont">
                 <div class="team home">${esc(home.display || home.name)}</div>
-                <img class="team-badge" src="${esc(home.badge)}" alt="${esc(home.name)} badge" />
+                <img class="team-badge ${match.homeTeamId}" src="${esc(home.badge)}" alt="${esc(home.name)} badge" />
             </div>
             <div class="score">
                 <div class="score-home">${esc(match.score.home)}</div>
@@ -196,7 +196,7 @@ function renderMatchCard(match) {
                 <div class="score-away">${esc(match.score.away)}</div>
             </div>
             <div class="at-cont">
-                <img class="team-badge" src="${esc(away.badge)}" alt="${esc(away.name)} badge" />
+                <img class="team-badge ${match.awayTeamId}" src="${esc(away.badge)}" alt="${esc(away.name)} badge" />
                 <div class="team away">${esc(away.display || away.name)}</div>
             </div>
         </header>
