@@ -63,7 +63,7 @@ const VIEW_MODES = {
   FULL: "full",
 };
 
-// let currentViewMode = VIEW_MODES.COMPACT;
+let globalViewMode = VIEW_MODES.COMPACT; // start compact like you want
 
 const viewModes = new Map();
 
@@ -71,22 +71,31 @@ const viewModes = new Map();
 
 const app = document.querySelector("#app");
 
+let showAllToggleText = "Show Timelines";
+let showAllAriaPressed = "false";
+
 function renderAllMatches() {
   app.innerHTML = `
     <div class="matchday-shell">
       <div class="matchday-header">
-        <label for="round-select">Matchday:</label>
-        <select id="round-select">
-          ${Object.keys(MATCHDAYS)
-      .map((round) => {
-        const rNum = Number(round);
-        const selected = rNum === currentRound ? "selected" : "";
-        return `<option value="${rNum}" ${selected}>${rNum}</option>`;
-      })
-      .join("")}
-        </select>
+        <div class="matchday-container">
+          <label for="matchday-select">Matchday:</label>
+          <select class="matchday-select" id="matchday-select">
+            ${Object.keys(MATCHDAYS)
+            .map((round) => {
+              const rNum = Number(round);
+              const selected = rNum === currentRound ? "selected" : "";
+              return `<option value="${rNum}" ${selected}>${rNum}</option>`;
+            })
+            .join("")}
+          </select>
+        </div>
+        <div class="show-all-container">
+          <button class="show-all-timelines" type="button" aria-pressed="${showAllAriaPressed}">
+            ${showAllToggleText}
+          </button>
+        </div>
       </div>
-
       <div class="match-list">
         ${currentMatches.map(renderMatchCard).join("")}
       </div>
@@ -96,6 +105,27 @@ function renderAllMatches() {
 
 // initial render
 renderAllMatches();
+
+document.addEventListener("click", (e) => {
+  
+  const globalBtn = e.target.closest(".show-all-timelines");
+
+  if (globalBtn) {
+
+    globalViewMode = globalViewMode === VIEW_MODES.FULL ? VIEW_MODES.COMPACT : VIEW_MODES.FULL;
+
+    // set all cards to match global (Option A)
+    for (const m of currentMatches) viewModes.set(String(m.id), globalViewMode);
+
+    showAllAriaPressed = globalViewMode === VIEW_MODES.FULL ? "true" : "false";
+    showAllToggleText = globalViewMode === VIEW_MODES.FULL ? "Show Results" : "Show Timelines";
+
+    renderAllMatches();
+    return;
+  }
+
+  // existing per-card toggle continues below...
+});
 
 
 document.addEventListener("click", (e) => {
@@ -122,7 +152,7 @@ document.addEventListener("click", (e) => {
 });
 
 document.addEventListener("change", (e) => {
-  const select = e.target.closest("#round-select");
+  const select = e.target.closest("#matchday-select");
   if (!select) return;
 
   const nextRound = Number(select.value);
@@ -190,20 +220,22 @@ function renderMatchCard(match) {
                 <div class="team home">${esc(home.display || home.name)}</div>
                 <img class="team-badge ${match.homeTeamId}" src="${esc(home.badge)}" alt="${esc(home.name)} badge" />
             </div>
-            <div class="score">
-                <div class="score-home">${esc(match.score.home)}</div>
-                <span class="separator" aria-hidden="true"></span>
-                <div class="score-away">${esc(match.score.away)}</div>
+            <div class="score-container">
+              <div class="score">
+                  <div class="score-home">${esc(match.score.home)}</div>
+                  <span class="separator" aria-hidden="true"></span>
+                  <div class="score-away">${esc(match.score.away)}</div>
+              </div>
+              <div class="match-status">
+                  <span class="half-time">HT ${ht}</span>
+              </div>
             </div>
             <div class="at-cont">
                 <img class="team-badge ${match.awayTeamId}" src="${esc(away.badge)}" alt="${esc(away.name)} badge" />
                 <div class="team away">${esc(away.display || away.name)}</div>
             </div>
         </header>
-        <div class="match-status">
-            <span class="full-time">${statusLine}</span>
-            <span class="half-time">${ht}</span>
-        </div>
+
         <div class="match-body">${eventsHtml}</div>
         <footer class="match-footer">
             <span class="footer-label">Venue:</span>
@@ -261,7 +293,7 @@ function renderEventText(evt, mode) {
       : "";
 
     return `
-        <span class="player">${player}</span>
+        <span class="player player-red">${player}</span>
         ${yellowIcon}
         <span class="card red"
               title="${second ? "Red card (2nd yellow)" : "Red card"}"
@@ -287,8 +319,18 @@ function renderEventText(evt, mode) {
     let goalImg = '';
     const isOwnGoal = evt.kind === "own-goal";
     const label = isOwnGoal
-      ? `<span class="player">${player}</span><span class="own-goal-label" title="Own Goal" aria-label="Own Goal"> (OG)</span>`
-      : `<span class="player">${player}</span>`;
+      ? `<span class="player-goal">${player}</span><span class="own-goal-label" title="Own Goal" aria-label="Own Goal"> (OG)</span>`
+      : `<span class="player-goal">${player}</span>`;
+
+      const cls = isOwnGoal ? "evt-svg og-goal-ball" : "evt-svg goal-ball";
+      const title = isOwnGoal ? "Own Goal" : "Goal";
+
+      goalImg = `
+                <span class="${cls}" title="${title}" aria-label="${title}">
+                    <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <use href="/img/misc/ball.svg"></use>
+                    </svg>
+                </span>`;
 
     if (mode === VIEW_MODES.FULL) {
 
@@ -391,7 +433,7 @@ function renderEventText(evt, mode) {
     let varEvent = '(VAR · ';
 
     const vgc = evt.kind === "var-pen-cancelled" ? `<span class="var var-no-goal">${varEvent + 'Pen Cancelled'})</span>` : "";
-    const vgd = evt.kind === "var-pen-confirmed" ? `<span class="var var-pen-awarded">${varEvent + 'Pen Confirmed'})</span>` : "";
+    const vgd = evt.kind === "var-pen-confirmed" ? `<span class="var var-pen-awarded">${varEvent + 'Pen Awarded'})</span>` : "";
     const vcu = evt.kind === "var-card-upgrade" ? `<span class="var var-card-upgrade">${varEvent + 'Card Upgraded'})</span>` : "";
 
     let metaBits = `${vgc}${vgd}${vcu}`;
@@ -406,7 +448,7 @@ function renderEventText(evt, mode) {
   if (evt.kind === "sub") {
 
     return `
-            <span class="player">${playerOut}</span>
+            <span class="player subbed">${playerOut}</span>
             <span class="evt-svg sub-arrow" aria-hidden="true">
                 <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                     <use href="/img/misc/sub.svg" />

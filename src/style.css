@@ -2,9 +2,9 @@
    ----------------------------- */
 :root {
   /* surfaces */
-  --page-bg: #f6f7f8;
+  --page-bg: #f1ecec;
   --card-bg: #ffffff;
-  --card-shadow: 0 4px 12px rgba(0,0,0,0.04);
+  --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
   --card-shadow-mb: 0 5px 10px rgba(0, 0, 0, 0.04);
 
   /* text */
@@ -13,8 +13,8 @@
   --text-subtle: #777;
 
   /* accents */
-  --accent: #37003c;        /* EPL purple */
-  --accent-soft: #ede6f0;   /* very light purple tint */
+  --accent: #37003c; /* EPL purple */
+  --accent-soft: #ede6f0; /* very light purple tint */
   --accent-minute: #b07a00;
   --accent-red: #d8234a;
   --accent-yellow: #f5c500;
@@ -22,7 +22,6 @@
   /* lines */
   --border-subtle: rgba(0, 0, 0, 0.08);
   --score-separator: #111;
-  
 }
 
 /* Automatic dark mode based on OS preference */
@@ -36,32 +35,35 @@
     --text-muted: #d5d6de;
     --text-subtle: #a0a2b2;
 
-    --accent-minute: #f3c548;
+    --accent-minute: hsl(44, 88%, 62%, 0.75); /* warmer gold for dark */
     --accent-red: #ff4b6a;
 
-    --accent-soft: #37003c;        /* EPL purple */
-    --accent: #ede6f0;   /* very light purple tint */
+    --accent-soft: #37003c; /* EPL purple */
+    --accent: #ede6f0; /* very light purple tint */
 
     --border-subtle: rgba(255, 255, 255, 0.12);
     --score-separator: #f5f5f7;
 
-    --league-color: #e0c890;
+    --league-color: hsl(42, 56%, 72%, 0.85); /* lighter gold for dark */
   }
 
-  .team-badge, .goal-ball{
-    filter: brightness(1.12) contrast(1.05);
+  .team-badge,
+  .goal-ball {
+    filter: brightness(1.05) contrast(1.05);
   }
 
-  .tottenham, .lauris {
-    filter: invert()
+  .team-badge.tottenham {
+    filter: invert();
   }
-
 }
 
 html {
   box-sizing: border-box;
 }
-*, *::before, *::after {
+
+*,
+*::before,
+*::after {
   box-sizing: inherit;
 }
 
@@ -74,7 +76,7 @@ body.dark-mode {
   --text-muted: #d5d6de;
   --text-subtle: #a0a2b2;
 
-  --accent-minute: #f3c548;        /* warmer gold for dark */
+  --accent-minute: #f3c548; /* warmer gold for dark */
   --accent-red: #ff4b6a;
 
   --border-subtle: rgba(255, 255, 255, 0.12);
@@ -84,7 +86,7 @@ body.dark-mode {
 /* BASE
    ----------------------------- */
 :root {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 /* utilities */
@@ -109,6 +111,15 @@ footer {
   font-size: 0.9rem;
 }
 
+.text-link,
+.text-link:visited {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 0.06rem;
+  text-decoration-color: var(--accent);
+  text-underline-offset: 3px;
+}
+
 .league-title {
   display: flex;
   align-items: center;
@@ -116,14 +127,16 @@ footer {
   gap: 1rem;
 }
 
-.league-logo, .goal-ball, .var-goal-cancelled-icon, .sub-arrow {
-  fill: var(--accent)
+.league-logo,
+.goal-ball,
+.var-goal-cancelled-icon,
+.sub-arrow {
+  fill: var(--accent);
+  transition: fill 0.5s ease-in-out;
 }
 
 .league-logo svg {
- 
   display: block; /* Removes any weird baseline spacing */
- 
 }
 
 .site-tagline {
@@ -139,9 +152,43 @@ footer {
   padding: 1rem;
 }
 
+.matchday-header {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.matchday-container, .show-all-container {
+  width: 50%;
+}
+
+.matchday-container {
+  text-align: end;
+}
+
+.show-all-container {
+  text-align: start;
+}
+
 .match-list {
   display: grid;
   gap: 1.5rem;
+}
+
+.ht-cont {
+  flex-direction: column-reverse;
+  align-items: center;
+  justify-content: center;
+  gap: 0rem;
+  margin: 0;
+}
+
+/* Right side: markup is badge then name already */
+.at-cont {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0rem;
+  margin: 0;
 }
 
 /* Two columns on wider screens */
@@ -157,7 +204,7 @@ footer {
   max-width: 720px;
   width: 100%;
   padding: 1.75rem 2.25rem;
-  border-radius: 0.7rem;
+  border-radius: 0.4rem;
   background: var(--card-bg);
   box-shadow: var(--card-shadow);
   height: 100%;
@@ -183,18 +230,18 @@ footer {
 .at-cont {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 1.5rem;
   min-width: 0;
 }
 
 .ht-cont {
   justify-content: flex-end;
-  margin-right: 10px;
+  margin-right: 0px;
 }
 
 .at-cont {
   justify-content: flex-start;
-  margin-left: 10px;
+  margin-left: 0px;
 }
 
 .at-cont .badge {
@@ -202,8 +249,21 @@ footer {
 }
 
 .team-badge {
-  max-width: 2.7rem;
-  max-height: 2.7rem;
+  max-width: 3.8rem;
+  max-height: 3.8rem;
+}
+
+/* Team badge tweaks */
+.team-badge.sunderland {
+  max-height: 4.55rem;
+  max-width: 4.55rem;
+}
+
+.team-badge.wolves {
+  max-height: 4.3rem;
+  max-width: 4.3rem;
+  position: relative;
+  top: 3px;
 }
 
 .team.away {
@@ -225,10 +285,9 @@ footer {
   grid-template-areas: "home_score  vertical_line  away_score";
   font-weight: 500;
   align-items: center;
-  font-size: 2.4rem;
+  font-size: 3.3rem;
   line-height: 1.1;
   padding: 0 4px;
-  margin-bottom: 0.5rem;
 }
 
 .separator {
@@ -246,7 +305,6 @@ footer {
   justify-content: center;
   align-items: baseline;
   font-weight: 600;
-  margin-bottom: 0.4rem;
   color: var(--text-subtle);
   font-size: 0.95rem;
 }
@@ -263,7 +321,7 @@ footer {
 /* Body / events */
 .match-body {
   padding-top: 0.65rem;
-  border-top: 1px solid var(--border-subtle);
+  border-top: 1px solid var(--accent);
 }
 
 .match-body .row {
@@ -284,20 +342,28 @@ footer {
 .minute {
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
-  margin: 0 .8rem;
-  font-weight: 600;
+  margin: 0 0.8rem;
+  font-weight: 500;
   color: var(--accent-minute);
-  width: 2.625rem;
+  width: 3rem;
   text-align: center;
 }
 
 /* Scorer / assist */
 .player {
   font-style: normal;
-  font-weight: 600;
+  font-weight: 400;
 }
 
-.assist, .sub, .sub-arrow, .event-meta {
+.player-goal,
+.player-red {
+  font-weight: 700;
+}
+
+.assist,
+.sub,
+.sub-arrow,
+.event-meta {
   opacity: 0.85;
 }
 
@@ -315,10 +381,13 @@ footer {
 }
 
 .sub-arrow {
-  margin: 0 .25rem 0 .25rem;
+  margin: 0 0.25rem 0 0.25rem;
 }
 
-.goal-ball, .og-goal-ball, .missed-pen-ball, .var-goal-cancelled-icon {
+.goal-ball,
+.og-goal-ball,
+.missed-pen-ball,
+.var-goal-cancelled-icon {
   margin-left: 0.15rem;
 }
 
@@ -330,26 +399,27 @@ footer {
   color: var(--text-subtle);
 }
 
-.missed-pen-label, .goal-detail, .var {
+.missed-pen-label,
+.goal-detail,
+.var {
   /* font-style: italic; */
   opacity: 0.7;
   margin-left: 0.15rem;
 }
 
-.missed-pen-ball svg, .var-goal-cancelled-icon svg {
-  opacity: 0.6;             /* softer than a normal goal */
-  filter: grayscale(100%);  /* optional “missed” vibe */
+.missed-pen-ball svg,
+.var-goal-cancelled-icon svg {
+  opacity: 0.6; /* softer than a normal goal */
+  filter: grayscale(100%); /* optional “missed” vibe */
 }
 
-.var-label {
-  font-style: italic;
-  opacity: 0.8;
-  margin-left: 0.25rem;
+.var {
+  font-size: 14px;
 }
 
 .var-player {
   /* optional: slightly dimmer than normal goals */
-  font-weight: 500;
+  font-weight: 400;
 }
 
 .card {
@@ -381,6 +451,7 @@ footer {
   margin-top: 1rem;
   display: flex;
   justify-content: center;
+  align-items: baseline;
   font-size: 0.9rem;
   font-weight: 300;
 }
@@ -397,21 +468,28 @@ footer {
   overflow: hidden;
   text-overflow: ellipsis;
   min-width: 0;
-  max-width: 10.75rem;
 }
 
-.timeline-toggle, select{
+.timeline-toggle,
+.matchday-select,
+.show-all-timelines {
   margin-left: 0.25rem;
   cursor: pointer;
-  background: transparent;
+  background: var(--card-bg);
   border: 1px solid var(--accent);
   color: var(--accent);
-  padding: 4px;
+  padding: 4px 7px;
   border-radius: 6px;
   font-size: 0.85rem;
 }
 
-.timeline-toggle:hover, select:hover {
+.show-all-timelines {
+  margin-left: 0;
+}
+
+.timeline-toggle:hover,
+select:hover,
+.show-all-timelines:hover {
   background: var(--accent);
   color: var(--accent-soft);
 }
@@ -466,62 +544,64 @@ span.sub {
     font-size: 1.4rem;
   }
 
-  .team-badge {
+  /* .team-badge {
     max-width: 2.1rem;
     max-height: 2.1rem;
-  }
+  } */
 
   .minute {
-    margin: 0 0.5rem;
+    margin: 0 0.6rem;
   }
 }
 
 @media (max-width: 480px) {
   #app {
-    padding: 0.15rem 0.15rem;
+    padding: 0.15rem 0rem;
   }
 
   .match-date {
-    margin-top: .5rem;
+    margin-top: 0.5rem;
     margin-bottom: 0;
   }
 
   .match-card {
-    padding: 0.25rem 0.25rem;
+    padding: 0.25rem 0.15rem;
     box-shadow: var(--card-shadow-mb);
   }
 
-  /* Left side: flip order because markup is name then badge */
+  /* .at-cont,
   .ht-cont {
-    flex-direction: column-reverse;
-    align-items: center;
-    justify-content: center;
-    gap: 0rem;
-    margin: 0;
-  }
-
-  /* Right side: markup is badge then name already */
-  .at-cont {
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0.25rem;
-    margin: 0;
-  }
+    gap: 0.5rem;
+  } */
 
   .team-badge {
-    max-width: 2.7rem;
-    max-height: 2.7rem;
+    max-width: 3.2rem;
+    max-height: 3.2rem;
+  }
+
+  /* Team badge tweaks */
+  .team-badge.sunderland {
+    max-height: 3.8rem;
+    max-width: 3.8rem;
+  }
+
+  .team-badge.wolves {
+    max-height: 3.75rem;
+    max-width: 3.75rem;
   }
 
   .team.home,
   .team.away {
     font-size: 1.15rem;
-    margin-top: .25rem;
+    margin-top: 0.25rem;
   }
 
   .score {
-    font-size: 2.4rem;
+    font-size: 2.8rem;
+  }
+
+  .match-status {
+    margin: 0 .25rem;
   }
 
   .separator {
@@ -542,6 +622,10 @@ span.sub {
     margin: 0.5rem 0;
   }
 
+  .footer-data {
+  max-width: 10.75rem;
+}
+
   /* First line: main player + ball icon stay inline */
   .event .player,
   .event .var-player {
@@ -553,8 +637,10 @@ span.sub {
   .event .assist,
   .event .sub,
   .event .missed-pen-label,
-  .event .var-label {
-    display: block;        /* drop to its own line under the player */
+  .event .var-label,
+  .event .goal-detail,
+  .var {
+    display: block; /* drop to its own line under the player */
     white-space: normal;
     margin-left: 0;
   }
@@ -596,5 +682,4 @@ span.sub {
     padding: 0.2rem 0.5rem;
     max-width: 6rem;
   }
-
 }
