@@ -73,13 +73,14 @@ const app = document.querySelector("#app");
 
 let showAllToggleText = "Show Timelines";
 let showAllAriaPressed = "false";
+let roundName = "Matchweek"; // EPL Term. Other leagues use "Matchday", "Jornada", etc.
 
 function renderAllMatches() {
   app.innerHTML = `
     <div class="matchday-shell">
       <div class="matchday-header">
         <div class="matchday-container">
-          <label for="matchday-select">Matchday:</label>
+          <label for="matchday-select">${roundName}:</label>
           <select class="matchday-select" id="matchday-select">
             ${Object.keys(MATCHDAYS)
             .map((round) => {
@@ -217,8 +218,10 @@ function renderMatchCard(match) {
         <div class="match-date">${esc(kickoffTime)}</div>
         <header class="match-header">
             <div class="ht-cont">
-                <div class="team home">${esc(home.display || home.name)}</div>
-                <img class="team-badge ${match.homeTeamId}" src="${esc(home.badge)}" alt="${esc(home.name)} badge" />
+              <div class="team-badge-cont" ${match.awayTeamId}>
+                <img class="team-badge ${match.awayTeamId}" src="${esc(home.badge)}" alt="${esc(home.name)} badge" />
+              </div>
+              <div class="team home">${esc(home.display || home.name)}</div>
             </div>
             <div class="score-container">
               <div class="score">
@@ -231,8 +234,10 @@ function renderMatchCard(match) {
               </div>
             </div>
             <div class="at-cont">
+              <div class="team-badge-cont ${match.awayTeamId}">
                 <img class="team-badge ${match.awayTeamId}" src="${esc(away.badge)}" alt="${esc(away.name)} badge" />
-                <div class="team away">${esc(away.display || away.name)}</div>
+              </div>
+              <div class="team away">${esc(away.display || away.name)}</div>
             </div>
         </header>
 

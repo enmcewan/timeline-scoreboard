@@ -157,7 +157,8 @@ footer {
   gap: 1.5rem;
 }
 
-.matchday-container, .show-all-container {
+.matchday-container,
+.show-all-container {
   width: 50%;
 }
 
@@ -174,15 +175,7 @@ footer {
   gap: 1.5rem;
 }
 
-.ht-cont {
-  flex-direction: column-reverse;
-  align-items: center;
-  justify-content: center;
-  gap: 0rem;
-  margin: 0;
-}
-
-/* Right side: markup is badge then name already */
+.ht-cont,
 .at-cont {
   flex-direction: column;
   align-items: center;
@@ -248,22 +241,27 @@ footer {
   margin-left: 1rem;
 }
 
+.team-badge-cont {
+  width: 61px;
+  height: 61px;
+}
+
+.team-badge-cont.sunderland {
+  width: 73px;
+  height: 73px;
+}
+
 .team-badge {
-  max-width: 3.8rem;
-  max-height: 3.8rem;
+  height: 100%;
+  max-height: 61px;
+  width: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
 }
 
 /* Team badge tweaks */
 .team-badge.sunderland {
-  max-height: 4.55rem;
-  max-width: 4.55rem;
-}
-
-.team-badge.wolves {
-  max-height: 4.3rem;
-  max-width: 4.3rem;
-  position: relative;
-  top: 3px;
+  max-height: 73px;
 }
 
 .team.away {
@@ -544,11 +542,6 @@ span.sub {
     font-size: 1.4rem;
   }
 
-  /* .team-badge {
-    max-width: 2.1rem;
-    max-height: 2.1rem;
-  } */
-
   .minute {
     margin: 0 0.6rem;
   }
@@ -568,26 +561,35 @@ span.sub {
     padding: 0.25rem 0.15rem;
     box-shadow: var(--card-shadow-mb);
   }
+  
+  .at-cont {
+    margin-right: 1rem;
+  }
 
-  /* .at-cont,
   .ht-cont {
-    gap: 0.5rem;
-  } */
+    margin-left: 1rem;
+  }
+
+  .team-badge-cont {
+    width: 51px;
+    height: 51px;
+  }
+
+  .team-badge-cont.sunderland {
+    width: 61px;
+    height: 61px;
+  }
 
   .team-badge {
-    max-width: 3.2rem;
-    max-height: 3.2rem;
+    height: 100%;
+    max-height: 51px;
+    width: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
   }
 
-  /* Team badge tweaks */
   .team-badge.sunderland {
-    max-height: 3.8rem;
-    max-width: 3.8rem;
-  }
-
-  .team-badge.wolves {
-    max-height: 3.75rem;
-    max-width: 3.75rem;
+    max-height: 61px; /* Your existing bound */
   }
 
   .team.home,
@@ -601,7 +603,7 @@ span.sub {
   }
 
   .match-status {
-    margin: 0 .25rem;
+    margin: 0 0.25rem;
   }
 
   .separator {
@@ -623,8 +625,8 @@ span.sub {
   }
 
   .footer-data {
-  max-width: 10.75rem;
-}
+    max-width: 10.75rem;
+  }
 
   /* First line: main player + ball icon stay inline */
   .event .player,
