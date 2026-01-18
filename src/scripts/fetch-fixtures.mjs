@@ -4,13 +4,13 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 // --- CONFIG: put your real API-Football key + fixture id here ---
-const API_KEY = "REMOVED";      // <- paste it here temporarily
+const API_KEY = process.env.APIFOOTBALL_KEY;     // <- paste it here temporarily
 const FIXTURE_ID = 1035043;                     // <- replace with an actual EPL fixture id
 const LEAGUE = 39;                       // <- replace with actual league id if needed
 const SEASON = 2025;                   // <- replace with actual season if needed
 
-if (!API_KEY || API_KEY === "YOUR_REAL_API_KEY_HERE") {
-  console.error("Please set API_KEY in fetch-fixture.mjs");
+if (!API_KEY) {
+  console.error("Missing APIFOOTBALL_KEY env var (APIFOOTBALL_KEY)");
   process.exit(1);
 }
 
