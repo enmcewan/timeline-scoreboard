@@ -20,36 +20,42 @@ for (const [, md] of Object.entries(matchdayModules)) {
 
 function pickInitialRound(matchdays) {
   const now = Date.now();
+  const GRACE_MS = 6 * 60 * 60 * 1000; // 6h buffer for late updates / timezones
 
-  const roundsWithDates = Object.entries(matchdays)
+  const rounds = Object.entries(matchdays)
     .map(([roundStr, md]) => {
       const round = Number(roundStr);
-      const dates = (md.matches || [])
+      const times = (md.matches || [])
         .map((m) => Date.parse(m.kickoff))
-        .filter((t) => Number.isFinite(t));
+        .filter(Number.isFinite);
 
-      if (!dates.length) return null;
+      if (!times.length) return null;
 
-      // use the *latest* kickoff in this round
-      const latestKickoff = Math.max(...dates);
-      return { round, latestKickoff };
+      return {
+        round,
+        minKickoff: Math.min(...times),
+        maxKickoff: Math.max(...times),
+      };
     })
     .filter(Boolean)
-    .sort((a, b) => a.latestKickoff - b.latestKickoff);
+    .sort((a, b) => a.minKickoff - b.minKickoff);
 
-  if (!roundsWithDates.length) return null;
+  if (!rounds.length) return null;
 
-  // 1) try to find the last round whose latest kickoff is <= now
-  let best = roundsWithDates[0].round;
-  for (const info of roundsWithDates) {
-    if (info.latestKickoff <= now) {
-      best = info.round;
-    }
-  }
+  // 1) Prefer the round we are currently inside (earliest..latest)
+  const current = rounds.find(
+    (r) => now >= r.minKickoff - GRACE_MS && now <= r.maxKickoff + GRACE_MS
+  );
+  if (current) return current.round;
 
-  // if everything is in the future, `best` will stay at the earliest round
-  return best;
+  // 2) Otherwise pick the next upcoming round (closest future)
+  const next = rounds.find((r) => r.minKickoff > now);
+  if (next) return next.round;
+
+  // 3) Otherwise fall back to the most recent past round
+  return rounds[rounds.length - 1].round;
 }
+
 
 const initialRound =
   pickInitialRound(MATCHDAYS) ?? allRounds[allRounds.length - 1];
@@ -196,8 +202,11 @@ function renderMatchCard(match) {
 
   const mode = viewModes.get(match.id) ?? VIEW_MODES.COMPACT;
 
-  const statusLine = esc(match.status?.state ?? "");
-  const ht = match.status?.halfTimeScore ? `(${esc(match.status.halfTimeScore)})` : "";
+  const gameStatus = esc(match.status?.state ?? "");
+  console.log("Rendering match", match.id, "in mode", mode, "status:", gameStatus);
+  const halfTimeScore = match.status?.halfTimeScore ? `(HT ${esc(match.status.halfTimeScore)})` : "";
+
+
 
   const allEvents = sortedEvents(match.events || []);
 
@@ -218,8 +227,8 @@ function renderMatchCard(match) {
         <div class="match-date">${esc(kickoffTime)}</div>
         <header class="match-header">
             <div class="ht-cont">
-              <div class="team-badge-cont" ${match.awayTeamId}>
-                <img class="team-badge ${match.awayTeamId}" src="${esc(home.badge)}" alt="${esc(home.name)} badge" />
+              <div class="team-badge-cont ${match.homeTeamId}">
+                <img class="team-badge ${match.homeTeamId}" src="${esc(home.badge)}" alt="${esc(home.name)} badge" />
               </div>
               <div class="team home">${esc(home.display || home.name)}</div>
             </div>
@@ -230,7 +239,7 @@ function renderMatchCard(match) {
                   <div class="score-away">${esc(match.score.away)}</div>
               </div>
               <div class="match-status">
-                  <span class="half-time">HT ${ht}</span>
+                  <span class="half-time">${gameStatus} ${halfTimeScore}</span>
               </div>
             </div>
             <div class="at-cont">
@@ -294,22 +303,23 @@ function renderEventText(evt, mode) {
     const yellowIcon = second
       ? `<span class="card yellow second-yellow"
                  title="Second yellow card"
-                 aria-label="Second yellow card"></span>`
+                 aria-label="Second yellow card"
+                 role="img"></span>`
       : "";
 
     return `
-        <span class="player player-red">${player}</span>
+        <span class="player player-red" title="${evt.comments}">${player}</span>
         ${yellowIcon}
         <span class="card red"
               title="${second ? "Red card (2nd yellow)" : "Red card"}"
-              aria-label="${second ? "Red card (2nd yellow)" : "Red card"}"></span>
+              aria-label="${second ? "Red card (2nd yellow)" : "Red card"}" role="img"></span>
     `;
   }
 
   if (evt.kind === "yellow") {
     return `
-            <span class="player">${player}</span>
-            <span class="card yellow" title="Yellow card" aria-label="Yellow card"></span>
+            <span class="player player-yellow" title="${evt.comments}">${player}</span>
+            <span class="card yellow" title="Yellow card" aria-label="Yellow card" role="img"></span>
         `;
   }
 
@@ -331,24 +341,24 @@ function renderEventText(evt, mode) {
       const title = isOwnGoal ? "Own Goal" : "Goal";
 
       goalImg = `
-                <span class="${cls}" title="${title}" aria-label="${title}">
+                <span class="${cls}" title="${title}">
                     <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                         <use href="/img/misc/ball.svg"></use>
                     </svg>
                 </span>`;
 
-    if (mode === VIEW_MODES.FULL) {
+    // if (mode === VIEW_MODES.FULL) {
 
-      const cls = isOwnGoal ? "evt-svg og-goal-ball" : "evt-svg goal-ball";
-      const title = isOwnGoal ? "Own Goal" : "Goal";
+    //   const cls = isOwnGoal ? "evt-svg og-goal-ball" : "evt-svg goal-ball";
+    //   const title = isOwnGoal ? "Own Goal" : "Goal";
 
-      goalImg = `
-                <span class="${cls}" title="${title}" aria-label="${title}">
-                    <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                        <use href="/img/misc/ball.svg"></use>
-                    </svg>
-                </span>`;
-    }
+    //   goalImg = `
+    //             <span class="${cls}" title="${title}" aria-label="${title}">
+    //                 <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    //                     <use href="/img/misc/ball.svg"></use>
+    //                 </svg>
+    //             </span>`;
+    // }
 
     const metaBits = `${assist || ""}${detail || ""}`;
 

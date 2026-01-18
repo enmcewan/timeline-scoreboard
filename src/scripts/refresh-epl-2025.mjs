@@ -140,6 +140,7 @@ function transformEventsForFixture(rawEvents, fixtureId, homeApiId, awayApiId) {
       detail,
       rawType: ev.type,
       rawDetail: ev.detail,
+      comments: ev.comments,
       elapsed,
       extra,
     };
