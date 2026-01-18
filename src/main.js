@@ -77,11 +77,14 @@ const viewModes = new Map();
 
 const app = document.querySelector("#app");
 
-let showAllToggleText = "Show Timelines";
+// let showAllToggleText = globalViewMode === VIEW_MODES.FULL ? "Show Results" : "Show Timelines";
 let showAllAriaPressed = "false";
 let roundName = "Matchweek"; // EPL Term. Other leagues use "Matchday", "Jornada", etc.
 
 function renderAllMatches() {
+
+  const showAllToggleText = globalViewMode === VIEW_MODES.FULL ? "Show Results" : "Show Timelines";
+
   app.innerHTML = `
     <div class="matchday-shell">
       <div class="matchday-header">
@@ -114,7 +117,7 @@ function renderAllMatches() {
 renderAllMatches();
 
 document.addEventListener("click", (e) => {
-  
+
   const globalBtn = e.target.closest(".show-all-timelines");
 
   if (globalBtn) {
@@ -125,7 +128,7 @@ document.addEventListener("click", (e) => {
     for (const m of currentMatches) viewModes.set(String(m.id), globalViewMode);
 
     showAllAriaPressed = globalViewMode === VIEW_MODES.FULL ? "true" : "false";
-    showAllToggleText = globalViewMode === VIEW_MODES.FULL ? "Show Results" : "Show Timelines";
+    // showAllToggleText = globalViewMode === VIEW_MODES.FULL ? "Show Results" : "Show Timelines";
 
     renderAllMatches();
     return;
@@ -168,6 +171,13 @@ document.addEventListener("change", (e) => {
   currentRound = nextRound;
   currentMatches = MATCHDAYS[currentRound].matches;
 
+  // reset global + per-card state for the new matchday
+  globalViewMode = VIEW_MODES.COMPACT;
+  showAllAriaPressed = "false";
+
+  viewModes.clear();
+  for (const m of currentMatches) viewModes.set(String(m.id), globalViewMode);
+
   // re-render with the new round's matches
   renderAllMatches();
 });
@@ -204,9 +214,17 @@ function renderMatchCard(match) {
 
   const gameStatus = esc(match.status?.state ?? "");
   console.log("Rendering match", match.id, "in mode", mode, "status:", gameStatus);
-  const halfTimeScore = match.status?.halfTimeScore ? `(HT ${esc(match.status.halfTimeScore)})` : "";
 
+  let halfTimeScore = "";
+  let gameMinute = parseInt(gameStatus, 10);
 
+  if (isNaN(gameMinute)) {
+    gameMinute = 0;
+  }
+
+  if (gameMinute >= 45 || gameStatus === "FT"){
+    halfTimeScore = `(HT ${esc(match.status.halfTimeScore)})`;
+  }
 
   const allEvents = sortedEvents(match.events || []);
 
@@ -337,10 +355,10 @@ function renderEventText(evt, mode) {
       ? `<span class="player-goal">${player}</span><span class="own-goal-label" title="Own Goal" aria-label="Own Goal"> (OG)</span>`
       : `<span class="player-goal">${player}</span>`;
 
-      const cls = isOwnGoal ? "evt-svg og-goal-ball" : "evt-svg goal-ball";
-      const title = isOwnGoal ? "Own Goal" : "Goal";
+    const cls = isOwnGoal ? "evt-svg og-goal-ball" : "evt-svg goal-ball";
+    const title = isOwnGoal ? "Own Goal" : "Goal";
 
-      goalImg = `
+    goalImg = `
                 <span class="${cls}" title="${title}">
                     <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                         <use href="/img/misc/ball.svg"></use>
@@ -413,7 +431,7 @@ function renderEventText(evt, mode) {
 
     if (vgc || vgd) {
 
-        return `
+      return `
           <span class="player var-player">${player}</span>
           ${varIcon}
           ${metaBits ? ` <span class="event-meta">${metaBits}</span>` : ""}
