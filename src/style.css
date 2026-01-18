@@ -59,6 +59,7 @@
 
 html {
   box-sizing: border-box;
+  overflow-y: scroll;
 }
 
 *,
@@ -98,6 +99,7 @@ body {
   margin: 0;
   background: var(--page-bg);
   color: var(--text-main);
+  min-height: 2347px;
 }
 
 header {
@@ -130,6 +132,7 @@ footer {
 .league-logo,
 .goal-ball,
 .var-goal-cancelled-icon,
+.missed-pen-ball,
 .sub-arrow {
   fill: var(--accent);
   transition: fill 0.5s ease-in-out;
@@ -145,7 +148,7 @@ footer {
 
 /* Use #app as the main layout container */
 #app {
-  min-height: 100vh;
+  /* min-height: 100vh; */
   display: flex;
   align-items: flex-start;
   justify-content: center;
@@ -246,10 +249,10 @@ footer {
   height: 61px;
 }
 
-.team-badge-cont.sunderland {
+/* .team-badge-cont.sunderland {
   width: 73px;
   height: 73px;
-}
+} */
 
 .team-badge {
   height: 100%;
@@ -260,9 +263,9 @@ footer {
 }
 
 /* Team badge tweaks */
-.team-badge.sunderland {
+/* .team-badge.sunderland {
   max-height: 73px;
-}
+} */
 
 .team.away {
   justify-self: self-start;
@@ -358,10 +361,11 @@ footer {
   font-weight: 700;
 }
 
-.assist,
 .sub,
 .sub-arrow,
-.event-meta {
+.event-meta,
+.player-yellow,
+.subbed {
   opacity: 0.85;
 }
 
@@ -375,7 +379,7 @@ footer {
 
 .evt-svg {
   position: relative;
-  top: 3px;
+  top: 2px;
 }
 
 .sub-arrow {
@@ -401,7 +405,7 @@ footer {
 .goal-detail,
 .var {
   /* font-style: italic; */
-  opacity: 0.7;
+  opacity: 0.85;
   margin-left: 0.15rem;
 }
 
@@ -417,7 +421,7 @@ footer {
 
 .var-player {
   /* optional: slightly dimmer than normal goals */
-  font-weight: 400;
+  font-weight: 500;
 }
 
 .card {
@@ -548,8 +552,14 @@ span.sub {
 }
 
 @media (max-width: 480px) {
+
+  body {
+    min-height: 4064px;
+  }
+
   #app {
     padding: 0.15rem 0rem;
+    /* min-height: 3790px; */
   }
 
   .match-date {
@@ -571,14 +581,14 @@ span.sub {
   }
 
   .team-badge-cont {
-    width: 51px;
-    height: 51px;
-  }
-
-  .team-badge-cont.sunderland {
     width: 61px;
     height: 61px;
   }
+
+  /* .team-badge-cont.sunderland {
+    width: 61px;
+    height: 61px;
+  } */
 
   .team-badge {
     height: 100%;

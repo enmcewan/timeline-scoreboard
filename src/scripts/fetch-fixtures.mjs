@@ -17,7 +17,7 @@ if (!API_KEY || API_KEY === "YOUR_REAL_API_KEY_HERE") {
 // --- resolve project root paths ---
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const projectRoot = path.resolve(__dirname, "../..");
+const projectRoot = path.resolve(__dirname, "../");
 
 function writeJson(relativePath, data) {
   const full = path.join(projectRoot, relativePath);
@@ -60,7 +60,7 @@ async function main() {
 
   const data = await fetchJson(fixturesUrl);
 
-  writeJson("../data/dev/fixtures.raw.json", data);
+  writeJson("/data/dev/fixtures.raw.json", data);
 
   console.log("Done.");
 }

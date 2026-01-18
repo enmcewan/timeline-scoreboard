@@ -29,6 +29,7 @@
           "detail": "",
           "rawType": "Card",
           "rawDetail": "Yellow Card",
+          "comments": "Argument",
           "elapsed": 29,
           "extra": 0
         },
@@ -42,6 +43,7 @@
           "detail": "",
           "rawType": "Goal",
           "rawDetail": "Normal Goal",
+          "comments": null,
           "elapsed": 32,
           "extra": 0
         },
@@ -55,6 +57,7 @@
           "detail": "",
           "rawType": "Card",
           "rawDetail": "Yellow Card",
+          "comments": "Foul",
           "elapsed": 34,
           "extra": 0
         },
@@ -70,6 +73,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 1",
+          "comments": null,
           "elapsed": 46,
           "extra": 0
         },
@@ -85,6 +89,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 1",
+          "comments": null,
           "elapsed": 58,
           "extra": 0
         },
@@ -100,6 +105,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 2",
+          "comments": null,
           "elapsed": 67,
           "extra": 0
         },
@@ -115,6 +121,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 2",
+          "comments": null,
           "elapsed": 72,
           "extra": 0
         },
@@ -130,6 +137,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 3",
+          "comments": null,
           "elapsed": 72,
           "extra": 0
         },
@@ -145,6 +153,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 4",
+          "comments": null,
           "elapsed": 72,
           "extra": 0
         },
@@ -158,6 +167,7 @@
           "detail": "",
           "rawType": "Card",
           "rawDetail": "Yellow Card",
+          "comments": "Foul",
           "elapsed": 75,
           "extra": 0
         },
@@ -171,6 +181,7 @@
           "detail": "",
           "rawType": "Card",
           "rawDetail": "Yellow Card",
+          "comments": "Foul",
           "elapsed": 78,
           "extra": 0
         },
@@ -186,6 +197,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 3",
+          "comments": null,
           "elapsed": 79,
           "extra": 0
         },
@@ -201,6 +213,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 4",
+          "comments": null,
           "elapsed": 79,
           "extra": 0
         },
@@ -216,6 +229,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 5",
+          "comments": null,
           "elapsed": 80,
           "extra": 0
         },
@@ -229,6 +243,7 @@
           "detail": "",
           "rawType": "Goal",
           "rawDetail": "Normal Goal",
+          "comments": null,
           "elapsed": 84,
           "extra": 0
         },
@@ -244,6 +259,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 5",
+          "comments": null,
           "elapsed": 88,
           "extra": 0
         },
@@ -257,6 +273,7 @@
           "detail": "",
           "rawType": "Card",
           "rawDetail": "Yellow Card",
+          "comments": "Foul",
           "elapsed": 90,
           "extra": 7
         },
@@ -270,6 +287,7 @@
           "detail": "",
           "rawType": "Card",
           "rawDetail": "Yellow Card",
+          "comments": null,
           "elapsed": 90,
           "extra": 2
         },
@@ -283,6 +301,7 @@
           "detail": "",
           "rawType": "Goal",
           "rawDetail": "Normal Goal",
+          "comments": null,
           "elapsed": 90,
           "extra": 0
         },
@@ -296,6 +315,7 @@
           "detail": "",
           "rawType": "Goal",
           "rawDetail": "Normal Goal",
+          "comments": null,
           "elapsed": 90,
           "extra": 0
         }
@@ -328,6 +348,7 @@
           "detail": "",
           "rawType": "Card",
           "rawDetail": "Yellow Card",
+          "comments": "Foul",
           "elapsed": 10,
           "extra": 0
         },
@@ -341,6 +362,7 @@
           "detail": "",
           "rawType": "Card",
           "rawDetail": "Yellow Card",
+          "comments": "Argument",
           "elapsed": 45,
           "extra": 3
         },
@@ -354,6 +376,7 @@
           "detail": "",
           "rawType": "Card",
           "rawDetail": "Yellow Card",
+          "comments": "Argument",
           "elapsed": 45,
           "extra": 3
         },
@@ -367,6 +390,7 @@
           "detail": "",
           "rawType": "Goal",
           "rawDetail": "Normal Goal",
+          "comments": null,
           "elapsed": 45,
           "extra": 0
         },
@@ -382,6 +406,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 1",
+          "comments": null,
           "elapsed": 46,
           "extra": 0
         },
@@ -397,6 +422,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 2",
+          "comments": null,
           "elapsed": 58,
           "extra": 0
         },
@@ -412,6 +438,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 3",
+          "comments": null,
           "elapsed": 59,
           "extra": 0
         },
@@ -425,6 +452,7 @@
           "detail": "",
           "rawType": "Card",
           "rawDetail": "Yellow Card",
+          "comments": null,
           "elapsed": 63,
           "extra": 0
         },
@@ -440,6 +468,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 1",
+          "comments": null,
           "elapsed": 67,
           "extra": 0
         },
@@ -455,6 +484,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 4",
+          "comments": null,
           "elapsed": 75,
           "extra": 0
         },
@@ -470,6 +500,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 2",
+          "comments": null,
           "elapsed": 79,
           "extra": 0
         },
@@ -483,6 +514,7 @@
           "detail": "",
           "rawType": "Goal",
           "rawDetail": "Normal Goal",
+          "comments": null,
           "elapsed": 81,
           "extra": 0
         },
@@ -498,6 +530,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 5",
+          "comments": null,
           "elapsed": 87,
           "extra": 0
         },
@@ -513,6 +546,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 3",
+          "comments": null,
           "elapsed": 89,
           "extra": 0
         }
@@ -545,6 +579,7 @@
           "detail": "",
           "rawType": "Card",
           "rawDetail": "Yellow Card",
+          "comments": "Foul",
           "elapsed": 25,
           "extra": 0
         },
@@ -558,6 +593,7 @@
           "detail": "",
           "rawType": "Goal",
           "rawDetail": "Normal Goal",
+          "comments": null,
           "elapsed": 35,
           "extra": 0
         },
@@ -571,6 +607,7 @@
           "detail": "",
           "rawType": "Goal",
           "rawDetail": "Normal Goal",
+          "comments": null,
           "elapsed": 44,
           "extra": 0
         },
@@ -584,6 +621,7 @@
           "detail": "",
           "rawType": "Card",
           "rawDetail": "Yellow Card",
+          "comments": "Foul",
           "elapsed": 55,
           "extra": 0
         },
@@ -599,6 +637,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 1",
+          "comments": null,
           "elapsed": 62,
           "extra": 0
         },
@@ -614,6 +653,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 1",
+          "comments": null,
           "elapsed": 67,
           "extra": 0
         },
@@ -629,6 +669,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 2",
+          "comments": null,
           "elapsed": 71,
           "extra": 0
         },
@@ -644,6 +685,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 2",
+          "comments": null,
           "elapsed": 71,
           "extra": 0
         },
@@ -659,6 +701,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 3",
+          "comments": null,
           "elapsed": 71,
           "extra": 0
         },
@@ -672,6 +715,7 @@
           "detail": "",
           "rawType": "Goal",
           "rawDetail": "Normal Goal",
+          "comments": null,
           "elapsed": 77,
           "extra": 0
         },
@@ -687,6 +731,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 4",
+          "comments": null,
           "elapsed": 81,
           "extra": 0
         },
@@ -702,6 +747,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 5",
+          "comments": null,
           "elapsed": 81,
           "extra": 0
         },
@@ -717,6 +763,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 3",
+          "comments": null,
           "elapsed": 83,
           "extra": 0
         },
@@ -732,6 +779,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 4",
+          "comments": null,
           "elapsed": 83,
           "extra": 0
         },
@@ -745,6 +793,7 @@
           "detail": "",
           "rawType": "Card",
           "rawDetail": "Yellow Card",
+          "comments": "Foul",
           "elapsed": 86,
           "extra": 0
         },
@@ -758,6 +807,7 @@
           "detail": "",
           "rawType": "Goal",
           "rawDetail": "Normal Goal",
+          "comments": null,
           "elapsed": 87,
           "extra": 0
         },
@@ -771,6 +821,7 @@
           "detail": "",
           "rawType": "Card",
           "rawDetail": "Yellow Card",
+          "comments": "Foul",
           "elapsed": 90,
           "extra": 6
         },
@@ -784,6 +835,7 @@
           "detail": "",
           "rawType": "Goal",
           "rawDetail": "Normal Goal",
+          "comments": null,
           "elapsed": 90,
           "extra": 0
         }
@@ -816,6 +868,7 @@
           "detail": "",
           "rawType": "Card",
           "rawDetail": "Yellow Card",
+          "comments": "Foul",
           "elapsed": 36,
           "extra": 0
         },
@@ -829,6 +882,7 @@
           "detail": "",
           "rawType": "Goal",
           "rawDetail": "Normal Goal",
+          "comments": null,
           "elapsed": 36,
           "extra": 0
         },
@@ -842,6 +896,7 @@
           "detail": "",
           "rawType": "Card",
           "rawDetail": "Yellow Card",
+          "comments": "Foul",
           "elapsed": 45,
           "extra": 1
         },
@@ -855,6 +910,7 @@
           "detail": "",
           "rawType": "Goal",
           "rawDetail": "Normal Goal",
+          "comments": null,
           "elapsed": 54,
           "extra": 0
         },
@@ -870,6 +926,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 1",
+          "comments": null,
           "elapsed": 63,
           "extra": 0
         },
@@ -885,6 +942,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 2",
+          "comments": null,
           "elapsed": 64,
           "extra": 0
         },
@@ -900,6 +958,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 3",
+          "comments": null,
           "elapsed": 64,
           "extra": 0
         },
@@ -913,6 +972,7 @@
           "detail": "",
           "rawType": "Card",
           "rawDetail": "Yellow Card",
+          "comments": "Foul",
           "elapsed": 72,
           "extra": 0
         },
@@ -926,6 +986,7 @@
           "detail": "",
           "rawType": "Goal",
           "rawDetail": "Normal Goal",
+          "comments": null,
           "elapsed": 74,
           "extra": 0
         },
@@ -941,6 +1002,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 4",
+          "comments": null,
           "elapsed": 87,
           "extra": 0
         },
@@ -956,6 +1018,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 1",
+          "comments": null,
           "elapsed": 88,
           "extra": 0
         },
@@ -969,6 +1032,7 @@
           "detail": "",
           "rawType": "Goal",
           "rawDetail": "Normal Goal",
+          "comments": null,
           "elapsed": 90,
           "extra": 0
         }
@@ -1001,6 +1065,7 @@
           "detail": "",
           "rawType": "Card",
           "rawDetail": "Yellow Card",
+          "comments": "Foul",
           "elapsed": 49,
           "extra": 0
         },
@@ -1014,6 +1079,7 @@
           "detail": "",
           "rawType": "Goal",
           "rawDetail": "Normal Goal",
+          "comments": null,
           "elapsed": 51,
           "extra": 0
         },
@@ -1027,6 +1093,7 @@
           "detail": "",
           "rawType": "Card",
           "rawDetail": "Yellow Card",
+          "comments": "Foul",
           "elapsed": 60,
           "extra": 0
         },
@@ -1042,6 +1109,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 1",
+          "comments": null,
           "elapsed": 64,
           "extra": 0
         },
@@ -1055,6 +1123,7 @@
           "detail": "",
           "rawType": "Goal",
           "rawDetail": "Normal Goal",
+          "comments": null,
           "elapsed": 65,
           "extra": 0
         },
@@ -1070,6 +1139,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 1",
+          "comments": null,
           "elapsed": 70,
           "extra": 0
         },
@@ -1085,6 +1155,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 2",
+          "comments": null,
           "elapsed": 70,
           "extra": 0
         },
@@ -1098,6 +1169,7 @@
           "detail": "",
           "rawType": "Goal",
           "rawDetail": "Normal Goal",
+          "comments": null,
           "elapsed": 73,
           "extra": 0
         },
@@ -1113,6 +1185,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 2",
+          "comments": null,
           "elapsed": 77,
           "extra": 0
         },
@@ -1128,6 +1201,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 3",
+          "comments": null,
           "elapsed": 77,
           "extra": 0
         },
@@ -1141,6 +1215,7 @@
           "detail": "",
           "rawType": "Card",
           "rawDetail": "Yellow Card",
+          "comments": "Foul",
           "elapsed": 79,
           "extra": 0
         },
@@ -1156,6 +1231,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 4",
+          "comments": null,
           "elapsed": 83,
           "extra": 0
         },
@@ -1171,6 +1247,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 5",
+          "comments": null,
           "elapsed": 83,
           "extra": 0
         }
@@ -1203,6 +1280,7 @@
           "detail": "",
           "rawType": "Card",
           "rawDetail": "Yellow Card",
+          "comments": "Foul",
           "elapsed": 60,
           "extra": 0
         },
@@ -1216,6 +1294,7 @@
           "detail": "",
           "rawType": "Var",
           "rawDetail": "Penalty cancelled",
+          "comments": null,
           "elapsed": 63,
           "extra": 0
         },
@@ -1229,6 +1308,7 @@
           "detail": "",
           "rawType": "Card",
           "rawDetail": "Yellow Card",
+          "comments": "Simulation",
           "elapsed": 65,
           "extra": 0
         },
@@ -1244,6 +1324,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 1",
+          "comments": null,
           "elapsed": 66,
           "extra": 0
         },
@@ -1259,6 +1340,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 1",
+          "comments": null,
           "elapsed": 75,
           "extra": 0
         },
@@ -1274,6 +1356,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 2",
+          "comments": null,
           "elapsed": 75,
           "extra": 0
         },
@@ -1289,6 +1372,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 2",
+          "comments": null,
           "elapsed": 83,
           "extra": 0
         },
@@ -1304,6 +1388,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 3",
+          "comments": null,
           "elapsed": 85,
           "extra": 0
         },
@@ -1319,6 +1404,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 4",
+          "comments": null,
           "elapsed": 85,
           "extra": 0
         },
@@ -1332,6 +1418,7 @@
           "detail": "",
           "rawType": "Card",
           "rawDetail": "Yellow Card",
+          "comments": "Argument",
           "elapsed": 90,
           "extra": 1
         },
@@ -1345,6 +1432,7 @@
           "detail": "",
           "rawType": "Card",
           "rawDetail": "Yellow Card",
+          "comments": "Argument",
           "elapsed": 90,
           "extra": 5
         },
@@ -1358,6 +1446,7 @@
           "detail": "",
           "rawType": "Card",
           "rawDetail": "Yellow Card",
+          "comments": "Argument",
           "elapsed": 90,
           "extra": 1
         }
@@ -1392,6 +1481,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 1",
+          "comments": null,
           "elapsed": 24,
           "extra": 0
         },
@@ -1405,6 +1495,7 @@
           "detail": "",
           "rawType": "Goal",
           "rawDetail": "Normal Goal",
+          "comments": null,
           "elapsed": 27,
           "extra": 0
         },
@@ -1418,6 +1509,7 @@
           "detail": "",
           "rawType": "Card",
           "rawDetail": "Yellow Card",
+          "comments": "Foul",
           "elapsed": 49,
           "extra": 0
         },
@@ -1431,6 +1523,7 @@
           "detail": "",
           "rawType": "Goal",
           "rawDetail": "Normal Goal",
+          "comments": null,
           "elapsed": 56,
           "extra": 0
         },
@@ -1444,6 +1537,7 @@
           "detail": "",
           "rawType": "Card",
           "rawDetail": "Yellow Card",
+          "comments": "Simulation",
           "elapsed": 61,
           "extra": 0
         },
@@ -1459,6 +1553,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 1",
+          "comments": null,
           "elapsed": 70,
           "extra": 0
         },
@@ -1472,6 +1567,7 @@
           "detail": "",
           "rawType": "Card",
           "rawDetail": "Yellow Card",
+          "comments": "Foul",
           "elapsed": 73,
           "extra": 0
         },
@@ -1485,6 +1581,7 @@
           "detail": "",
           "rawType": "Card",
           "rawDetail": "Red Card",
+          "comments": "Foul",
           "elapsed": 73,
           "extra": 0
         },
@@ -1500,6 +1597,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 2",
+          "comments": null,
           "elapsed": 77,
           "extra": 0
         },
@@ -1515,6 +1613,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 3",
+          "comments": null,
           "elapsed": 77,
           "extra": 0
         },
@@ -1530,6 +1629,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 4",
+          "comments": null,
           "elapsed": 77,
           "extra": 0
         },
@@ -1545,6 +1645,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 5",
+          "comments": null,
           "elapsed": 77,
           "extra": 0
         },
@@ -1558,6 +1659,7 @@
           "detail": "pen",
           "rawType": "Goal",
           "rawDetail": "Penalty",
+          "comments": null,
           "elapsed": 78,
           "extra": 0
         },
@@ -1573,6 +1675,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 2",
+          "comments": null,
           "elapsed": 84,
           "extra": 0
         },
@@ -1588,6 +1691,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 3",
+          "comments": null,
           "elapsed": 84,
           "extra": 0
         },
@@ -1601,6 +1705,7 @@
           "detail": "",
           "rawType": "Card",
           "rawDetail": "Yellow Card",
+          "comments": "Foul",
           "elapsed": 87,
           "extra": 0
         },
@@ -1614,6 +1719,7 @@
           "detail": "",
           "rawType": "Card",
           "rawDetail": "Yellow Card",
+          "comments": "Foul",
           "elapsed": 90,
           "extra": 7
         },
@@ -1629,6 +1735,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 4",
+          "comments": null,
           "elapsed": 90,
           "extra": 2
         },
@@ -1644,6 +1751,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 6",
+          "comments": null,
           "elapsed": 90,
           "extra": 6
         },
@@ -1657,6 +1765,7 @@
           "detail": "",
           "rawType": "Goal",
           "rawDetail": "Normal Goal",
+          "comments": null,
           "elapsed": 90,
           "extra": 0
         }
@@ -1689,6 +1798,7 @@
           "detail": "",
           "rawType": "Goal",
           "rawDetail": "Normal Goal",
+          "comments": null,
           "elapsed": 13,
           "extra": 0
         },
@@ -1702,6 +1812,7 @@
           "detail": "",
           "rawType": "Goal",
           "rawDetail": "Normal Goal",
+          "comments": null,
           "elapsed": 15,
           "extra": 0
         },
@@ -1715,6 +1826,7 @@
           "detail": "",
           "rawType": "Card",
           "rawDetail": "Yellow Card",
+          "comments": "Foul",
           "elapsed": 33,
           "extra": 0
         },
@@ -1728,6 +1840,7 @@
           "detail": "",
           "rawType": "Card",
           "rawDetail": "Yellow Card",
+          "comments": "Foul",
           "elapsed": 41,
           "extra": 0
         },
@@ -1743,6 +1856,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 1",
+          "comments": null,
           "elapsed": 59,
           "extra": 0
         },
@@ -1758,6 +1872,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 2",
+          "comments": null,
           "elapsed": 59,
           "extra": 0
         },
@@ -1773,6 +1888,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 3",
+          "comments": null,
           "elapsed": 59,
           "extra": 0
         },
@@ -1786,6 +1902,7 @@
           "detail": "",
           "rawType": "Goal",
           "rawDetail": "Normal Goal",
+          "comments": null,
           "elapsed": 68,
           "extra": 0
         },
@@ -1799,6 +1916,7 @@
           "detail": "",
           "rawType": "Card",
           "rawDetail": "Yellow Card",
+          "comments": "Foul",
           "elapsed": 71,
           "extra": 0
         },
@@ -1814,6 +1932,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 1",
+          "comments": null,
           "elapsed": 74,
           "extra": 0
         },
@@ -1829,6 +1948,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 2",
+          "comments": null,
           "elapsed": 74,
           "extra": 0
         },
@@ -1844,6 +1964,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 3",
+          "comments": null,
           "elapsed": 74,
           "extra": 0
         },
@@ -1859,6 +1980,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 4",
+          "comments": null,
           "elapsed": 82,
           "extra": 0
         },
@@ -1874,6 +1996,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 5",
+          "comments": null,
           "elapsed": 82,
           "extra": 0
         },
@@ -1889,6 +2012,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 4",
+          "comments": null,
           "elapsed": 88,
           "extra": 0
         },
@@ -1902,6 +2026,7 @@
           "detail": "pen",
           "rawType": "Goal",
           "rawDetail": "Penalty",
+          "comments": null,
           "elapsed": 90,
           "extra": 0
         }
@@ -1936,6 +2061,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 1",
+          "comments": null,
           "elapsed": 10,
           "extra": 0
         },
@@ -1949,6 +2075,7 @@
           "detail": "",
           "rawType": "Card",
           "rawDetail": "Yellow Card",
+          "comments": "Foul",
           "elapsed": 13,
           "extra": 0
         },
@@ -1962,6 +2089,7 @@
           "detail": "",
           "rawType": "Card",
           "rawDetail": "Yellow Card",
+          "comments": "Foul",
           "elapsed": 23,
           "extra": 0
         },
@@ -1975,6 +2103,7 @@
           "detail": "",
           "rawType": "Card",
           "rawDetail": "Yellow Card",
+          "comments": "Foul",
           "elapsed": 27,
           "extra": 0
         },
@@ -1988,6 +2117,7 @@
           "detail": "",
           "rawType": "Goal",
           "rawDetail": "Normal Goal",
+          "comments": null,
           "elapsed": 28,
           "extra": 0
         },
@@ -2001,6 +2131,7 @@
           "detail": "",
           "rawType": "Card",
           "rawDetail": "Yellow Card",
+          "comments": "Foul",
           "elapsed": 38,
           "extra": 0
         },
@@ -2014,6 +2145,7 @@
           "detail": "",
           "rawType": "Goal",
           "rawDetail": "Normal Goal",
+          "comments": null,
           "elapsed": 40,
           "extra": 0
         },
@@ -2029,6 +2161,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 2",
+          "comments": null,
           "elapsed": 46,
           "extra": 0
         },
@@ -2044,6 +2177,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 3",
+          "comments": null,
           "elapsed": 63,
           "extra": 0
         },
@@ -2059,6 +2193,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 4",
+          "comments": null,
           "elapsed": 63,
           "extra": 0
         },
@@ -2074,6 +2209,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 5",
+          "comments": null,
           "elapsed": 63,
           "extra": 0
         },
@@ -2089,6 +2225,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 1",
+          "comments": null,
           "elapsed": 71,
           "extra": 0
         },
@@ -2104,6 +2241,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 2",
+          "comments": null,
           "elapsed": 71,
           "extra": 0
         },
@@ -2119,6 +2257,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 3",
+          "comments": null,
           "elapsed": 71,
           "extra": 0
         },
@@ -2134,6 +2273,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 6",
+          "comments": null,
           "elapsed": 77,
           "extra": 0
         },
@@ -2147,6 +2287,7 @@
           "detail": "",
           "rawType": "Goal",
           "rawDetail": "Normal Goal",
+          "comments": null,
           "elapsed": 77,
           "extra": 0
         },
@@ -2162,6 +2303,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 4",
+          "comments": null,
           "elapsed": 81,
           "extra": 0
         },
@@ -2177,6 +2319,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 5",
+          "comments": null,
           "elapsed": 81,
           "extra": 0
         },
@@ -2190,6 +2333,7 @@
           "detail": "",
           "rawType": "Goal",
           "rawDetail": "Normal Goal",
+          "comments": null,
           "elapsed": 82,
           "extra": 0
         },
@@ -2205,6 +2349,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 6",
+          "comments": null,
           "elapsed": 86,
           "extra": 0
         }
@@ -2237,6 +2382,7 @@
           "detail": "",
           "rawType": "Var",
           "rawDetail": "Penalty confirmed",
+          "comments": null,
           "elapsed": 10,
           "extra": 0
         },
@@ -2250,6 +2396,7 @@
           "detail": "",
           "rawType": "Card",
           "rawDetail": "Yellow Card",
+          "comments": "Foul",
           "elapsed": 27,
           "extra": 0
         },
@@ -2263,6 +2410,7 @@
           "detail": "",
           "rawType": "Goal",
           "rawDetail": "Normal Goal",
+          "comments": null,
           "elapsed": 29,
           "extra": 0
         },
@@ -2276,6 +2424,7 @@
           "detail": "",
           "rawType": "Card",
           "rawDetail": "Yellow Card",
+          "comments": "Foul",
           "elapsed": 36,
           "extra": 0
         },
@@ -2289,6 +2438,7 @@
           "detail": "",
           "rawType": "Card",
           "rawDetail": "Yellow Card",
+          "comments": "Foul",
           "elapsed": 41,
           "extra": 0
         },
@@ -2302,6 +2452,7 @@
           "detail": "",
           "rawType": "Goal",
           "rawDetail": "Normal Goal",
+          "comments": null,
           "elapsed": 45,
           "extra": 0
         },
@@ -2315,6 +2466,7 @@
           "detail": "",
           "rawType": "Card",
           "rawDetail": "Yellow Card",
+          "comments": "Foul",
           "elapsed": 52,
           "extra": 0
         },
@@ -2330,6 +2482,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 1",
+          "comments": null,
           "elapsed": 53,
           "extra": 0
         },
@@ -2345,6 +2498,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 1",
+          "comments": null,
           "elapsed": 56,
           "extra": 0
         },
@@ -2360,6 +2514,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 2",
+          "comments": null,
           "elapsed": 56,
           "extra": 0
         },
@@ -2373,6 +2528,7 @@
           "detail": "",
           "rawType": "Goal",
           "rawDetail": "Normal Goal",
+          "comments": null,
           "elapsed": 63,
           "extra": 0
         },
@@ -2388,6 +2544,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 2",
+          "comments": null,
           "elapsed": 74,
           "extra": 0
         },
@@ -2403,6 +2560,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 3",
+          "comments": null,
           "elapsed": 74,
           "extra": 0
         },
@@ -2418,6 +2576,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 4",
+          "comments": null,
           "elapsed": 83,
           "extra": 0
         },
@@ -2433,6 +2592,7 @@
           "detail": "",
           "rawType": "subst",
           "rawDetail": "Substitution 5",
+          "comments": null,
           "elapsed": 83,
           "extra": 0
         },
@@ -2446,6 +2606,7 @@
           "detail": "",
           "rawType": "Card",
           "rawDetail": "Yellow Card",
+          "comments": "Foul",
           "elapsed": 89,
           "extra": 0
         },
@@ -2459,6 +2620,7 @@
           "detail": "",
           "rawType": "Card",
           "rawDetail": "Yellow Card",
+          "comments": "Foul",
           "elapsed": 90,
           "extra": 1
         }
