@@ -13,6 +13,76 @@
   "response": [
     {
       "fixture": {
+        "id": 1379188,
+        "referee": "Samuel Barrott, England",
+        "timezone": "UTC",
+        "date": "2026-01-18T14:00:00+00:00",
+        "timestamp": 1768744800,
+        "periods": {
+          "first": 1768744800,
+          "second": 1768748400
+        },
+        "venue": {
+          "id": 600,
+          "name": "Molineux Stadium",
+          "city": "Wolverhampton"
+        },
+        "status": {
+          "long": "Second Half",
+          "short": "2H",
+          "elapsed": 49,
+          "extra": null
+        }
+      },
+      "league": {
+        "id": 39,
+        "name": "Premier League",
+        "country": "England",
+        "logo": "https://media.api-sports.io/football/leagues/39.png",
+        "flag": "https://media.api-sports.io/flags/gb-eng.svg",
+        "season": 2025,
+        "round": "Regular Season - 22",
+        "standings": true
+      },
+      "teams": {
+        "home": {
+          "id": 39,
+          "name": "Wolves",
+          "logo": "https://media.api-sports.io/football/teams/39.png",
+          "winner": null
+        },
+        "away": {
+          "id": 34,
+          "name": "Newcastle",
+          "logo": "https://media.api-sports.io/football/teams/34.png",
+          "winner": null
+        }
+      },
+      "goals": {
+        "home": 0,
+        "away": 0
+      },
+      "score": {
+        "halftime": {
+          "home": 0,
+          "away": 0
+        },
+        "fulltime": {
+          "home": null,
+          "away": null
+        },
+        "extratime": {
+          "home": null,
+          "away": null
+        },
+        "penalty": {
+          "home": null,
+          "away": null
+        }
+      }
+    },
+    {
+      "fixture": {
         "id": 1378969,
         "referee": "Anthony Taylor, England",
         "timezone": "UTC",
@@ -15190,76 +15260,6 @@
         "fulltime": {
           "home": 0,
           "away": 0
-        },
-        "extratime": {
-          "home": null,
-          "away": null
-        },
-        "penalty": {
-          "home": null,
-          "away": null
-        }
-      }
-    },
-    {
-      "fixture": {
-        "id": 1379188,
-        "referee": null,
-        "timezone": "UTC",
-        "date": "2026-01-18T14:00:00+00:00",
-        "timestamp": 1768744800,
-        "periods": {
-          "first": null,
-          "second": null
-        },
-        "venue": {
-          "id": 600,
-          "name": "Molineux Stadium",
-          "city": "Wolverhampton"
-        },
-        "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
-          "extra": null
-        }
-      },
-      "league": {
-        "id": 39,
-        "name": "Premier League",
-        "country": "England",
-        "logo": "https://media.api-sports.io/football/leagues/39.png",
-        "flag": "https://media.api-sports.io/flags/gb-eng.svg",
-        "season": 2025,
-        "round": "Regular Season - 22",
-        "standings": true
-      },
-      "teams": {
-        "home": {
-          "id": 39,
-          "name": "Wolves",
-          "logo": "https://media.api-sports.io/football/teams/39.png",
-          "winner": null
-        },
-        "away": {
-          "id": 34,
-          "name": "Newcastle",
-          "logo": "https://media.api-sports.io/football/teams/34.png",
-          "winner": null
-        }
-      },
-      "goals": {
-        "home": null,
-        "away": null
-      },
-      "score": {
-        "halftime": {
-          "home": null,
-          "away": null
-        },
-        "fulltime": {
-          "home": null,
-          "away": null
         },
         "extratime": {
           "home": null,
