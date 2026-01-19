@@ -222,7 +222,7 @@ function renderMatchCard(match) {
     gameMinute = 0;
   }
 
-  if (gameMinute >= 45 || gameStatus === "FT"){
+  if ((gameMinute > 45) || (gameStatus === "FT")) {
     halfTimeScore = `(HT ${esc(match.status.halfTimeScore)})`;
   }
 
