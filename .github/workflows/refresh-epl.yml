@@ -1,9 +1,13 @@
-name: Refresh EPL data
-
 on:
   schedule:
     - cron: "*/10 * * * *"   # every 10 minutes
   workflow_dispatch:
+    inputs:
+      force_refresh:
+        description: "Force refresh (ignore gate)"
+        required: false
+        default: false
+        type: boolean
 
 jobs:
   refresh:
@@ -23,6 +27,7 @@ jobs:
       - name: Smart refresh (gated)
         env:
           APIFOOTBALL_KEY: ${{ secrets.APIFOOTBALL_KEY }}
+          FORCE_REFRESH: ${{ github.event.inputs.force_refresh }}
         run: |
           set +e
           npm run refresh:smart
