@@ -5,7 +5,7 @@
     "league": 39
   },
   "errors": [],
-  "results": 3326,
+  "results": 3325,
   "paging": {
     "current": 1,
     "total": 1
@@ -76338,7 +76338,7 @@
       },
       "player": {
         "id": 18929,
-        "name": "D. McNeil"
+        "name": "Dwight McNeil"
       },
       "assist": {
         "id": null,
@@ -76346,30 +76346,7 @@
       },
       "type": "Card",
       "detail": "Yellow Card",
-      "comments": "Holding"
-    },
-    {
-      "fixtureId": "1379179",
-      "time": {
-        "elapsed": 33,
-        "extra": null
-      },
-      "team": {
-        "id": 45,
-        "name": "Everton",
-        "logo": "https://media.api-sports.io/football/teams/45.png"
-      },
-      "player": {
-        "id": 270139,
-        "name": "J. O'Brien"
-      },
-      "assist": {
-        "id": null,
-        "name": null
-      },
-      "type": "Var",
-      "detail": "Goal Disallowed - offside",
-      "comments": null
+      "comments": "Foul"
     },
     {
       "fixtureId": "1379179",
@@ -76384,7 +76361,7 @@
       },
       "player": {
         "id": 895,
-        "name": "J. Garner"
+        "name": "James Garner"
       },
       "assist": {
         "id": null,
@@ -76392,7 +76369,7 @@
       },
       "type": "Card",
       "detail": "Yellow Card",
-      "comments": "Tripping"
+      "comments": "Foul"
     },
     {
       "fixtureId": "1379179",
@@ -76407,7 +76384,7 @@
       },
       "player": {
         "id": 284457,
-        "name": "L. Bogarde"
+        "name": "Lamare Bogarde"
       },
       "assist": {
         "id": null,
@@ -76415,7 +76392,7 @@
       },
       "type": "Card",
       "detail": "Yellow Card",
-      "comments": "Tripping"
+      "comments": "Foul"
     },
     {
       "fixtureId": "1379179",
