@@ -5,7 +5,7 @@
     "league": 39
   },
   "errors": [],
-  "results": 3325,
+  "results": 3326,
   "paging": {
     "current": 1,
     "total": 1
@@ -76484,6 +76484,29 @@
       },
       "type": "subst",
       "detail": "Substitution 1",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379180",
+      "time": {
+        "elapsed": 32,
+        "extra": null
+      },
+      "team": {
+        "id": 35,
+        "name": "Bournemouth",
+        "logo": "https://media.api-sports.io/football/teams/35.png"
+      },
+      "player": {
+        "id": 19245,
+        "name": "M. Tavernier"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Goal",
+      "detail": "Penalty",
       "comments": null
     }
   ]

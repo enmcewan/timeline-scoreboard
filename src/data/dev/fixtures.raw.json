@@ -30,7 +30,7 @@
         "status": {
           "long": "First Half",
           "short": "1H",
-          "elapsed": 1,
+          "elapsed": 34,
           "extra": null
         }
       },
@@ -49,23 +49,23 @@
           "id": 51,
           "name": "Brighton",
           "logo": "https://media.api-sports.io/football/teams/51.png",
-          "winner": null
+          "winner": false
         },
         "away": {
           "id": 35,
           "name": "Bournemouth",
           "logo": "https://media.api-sports.io/football/teams/35.png",
-          "winner": null
+          "winner": true
         }
       },
       "goals": {
         "home": 0,
-        "away": 0
+        "away": 1
       },
       "score": {
         "halftime": {
           "home": 0,
-          "away": 0
+          "away": 1
         },
         "fulltime": {
           "home": null,
