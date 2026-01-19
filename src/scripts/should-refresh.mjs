@@ -1,6 +1,14 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 
+// ---- FORCE OVERRIDE (GitHub Actions workflow_dispatch input) ----
+if (process.env.FORCE_REFRESH === "true" || process.env.FORCE_REFRESH === "1") {
+  console.log("REFRESH=1");
+  console.log("Reason: FORCE_REFRESH set");
+  process.exit(0);
+}
+
+
 const CANDIDATE_FIXTURE_PATHS = [
   // adjust/add if your repo stores fixtures elsewhere
   "src/data/dev/fixtures.raw.json",
