@@ -1987,13 +1987,28 @@
       "awayTeamId": "bournemouth",
       "score": {
         "home": 0,
-        "away": 0
+        "away": 1
       },
       "status": {
-        "state": "1'",
-        "halfTimeScore": "0–0"
+        "state": "34'",
+        "halfTimeScore": "0–1"
       },
-      "events": []
+      "events": [
+        {
+          "id": "1379180-0",
+          "minute": "32'",
+          "team": "away",
+          "kind": "goal",
+          "player": "M. Tavernier",
+          "assist": "",
+          "detail": "pen",
+          "rawType": "Goal",
+          "rawDetail": "Penalty",
+          "comments": null,
+          "elapsed": 32,
+          "extra": 0
+        }
+      ]
     }
   ]
 }
