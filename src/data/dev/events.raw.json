@@ -5,7 +5,7 @@
     "league": 39
   },
   "errors": [],
-  "results": 3341,
+  "results": 3346,
   "paging": {
     "current": 1,
     "total": 1
@@ -76852,6 +76852,121 @@
       },
       "type": "subst",
       "detail": "Substitution 4",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379198",
+      "time": {
+        "elapsed": 14,
+        "extra": null
+      },
+      "team": {
+        "id": 48,
+        "name": "West Ham",
+        "logo": "https://media.api-sports.io/football/teams/48.png"
+      },
+      "player": {
+        "id": 37724,
+        "name": "C. Summerville"
+      },
+      "assist": {
+        "id": 19428,
+        "name": "J. Bowen"
+      },
+      "type": "Goal",
+      "detail": "Normal Goal",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379198",
+      "time": {
+        "elapsed": 28,
+        "extra": null
+      },
+      "team": {
+        "id": 48,
+        "name": "West Ham",
+        "logo": "https://media.api-sports.io/football/teams/48.png"
+      },
+      "player": {
+        "id": 19428,
+        "name": "J. Bowen"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Goal",
+      "detail": "Penalty",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379198",
+      "time": {
+        "elapsed": 30,
+        "extra": null
+      },
+      "team": {
+        "id": 746,
+        "name": "Sunderland",
+        "logo": "https://media.api-sports.io/football/teams/746.png"
+      },
+      "player": {
+        "id": 55904,
+        "name": "D. Ballard"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Card",
+      "detail": "Yellow Card",
+      "comments": "Roughing"
+    },
+    {
+      "fixtureId": "1379198",
+      "time": {
+        "elapsed": 36,
+        "extra": null
+      },
+      "team": {
+        "id": 746,
+        "name": "Sunderland",
+        "logo": "https://media.api-sports.io/football/teams/746.png"
+      },
+      "player": {
+        "id": 22225,
+        "name": "R. Mandava"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Card",
+      "detail": "Yellow Card",
+      "comments": "Holding"
+    },
+    {
+      "fixtureId": "1379198",
+      "time": {
+        "elapsed": 43,
+        "extra": null
+      },
+      "team": {
+        "id": 48,
+        "name": "West Ham",
+        "logo": "https://media.api-sports.io/football/teams/48.png"
+      },
+      "player": {
+        "id": 336585,
+        "name": "M. Fernandes"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Goal",
+      "detail": "Normal Goal",
       "comments": null
     }
   ]
