@@ -25,3 +25,4 @@ dist-ssr
 .env
 build
 BBC Screenshots/
+package.json.readme.txt

@@ -73,47 +73,46 @@ let globalViewMode = VIEW_MODES.COMPACT; // start compact like you want
 
 const viewModes = new Map();
 
-// const matches = matchday.matches;
-
 const app = document.querySelector("#app");
 
-// let showAllToggleText = globalViewMode === VIEW_MODES.FULL ? "Show Results" : "Show Timelines";
-let showAllAriaPressed = "false";
-let roundName = "Matchweek"; // EPL Term. Other leagues use "Matchday", "Jornada", etc.
-
 function renderAllMatches() {
-
-  const showAllToggleText = globalViewMode === VIEW_MODES.FULL ? "Show Results" : "Show Timelines";
-
   app.innerHTML = `
-    <div class="matchday-shell">
-      <div class="matchday-header">
-        <div class="matchday-container">
-          <label for="matchday-select">${roundName}:</label>
-          <select class="matchday-select" id="matchday-select">
-            ${Object.keys(MATCHDAYS)
-            .map((round) => {
-              const rNum = Number(round);
-              const selected = rNum === currentRound ? "selected" : "";
-              return `<option value="${rNum}" ${selected}>${rNum}</option>`;
-            })
-            .join("")}
-          </select>
-        </div>
-        <div class="show-all-container">
-          <button class="show-all-timelines" type="button" aria-pressed="${showAllAriaPressed}">
-            ${showAllToggleText}
-          </button>
-        </div>
-      </div>
-      <div class="match-list">
-        ${currentMatches.map(renderMatchCard).join("")}
-      </div>
+    <div class="match-list">
+      ${currentMatches.map(renderMatchCard).join("")}
     </div>
   `;
 }
 
+const matchdaySelect = document.querySelector("#matchday-select");
+const showAllBtn = document.querySelector("#show-all-timelines");
+const roundLabel = document.querySelector("#round-label");
+
+let showAllAriaPressed = "false";
+let roundName = "Matchweek"; // keep your variable
+
+function renderControls() {
+  // label text
+  roundLabel.textContent = `${roundName}:`;
+
+  // dropdown options
+  matchdaySelect.innerHTML = Object.keys(MATCHDAYS)
+    .map((round) => {
+      const rNum = Number(round);
+      const selected = rNum === currentRound ? "selected" : "";
+      return `<option value="${rNum}" ${selected}>${rNum}</option>`;
+    })
+    .join("");
+
+  // global button text + aria
+  const showAllToggleText =
+    globalViewMode === VIEW_MODES.FULL ? "Show Results" : "Show Timelines";
+
+  showAllBtn.textContent = showAllToggleText;
+  showAllBtn.setAttribute("aria-pressed", showAllAriaPressed);
+}
+
 // initial render
+renderControls();
 renderAllMatches();
 
 document.addEventListener("click", (e) => {
@@ -130,6 +129,7 @@ document.addEventListener("click", (e) => {
     showAllAriaPressed = globalViewMode === VIEW_MODES.FULL ? "true" : "false";
     // showAllToggleText = globalViewMode === VIEW_MODES.FULL ? "Show Results" : "Show Timelines";
 
+    renderControls();
     renderAllMatches();
     return;
   }
@@ -158,6 +158,7 @@ document.addEventListener("click", (e) => {
   viewModes.set(matchId, next);
 
   // re-render everything for now (simpler + safe)
+  renderControls();
   renderAllMatches();
 });
 
@@ -179,6 +180,7 @@ document.addEventListener("change", (e) => {
   for (const m of currentMatches) viewModes.set(String(m.id), globalViewMode);
 
   // re-render with the new round's matches
+  renderControls();
   renderAllMatches();
 });
 
@@ -363,7 +365,8 @@ function renderEventText(evt, mode) {
                     <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                         <use href="/img/misc/ball.svg"></use>
                     </svg>
-                </span>`;
+                </span>
+              `;
 
     // if (mode === VIEW_MODES.FULL) {
 
