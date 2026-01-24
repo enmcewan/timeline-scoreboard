@@ -28,10 +28,10 @@
           "city": "London"
         },
         "status": {
-          "long": "First Half",
-          "short": "1H",
-          "elapsed": 42,
-          "extra": null
+          "long": "Halftime",
+          "short": "HT",
+          "elapsed": 45,
+          "extra": 1
         }
       },
       "league": {
@@ -98,10 +98,10 @@
           "city": "Burnley"
         },
         "status": {
-          "long": "First Half",
-          "short": "1H",
-          "elapsed": 41,
-          "extra": null
+          "long": "Halftime",
+          "short": "HT",
+          "elapsed": 45,
+          "extra": 4
         }
       },
       "league": {
@@ -119,22 +119,22 @@
           "id": 44,
           "name": "Burnley",
           "logo": "https://media.api-sports.io/football/teams/44.png",
-          "winner": false
+          "winner": null
         },
         "away": {
           "id": 47,
           "name": "Tottenham",
           "logo": "https://media.api-sports.io/football/teams/47.png",
-          "winner": true
+          "winner": null
         }
       },
       "goals": {
-        "home": 0,
+        "home": 1,
         "away": 1
       },
       "score": {
         "halftime": {
-          "home": 0,
+          "home": 1,
           "away": 1
         },
         "fulltime": {
@@ -168,10 +168,10 @@
           "city": "Manchester"
         },
         "status": {
-          "long": "First Half",
-          "short": "1H",
-          "elapsed": 42,
-          "extra": null
+          "long": "Halftime",
+          "short": "HT",
+          "elapsed": 45,
+          "extra": 5
         }
       },
       "league": {
@@ -199,12 +199,12 @@
         }
       },
       "goals": {
-        "home": 1,
+        "home": 2,
         "away": 0
       },
       "score": {
         "halftime": {
-          "home": 1,
+          "home": 2,
           "away": 0
         },
         "fulltime": {

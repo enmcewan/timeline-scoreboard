@@ -332,7 +332,7 @@
         "away": 1
       },
       "status": {
-        "state": "42'",
+        "state": "HT",
         "halfTimeScore": "0–1"
       },
       "events": [
@@ -361,12 +361,12 @@
       "homeTeamId": "burnley",
       "awayTeamId": "tottenham",
       "score": {
-        "home": 0,
+        "home": 1,
         "away": 1
       },
       "status": {
-        "state": "41'",
-        "halfTimeScore": "0–1"
+        "state": "HT",
+        "halfTimeScore": "1–1"
       },
       "events": [
         {
@@ -382,6 +382,20 @@
           "comments": null,
           "elapsed": 38,
           "extra": 0
+        },
+        {
+          "id": "1379192-1",
+          "minute": "45'",
+          "team": "home",
+          "kind": "goal",
+          "player": "A. Tuanzebe",
+          "assist": "K. Walker",
+          "detail": "",
+          "rawType": "Goal",
+          "rawDetail": "Normal Goal",
+          "comments": null,
+          "elapsed": 45,
+          "extra": 0
         }
       ]
     },
@@ -394,12 +408,12 @@
       "homeTeamId": "manchester-city",
       "awayTeamId": "wolves",
       "score": {
-        "home": 1,
+        "home": 2,
         "away": 0
       },
       "status": {
-        "state": "42'",
-        "halfTimeScore": "1–0"
+        "state": "HT",
+        "halfTimeScore": "2–0"
       },
       "events": [
         {
@@ -415,6 +429,20 @@
           "comments": null,
           "elapsed": 6,
           "extra": 0
+        },
+        {
+          "id": "1379196-1",
+          "minute": "45'+2",
+          "team": "home",
+          "kind": "goal",
+          "player": "A. Semenyo",
+          "assist": "B. Silva",
+          "detail": "",
+          "rawType": "Goal",
+          "rawDetail": "Normal Goal",
+          "comments": null,
+          "elapsed": 45,
+          "extra": 2
         }
       ]
     },
