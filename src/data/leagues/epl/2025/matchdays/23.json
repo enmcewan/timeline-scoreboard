@@ -976,10 +976,10 @@
       "awayTeamId": "liverpool",
       "score": {
         "home": 2,
-        "away": 1
+        "away": 2
       },
       "status": {
-        "state": "69'",
+        "state": "90'",
         "halfTimeScore": "2–1"
       },
       "events": [
@@ -1118,6 +1118,82 @@
           "comments": null,
           "elapsed": 67,
           "extra": 0
+        },
+        {
+          "id": "1379190-9",
+          "minute": "74'",
+          "team": "away",
+          "kind": "sub",
+          "player": "C. Gakpo",
+          "assist": "R. Ngumoha",
+          "inPlayer": "R. Ngumoha",
+          "outPlayer": "C. Gakpo",
+          "detail": "",
+          "rawType": "subst",
+          "rawDetail": "Substitution 5",
+          "comments": null,
+          "elapsed": 74,
+          "extra": 0
+        },
+        {
+          "id": "1379190-10",
+          "minute": "80'",
+          "team": "away",
+          "kind": "goal",
+          "player": "D. Szoboszlai",
+          "assist": "M. Salah",
+          "detail": "",
+          "rawType": "Goal",
+          "rawDetail": "Normal Goal",
+          "comments": null,
+          "elapsed": 80,
+          "extra": 0
+        },
+        {
+          "id": "1379190-11",
+          "minute": "85'",
+          "team": "home",
+          "kind": "sub",
+          "player": "A. Jimenez",
+          "assist": "A. Toth",
+          "inPlayer": "A. Toth",
+          "outPlayer": "A. Jimenez",
+          "detail": "",
+          "rawType": "subst",
+          "rawDetail": "Substitution 2",
+          "comments": null,
+          "elapsed": 85,
+          "extra": 0
+        },
+        {
+          "id": "1379190-12",
+          "minute": "90'+3",
+          "team": "home",
+          "kind": "sub",
+          "player": "Evanilson",
+          "assist": "E. Unal",
+          "inPlayer": "E. Unal",
+          "outPlayer": "Evanilson",
+          "detail": "",
+          "rawType": "subst",
+          "rawDetail": "Substitution 3",
+          "comments": null,
+          "elapsed": 90,
+          "extra": 3
+        },
+        {
+          "id": "1379190-13",
+          "minute": "90'+3",
+          "team": "away",
+          "kind": "yellow",
+          "player": "R. Gravenberch",
+          "assist": "",
+          "detail": "",
+          "rawType": "Card",
+          "rawDetail": "Yellow Card",
+          "comments": "Unsportsmanlike conduct",
+          "elapsed": 90,
+          "extra": 3
         }
       ]
     },

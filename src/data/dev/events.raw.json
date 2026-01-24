@@ -5,7 +5,7 @@
     "league": 39
   },
   "errors": [],
-  "results": 3409,
+  "results": 3414,
   "paging": {
     "current": 1,
     "total": 1
@@ -78417,6 +78417,121 @@
       "type": "subst",
       "detail": "Substitution 1",
       "comments": null
+    },
+    {
+      "fixtureId": "1379190",
+      "time": {
+        "elapsed": 74,
+        "extra": null
+      },
+      "team": {
+        "id": 40,
+        "name": "Liverpool",
+        "logo": "https://media.api-sports.io/football/teams/40.png"
+      },
+      "player": {
+        "id": 247,
+        "name": "C. Gakpo"
+      },
+      "assist": {
+        "id": 452685,
+        "name": "R. Ngumoha"
+      },
+      "type": "subst",
+      "detail": "Substitution 5",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379190",
+      "time": {
+        "elapsed": 80,
+        "extra": null
+      },
+      "team": {
+        "id": 40,
+        "name": "Liverpool",
+        "logo": "https://media.api-sports.io/football/teams/40.png"
+      },
+      "player": {
+        "id": 1096,
+        "name": "D. Szoboszlai"
+      },
+      "assist": {
+        "id": 306,
+        "name": "M. Salah"
+      },
+      "type": "Goal",
+      "detail": "Normal Goal",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379190",
+      "time": {
+        "elapsed": 85,
+        "extra": null
+      },
+      "team": {
+        "id": 35,
+        "name": "Bournemouth",
+        "logo": "https://media.api-sports.io/football/teams/35.png"
+      },
+      "player": {
+        "id": 330437,
+        "name": "A. Jimenez"
+      },
+      "assist": {
+        "id": 361485,
+        "name": "A. Toth"
+      },
+      "type": "subst",
+      "detail": "Substitution 2",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379190",
+      "time": {
+        "elapsed": 90,
+        "extra": 3
+      },
+      "team": {
+        "id": 35,
+        "name": "Bournemouth",
+        "logo": "https://media.api-sports.io/football/teams/35.png"
+      },
+      "player": {
+        "id": 152856,
+        "name": "Evanilson"
+      },
+      "assist": {
+        "id": 47499,
+        "name": "E. Unal"
+      },
+      "type": "subst",
+      "detail": "Substitution 3",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379190",
+      "time": {
+        "elapsed": 90,
+        "extra": 3
+      },
+      "team": {
+        "id": 40,
+        "name": "Liverpool",
+        "logo": "https://media.api-sports.io/football/teams/40.png"
+      },
+      "player": {
+        "id": 542,
+        "name": "R. Gravenberch"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Card",
+      "detail": "Yellow Card",
+      "comments": "Unsportsmanlike conduct"
     }
   ]
 }
