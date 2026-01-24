@@ -30,7 +30,7 @@
         "status": {
           "long": "Second Half",
           "short": "2H",
-          "elapsed": 57,
+          "elapsed": 90,
           "extra": null
         }
       },
@@ -60,7 +60,7 @@
       },
       "goals": {
         "home": 3,
-        "away": 0
+        "away": 1
       },
       "score": {
         "halftime": {
@@ -15484,7 +15484,7 @@
     {
       "fixture": {
         "id": 1379195,
-        "referee": null,
+        "referee": "Michael Oliver, England",
         "timezone": "UTC",
         "date": "2026-01-24T15:00:00+00:00",
         "timestamp": 1769266800,
@@ -15554,7 +15554,7 @@
     {
       "fixture": {
         "id": 1379192,
-        "referee": null,
+        "referee": "Peter Bankes, England",
         "timezone": "UTC",
         "date": "2026-01-24T15:00:00+00:00",
         "timestamp": 1769266800,
@@ -15624,7 +15624,7 @@
     {
       "fixture": {
         "id": 1379196,
-        "referee": null,
+        "referee": "Farai Hallam, England",
         "timezone": "UTC",
         "date": "2026-01-24T15:00:00+00:00",
         "timestamp": 1769266800,
