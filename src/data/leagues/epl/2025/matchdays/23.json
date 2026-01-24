@@ -15,7 +15,7 @@
         "away": 0
       },
       "status": {
-        "state": "HT",
+        "state": "57'",
         "halfTimeScore": "3–0"
       },
       "events": [
@@ -63,7 +63,7 @@
         },
         {
           "id": "1379198-3",
-          "minute": "36'",
+          "minute": "35'",
           "team": "away",
           "kind": "yellow",
           "player": "R. Mandava",
@@ -72,7 +72,7 @@
           "rawType": "Card",
           "rawDetail": "Yellow Card",
           "comments": "Holding",
-          "elapsed": 36,
+          "elapsed": 35,
           "extra": 0
         },
         {
@@ -87,6 +87,54 @@
           "rawDetail": "Normal Goal",
           "comments": null,
           "elapsed": 43,
+          "extra": 0
+        },
+        {
+          "id": "1379198-5",
+          "minute": "46'",
+          "team": "away",
+          "kind": "sub",
+          "player": "R. Mundle",
+          "assist": "C. Talbi",
+          "inPlayer": "C. Talbi",
+          "outPlayer": "R. Mundle",
+          "detail": "",
+          "rawType": "subst",
+          "rawDetail": "Substitution 1",
+          "comments": null,
+          "elapsed": 46,
+          "extra": 0
+        },
+        {
+          "id": "1379198-6",
+          "minute": "46'",
+          "team": "away",
+          "kind": "sub",
+          "player": "R. Mandava",
+          "assist": "D. Cirkin",
+          "inPlayer": "D. Cirkin",
+          "outPlayer": "R. Mandava",
+          "detail": "",
+          "rawType": "subst",
+          "rawDetail": "Substitution 2",
+          "comments": null,
+          "elapsed": 46,
+          "extra": 0
+        },
+        {
+          "id": "1379198-7",
+          "minute": "46'",
+          "team": "away",
+          "kind": "sub",
+          "player": "T. Hume",
+          "assist": "H. Diarra",
+          "inPlayer": "H. Diarra",
+          "outPlayer": "T. Hume",
+          "detail": "",
+          "rawType": "subst",
+          "rawDetail": "Substitution 3",
+          "comments": null,
+          "elapsed": 46,
           "extra": 0
         }
       ]

@@ -5,7 +5,7 @@
     "league": 39
   },
   "errors": [],
-  "results": 3346,
+  "results": 3349,
   "paging": {
     "current": 1,
     "total": 1
@@ -76926,7 +76926,7 @@
     {
       "fixtureId": "1379198",
       "time": {
-        "elapsed": 36,
+        "elapsed": 35,
         "extra": null
       },
       "team": {
@@ -76967,6 +76967,75 @@
       },
       "type": "Goal",
       "detail": "Normal Goal",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379198",
+      "time": {
+        "elapsed": 46,
+        "extra": null
+      },
+      "team": {
+        "id": 746,
+        "name": "Sunderland",
+        "logo": "https://media.api-sports.io/football/teams/746.png"
+      },
+      "player": {
+        "id": 284414,
+        "name": "R. Mundle"
+      },
+      "assist": {
+        "id": 336659,
+        "name": "C. Talbi"
+      },
+      "type": "subst",
+      "detail": "Substitution 1",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379198",
+      "time": {
+        "elapsed": 46,
+        "extra": null
+      },
+      "team": {
+        "id": 746,
+        "name": "Sunderland",
+        "logo": "https://media.api-sports.io/football/teams/746.png"
+      },
+      "player": {
+        "id": 22225,
+        "name": "R. Mandava"
+      },
+      "assist": {
+        "id": 162076,
+        "name": "D. Cirkin"
+      },
+      "type": "subst",
+      "detail": "Substitution 2",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379198",
+      "time": {
+        "elapsed": 46,
+        "extra": null
+      },
+      "team": {
+        "id": 746,
+        "name": "Sunderland",
+        "logo": "https://media.api-sports.io/football/teams/746.png"
+      },
+      "player": {
+        "id": 119121,
+        "name": "T. Hume"
+      },
+      "assist": {
+        "id": 327631,
+        "name": "H. Diarra"
+      },
+      "type": "subst",
+      "detail": "Substitution 3",
       "comments": null
     }
   ]
