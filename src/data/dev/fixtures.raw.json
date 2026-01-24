@@ -20,7 +20,7 @@
         "timestamp": 1769257800,
         "periods": {
           "first": 1769257800,
-          "second": null
+          "second": 1769261400
         },
         "venue": {
           "id": 598,
@@ -28,10 +28,10 @@
           "city": "London"
         },
         "status": {
-          "long": "Halftime",
-          "short": "HT",
-          "elapsed": 45,
-          "extra": 4
+          "long": "Second Half",
+          "short": "2H",
+          "elapsed": 57,
+          "extra": null
         }
       },
       "league": {
