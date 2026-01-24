@@ -5,7 +5,7 @@
     "league": 39
   },
   "errors": [],
-  "results": 3364,
+  "results": 3366,
   "paging": {
     "current": 1,
     "total": 1
@@ -77338,6 +77338,29 @@
       "comments": null
     },
     {
+      "fixtureId": "1379196",
+      "time": {
+        "elapsed": 45,
+        "extra": 2
+      },
+      "team": {
+        "id": 50,
+        "name": "Manchester City",
+        "logo": "https://media.api-sports.io/football/teams/50.png"
+      },
+      "player": {
+        "id": 19281,
+        "name": "A. Semenyo"
+      },
+      "assist": {
+        "id": 636,
+        "name": "B. Silva"
+      },
+      "type": "Goal",
+      "detail": "Normal Goal",
+      "comments": null
+    },
+    {
       "fixtureId": "1379195",
       "time": {
         "elapsed": 28,
@@ -77378,6 +77401,29 @@
       "assist": {
         "id": null,
         "name": null
+      },
+      "type": "Goal",
+      "detail": "Normal Goal",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379192",
+      "time": {
+        "elapsed": 45,
+        "extra": null
+      },
+      "team": {
+        "id": 44,
+        "name": "Burnley",
+        "logo": "https://media.api-sports.io/football/teams/44.png"
+      },
+      "player": {
+        "id": 19182,
+        "name": "A. Tuanzebe"
+      },
+      "assist": {
+        "id": 627,
+        "name": "K. Walker"
       },
       "type": "Goal",
       "detail": "Normal Goal",
