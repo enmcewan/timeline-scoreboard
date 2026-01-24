@@ -329,13 +329,28 @@
       "awayTeamId": "brighton",
       "score": {
         "home": 0,
-        "away": 0
+        "away": 1
       },
       "status": {
-        "state": "21'",
-        "halfTimeScore": "0–0"
+        "state": "42'",
+        "halfTimeScore": "0–1"
       },
-      "events": []
+      "events": [
+        {
+          "id": "1379195-0",
+          "minute": "28'",
+          "team": "away",
+          "kind": "goal",
+          "player": "Y. Ayari",
+          "assist": "O. Boscagli",
+          "detail": "",
+          "rawType": "Goal",
+          "rawDetail": "Normal Goal",
+          "comments": null,
+          "elapsed": 28,
+          "extra": 0
+        }
+      ]
     },
     {
       "id": "1379192",
@@ -347,13 +362,28 @@
       "awayTeamId": "tottenham",
       "score": {
         "home": 0,
-        "away": 0
+        "away": 1
       },
       "status": {
-        "state": "21'",
-        "halfTimeScore": "0–0"
+        "state": "41'",
+        "halfTimeScore": "0–1"
       },
-      "events": []
+      "events": [
+        {
+          "id": "1379192-0",
+          "minute": "38'",
+          "team": "away",
+          "kind": "goal",
+          "player": "M. van de Ven",
+          "assist": "",
+          "detail": "",
+          "rawType": "Goal",
+          "rawDetail": "Normal Goal",
+          "comments": null,
+          "elapsed": 38,
+          "extra": 0
+        }
+      ]
     },
     {
       "id": "1379196",
@@ -368,7 +398,7 @@
         "away": 0
       },
       "status": {
-        "state": "22'",
+        "state": "42'",
         "halfTimeScore": "1–0"
       },
       "events": [
