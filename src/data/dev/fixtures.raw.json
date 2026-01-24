@@ -30,8 +30,8 @@
         "status": {
           "long": "Second Half",
           "short": "2H",
-          "elapsed": 69,
-          "extra": null
+          "elapsed": 90,
+          "extra": 5
         }
       },
       "league": {
@@ -49,18 +49,18 @@
           "id": 35,
           "name": "Bournemouth",
           "logo": "https://media.api-sports.io/football/teams/35.png",
-          "winner": true
+          "winner": null
         },
         "away": {
           "id": 40,
           "name": "Liverpool",
           "logo": "https://media.api-sports.io/football/teams/40.png",
-          "winner": false
+          "winner": null
         }
       },
       "goals": {
         "home": 2,
-        "away": 1
+        "away": 2
       },
       "score": {
         "halftime": {
