@@ -5,7 +5,7 @@
     "league": 39
   },
   "errors": [],
-  "results": 3397,
+  "results": 3400,
   "paging": {
     "current": 1,
     "total": 1
@@ -77870,7 +77870,7 @@
       "fixtureId": "1379195",
       "time": {
         "elapsed": 90,
-        "extra": 2
+        "extra": 1
       },
       "team": {
         "id": 51,
@@ -77887,6 +77887,29 @@
       },
       "type": "Card",
       "detail": "Yellow Card",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379195",
+      "time": {
+        "elapsed": 90,
+        "extra": 2
+      },
+      "team": {
+        "id": 36,
+        "name": "Fulham",
+        "logo": "https://media.api-sports.io/football/teams/36.png"
+      },
+      "player": {
+        "id": 19221,
+        "name": "H. Wilson"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Goal",
+      "detail": "Normal Goal",
       "comments": null
     },
     {
@@ -78140,6 +78163,52 @@
       },
       "type": "subst",
       "detail": "Substitution 4",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379192",
+      "time": {
+        "elapsed": 90,
+        "extra": null
+      },
+      "team": {
+        "id": 47,
+        "name": "Tottenham",
+        "logo": "https://media.api-sports.io/football/teams/47.png"
+      },
+      "player": {
+        "id": 30776,
+        "name": "C. Romero"
+      },
+      "assist": {
+        "id": 336564,
+        "name": "W. Odobert"
+      },
+      "type": "Goal",
+      "detail": "Normal Goal",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379192",
+      "time": {
+        "elapsed": 90,
+        "extra": 5
+      },
+      "team": {
+        "id": 47,
+        "name": "Tottenham",
+        "logo": "https://media.api-sports.io/football/teams/47.png"
+      },
+      "player": {
+        "id": 30776,
+        "name": "C. Romero"
+      },
+      "assist": {
+        "id": 162498,
+        "name": "R. Dragusin"
+      },
+      "type": "subst",
+      "detail": "Substitution 5",
       "comments": null
     }
   ]
