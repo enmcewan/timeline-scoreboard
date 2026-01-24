@@ -328,11 +328,11 @@
       "homeTeamId": "fulham",
       "awayTeamId": "brighton",
       "score": {
-        "home": 1,
+        "home": 2,
         "away": 1
       },
       "status": {
-        "state": "90'",
+        "state": "FT",
         "halfTimeScore": "0–1"
       },
       "events": [
@@ -522,7 +522,7 @@
         },
         {
           "id": "1379195-12",
-          "minute": "90'+2",
+          "minute": "90'+1",
           "team": "away",
           "kind": "yellow",
           "player": "C. Kostoulas",
@@ -530,6 +530,20 @@
           "detail": "",
           "rawType": "Card",
           "rawDetail": "Yellow Card",
+          "comments": null,
+          "elapsed": 90,
+          "extra": 1
+        },
+        {
+          "id": "1379195-13",
+          "minute": "90'+2",
+          "team": "home",
+          "kind": "goal",
+          "player": "H. Wilson",
+          "assist": "",
+          "detail": "",
+          "rawType": "Goal",
+          "rawDetail": "Normal Goal",
           "comments": null,
           "elapsed": 90,
           "extra": 2
@@ -546,10 +560,10 @@
       "awayTeamId": "tottenham",
       "score": {
         "home": 2,
-        "away": 1
+        "away": 2
       },
       "status": {
-        "state": "89'",
+        "state": "FT",
         "halfTimeScore": "1–1"
       },
       "events": [
@@ -720,6 +734,36 @@
           "comments": null,
           "elapsed": 85,
           "extra": 0
+        },
+        {
+          "id": "1379192-11",
+          "minute": "90'",
+          "team": "away",
+          "kind": "goal",
+          "player": "C. Romero",
+          "assist": "W. Odobert",
+          "detail": "",
+          "rawType": "Goal",
+          "rawDetail": "Normal Goal",
+          "comments": null,
+          "elapsed": 90,
+          "extra": 0
+        },
+        {
+          "id": "1379192-12",
+          "minute": "90'+5",
+          "team": "away",
+          "kind": "sub",
+          "player": "C. Romero",
+          "assist": "R. Dragusin",
+          "inPlayer": "R. Dragusin",
+          "outPlayer": "C. Romero",
+          "detail": "",
+          "rawType": "subst",
+          "rawDetail": "Substitution 5",
+          "comments": null,
+          "elapsed": 90,
+          "extra": 5
         }
       ]
     },
@@ -736,7 +780,7 @@
         "away": 0
       },
       "status": {
-        "state": "89'",
+        "state": "FT",
         "halfTimeScore": "2–0"
       },
       "events": [
