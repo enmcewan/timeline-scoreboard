@@ -39,24 +39,6 @@
       "events": []
     },
     {
-      "id": "1379232",
-      "league": "Premier League",
-      "venue": "Selhurst Park",
-      "attendance": null,
-      "kickoff": "2026-02-21T15:00:00+00:00",
-      "homeTeamId": "crystal-palace",
-      "awayTeamId": "wolves",
-      "score": {
-        "home": 0,
-        "away": 0
-      },
-      "status": {
-        "state": "NS",
-        "halfTimeScore": ""
-      },
-      "events": []
-    },
-    {
       "id": "1379230",
       "league": "Premier League",
       "venue": "Brentford Community Stadium",
@@ -118,6 +100,24 @@
       "kickoff": "2026-02-21T17:30:00+00:00",
       "homeTeamId": "west-ham",
       "awayTeamId": "bournemouth",
+      "score": {
+        "home": 0,
+        "away": 0
+      },
+      "status": {
+        "state": "NS",
+        "halfTimeScore": ""
+      },
+      "events": []
+    },
+    {
+      "id": "1379232",
+      "league": "Premier League",
+      "venue": "Selhurst Park",
+      "attendance": null,
+      "kickoff": "2026-02-22T14:00:00+00:00",
+      "homeTeamId": "crystal-palace",
+      "awayTeamId": "wolves",
       "score": {
         "home": 0,
         "away": 0
