@@ -979,7 +979,7 @@
         "away": 1
       },
       "status": {
-        "state": "HT",
+        "state": "69'",
         "halfTimeScore": "2–1"
       },
       "events": [
@@ -1054,6 +1054,70 @@
           "comments": "Delay of game",
           "elapsed": 45,
           "extra": 3
+        },
+        {
+          "id": "1379190-5",
+          "minute": "46'",
+          "team": "away",
+          "kind": "sub",
+          "player": "M. Kerkez",
+          "assist": "A. Robertson",
+          "inPlayer": "A. Robertson",
+          "outPlayer": "M. Kerkez",
+          "detail": "",
+          "rawType": "subst",
+          "rawDetail": "Substitution 2",
+          "comments": null,
+          "elapsed": 46,
+          "extra": 0
+        },
+        {
+          "id": "1379190-6",
+          "minute": "59'",
+          "team": "away",
+          "kind": "sub",
+          "player": "A. Mac Allister",
+          "assist": "H. Ekitike",
+          "inPlayer": "H. Ekitike",
+          "outPlayer": "A. Mac Allister",
+          "detail": "",
+          "rawType": "subst",
+          "rawDetail": "Substitution 3",
+          "comments": null,
+          "elapsed": 59,
+          "extra": 0
+        },
+        {
+          "id": "1379190-7",
+          "minute": "59'",
+          "team": "away",
+          "kind": "sub",
+          "player": "J. Frimpong",
+          "assist": "C. Jones",
+          "inPlayer": "C. Jones",
+          "outPlayer": "J. Frimpong",
+          "detail": "",
+          "rawType": "subst",
+          "rawDetail": "Substitution 4",
+          "comments": null,
+          "elapsed": 59,
+          "extra": 0
+        },
+        {
+          "id": "1379190-8",
+          "minute": "67'",
+          "team": "home",
+          "kind": "sub",
+          "player": "E. J. Kroupi",
+          "assist": "R. Christie",
+          "inPlayer": "R. Christie",
+          "outPlayer": "E. J. Kroupi",
+          "detail": "",
+          "rawType": "subst",
+          "rawDetail": "Substitution 1",
+          "comments": null,
+          "elapsed": 67,
+          "extra": 0
         }
       ]
     },
