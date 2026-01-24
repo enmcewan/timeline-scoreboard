@@ -5,7 +5,7 @@
     "league": 39
   },
   "errors": [],
-  "results": 3357,
+  "results": 3361,
   "paging": {
     "current": 1,
     "total": 1
@@ -77221,6 +77221,98 @@
       "type": "subst",
       "detail": "Substitution 5",
       "comments": null
+    },
+    {
+      "fixtureId": "1379198",
+      "time": {
+        "elapsed": 88,
+        "extra": null
+      },
+      "team": {
+        "id": 746,
+        "name": "Sunderland",
+        "logo": "https://media.api-sports.io/football/teams/746.png"
+      },
+      "player": {
+        "id": 327631,
+        "name": "H. Diarra"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Card",
+      "detail": "Yellow Card",
+      "comments": "Unsportsmanlike conduct"
+    },
+    {
+      "fixtureId": "1379198",
+      "time": {
+        "elapsed": 90,
+        "extra": 1
+      },
+      "team": {
+        "id": 48,
+        "name": "West Ham",
+        "logo": "https://media.api-sports.io/football/teams/48.png"
+      },
+      "player": {
+        "id": 336585,
+        "name": "M. Fernandes"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Card",
+      "detail": "Yellow Card",
+      "comments": "Roughing"
+    },
+    {
+      "fixtureId": "1379198",
+      "time": {
+        "elapsed": 90,
+        "extra": 4
+      },
+      "team": {
+        "id": 48,
+        "name": "West Ham",
+        "logo": "https://media.api-sports.io/football/teams/48.png"
+      },
+      "player": {
+        "id": 37724,
+        "name": "C. Summerville"
+      },
+      "assist": {
+        "id": 18744,
+        "name": "M. Kilman"
+      },
+      "type": "subst",
+      "detail": "Substitution 4",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379198",
+      "time": {
+        "elapsed": 90,
+        "extra": 4
+      },
+      "team": {
+        "id": 746,
+        "name": "Sunderland",
+        "logo": "https://media.api-sports.io/football/teams/746.png"
+      },
+      "player": {
+        "id": 84087,
+        "name": "W. Isidor"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Card",
+      "detail": "Yellow Card",
+      "comments": "Unsportsmanlike conduct"
     }
   ]
 }

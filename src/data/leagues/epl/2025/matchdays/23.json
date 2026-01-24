@@ -15,7 +15,7 @@
         "away": 1
       },
       "status": {
-        "state": "90'",
+        "state": "FT",
         "halfTimeScore": "3–0"
       },
       "events": [
@@ -258,6 +258,64 @@
           "comments": null,
           "elapsed": 84,
           "extra": 0
+        },
+        {
+          "id": "1379198-16",
+          "minute": "88'",
+          "team": "away",
+          "kind": "yellow",
+          "player": "H. Diarra",
+          "assist": "",
+          "detail": "",
+          "rawType": "Card",
+          "rawDetail": "Yellow Card",
+          "comments": "Unsportsmanlike conduct",
+          "elapsed": 88,
+          "extra": 0
+        },
+        {
+          "id": "1379198-17",
+          "minute": "90'+1",
+          "team": "home",
+          "kind": "yellow",
+          "player": "M. Fernandes",
+          "assist": "",
+          "detail": "",
+          "rawType": "Card",
+          "rawDetail": "Yellow Card",
+          "comments": "Roughing",
+          "elapsed": 90,
+          "extra": 1
+        },
+        {
+          "id": "1379198-18",
+          "minute": "90'+4",
+          "team": "home",
+          "kind": "sub",
+          "player": "C. Summerville",
+          "assist": "M. Kilman",
+          "inPlayer": "M. Kilman",
+          "outPlayer": "C. Summerville",
+          "detail": "",
+          "rawType": "subst",
+          "rawDetail": "Substitution 4",
+          "comments": null,
+          "elapsed": 90,
+          "extra": 4
+        },
+        {
+          "id": "1379198-19",
+          "minute": "90'+4",
+          "team": "away",
+          "kind": "yellow",
+          "player": "W. Isidor",
+          "assist": "",
+          "detail": "",
+          "rawType": "Card",
+          "rawDetail": "Yellow Card",
+          "comments": "Unsportsmanlike conduct",
+          "elapsed": 90,
+          "extra": 4
         }
       ]
     },
