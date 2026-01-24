@@ -5,7 +5,7 @@
     "league": 39
   },
   "errors": [],
-  "results": 3361,
+  "results": 3362,
   "paging": {
     "current": 1,
     "total": 1
@@ -77064,7 +77064,7 @@
     {
       "fixtureId": "1379198",
       "time": {
-        "elapsed": 70,
+        "elapsed": 71,
         "extra": null
       },
       "team": {
@@ -77087,7 +77087,7 @@
     {
       "fixtureId": "1379198",
       "time": {
-        "elapsed": 70,
+        "elapsed": 71,
         "extra": null
       },
       "team": {
@@ -77110,7 +77110,7 @@
     {
       "fixtureId": "1379198",
       "time": {
-        "elapsed": 72,
+        "elapsed": 71,
         "extra": null
       },
       "team": {
@@ -77202,7 +77202,7 @@
     {
       "fixtureId": "1379198",
       "time": {
-        "elapsed": 84,
+        "elapsed": 83,
         "extra": null
       },
       "team": {
@@ -77272,7 +77272,7 @@
       "fixtureId": "1379198",
       "time": {
         "elapsed": 90,
-        "extra": 4
+        "extra": 3
       },
       "team": {
         "id": 48,
@@ -77313,6 +77313,29 @@
       "type": "Card",
       "detail": "Yellow Card",
       "comments": "Unsportsmanlike conduct"
+    },
+    {
+      "fixtureId": "1379196",
+      "time": {
+        "elapsed": 6,
+        "extra": null
+      },
+      "team": {
+        "id": 50,
+        "name": "Manchester City",
+        "logo": "https://media.api-sports.io/football/teams/50.png"
+      },
+      "player": {
+        "id": 81573,
+        "name": "O. Marmoush"
+      },
+      "assist": {
+        "id": 41621,
+        "name": "M. Nunes"
+      },
+      "type": "Goal",
+      "detail": "Normal Goal",
+      "comments": null
     }
   ]
 }

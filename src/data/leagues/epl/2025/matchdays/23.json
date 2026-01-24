@@ -153,7 +153,7 @@
         },
         {
           "id": "1379198-9",
-          "minute": "70'",
+          "minute": "71'",
           "team": "home",
           "kind": "sub",
           "player": "Pablo",
@@ -164,12 +164,12 @@
           "rawType": "subst",
           "rawDetail": "Substitution 1",
           "comments": null,
-          "elapsed": 70,
+          "elapsed": 71,
           "extra": 0
         },
         {
           "id": "1379198-10",
-          "minute": "70'",
+          "minute": "71'",
           "team": "home",
           "kind": "sub",
           "player": "O. Scarles",
@@ -180,12 +180,12 @@
           "rawType": "subst",
           "rawDetail": "Substitution 2",
           "comments": null,
-          "elapsed": 70,
+          "elapsed": 71,
           "extra": 0
         },
         {
           "id": "1379198-11",
-          "minute": "72'",
+          "minute": "71'",
           "team": "home",
           "kind": "yellow",
           "player": "T. Castellanos",
@@ -194,7 +194,7 @@
           "rawType": "Card",
           "rawDetail": "Yellow Card",
           "comments": "Foul",
-          "elapsed": 72,
+          "elapsed": 71,
           "extra": 0
         },
         {
@@ -245,7 +245,7 @@
         },
         {
           "id": "1379198-15",
-          "minute": "84'",
+          "minute": "83'",
           "team": "away",
           "kind": "sub",
           "player": "N. Mukiele",
@@ -256,7 +256,7 @@
           "rawType": "subst",
           "rawDetail": "Substitution 5",
           "comments": null,
-          "elapsed": 84,
+          "elapsed": 83,
           "extra": 0
         },
         {
@@ -289,7 +289,7 @@
         },
         {
           "id": "1379198-18",
-          "minute": "90'+4",
+          "minute": "90'+3",
           "team": "home",
           "kind": "sub",
           "player": "C. Summerville",
@@ -301,7 +301,7 @@
           "rawDetail": "Substitution 4",
           "comments": null,
           "elapsed": 90,
-          "extra": 4
+          "extra": 3
         },
         {
           "id": "1379198-19",
@@ -332,8 +332,8 @@
         "away": 0
       },
       "status": {
-        "state": "NS",
-        "halfTimeScore": ""
+        "state": "21'",
+        "halfTimeScore": "0–0"
       },
       "events": []
     },
@@ -350,8 +350,8 @@
         "away": 0
       },
       "status": {
-        "state": "NS",
-        "halfTimeScore": ""
+        "state": "21'",
+        "halfTimeScore": "0–0"
       },
       "events": []
     },
@@ -364,14 +364,29 @@
       "homeTeamId": "manchester-city",
       "awayTeamId": "wolves",
       "score": {
-        "home": 0,
+        "home": 1,
         "away": 0
       },
       "status": {
-        "state": "NS",
-        "halfTimeScore": ""
+        "state": "22'",
+        "halfTimeScore": "1–0"
       },
-      "events": []
+      "events": [
+        {
+          "id": "1379196-0",
+          "minute": "6'",
+          "team": "home",
+          "kind": "goal",
+          "player": "O. Marmoush",
+          "assist": "M. Nunes",
+          "detail": "",
+          "rawType": "Goal",
+          "rawDetail": "Normal Goal",
+          "comments": null,
+          "elapsed": 6,
+          "extra": 0
+        }
+      ]
     },
     {
       "id": "1379190",
