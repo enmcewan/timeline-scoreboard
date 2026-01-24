@@ -30,7 +30,7 @@
         "status": {
           "long": "First Half",
           "short": "1H",
-          "elapsed": 21,
+          "elapsed": 42,
           "extra": null
         }
       },
@@ -49,23 +49,23 @@
           "id": 36,
           "name": "Fulham",
           "logo": "https://media.api-sports.io/football/teams/36.png",
-          "winner": null
+          "winner": false
         },
         "away": {
           "id": 51,
           "name": "Brighton",
           "logo": "https://media.api-sports.io/football/teams/51.png",
-          "winner": null
+          "winner": true
         }
       },
       "goals": {
         "home": 0,
-        "away": 0
+        "away": 1
       },
       "score": {
         "halftime": {
           "home": 0,
-          "away": 0
+          "away": 1
         },
         "fulltime": {
           "home": null,
@@ -100,7 +100,7 @@
         "status": {
           "long": "First Half",
           "short": "1H",
-          "elapsed": 21,
+          "elapsed": 41,
           "extra": null
         }
       },
@@ -119,23 +119,23 @@
           "id": 44,
           "name": "Burnley",
           "logo": "https://media.api-sports.io/football/teams/44.png",
-          "winner": null
+          "winner": false
         },
         "away": {
           "id": 47,
           "name": "Tottenham",
           "logo": "https://media.api-sports.io/football/teams/47.png",
-          "winner": null
+          "winner": true
         }
       },
       "goals": {
         "home": 0,
-        "away": 0
+        "away": 1
       },
       "score": {
         "halftime": {
           "home": 0,
-          "away": 0
+          "away": 1
         },
         "fulltime": {
           "home": null,
@@ -170,7 +170,7 @@
         "status": {
           "long": "First Half",
           "short": "1H",
-          "elapsed": 22,
+          "elapsed": 42,
           "extra": null
         }
       },
