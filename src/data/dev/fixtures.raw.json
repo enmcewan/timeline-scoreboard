@@ -20,7 +20,7 @@
         "timestamp": 1769275800,
         "periods": {
           "first": 1769275800,
-          "second": null
+          "second": 1769279400
         },
         "venue": {
           "id": 504,
@@ -28,10 +28,10 @@
           "city": "Bournemouth"
         },
         "status": {
-          "long": "Halftime",
-          "short": "HT",
-          "elapsed": 45,
-          "extra": 4
+          "long": "Second Half",
+          "short": "2H",
+          "elapsed": 69,
+          "extra": null
         }
       },
       "league": {
