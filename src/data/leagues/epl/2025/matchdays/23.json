@@ -332,7 +332,7 @@
         "away": 1
       },
       "status": {
-        "state": "HT",
+        "state": "70'",
         "halfTimeScore": "0–1"
       },
       "events": [
@@ -348,6 +348,68 @@
           "rawDetail": "Normal Goal",
           "comments": null,
           "elapsed": 28,
+          "extra": 0
+        },
+        {
+          "id": "1379195-1",
+          "minute": "59'",
+          "team": "home",
+          "kind": "sub",
+          "player": "A. Robinson",
+          "assist": "R. Sessegnon",
+          "inPlayer": "R. Sessegnon",
+          "outPlayer": "A. Robinson",
+          "detail": "",
+          "rawType": "subst",
+          "rawDetail": "Substitution 1",
+          "comments": null,
+          "elapsed": 59,
+          "extra": 0
+        },
+        {
+          "id": "1379195-2",
+          "minute": "59'",
+          "team": "home",
+          "kind": "sub",
+          "player": "Kevin",
+          "assist": "S. Chukwueze",
+          "inPlayer": "S. Chukwueze",
+          "outPlayer": "Kevin",
+          "detail": "",
+          "rawType": "subst",
+          "rawDetail": "Substitution 2",
+          "comments": null,
+          "elapsed": 59,
+          "extra": 0
+        },
+        {
+          "id": "1379195-3",
+          "minute": "66'",
+          "team": "home",
+          "kind": "yellow",
+          "player": "S. Berge",
+          "assist": "",
+          "detail": "",
+          "rawType": "Card",
+          "rawDetail": "Yellow Card",
+          "comments": null,
+          "elapsed": 66,
+          "extra": 0
+        },
+        {
+          "id": "1379195-4",
+          "minute": "69'",
+          "team": "home",
+          "kind": "sub",
+          "player": "E. Smith Rowe",
+          "assist": "T. Cairney",
+          "inPlayer": "T. Cairney",
+          "outPlayer": "E. Smith Rowe",
+          "detail": "",
+          "rawType": "subst",
+          "rawDetail": "Substitution 3",
+          "comments": null,
+          "elapsed": 69,
           "extra": 0
         }
       ]
@@ -365,7 +427,7 @@
         "away": 1
       },
       "status": {
-        "state": "HT",
+        "state": "66'",
         "halfTimeScore": "1–1"
       },
       "events": [
@@ -396,6 +458,22 @@
           "comments": null,
           "elapsed": 45,
           "extra": 0
+        },
+        {
+          "id": "1379192-2",
+          "minute": "46'",
+          "team": "away",
+          "kind": "sub",
+          "player": "P. Porro",
+          "assist": "D. Udogie",
+          "inPlayer": "D. Udogie",
+          "outPlayer": "P. Porro",
+          "detail": "",
+          "rawType": "subst",
+          "rawDetail": "Substitution 1",
+          "comments": null,
+          "elapsed": 46,
+          "extra": 0
         }
       ]
     },
@@ -412,7 +490,7 @@
         "away": 0
       },
       "status": {
-        "state": "HT",
+        "state": "66'",
         "halfTimeScore": "2–0"
       },
       "events": [
@@ -443,6 +521,68 @@
           "comments": null,
           "elapsed": 45,
           "extra": 2
+        },
+        {
+          "id": "1379196-2",
+          "minute": "46'",
+          "team": "away",
+          "kind": "sub",
+          "player": "J. Arias",
+          "assist": "J. S. Larsen",
+          "inPlayer": "J. S. Larsen",
+          "outPlayer": "J. Arias",
+          "detail": "",
+          "rawType": "subst",
+          "rawDetail": "Substitution 1",
+          "comments": null,
+          "elapsed": 46,
+          "extra": 0
+        },
+        {
+          "id": "1379196-3",
+          "minute": "46'",
+          "team": "away",
+          "kind": "sub",
+          "player": "J. Tchatchoua",
+          "assist": "R. Gomes",
+          "inPlayer": "R. Gomes",
+          "outPlayer": "J. Tchatchoua",
+          "detail": "",
+          "rawType": "subst",
+          "rawDetail": "Substitution 2",
+          "comments": null,
+          "elapsed": 46,
+          "extra": 0
+        },
+        {
+          "id": "1379196-4",
+          "minute": "57'",
+          "team": "away",
+          "kind": "yellow",
+          "player": "Andre",
+          "assist": "",
+          "detail": "",
+          "rawType": "Card",
+          "rawDetail": "Yellow Card",
+          "comments": "Tripping",
+          "elapsed": 57,
+          "extra": 0
+        },
+        {
+          "id": "1379196-5",
+          "minute": "61'",
+          "team": "home",
+          "kind": "sub",
+          "player": "T. Reijnders",
+          "assist": "P. Foden",
+          "inPlayer": "P. Foden",
+          "outPlayer": "T. Reijnders",
+          "detail": "",
+          "rawType": "subst",
+          "rawDetail": "Substitution 1",
+          "comments": null,
+          "elapsed": 61,
+          "extra": 0
         }
       ]
     },

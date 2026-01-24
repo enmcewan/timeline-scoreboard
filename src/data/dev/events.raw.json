@@ -5,7 +5,7 @@
     "league": 39
   },
   "errors": [],
-  "results": 3366,
+  "results": 3375,
   "paging": {
     "current": 1,
     "total": 1
@@ -77361,6 +77361,98 @@
       "comments": null
     },
     {
+      "fixtureId": "1379196",
+      "time": {
+        "elapsed": 46,
+        "extra": null
+      },
+      "team": {
+        "id": 39,
+        "name": "Wolves",
+        "logo": "https://media.api-sports.io/football/teams/39.png"
+      },
+      "player": {
+        "id": 13708,
+        "name": "J. Arias"
+      },
+      "assist": {
+        "id": 2032,
+        "name": "J. S. Larsen"
+      },
+      "type": "subst",
+      "detail": "Substitution 1",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379196",
+      "time": {
+        "elapsed": 46,
+        "extra": null
+      },
+      "team": {
+        "id": 39,
+        "name": "Wolves",
+        "logo": "https://media.api-sports.io/football/teams/39.png"
+      },
+      "player": {
+        "id": 296560,
+        "name": "J. Tchatchoua"
+      },
+      "assist": {
+        "id": 282770,
+        "name": "R. Gomes"
+      },
+      "type": "subst",
+      "detail": "Substitution 2",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379196",
+      "time": {
+        "elapsed": 57,
+        "extra": null
+      },
+      "team": {
+        "id": 39,
+        "name": "Wolves",
+        "logo": "https://media.api-sports.io/football/teams/39.png"
+      },
+      "player": {
+        "id": 265784,
+        "name": "Andre"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Card",
+      "detail": "Yellow Card",
+      "comments": "Tripping"
+    },
+    {
+      "fixtureId": "1379196",
+      "time": {
+        "elapsed": 61,
+        "extra": null
+      },
+      "team": {
+        "id": 50,
+        "name": "Manchester City",
+        "logo": "https://media.api-sports.io/football/teams/50.png"
+      },
+      "player": {
+        "id": 36902,
+        "name": "T. Reijnders"
+      },
+      "assist": {
+        "id": 631,
+        "name": "P. Foden"
+      },
+      "type": "subst",
+      "detail": "Substitution 1",
+      "comments": null
+    },
+    {
       "fixtureId": "1379195",
       "time": {
         "elapsed": 28,
@@ -77381,6 +77473,98 @@
       },
       "type": "Goal",
       "detail": "Normal Goal",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379195",
+      "time": {
+        "elapsed": 59,
+        "extra": null
+      },
+      "team": {
+        "id": 36,
+        "name": "Fulham",
+        "logo": "https://media.api-sports.io/football/teams/36.png"
+      },
+      "player": {
+        "id": 19549,
+        "name": "A. Robinson"
+      },
+      "assist": {
+        "id": 19032,
+        "name": "R. Sessegnon"
+      },
+      "type": "subst",
+      "detail": "Substitution 1",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379195",
+      "time": {
+        "elapsed": 59,
+        "extra": null
+      },
+      "team": {
+        "id": 36,
+        "name": "Fulham",
+        "logo": "https://media.api-sports.io/football/teams/36.png"
+      },
+      "player": {
+        "id": 237819,
+        "name": "Kevin"
+      },
+      "assist": {
+        "id": 1696,
+        "name": "S. Chukwueze"
+      },
+      "type": "subst",
+      "detail": "Substitution 2",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379195",
+      "time": {
+        "elapsed": 66,
+        "extra": null
+      },
+      "team": {
+        "id": 36,
+        "name": "Fulham",
+        "logo": "https://media.api-sports.io/football/teams/36.png"
+      },
+      "player": {
+        "id": 1934,
+        "name": "S. Berge"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Card",
+      "detail": "Yellow Card",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379195",
+      "time": {
+        "elapsed": 69,
+        "extra": null
+      },
+      "team": {
+        "id": 36,
+        "name": "Fulham",
+        "logo": "https://media.api-sports.io/football/teams/36.png"
+      },
+      "player": {
+        "id": 1161,
+        "name": "E. Smith Rowe"
+      },
+      "assist": {
+        "id": 19025,
+        "name": "T. Cairney"
+      },
+      "type": "subst",
+      "detail": "Substitution 3",
       "comments": null
     },
     {
@@ -77427,6 +77611,29 @@
       },
       "type": "Goal",
       "detail": "Normal Goal",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379192",
+      "time": {
+        "elapsed": 46,
+        "extra": null
+      },
+      "team": {
+        "id": 47,
+        "name": "Tottenham",
+        "logo": "https://media.api-sports.io/football/teams/47.png"
+      },
+      "player": {
+        "id": 47519,
+        "name": "P. Porro"
+      },
+      "assist": {
+        "id": 204039,
+        "name": "D. Udogie"
+      },
+      "type": "subst",
+      "detail": "Substitution 1",
       "comments": null
     }
   ]
