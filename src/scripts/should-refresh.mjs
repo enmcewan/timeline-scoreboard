@@ -70,56 +70,36 @@ function isFinished(statusShort) {
 }
 
 function shouldRefresh(fixtures, nowMs) {
-  const now = new Date(nowMs);
-  const utcMin = now.getUTCMinutes();
-  const utcHour = now.getUTCHours();
+  const PRE_MS = 10 * 60 * 1000;     // 10 mins before kickoff
+  const POST_MS = 110 * 60 * 1000;   // 110 mins after kickoff (105 + buffer)
 
-  const kickoffTimes = [];
-  let anyLive = false;
-  let anyRecentUnfinished = false;
+  // statuses we never refresh for
+  const DEAD = new Set(["PST", "CANC", "ABD", "SUSP", "INT", "WO", "TBD"]);
 
   for (const fx of fixtures) {
-    const ko = getKickoffMs(fx);
-    if (Number.isFinite(ko)) kickoffTimes.push(ko);
-
     const st = getStatusShort(fx);
-    if (isLiveish(st)) anyLive = true;
 
-    // unfinished within last 12h => we’re still in a match window (late games / long stoppage / etc.)
-    if (!isFinished(st) && Number.isFinite(ko) && ko <= nowMs && nowMs - ko <= 12 * 60 * 60 * 1000) {
-      anyRecentUnfinished = true;
+    // ignore dead fixtures
+    if (DEAD.has(st)) continue;
+
+    // if match is live, refresh
+    if (isLiveish(st)) return true;
+
+    // otherwise, refresh only inside the kickoff window
+    // (covers NS / delayed status weirdness, and avoids hammering all season)
+    if (!isFinished(st)) {
+      const ko = getKickoffMs(fx);
+      if (Number.isFinite(ko)) {
+        if (nowMs >= ko - PRE_MS && nowMs <= ko + POST_MS) {
+          return true;
+        }
+      }
     }
   }
 
-  kickoffTimes.sort((a, b) => a - b);
-
-  const nextKickoff = kickoffTimes.find((t) => t > nowMs);
-  const lastKickoff = (() => {
-    for (let i = kickoffTimes.length - 1; i >= 0; i--) {
-      if (kickoffTimes[i] <= nowMs) return kickoffTimes[i];
-    }
-    return null;
-  })();
-
-  const minsToNext = nextKickoff ? (nextKickoff - nowMs) / 60000 : Infinity;
-  const minsSinceLast = lastKickoff ? (nowMs - lastKickoff) / 60000 : Infinity;
-
-  // Windows
-  const withinPre = minsToNext <= 120;      // 2h before kickoff
-  const withinPost = minsSinceLast <= 180;  // 3h after last kickoff
-  const within36h = minsToNext <= 36 * 60;
-
-  // Decision rules (ordered)
-  if (anyLive || anyRecentUnfinished) return true;
-  if (withinPre || withinPost) return true;
-
-  // If there’s a matchday coming up soon, do a light refresh on the half-hour marks
-  // (assumes workflow runs every ~10 min; this avoids hammering)
-  if (within36h) return utcMin === 0 || utcMin === 30;
-
-  // Otherwise: once a day at 06:00 UTC (pick any quiet hour you like)
-  return utcHour === 6 && utcMin === 0;
+  return false;
 }
+
 
 async function main() {
   const args = parseArgs(process.argv.slice(2));
