@@ -11,14 +11,85 @@
       "homeTeamId": "west-ham",
       "awayTeamId": "sunderland",
       "score": {
-        "home": 0,
+        "home": 3,
         "away": 0
       },
       "status": {
-        "state": "13'",
-        "halfTimeScore": "0–0"
+        "state": "HT",
+        "halfTimeScore": "3–0"
       },
-      "events": []
+      "events": [
+        {
+          "id": "1379198-0",
+          "minute": "14'",
+          "team": "home",
+          "kind": "goal",
+          "player": "C. Summerville",
+          "assist": "J. Bowen",
+          "detail": "",
+          "rawType": "Goal",
+          "rawDetail": "Normal Goal",
+          "comments": null,
+          "elapsed": 14,
+          "extra": 0
+        },
+        {
+          "id": "1379198-1",
+          "minute": "28'",
+          "team": "home",
+          "kind": "goal",
+          "player": "J. Bowen",
+          "assist": "",
+          "detail": "pen",
+          "rawType": "Goal",
+          "rawDetail": "Penalty",
+          "comments": null,
+          "elapsed": 28,
+          "extra": 0
+        },
+        {
+          "id": "1379198-2",
+          "minute": "30'",
+          "team": "away",
+          "kind": "yellow",
+          "player": "D. Ballard",
+          "assist": "",
+          "detail": "",
+          "rawType": "Card",
+          "rawDetail": "Yellow Card",
+          "comments": "Roughing",
+          "elapsed": 30,
+          "extra": 0
+        },
+        {
+          "id": "1379198-3",
+          "minute": "36'",
+          "team": "away",
+          "kind": "yellow",
+          "player": "R. Mandava",
+          "assist": "",
+          "detail": "",
+          "rawType": "Card",
+          "rawDetail": "Yellow Card",
+          "comments": "Holding",
+          "elapsed": 36,
+          "extra": 0
+        },
+        {
+          "id": "1379198-4",
+          "minute": "43'",
+          "team": "home",
+          "kind": "goal",
+          "player": "M. Fernandes",
+          "assist": "",
+          "detail": "",
+          "rawType": "Goal",
+          "rawDetail": "Normal Goal",
+          "comments": null,
+          "elapsed": 43,
+          "extra": 0
+        }
+      ]
     },
     {
       "id": "1379195",
