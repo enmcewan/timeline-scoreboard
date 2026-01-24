@@ -5,7 +5,7 @@
     "league": 39
   },
   "errors": [],
-  "results": 3414,
+  "results": 3415,
   "paging": {
     "current": 1,
     "total": 1
@@ -78532,6 +78532,29 @@
       "type": "Card",
       "detail": "Yellow Card",
       "comments": "Unsportsmanlike conduct"
+    },
+    {
+      "fixtureId": "1379190",
+      "time": {
+        "elapsed": 90,
+        "extra": 5
+      },
+      "team": {
+        "id": 35,
+        "name": "Bournemouth",
+        "logo": "https://media.api-sports.io/football/teams/35.png"
+      },
+      "player": {
+        "id": 129682,
+        "name": "A. Adli"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Goal",
+      "detail": "Normal Goal",
+      "comments": null
     }
   ]
 }
