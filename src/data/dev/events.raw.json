@@ -5,7 +5,7 @@
     "league": 39
   },
   "errors": [],
-  "results": 3400,
+  "results": 3405,
   "paging": {
     "current": 1,
     "total": 1
@@ -78210,6 +78210,121 @@
       "type": "subst",
       "detail": "Substitution 5",
       "comments": null
+    },
+    {
+      "fixtureId": "1379190",
+      "time": {
+        "elapsed": 26,
+        "extra": null
+      },
+      "team": {
+        "id": 35,
+        "name": "Bournemouth",
+        "logo": "https://media.api-sports.io/football/teams/35.png"
+      },
+      "player": {
+        "id": 152856,
+        "name": "Evanilson"
+      },
+      "assist": {
+        "id": 304853,
+        "name": "A. Scott"
+      },
+      "type": "Goal",
+      "detail": "Normal Goal",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379190",
+      "time": {
+        "elapsed": 33,
+        "extra": null
+      },
+      "team": {
+        "id": 35,
+        "name": "Bournemouth",
+        "logo": "https://media.api-sports.io/football/teams/35.png"
+      },
+      "player": {
+        "id": 330437,
+        "name": "A. Jimenez"
+      },
+      "assist": {
+        "id": 20093,
+        "name": "J. Hill"
+      },
+      "type": "Goal",
+      "detail": "Normal Goal",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379190",
+      "time": {
+        "elapsed": 35,
+        "extra": null
+      },
+      "team": {
+        "id": 40,
+        "name": "Liverpool",
+        "logo": "https://media.api-sports.io/football/teams/40.png"
+      },
+      "player": {
+        "id": 284,
+        "name": "J. Gomez"
+      },
+      "assist": {
+        "id": 8500,
+        "name": "W. Endo"
+      },
+      "type": "subst",
+      "detail": "Substitution 1",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379190",
+      "time": {
+        "elapsed": 45,
+        "extra": null
+      },
+      "team": {
+        "id": 40,
+        "name": "Liverpool",
+        "logo": "https://media.api-sports.io/football/teams/40.png"
+      },
+      "player": {
+        "id": 290,
+        "name": "V. van Dijk"
+      },
+      "assist": {
+        "id": 1096,
+        "name": "D. Szoboszlai"
+      },
+      "type": "Goal",
+      "detail": "Normal Goal",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379190",
+      "time": {
+        "elapsed": 45,
+        "extra": 3
+      },
+      "team": {
+        "id": 35,
+        "name": "Bournemouth",
+        "logo": "https://media.api-sports.io/football/teams/35.png"
+      },
+      "player": {
+        "id": 368030,
+        "name": "E. J. Kroupi"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Card",
+      "detail": "Yellow Card",
+      "comments": "Delay of game"
     }
   ]
 }

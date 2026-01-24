@@ -975,14 +975,87 @@
       "homeTeamId": "bournemouth",
       "awayTeamId": "liverpool",
       "score": {
-        "home": 0,
-        "away": 0
+        "home": 2,
+        "away": 1
       },
       "status": {
-        "state": "23'",
-        "halfTimeScore": "0–0"
+        "state": "HT",
+        "halfTimeScore": "2–1"
       },
-      "events": []
+      "events": [
+        {
+          "id": "1379190-0",
+          "minute": "26'",
+          "team": "home",
+          "kind": "goal",
+          "player": "Evanilson",
+          "assist": "A. Scott",
+          "detail": "",
+          "rawType": "Goal",
+          "rawDetail": "Normal Goal",
+          "comments": null,
+          "elapsed": 26,
+          "extra": 0
+        },
+        {
+          "id": "1379190-1",
+          "minute": "33'",
+          "team": "home",
+          "kind": "goal",
+          "player": "A. Jimenez",
+          "assist": "J. Hill",
+          "detail": "",
+          "rawType": "Goal",
+          "rawDetail": "Normal Goal",
+          "comments": null,
+          "elapsed": 33,
+          "extra": 0
+        },
+        {
+          "id": "1379190-2",
+          "minute": "35'",
+          "team": "away",
+          "kind": "sub",
+          "player": "J. Gomez",
+          "assist": "W. Endo",
+          "inPlayer": "W. Endo",
+          "outPlayer": "J. Gomez",
+          "detail": "",
+          "rawType": "subst",
+          "rawDetail": "Substitution 1",
+          "comments": null,
+          "elapsed": 35,
+          "extra": 0
+        },
+        {
+          "id": "1379190-3",
+          "minute": "45'",
+          "team": "away",
+          "kind": "goal",
+          "player": "V. van Dijk",
+          "assist": "D. Szoboszlai",
+          "detail": "",
+          "rawType": "Goal",
+          "rawDetail": "Normal Goal",
+          "comments": null,
+          "elapsed": 45,
+          "extra": 0
+        },
+        {
+          "id": "1379190-4",
+          "minute": "45'+3",
+          "team": "home",
+          "kind": "yellow",
+          "player": "E. J. Kroupi",
+          "assist": "",
+          "detail": "",
+          "rawType": "Card",
+          "rawDetail": "Yellow Card",
+          "comments": "Delay of game",
+          "elapsed": 45,
+          "extra": 3
+        }
+      ]
     },
     {
       "id": "1379197",
