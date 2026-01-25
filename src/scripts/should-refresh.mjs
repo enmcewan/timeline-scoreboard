@@ -11,7 +11,7 @@ if (process.env.FORCE_REFRESH === "true" || process.env.FORCE_REFRESH === "1") {
 
 const CANDIDATE_FIXTURE_PATHS = [
   // adjust/add if your repo stores fixtures elsewhere
-  "src/data/dev/fixtures.raw.json",
+  "public/data/dev/fixtures.raw.json",
   "src/data/leagues/epl/2025/fixtures.raw.json",
   "src/data/leagues/epl/fixtures.raw.json",
 ];
