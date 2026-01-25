@@ -504,7 +504,7 @@ function renderEventRow(evt, mode) {
   const homeCell = evt.team === "home" ? renderEventText(evt, mode) : "";
   const awayCell = evt.team === "away" ? renderEventText(evt, mode) : "";
 
-  if (evt.kind !== "var" && evt.detail !== "penalty confirmed")
+  if (evt.kind !== "var" && evt.detail !== "penalty confirmed") {
 
     return `
     <div class="row">
@@ -513,4 +513,5 @@ function renderEventRow(evt, mode) {
       <div class="event away">${awayCell}</div>
     </div>
   `;
+  }
 }
