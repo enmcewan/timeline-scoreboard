@@ -87,7 +87,13 @@ body.dark-mode {
 /* BASE
    ----------------------------- */
 :root {
-  font-family: inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family:
+    inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
 }
 
 /* utilities */
@@ -152,7 +158,7 @@ footer {
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  padding: .5rem 1rem 1rem 1rem;
+  padding: 0.5rem 1rem 1rem 1rem;
 }
 
 .matchday-header {
@@ -199,7 +205,7 @@ footer {
 .match-card {
   max-width: 640px;
   /* width: 100%; */
-  padding: .75rem;
+  padding: 0.75rem;
   border-radius: 0.4rem;
   background: var(--card-bg);
   box-shadow: var(--card-shadow);
@@ -249,10 +255,12 @@ footer {
   height: 61px;
 }
 
-/* .team-badge-cont.sunderland {
+.team-badge.sunderland {
   width: 73px;
   height: 73px;
-} */
+  position: relative;
+  right: 0.25rem;
+}
 
 .team-badge {
   height: 100%;
@@ -552,7 +560,6 @@ span.sub {
 }
 
 @media (max-width: 480px) {
-
   body {
     min-height: 4064px;
   }
@@ -571,7 +578,7 @@ span.sub {
     padding: 0.25rem 0.15rem;
     box-shadow: var(--card-shadow-mb);
   }
-  
+
   .at-cont {
     margin-right: 1rem;
   }
@@ -585,10 +592,12 @@ span.sub {
     height: 61px;
   }
 
-  /* .team-badge-cont.sunderland {
-    width: 61px;
-    height: 61px;
-  } */
+  .team-badge.sunderland {
+    width: 67px;
+    height: 67px;
+    position: relative;
+    bottom: 0.4rem;
+  }
 
   .team-badge {
     height: 100%;
