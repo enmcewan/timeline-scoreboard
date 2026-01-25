@@ -11,7 +11,7 @@
     "fetch:events": "node src/scripts/fetch-events.byFixture.mjs",
     "refresh:epl2025": "node src/scripts/refresh-epl-2025.mjs",
     "refresh:all": "npm run fetch:fixtures && npm run fetch:events && npm run refresh:epl2025",
-    "gate:refresh": "node src/scripts/should-refresh.mjs --fixtures src/data/dev/fixtures.raw.json",
+    "gate:refresh": "node src/scripts/should-refresh.mjs --fixtures public/data/dev/fixtures.raw.json",
     "refresh:smart": "npm run gate:refresh | tee /dev/stderr | node -e \"let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{if(d.includes('REFRESH=1')) process.exit(0); console.log('Gate: skip refresh'); process.exit(42);});\" && npm run refresh:all",
     "update:matchdays": "npm run fetch:events && npm run refresh:epl2025"
   },
