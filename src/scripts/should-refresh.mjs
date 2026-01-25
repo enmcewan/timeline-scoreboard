@@ -100,7 +100,6 @@ function shouldRefresh(fixtures, nowMs) {
   return false;
 }
 
-
 async function main() {
   const args = parseArgs(process.argv.slice(2));
 
@@ -120,9 +119,8 @@ async function main() {
     rawText = await fs.readFile(fixturesPath, "utf8");
   } catch (err) {
     if (err && err.code === "ENOENT") {
-      console.log("REFRESH=1");
-      console.log(`Reason: fixtures file missing at ${fixturesPath} (cold start)`);
-      process.exit(0);
+      console.error(`Gate error: fixtures file missing at ${fixturesPath}`);
+      process.exit(2);
     }
     throw err;
   }
