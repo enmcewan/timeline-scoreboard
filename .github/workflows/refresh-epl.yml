@@ -27,28 +27,29 @@ jobs:
       - name: Install
         run: npm ci
 
+      - name: Fetch fixtures (always)
+        env:
+          APIFOOTBALL_KEY: ${{ secrets.APIFOOTBALL_KEY }}
+        run: npm run fetch:fixtures
+
       - name: Smart refresh (gated)
         id: gate
         env:
-          APIFOOTBALL_KEY: ${{ secrets.APIFOOTBALL_KEY }}
           FORCE_REFRESH: ${{ github.event.inputs.force_refresh }}
         run: |
-          set +e
-          npm run refresh:smart
-          code=$?
-          set -e
-
-          if [ "$code" = "42" ]; then
-            echo "Gate said skip refresh."
+          out="$(npm run -s gate:refresh)"
+          echo "$out"
+          if echo "$out" | grep -q "REFRESH=1"; then
+            echo "should_deploy=1" >> "$GITHUB_OUTPUT"
+          else
             echo "should_deploy=0" >> "$GITHUB_OUTPUT"
-            exit 0
           fi
 
-          if [ "$code" != "0" ]; then
-            exit $code
-          fi
-
-          echo "should_deploy=1" >> "$GITHUB_OUTPUT"
+      - name: Refresh events + matchdays
+        if: steps.gate.outputs.should_deploy == '1'
+        env:
+          APIFOOTBALL_KEY: ${{ secrets.APIFOOTBALL_KEY }}
+        run: npm run update:matchdays
 
       - name: Build
         if: steps.gate.outputs.should_deploy == '1'
