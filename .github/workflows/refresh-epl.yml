@@ -28,6 +28,7 @@ jobs:
         run: npm ci
 
       - name: Smart refresh (gated)
+        id: gate
         env:
           APIFOOTBALL_KEY: ${{ secrets.APIFOOTBALL_KEY }}
           FORCE_REFRESH: ${{ github.event.inputs.force_refresh }}
@@ -35,16 +36,26 @@ jobs:
           set +e
           npm run refresh:smart
           code=$?
+          set -e
+
           if [ "$code" = "42" ]; then
             echo "Gate said skip refresh."
+            echo "should_deploy=0" >> "$GITHUB_OUTPUT"
             exit 0
           fi
-          exit $code
+
+          if [ "$code" != "0" ]; then
+            exit $code
+          fi
+
+          echo "should_deploy=1" >> "$GITHUB_OUTPUT"
 
       - name: Build
+        if: steps.gate.outputs.should_deploy == '1'
         run: npm run build
 
       - name: Deploy to Netlify (prod)
+        if: steps.gate.outputs.should_deploy == '1'
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
