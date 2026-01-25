@@ -1,4 +1,3 @@
-// src/dev/fetch-fixture.mjs
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -17,7 +16,7 @@ if (!API_KEY) {
 // --- resolve project root paths ---
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const projectRoot = path.resolve(__dirname, "../");
+const projectRoot = path.resolve(__dirname, "../..");
 
 function writeJson(relativePath, data) {
   const full = path.join(projectRoot, relativePath);
@@ -60,7 +59,8 @@ async function main() {
 
   const data = await fetchJson(fixturesUrl);
 
-  writeJson("/data/dev/fixtures.raw.json", data);
+  writeJson("/public/data/dev/fixtures.raw.json", data);
+
 
   console.log("Done.");
 }

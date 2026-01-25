@@ -14,6 +14,8 @@ console.log("SCRIPT STARTED");
 const FIXTURES_RAW_PATH = path.join(
   __dirname,
   "..",
+  "..",
+  "public",
   "data",
   "dev",
   "fixtures.raw.json"
@@ -22,6 +24,8 @@ const FIXTURES_RAW_PATH = path.join(
 const EVENTS_RAW_PATH = path.join(
   __dirname,
   "..",
+  "..",
+  "public",
   "data",
   "dev",
   "events.raw.json"
@@ -30,6 +34,8 @@ const EVENTS_RAW_PATH = path.join(
 const MATCHDAYS_DIR = path.join(
   __dirname,
   "..",
+  "..",
+  "public",
   "data",
   "leagues",
   "epl",

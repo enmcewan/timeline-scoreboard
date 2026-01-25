@@ -2,20 +2,31 @@ import "./style.css";
 import teams from "./data/leagues/epl/2025/teams.json";
 import { esc, sortedEvents } from "./lib/utils.js";
 
-// Load ALL matchdays for 2025 EPL
-const matchdayModules = import.meta.glob(
-  "./data/leagues/epl/2025/matchdays/*.json",
-  { eager: true, import: "default" }
-);
-
-// Build a { roundNumber: matchdayJson } map
+// Runtime-loaded matchdays from /public/data (served at /data/...)
 const MATCHDAYS = {};
+const ALL_ROUNDS = Array.from({ length: 38 }, (_, i) => i + 1);
 
-for (const [, md] of Object.entries(matchdayModules)) {
-  // each md should look like: { season, round, matches: [...] }
-  const round = md.round;
-  if (!round) continue;
-  MATCHDAYS[round] = md;
+async function loadAllMatchdays() {
+  const results = await Promise.allSettled(
+    ALL_ROUNDS.map(async (round) => {
+      const res = await fetch(`/data/leagues/epl/2025/matchdays/${round}.json`, {
+        cache: "no-store",
+      });
+      if (!res.ok) return null; // allow missing rounds early season
+      const md = await res.json();
+      if (!md?.round) return null;
+      return md;
+    })
+  );
+
+  for (const r of results) {
+    if (r.status !== "fulfilled" || !r.value) continue;
+    MATCHDAYS[r.value.round] = r.value;
+  }
+
+  return Object.keys(MATCHDAYS)
+    .map(Number)
+    .sort((a, b) => a - b);
 }
 
 function pickInitialRound(matchdays) {
@@ -57,12 +68,14 @@ function pickInitialRound(matchdays) {
 }
 
 
-const initialRound =
-  pickInitialRound(MATCHDAYS) ?? allRounds[allRounds.length - 1];
+// const initialRound =
+//   pickInitialRound(MATCHDAYS) ?? allRounds[allRounds.length - 1];
 
-let currentRound = initialRound;
-let currentMatches = MATCHDAYS[currentRound].matches;
+// let currentRound = initialRound;
+// let currentMatches = MATCHDAYS[currentRound].matches;
 
+let currentRound = null;
+let currentMatches = [];
 
 const VIEW_MODES = {
   COMPACT: "compact",
@@ -112,8 +125,37 @@ function renderControls() {
 }
 
 // initial render
-renderControls();
-renderAllMatches();
+// renderControls();
+// renderAllMatches();
+
+async function init() {
+  const allRounds = await loadAllMatchdays();
+
+  if (!allRounds.length) {
+    app.innerHTML = `<div class="match-list"><p>No matchday data found.</p></div>`;
+    return;
+  }
+
+  const initialRound =
+    pickInitialRound(MATCHDAYS) ?? allRounds[allRounds.length - 1];
+
+  currentRound = initialRound;
+  currentMatches = MATCHDAYS[currentRound].matches;
+
+  // initialize per-card modes to match the global mode
+  viewModes.clear();
+  for (const m of currentMatches) viewModes.set(String(m.id), globalViewMode);
+
+  renderControls();
+  renderAllMatches();
+}
+
+init().catch((err) => {
+  console.error("Init failed:", err);
+  app.innerHTML = `<div class="match-list"><p>Failed to load matchday data.</p></div>`;
+});
+
+
 
 document.addEventListener("click", (e) => {
 
