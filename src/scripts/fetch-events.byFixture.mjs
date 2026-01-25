@@ -2,7 +2,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-import fixturesRaw from "../data/dev/fixtures.raw.json" with { type: "json" };
+import fixturesRaw from "../../public/data/dev/fixtures.raw.json" with { type: "json" };
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -10,7 +10,7 @@ const __dirname = path.dirname(__filename);
 const API_KEY = process.env.APIFOOTBALL_KEY;
 const BASE_URL = "https://v3.football.api-sports.io";
 
-const OUT_PATH = path.join(__dirname, "../data/dev/events.raw.json");
+const OUT_PATH = path.join(__dirname, "../../public/data/dev/events.raw.json");
 
 const REFRESH_WINDOW_HOURS = 24;
 const REFRESH_WINDOW_MS = REFRESH_WINDOW_HOURS * 60 * 60 * 1000;
