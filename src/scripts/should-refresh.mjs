@@ -110,8 +110,9 @@ async function main() {
     (await firstExistingPath(CANDIDATE_FIXTURE_PATHS));
 
   if (!fixturesPath) {
-    console.error("Gate: could not find fixtures.raw.json. Provide --fixtures <path> or set FIXTURES_PATH.");
-    process.exit(2);
+    console.log("REFRESH=1");
+    console.log("Reason: fixtures file missing (cold start)");
+    process.exit(0);
   }
 
   const raw = JSON.parse(await fs.readFile(fixturesPath, "utf8"));
