@@ -30,4 +30,5 @@ package.json.readme.txt
 
 # Generated runtime data (do not commit)
 public/data/**
-
+src/data/dev/**
+src/data/leagues/epl/2025/matchdays/**
