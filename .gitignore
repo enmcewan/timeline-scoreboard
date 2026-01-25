@@ -26,3 +26,4 @@ dist-ssr
 build
 BBC Screenshots/
 package.json.readme.txt
+.secret_sauce/
