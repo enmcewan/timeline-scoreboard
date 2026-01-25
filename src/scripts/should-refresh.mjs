@@ -38,7 +38,7 @@ async function firstExistingPath(paths) {
     try {
       await fs.access(p);
       return p;
-    } catch {}
+    } catch { }
   }
   return null;
 }
@@ -115,7 +115,20 @@ async function main() {
     process.exit(0);
   }
 
-  const raw = JSON.parse(await fs.readFile(fixturesPath, "utf8"));
+  let rawText;
+  try {
+    rawText = await fs.readFile(fixturesPath, "utf8");
+  } catch (err) {
+    if (err && err.code === "ENOENT") {
+      console.log("REFRESH=1");
+      console.log(`Reason: fixtures file missing at ${fixturesPath} (cold start)`);
+      process.exit(0);
+    }
+    throw err;
+  }
+
+  const raw = JSON.parse(rawText);
+
   const fixtures = raw?.response ?? [];
 
   const ok = shouldRefresh(fixtures, Date.now());
