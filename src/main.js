@@ -29,6 +29,14 @@ async function loadAllMatchdays() {
     .sort((a, b) => a - b);
 }
 
+function getRoundFromPathname() {
+  const m = window.location.pathname.match(/\/epl\/2025\/matchweek\/(\d+)\//);
+  if (!m) return null;
+  const n = Number(m[1]);
+  return Number.isFinite(n) ? n : null;
+}
+
+
 function pickInitialRound(matchdays) {
   const now = Date.now();
   const GRACE_MS = 6 * 60 * 60 * 1000; // 6h buffer for late updates / timezones
@@ -65,6 +73,29 @@ function pickInitialRound(matchdays) {
 
   // 3) Otherwise fall back to the most recent past round
   return rounds[rounds.length - 1].round;
+}
+
+function setPageMetaForRound(round) {
+  const title = `EPL 2025–26 Matchweek ${round} Timelines | Timeline Football`;
+  document.title = title;
+
+  const desc = `Premier League 2025–26 Matchweek ${round} results with goal, card, VAR and substitution timelines.`;
+  let meta = document.querySelector('meta[name="description"]');
+  if (!meta) {
+    meta = document.createElement("meta");
+    meta.setAttribute("name", "description");
+    document.head.appendChild(meta);
+  }
+  meta.setAttribute("content", desc);
+
+  const canonicalHref = `${window.location.origin}/epl/2025/matchweek/${round}/`;
+  let canon = document.querySelector('link[rel="canonical"]');
+  if (!canon) {
+    canon = document.createElement("link");
+    canon.setAttribute("rel", "canonical");
+    document.head.appendChild(canon);
+  }
+  canon.setAttribute("href", canonicalHref);
 }
 
 
@@ -136,10 +167,19 @@ async function init() {
     return;
   }
 
+  // const initialRound =
+  //   pickInitialRound(MATCHDAYS) ?? allRounds[allRounds.length - 1];
+
+  const routeRound = getRoundFromPathname();
+
   const initialRound =
-    pickInitialRound(MATCHDAYS) ?? allRounds[allRounds.length - 1];
+    (routeRound && MATCHDAYS[routeRound] ? routeRound : null) ??
+    pickInitialRound(MATCHDAYS) ??
+    allRounds[allRounds.length - 1];
 
   currentRound = initialRound;
+  setPageMetaForRound(currentRound);
+  
   currentMatches = MATCHDAYS[currentRound].matches;
 
   // initialize per-card modes to match the global mode
@@ -217,6 +257,10 @@ document.addEventListener("change", (e) => {
   // reset global + per-card state for the new matchday
   globalViewMode = VIEW_MODES.COMPACT;
   showAllAriaPressed = "false";
+
+  history.replaceState(null, "", `/epl/2025/matchweek/${currentRound}/`);
+  setPageMetaForRound(currentRound);
+
 
   viewModes.clear();
   for (const m of currentMatches) viewModes.set(String(m.id), globalViewMode);
@@ -391,20 +435,17 @@ function renderEventText(evt, mode) {
     const assist = evt.assist ? `<span class="assist">(${formatPlayerName(esc(evt.assist))})</span>` : "";
 
     let detail = "";
-    if (evt.detail === "pen") { detail = `<span class="goal-detail">(Pen)</span>`; }
+    if (evt.detail === "pen") { detail = `<span class="goal-detail">(Pen)</span>`; };
+    if (evt.kind === "own-goal") { detail = `</span><span class="own-goal-label" title="Own Goal" aria-label="Own Goal"> (Own Goal)</span>`; };
 
-    let goalImg = '';
+    const label = `<span class="player-goal">${player}</span>`;
     const isOwnGoal = evt.kind === "own-goal";
-    const label = isOwnGoal
-      ? `<span class="player-goal">${player}</span><span class="own-goal-label" title="Own Goal" aria-label="Own Goal"> (OG)</span>`
-      : `<span class="player-goal">${player}</span>`;
-
     const cls = isOwnGoal ? "evt-svg og-goal-ball" : "evt-svg goal-ball";
     const title = isOwnGoal ? "Own Goal" : "Goal";
 
-    goalImg = `
+    let goalImg = `
                 <span class="${cls}" title="${title}">
-                    <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <svg width="18" height="18" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                         <use href="/img/misc/ball.svg"></use>
                     </svg>
                 </span>

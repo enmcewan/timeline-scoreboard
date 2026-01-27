@@ -137,11 +137,15 @@ footer {
 
 .league-logo,
 .goal-ball,
-.var-goal-cancelled-icon,
-.missed-pen-ball,
 .sub-arrow {
   fill: var(--accent);
   transition: fill 0.5s ease-in-out;
+}
+
+
+.var-goal-cancelled-icon,
+.missed-pen-ball {
+  fill: var(--accent-minute);
 }
 
 .league-logo svg {
@@ -250,16 +254,17 @@ footer {
   margin-left: 1rem;
 }
 
-.team-badge-cont {
+/* .team-badge-cont {
   width: 61px;
   height: 61px;
-}
+} */
 
 .team-badge.sunderland {
   width: 73px;
   height: 73px;
   position: relative;
   right: 0.25rem;
+  bottom: 1px;
 }
 
 .team-badge {
@@ -336,8 +341,8 @@ footer {
 .match-body .row {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
-  min-height: 1.3rem;
-  margin: 0.12rem 0;
+  min-height: 1.5rem;
+  align-items: end;
 }
 
 .event.home {
@@ -390,6 +395,11 @@ footer {
   top: 2px;
 }
 
+.goal-ball,
+.og-goal-ball {
+  top: 3px;
+}
+
 .sub-arrow {
   margin: 0 0.25rem 0 0.25rem;
 }
@@ -417,11 +427,15 @@ footer {
   margin-left: 0.15rem;
 }
 
-.missed-pen-ball svg,
-.var-goal-cancelled-icon svg {
-  opacity: 0.6; /* softer than a normal goal */
-  filter: grayscale(100%); /* optional “missed” vibe */
+.var-goal-confirmed {
+  margin-left: 0;
 }
+
+/* .missed-pen-ball svg,
+.var-goal-cancelled-icon svg {
+  opacity: 0.6; 
+  filter: grayscale(100%);
+} */
 
 .var {
   font-size: 14px;
@@ -429,7 +443,8 @@ footer {
 
 .var-player {
   /* optional: slightly dimmer than normal goals */
-  font-weight: 500;
+  /* font-weight: 500; */
+  font-style: italic;
 }
 
 .card {
@@ -596,7 +611,7 @@ span.sub {
     width: 67px;
     height: 67px;
     position: relative;
-    bottom: 0.4rem;
+    bottom: 0.35rem;
   }
 
   .team-badge {
