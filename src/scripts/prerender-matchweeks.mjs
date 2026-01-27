@@ -101,7 +101,7 @@ async function main() {
     out = setTitle(out, `EPL 2025–26 Matchweek ${round} Timelines | Timeline Football`);
     out = setDescription(
       out,
-      `Premier League 2025–26 Matchweek ${round} results with goal, card, VAR and substitution timelines.`
+      `EnglishPremier League 2025–26 Matchweek ${round} results with goals, cards, VAR and substitution timelines.`
     );
     out = setCanonical(out, canonical);
     out = injectApp(out, appHtml);
