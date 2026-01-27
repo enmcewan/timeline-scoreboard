@@ -55,6 +55,17 @@ jobs:
         if: steps.gate.outputs.should_deploy == '1'
         run: npm run build:prerender
 
+      - name: Verify prerender output exists
+        if: steps.gate.outputs.should_deploy == '1'
+        run: |
+          echo "PWD=$(pwd)"
+          test -f dist/index.html
+          test -f dist/sitemap.xml
+          echo "---- matchweek dirs ----"
+          ls -la dist/epl/2025/matchweek || true
+          echo "---- sample matchweek file ----"
+          test -f dist/epl/2025/matchweek/1/index.html && echo "MW1 OK" || echo "MW1 missing (maybe season hasn't reached 1?)"
+
       - name: Deploy to Netlify (prod)
         if: steps.gate.outputs.should_deploy == '1'
         env:
