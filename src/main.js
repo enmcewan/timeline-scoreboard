@@ -36,6 +36,42 @@ function getRoundFromPathname() {
   return Number.isFinite(n) ? n : null;
 }
 
+const SEASON_START = 2025;
+const SEASON_LABEL = "2025–26";
+
+function updateHeaderNav(round) {
+
+  const MAX_ROUND = Math.max(...Object.keys(MATCHDAYS).map(Number));
+
+  const hub = document.querySelector("#mw-hub");
+  const prev = document.querySelector("#mw-prev");
+  const next = document.querySelector("#mw-next");
+
+  if (!hub || !prev || !next) return;
+
+  hub.textContent = `← EPL ${SEASON_LABEL} matchweeks`;
+  hub.href = `/epl/${SEASON_START}/`;
+
+  // prev
+  if (round > 1) {
+    prev.style.display = "";
+    prev.href = `/epl/${SEASON_START}/matchweek/${round - 1}/`;
+    prev.textContent = `← Matchweek ${round - 1}`;
+    prev.setAttribute("aria-disabled", "false");
+  } else {
+    prev.style.display = "none"; // or disable visually
+  }
+
+  // next
+  if (round < MAX_ROUND) {
+    next.style.display = "";
+    next.href = `/epl/${SEASON_START}/matchweek/${round + 1}/`;
+    next.textContent = `Matchweek ${round + 1} →`;
+    next.setAttribute("aria-disabled", "false");
+  } else {
+    next.style.display = "none";
+  }
+}
 
 function pickInitialRound(matchdays) {
   const now = Date.now();
@@ -98,13 +134,6 @@ function setPageMetaForRound(round) {
   canon.setAttribute("href", canonicalHref);
 }
 
-
-// const initialRound =
-//   pickInitialRound(MATCHDAYS) ?? allRounds[allRounds.length - 1];
-
-// let currentRound = initialRound;
-// let currentMatches = MATCHDAYS[currentRound].matches;
-
 let currentRound = null;
 let currentMatches = [];
 
@@ -155,10 +184,6 @@ function renderControls() {
   showAllBtn.setAttribute("aria-pressed", showAllAriaPressed);
 }
 
-// initial render
-// renderControls();
-// renderAllMatches();
-
 async function init() {
   const allRounds = await loadAllMatchdays();
 
@@ -179,7 +204,9 @@ async function init() {
 
   currentRound = initialRound;
   setPageMetaForRound(currentRound);
-  
+
+  updateHeaderNav(currentRound);
+
   currentMatches = MATCHDAYS[currentRound].matches;
 
   // initialize per-card modes to match the global mode
@@ -194,8 +221,6 @@ init().catch((err) => {
   console.error("Init failed:", err);
   app.innerHTML = `<div class="match-list"><p>Failed to load matchday data.</p></div>`;
 });
-
-
 
 document.addEventListener("click", (e) => {
 
@@ -218,7 +243,6 @@ document.addEventListener("click", (e) => {
 
   // existing per-card toggle continues below...
 });
-
 
 document.addEventListener("click", (e) => {
   const btn = e.target.closest(".timeline-toggle");
@@ -253,6 +277,8 @@ document.addEventListener("change", (e) => {
 
   currentRound = nextRound;
   currentMatches = MATCHDAYS[currentRound].matches;
+
+  updateHeaderNav(currentRound);
 
   // reset global + per-card state for the new matchday
   globalViewMode = VIEW_MODES.COMPACT;
@@ -329,11 +355,11 @@ function renderMatchCard(match) {
     : "TBD";
 
   return `
-    <div class="match-card" data-match-id="${match.id}">
+    <div class="match-card" id="fixture-${match.id}" data-match-id="${match.id}">
         <div class="match-date">${esc(kickoffTime)}</div>
         <header class="match-header">
             <div class="ht-cont">
-              <div class="team-badge-cont ${match.homeTeamId}">
+              <div class="team-badge-cont ${match.homeTeamId}" title="${esc(home.nicknames[0])}">
                 <img class="team-badge ${match.homeTeamId}" src="${esc(home.badge)}" alt="${esc(home.name)} badge" />
               </div>
               <div class="team home">${esc(home.display || home.name)}</div>
@@ -349,7 +375,7 @@ function renderMatchCard(match) {
               </div>
             </div>
             <div class="at-cont">
-              <div class="team-badge-cont ${match.awayTeamId}">
+              <div class="team-badge-cont ${match.awayTeamId}" title="${esc(away.nicknames[0])}">
                 <img class="team-badge ${match.awayTeamId}" src="${esc(away.badge)}" alt="${esc(away.name)} badge" />
               </div>
               <div class="team away">${esc(away.display || away.name)}</div>
@@ -368,10 +394,6 @@ function renderMatchCard(match) {
   `;
 }
 
-/**
- * Formats player names to "F. Lastname".
- * Returns single names as-is and ignores already formatted names.
- */
 function formatPlayerName(fullName) {
   const trimmedName = fullName.trim();
 
@@ -507,11 +529,11 @@ function renderEventText(evt, mode) {
             `;
     }
 
-    let varEvent = '(VAR · ';
+    let varEvent = '<span class="var-event">VAR</span>';
 
-    const vgc = evt.kind === "var-goal-cancelled" ? `<span class="var var-no-goal">${varEvent + 'Cancelled'})</span>` : "";
-    const vgd = evt.kind === "var-goal-disallowed" ? `<span class="var var-no-goal">${varEvent + 'Offside'})</span>` : "";
-    const vga = evt.kind === "var-goal-confirmed" ? `<span class="var var-goal-confirmed">${varEvent + 'Confirmed'})</span>` : "";
+    const vgc = evt.kind === "var-goal-cancelled" ? `<span class="var var-no-goal">${varEvent + ' (Cancelled'})</span>` : "";
+    const vgd = evt.kind === "var-goal-disallowed" ? `<span class="var var-no-goal">${varEvent + ' (Offside'})</span>` : "";
+    const vga = evt.kind === "var-goal-confirmed" ? `<span class="var var-goal-confirmed">${varEvent + ' (Confirmed'})</span>` : "";
 
     let metaBits = `${vgc}${vgd}${vga}`;
 
@@ -549,11 +571,11 @@ function renderEventText(evt, mode) {
     //     `;
     // }
 
-    let varEvent = '(VAR · ';
+    let varEvent = '<span class="var-event">VAR</span>';
 
-    const vgc = evt.kind === "var-pen-cancelled" ? `<span class="var var-no-goal">${varEvent + 'Pen Cancelled'})</span>` : "";
-    const vgd = evt.kind === "var-pen-confirmed" ? `<span class="var var-pen-awarded">${varEvent + 'Pen Awarded'})</span>` : "";
-    const vcu = evt.kind === "var-card-upgrade" ? `<span class="var var-card-upgrade">${varEvent + 'Card Upgraded'})</span>` : "";
+    const vgc = evt.kind === "var-pen-cancelled" ? `<span class="var var-no-goal">${varEvent + ' (Pen Cancelled'})</span>` : "";
+    const vgd = evt.kind === "var-pen-confirmed" ? `<span class="var var-pen-awarded">${varEvent + ' (Pen Awarded'})</span>` : "";
+    const vcu = evt.kind === "var-card-upgrade" ? `<span class="var var-card-upgrade">${varEvent + ' (Card Upgraded'})</span>` : "";
 
     let metaBits = `${vgc}${vgd}${vcu}`;
 

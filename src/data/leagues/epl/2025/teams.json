@@ -2,101 +2,141 @@
   "arsenal": {
     "name": "Arsenal",
     "display": "",
+    "altNames": ["Arsenal", "Arsenal FC", "AFC"],
+    "nicknames": ["The Gunners"],
     "badge": "/img/badges/epl/arsenal.svg"
   },
   "aston-villa": {
     "name": "Aston Villa",
     "display": "",
+    "altNames": ["Aston Villa", "Villa", "Aston Villa FC", "AVFC"],
+    "nicknames": ["The Villans"],
     "badge": "/img/badges/epl/aston-villa.svg"
   },
   "bournemouth": {
-    "name": "Bournemouth",
-    "display": "AFC Bournemouth",
+    "name": "AFC Bournemouth",
+    "display": "Bournemouth",
+    "altNames": ["Bournemouth", "AFC Bournemouth", "A.F.C. Bournemouth"],
+    "nicknames": ["The Cherries"],
     "badge": "/img/badges/epl/bournemouth.svg"
   },
   "brentford": {
     "name": "Brentford",
     "display": "",
+    "altNames": ["Brentford", "Brentford FC"],
+    "nicknames": ["The Bees"],
     "badge": "/img/badges/epl/brentford.svg"
   },
   "brighton": {
-    "name": "Brighton",
-    "display": "",
+    "name": "Brighton & Hove Albion",
+    "display": "Brighton",
+    "altNames": ["Brighton", "Brighton & Hove Albion", "Brighton and Hove Albion", "BHA", "BHAFC"],
+    "nicknames": ["The Seagulls", "Albion"],
     "badge": "/img/badges/epl/brighton.svg"
   },
   "burnley": {
     "name": "Burnley",
     "display": "",
+    "altNames": ["Burnley", "Burnley FC"],
+    "nicknames": ["The Clarets"],
     "badge": "/img/badges/epl/burnley.svg"
   },
   "chelsea": {
     "name": "Chelsea",
     "display": "",
+    "altNames": ["Chelsea", "Chelsea FC", "CFC"],
+    "nicknames": ["The Blues"],
     "badge": "/img/badges/epl/chelsea.svg"
   },
   "crystal-palace": {
     "name": "Crystal Palace",
     "display": "",
+    "altNames": ["Crystal Palace", "Palace", "Crystal Palace FC", "CPFC"],
+    "nicknames": ["The Eagles"],
     "badge": "/img/badges/epl/crystal-palace.svg"
   },
   "everton": {
     "name": "Everton",
     "display": "",
+    "altNames": ["Everton", "Everton FC", "EFC"],
+    "nicknames": ["The Toffees"],
     "badge": "/img/badges/epl/everton.svg"
   },
   "fulham": {
     "name": "Fulham",
     "display": "",
+    "altNames": ["Fulham", "Fulham FC"],
+    "nicknames": ["The Cottagers"],
     "badge": "/img/badges/epl/fulham.svg"
   },
   "leeds": {
-    "name": "Leeds",
+    "name": "Leeds United",
     "display": "Leeds Utd",
+    "altNames": ["Leeds", "Leeds Utd", "Leeds United", "LUFC"],
+    "nicknames": ["The Whites"],
     "badge": "/img/badges/epl/leeds-united.svg"
   },
   "liverpool": {
     "name": "Liverpool",
     "display": "",
+    "altNames": ["Liverpool", "Liverpool FC", "LFC"],
+    "nicknames": ["The Reds"],
     "badge": "/img/badges/epl/liverpool.svg"
   },
   "manchester-city": {
     "name": "Manchester City",
     "display": "",
+    "altNames": ["Man City", "Manchester City", "Manchester City FC", "MCFC"],
+    "nicknames": ["The Citizens", "City"],
     "badge": "/img/badges/epl/manchester-city.svg"
   },
   "manchester-united": {
     "name": "Manchester United",
     "display": "Manchester Utd",
+    "altNames": ["Man U", "Man United", "Man Utd", "Manchester Utd", "Manchester United", "MUFC"],
+    "nicknames": ["The Red Devils"],
     "badge": "/img/badges/epl/manchester-united.svg"
   },
   "newcastle": {
-    "name": "Newcastle",
+    "name": "Newcastle United",
     "display": "Newcastle Utd",
+    "altNames": ["Newcastle", "Newcastle Utd", "Newcastle United", "NUFC"],
+    "nicknames": ["The Magpies"],
     "badge": "/img/badges/epl/newcastle.svg"
   },
   "nottingham-forest": {
     "name": "Nottingham Forest",
     "display": "",
+    "altNames": ["Nottingham Forest", "Forest", "Nott'm Forest", "NFFC"],
+    "nicknames": ["The Tricky Trees", "Forest"],
     "badge": "/img/badges/epl/nottingham-forest.svg"
   },
   "sunderland": {
     "name": "Sunderland",
     "display": "",
+    "altNames": ["Sunderland", "Sunderland AFC", "SAFC"],
+    "nicknames": ["The Black Cats"],
     "badge": "/img/badges/epl/sunderland.svg"
   },
   "tottenham": {
-    "name": "Tottenham",
-    "display": "Tottenham Hotspur",
+    "name": "Tottenham Hotspur",
+    "display": "Tottenham",
+    "altNames": ["Tottenham", "Tottenham Hotspur", "Spurs", "THFC"],
+    "nicknames": ["The Lilywhites"],
     "badge": "/img/badges/epl/tottenham.svg"
   },
   "west-ham": {
-    "name": "West Ham",
+    "name": "West Ham United",
     "display": "West Ham Utd",
+    "altNames": ["West Ham", "West Ham Utd", "West Ham United", "WHUFC"],
+    "nicknames": ["The Hammers", "The Irons"],
     "badge": "/img/badges/epl/west-ham.svg"
   },
   "wolves": {
-    "name": "Wolves",
-    "display": "",
+    "name": "Wolverhampton Wanderers",
+    "display": "Wolves",
+    "altNames": ["Wolves", "Wolverhampton", "Wolverhampton Wanderers", "WWFC"],
+    "nicknames": ["Old Gold"],
     "badge": "/img/badges/epl/wolves.svg"
   }
 }

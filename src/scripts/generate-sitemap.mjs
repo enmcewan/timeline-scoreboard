@@ -10,6 +10,7 @@ const DIST_DIR = path.join(ROOT, "dist");
 
 // Change later if you decide on www, but this is fine for now:
 const SITE_ORIGIN = "https://timelinefootball.com";
+const MATCH_HUB = "https://timelinefootball.com/epl/2025/";
 
 function xmlEscape(s) {
   return String(s)
@@ -44,6 +45,13 @@ async function main() {
   // homepage
   urls.push({ loc: `${SITE_ORIGIN}/`, changefreq: "hourly", priority: "1.0" });
 
+  // match hub
+  urls.push({
+    loc: MATCH_HUB,
+    changefreq: "monthly",
+    priority: "0.8",
+  });
+
   // matchweeks
   for (const r of rounds) {
     urls.push({
@@ -54,18 +62,18 @@ async function main() {
   }
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls
-  .map(
-    (u) => `  <url>
-    <loc>${xmlEscape(u.loc)}</loc>
-    <changefreq>${u.changefreq}</changefreq>
-    <priority>${u.priority}</priority>
-  </url>`
-  )
-  .join("\n")}
-</urlset>
-`;
+    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    ${urls
+          .map(
+            (u) => `  <url>
+        <loc>${xmlEscape(u.loc)}</loc>
+        <changefreq>${u.changefreq}</changefreq>
+        <priority>${u.priority}</priority>
+      </url>`
+          )
+          .join("\n")}
+    </urlset>
+  `;
 
   const outPath = path.join(DIST_DIR, "sitemap.xml");
   await fs.writeFile(outPath, xml, "utf8");
