@@ -74,11 +74,11 @@ function renderMatchCard(match, teams, mode) {
     : "TBD";
 
   return `
-    <div class="match-card" data-match-id="${esc(match.id)}">
+    <div class="match-card" id="fixture-${match.id}" data-match-id="${esc(match.id)}">
       <div class="match-date">${esc(kickoffTime)}</div>
       <header class="match-header">
         <div class="ht-cont">
-          <div class="team-badge-cont ${esc(match.homeTeamId)}">
+          <div class="team-badge-cont ${esc(match.homeTeamId)}" title="${esc(home.nicknames[0])}">
             <img class="team-badge ${esc(match.homeTeamId)}" src="${esc(home.badge)}" alt="${esc(home.name)} badge" />
           </div>
           <div class="team home">${esc(home.display || home.name)}</div>
@@ -96,7 +96,7 @@ function renderMatchCard(match, teams, mode) {
         </div>
 
         <div class="at-cont">
-          <div class="team-badge-cont ${esc(match.awayTeamId)}">
+          <div class="team-badge-cont ${esc(match.awayTeamId)}" title="${esc(away.nicknames[0])}">
             <img class="team-badge ${esc(match.awayTeamId)}" src="${esc(away.badge)}" alt="${esc(away.name)} badge" />
           </div>
           <div class="team away">${esc(away.display || away.name)}</div>
