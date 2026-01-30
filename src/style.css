@@ -415,10 +415,6 @@ footer {
   fill: var(--accent-red);
 }
 
-.own-goal-label {
-  color: var(--text-subtle);
-}
-
 .missed-pen-label,
 .goal-detail,
 .var {
@@ -702,6 +698,7 @@ span.sub {
   .match-body .row {
     min-height: 1.7rem;
     line-height: 1.4;
+    vertical-align: middle;
   }
 
   .at-cont {

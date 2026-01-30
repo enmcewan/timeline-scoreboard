@@ -117,7 +117,7 @@ function setPageMetaForRound(round) {
   const title = `EPL 2025–26 Matchweek ${round} Timelines | Timeline Football`;
   document.title = title;
 
-  const desc = `Premier League 2025–26 Matchweek ${round} results with goal, card, VAR and substitution timelines.`;
+  const desc = `English Premier League 2025–26 Matchweek ${round} results with goal, card, VAR and substitution timelines.`;
   let meta = document.querySelector('meta[name="description"]');
   if (!meta) {
     meta = document.createElement("meta");
