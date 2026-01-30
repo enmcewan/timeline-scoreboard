@@ -110,7 +110,11 @@ body {
 
 header {
   text-align: center;
-  padding: 1rem;
+  padding: 0 1rem 1rem;
+}
+
+h1 {
+  margin-bottom: 0.25rem;
 }
 
 footer {
@@ -544,30 +548,38 @@ span.sub {
   font-size: 0.9rem;
 }
 
-/* The container that holds all your cards */
+.nav-container, .nav-container a {
+  color: var(--text-main);
+}
+
+.season-hub p {
+  padding: 0 0.5rem;
+
+}
+.season-hub h2 {
+
+  text-align: center;
+  margin-top: 0;;
+}
+
 .matchweek-grid {
     display: grid;
     gap: 1.5rem;
-    padding: 2rem 0;
-    
-    /* Responsive Magic: */
-    /* It will fit as many cards as it can, minimum 200px wide each */
+    padding: 2rem 0.25rem;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 }
 
-/* Ensure your existing .mw-card styles from before are also in your CSS! */
-/* Card Container */
 .mw-card {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 1.5rem;
-  background: #ffffff;
+  background: var(--card-bg);
   border: 1px solid #e0e0e0;
   border-radius: 12px;
   text-decoration: none;
-  color: #1a1a1a;
+  color: var(--text-main);
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 2px 4px rgba(0,0,0,0.02);
 }
