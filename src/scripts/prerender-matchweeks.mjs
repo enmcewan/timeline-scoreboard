@@ -155,19 +155,55 @@ function matchweekJsonLd({ seasonLabel, round, matches, teamsById, pageUrl }) {
     };
 }
 
-function buildSeasonHubHtml({ seasonStart, seasonLabel, maxRound }) {
+function getMatchweekStartKickoffISO(md) {
+    const times = (md?.matches || [])
+        .map((m) => Date.parse(m.kickoff))
+        .filter(Number.isFinite);
 
+    if (!times.length) return null;
+
+    const minMs = Math.min(...times);
+    return new Date(minMs).toISOString();
+}
+
+async function buildMatchweekStartDateMap(rounds) {
+    // returns: { [roundNumber]: "Aug 15, 2025" }
+    const fmt = new Intl.DateTimeFormat("en-US", {
+        month: "short",
+        day: "2-digit",
+        year: "numeric",
+    });
+
+    const out = {};
+
+    for (const round of rounds) {
+        const mdPath = path.join(MATCHDAYS_DIR, `${round}.json`);
+        const md = JSON.parse(await fs.readFile(mdPath, "utf8"));
+
+        const iso = getMatchweekStartKickoffISO(md);
+        if (!iso) continue;
+
+        out[round] = fmt.format(new Date(iso));
+    }
+
+    return out
+}
+
+function buildSeasonHubHtml({ seasonStart, seasonLabel, maxRound, matchweekStartDates }) {
     const cards = Array.from({ length: maxRound }, (_, i) => {
         const round = i + 1;
-        const displayRound = round.toString().padStart(2, '0');
+        const displayRound = round.toString().padStart(2, "0");
+
+        const startDate = matchweekStartDates?.[round] ?? ""; // fallback if missing
+        const dateLine = startDate ? `${startDate}` : `EPL ${seasonLabel}`;
 
         return `
-        <a href="/epl/${seasonStart}/matchweek/${round}/" class="mw-card">
-            <div class="mw-number">${displayRound}</div>
-            <div class="mw-label">Matchweek</div>
-            <div class="mw-divider"></div>
-            <div class="mw-date">EPL ${seasonLabel}</div>
-        </a>
+      <a href="/epl/${seasonStart}/matchweek/${round}/" class="mw-card">
+        <div class="mw-number">${displayRound}</div>
+        <div class="mw-label">Matchweek</div>
+        <div class="mw-divider"></div>
+        <div class="mw-date">${dateLine}</div>
+      </a>
     `;
     }).join("\n");
 
@@ -186,8 +222,8 @@ function buildSeasonHubHtml({ seasonStart, seasonLabel, maxRound }) {
       </nav>
     </section>
   `.trim();
-
 }
+
 
 function stripAppScripts(html) {
     // Remove any module scripts (Vite-built bundle or dev script tag)
@@ -267,7 +303,7 @@ async function main() {
         out = setTitle(out, `EPL 2025–26 Matchweek ${round} Timelines | Timeline Football`);
         out = setDescription(
             out,
-            `EnglishPremier League 2025–26 Matchweek ${round} results with goals, cards, VAR and substitution timelines.`
+            `English Premier League 2025–26 Matchweek ${round} results with goals, cards, VAR and substitution timelines.`
         );
         out = setCanonical(out, canonical);
 
@@ -311,10 +347,18 @@ async function main() {
         out,
         `Browse English Premier League ${seasonLabel} match timelines by matchweek (1–${maxRound}).`
     );
-    
+
     out = setCanonical(out, canonical);
 
-    const hubHtml = buildSeasonHubHtml({ seasonStart, seasonLabel, maxRound });
+    const matchweekStartDates = await buildMatchweekStartDateMap(rounds);
+
+    const hubHtml = buildSeasonHubHtml({
+        seasonStart,
+        seasonLabel,
+        maxRound,
+        matchweekStartDates
+    });
+
     out = injectApp(out, hubHtml);
 
     // write it

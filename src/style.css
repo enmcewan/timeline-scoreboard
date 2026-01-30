@@ -367,6 +367,7 @@ footer {
   color: var(--accent-minute);
   width: 3rem;
   text-align: center;
+  transform: translateY(-0px);
 }
 
 /* Scorer / assist */
@@ -389,13 +390,14 @@ footer {
 }
 
 .evt-svg {
-  position: relative;
-  top: 2px;
+  display: inline-block;
+  line-height: 0; /* key: removes extra inline line-box height */
+  vertical-align: middle; /* keeps it visually centered next to text */
+  transform: translateY(-1.5px); /* tweak 1–3px */
 }
 
-.goal-ball,
-.og-goal-ball {
-  top: 3px;
+.evt-svg svg {
+  display: block;
 }
 
 .sub-arrow {
@@ -548,25 +550,24 @@ span.sub {
   font-size: 0.9rem;
 }
 
-.nav-container, .nav-container a {
+.nav-container,
+.nav-container a {
   color: var(--text-main);
 }
 
 .season-hub p {
   padding: 0 0.5rem;
-
 }
 .season-hub h2 {
-
   text-align: center;
-  margin-top: 0;;
+  margin-top: 0;
 }
 
 .matchweek-grid {
-    display: grid;
-    gap: 1.5rem;
-    padding: 2rem 0.25rem;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  display: grid;
+  gap: 1.5rem;
+  padding: 2rem 0.25rem;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 }
 
 .mw-card {
@@ -581,7 +582,7 @@ span.sub {
   text-decoration: none;
   color: var(--text-main);
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
 }
 
 /* Typography */
@@ -791,14 +792,14 @@ span.sub {
   }
 
   /* Keep the icons sitting with the player on line 1 */
-  .event .evt-svg.goal-ball,
+  /* .event .evt-svg.goal-ball,
   .event .evt-svg.og-goal-ball,
   .event .evt-svg.missed-pen-ball,
   .event .evt-svg.var-goal-cancelled-icon,
   .event .evt-svg.sub-arrow {
     margin: 0;
     vertical-align: baseline;
-  }
+  } */
 
   .event .event-meta {
     display: inline-block;
