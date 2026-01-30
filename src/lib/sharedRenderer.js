@@ -266,7 +266,7 @@ export function createRenderMatchCard({
 
         <header class="match-header">
           <div class="ht-cont">
-            <div class="team-badge-cont ${match.homeTeamId}">
+            <div class="team-badge-cont ${match.homeTeamId}" title="${esc(home.nicknames[0] || "")}">
               <img class="team-badge ${match.homeTeamId}" src="${esc(home.badge)}" alt="${esc(home.name)} badge" />
             </div>
             <div class="team home">${esc(home.display || home.name)}</div>
@@ -284,7 +284,7 @@ export function createRenderMatchCard({
           </div>
 
           <div class="at-cont">
-            <div class="team-badge-cont ${match.awayTeamId}">
+            <div class="team-badge-cont ${match.awayTeamId}" title="${esc(away.nicknames[0] || "")}">
               <img class="team-badge ${match.awayTeamId}" src="${esc(away.badge)}" alt="${esc(away.name)} badge" />
             </div>
             <div class="team away">${esc(away.display || away.name)}</div>
