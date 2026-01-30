@@ -144,7 +144,7 @@ function matchweekJsonLd({ seasonLabel, round, matches, teamsById, pageUrl }) {
     return {
         "@context": "https://schema.org",
         "@type": "ItemList",
-        name: `Premier League ${seasonLabel} Matchweek ${round} results and timelines`,
+        name: `English Premier League ${seasonLabel} Matchweek ${round} results and timelines`,
         itemListOrder: "https://schema.org/ItemListOrderAscending",
         numberOfItems: list.length,
         itemListElement: list.map((m, i) => ({
@@ -211,7 +211,7 @@ function buildSeasonHubHtml({ seasonStart, seasonLabel, maxRound, matchweekStart
     <section class="season-hub">
       <h2>Matchweeks ${seasonLabel}</h2>
       <p>
-        Browse match timelines by matchweek for the Premier League ${seasonLabel} season.
+        Browse match timelines by matchweek for the EPL ${seasonLabel} season.
         Each matchweek page includes goals, cards, VAR decisions, and substitutions in chronological order.
       </p>
 
