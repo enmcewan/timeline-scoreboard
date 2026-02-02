@@ -50,7 +50,7 @@ export function createRenderEventText(esc) {
                 : "";
 
             return `
-            <span class="player player-red" title="${evt.comments}">${player}</span>
+            <span class="player player-red" title="${evt.comments || ""}">${player}</span>
             ${yellowIcon}
             <span class="card red"
                   title="${second ? "Red card (2nd yellow)" : "Red card"}"
@@ -60,7 +60,7 @@ export function createRenderEventText(esc) {
 
         if (evt.kind === "yellow") {
             return `
-                <span class="player player-yellow" title="${evt.comments}">${player}</span>
+                <span class="player player-yellow" title="${evt.comments || ""}">${player}</span>
                 <span class="card yellow" title="Yellow card" aria-label="Yellow card" role="img"></span>
             `;
         }
@@ -133,12 +133,13 @@ export function createRenderEventText(esc) {
             let varEvent = '<span class="var-event">VAR</span>';
 
             const vgc = evt.kind === "var-goal-cancelled" ? `<span class="var var-no-goal">${varEvent + ' (Overturned'})</span>` : "";
-            const vgd = evt.kind === "var-goal-disallowed" ? `<span class="var var-no-goal">${varEvent + ' (Offside'})</span>` : "";
+            const vgdo = evt.kind === "var-goal-disallowed-offside" ? `<span class="var var-no-goal">${varEvent + ' (Offside'})</span>` : "";
+            const vgd = evt.kind === "var-goal-disallowed" ? `<span class="var var-no-goal">${varEvent + ' (Disallowed'})</span>` : "";
             const vga = evt.kind === "var-goal-confirmed" ? `<span class="var var-goal-confirmed">${varEvent + ' (Confirmed'})</span>` : "";
 
-            let metaBits = `${vgc}${vgd}${vga}`;
+            let metaBits = `${vgc}${vgdo}${vgd}${vga}`;
 
-            if (vgc || vgd) {
+            if (vgc || vgdo || vgd) {
 
                 return `
               <span class="player var-player">${player}</span>

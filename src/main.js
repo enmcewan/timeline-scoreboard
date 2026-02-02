@@ -159,7 +159,7 @@ function renderAllMatches() {
 
   const app = document.querySelector("#app");
   if (!app) return;
-  
+
   app.innerHTML = `
     <div class="match-list">
       ${currentMatches.map(renderMatchCard).join("")}
@@ -199,6 +199,7 @@ function renderControls() {
 }
 
 async function init() {
+
   const allRounds = await loadAllMatchdays();
 
   if (!allRounds.length) {
@@ -217,6 +218,19 @@ async function init() {
   setPageMetaForRound(currentRound);
 
   updateHeaderNav(currentRound);
+
+  currentRound = initialRound;
+
+  if (window.location.pathname === "/") {
+  // ... after currentRound is computed and validated
+  window.location.replace(`/epl/2025/matchweek/${currentRound}/`);
+  return;
+}
+
+  // HARD GUARD (do not proceed if round is invalid)
+  if (!Number.isFinite(currentRound)) {
+    throw new Error(`Invalid currentRound: ${currentRound}`);
+  }
 
   currentMatches = MATCHDAYS[currentRound].matches;
 
