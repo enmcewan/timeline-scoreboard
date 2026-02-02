@@ -1,0 +1,9 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <rect width="512" height="512" rx="100" fill="#4a1a5c"/>
+  
+  <rect x="246" y="80" width="20" height="352" rx="10" fill="white" fill-opacity="0.2"/>
+  
+  <text x="280" y="300" font-family="Arial, sans-serif" font-weight="900" font-size="140" fill="#DAA520">88'</text>
+  
+  <circle cx="256" cy="275" r="25" fill="#DAA520" stroke="#4a1a5c" stroke-width="8"/>
+</svg>

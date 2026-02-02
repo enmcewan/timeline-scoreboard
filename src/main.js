@@ -1,7 +1,7 @@
 import "./style.css";
 import teams from "./data/leagues/epl/2025/teams.json";
 import { esc, sortedEvents } from "./lib/utils.js";
-import { VIEW_MODES, isVisibleInMode, createRenderEventText, createRenderEventRow, createRenderMatchCard  } from "./lib/sharedRenderer.js";
+import { VIEW_MODES, isVisibleInMode, createRenderEventText, createRenderEventRow, createRenderMatchCard } from "./lib/sharedRenderer.js";
 
 
 // Runtime-loaded matchdays from /public/data (served at /data/...)
@@ -32,7 +32,7 @@ async function loadAllMatchdays() {
 }
 
 function getRoundFromPathname() {
-  const m = window.location.pathname.match(/\/epl\/2025\/matchweek\/(\d+)\//);
+  const m = window.location.pathname.match(/\/epl\/2025\/matchweek\/(\d+)(?:\/|$)/); // fixe for ...matchweek/10 - no trailing slash
   if (!m) return null;
   const n = Number(m[1]);
   return Number.isFinite(n) ? n : null;
@@ -156,6 +156,10 @@ const viewModes = new Map();
 const app = document.querySelector("#app");
 
 function renderAllMatches() {
+
+  const app = document.querySelector("#app");
+  if (!app) return;
+  
   app.innerHTML = `
     <div class="match-list">
       ${currentMatches.map(renderMatchCard).join("")}
@@ -163,14 +167,17 @@ function renderAllMatches() {
   `;
 }
 
-const matchdaySelect = document.querySelector("#matchday-select");
-const showAllBtn = document.querySelector("#show-all-timelines");
-const roundLabel = document.querySelector("#round-label");
-
 let showAllAriaPressed = "false";
 let roundName = "Matchweek"; // keep your variable
 
 function renderControls() {
+
+  const matchdaySelect = document.querySelector("#matchday-select");
+  const showAllBtn = document.querySelector("#show-all-timelines");
+  const roundLabel = document.querySelector("#round-label");
+
+  // If we're on a page without these controls, just no-op.
+  if (!matchdaySelect || !showAllBtn || !roundLabel) return;
   // label text
   roundLabel.textContent = `${roundName}:`;
 
