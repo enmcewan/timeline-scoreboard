@@ -221,11 +221,14 @@ async function init() {
 
   currentRound = initialRound;
 
+  // Root "/" is an entry point only.
+  // Must hard-navigate to prerendered matchweek HTML so nav exists.
+
   if (window.location.pathname === "/") {
-  // ... after currentRound is computed and validated
-  window.location.replace(`/epl/2025/matchweek/${currentRound}/`);
-  return;
-}
+    // ... after currentRound is computed and validated
+    window.location.replace(`/epl/2025/matchweek/${currentRound}/`);
+    return;
+  }
 
   // HARD GUARD (do not proceed if round is invalid)
   if (!Number.isFinite(currentRound)) {

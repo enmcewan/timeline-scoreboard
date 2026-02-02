@@ -55,6 +55,64 @@ function setCanonical(html, canonicalUrl) {
     return html.replace("</head>", `  <link rel="canonical" href="${safe}" />\n</head>`);
 }
 
+function setMetaProperty(html, property, content) {
+    const safe = escapeAttr(content);
+    const re = new RegExp(
+        `<meta\\s+property=["']${property}["']\\s+content=["'][\\s\\S]*?["']\\s*\\/?>`,
+        "i"
+    );
+
+    if (re.test(html)) {
+        return html.replace(re, `<meta property="${property}" content="${safe}" />`);
+    }
+    return html.replace(
+        "</head>",
+        `  <meta property="${property}" content="${safe}" />\n</head>`
+    );
+}
+
+function setMetaName(html, name, content) {
+    const safe = escapeAttr(content);
+    const re = new RegExp(
+        `<meta\\s+name=["']${name}["']\\s+content=["'][\\s\\S]*?["']\\s*\\/?>`,
+        "i"
+    );
+
+    if (re.test(html)) {
+        return html.replace(re, `<meta name="${name}" content="${safe}" />`);
+    }
+    return html.replace("</head>", `  <meta name="${name}" content="${safe}" />\n</head>`);
+}
+
+function setOpenGraph(html, { title, description, url, image, siteName }) {
+    let out = html;
+
+    out = setMetaProperty(out, "og:type", "website");
+    out = setMetaProperty(out, "og:site_name", siteName);
+    out = setMetaProperty(out, "og:title", title);
+    out = setMetaProperty(out, "og:description", description);
+    out = setMetaProperty(out, "og:url", url);
+    out = setMetaProperty(out, "og:image", image);
+
+    // Optional but recommended if your OG image is always 1200x630:
+    out = setMetaProperty(out, "og:image:width", "1200");
+    out = setMetaProperty(out, "og:image:height", "630");
+
+    return out;
+}
+
+function setTwitterCard(html, { title, description, image }) {
+    let out = html;
+
+    out = setMetaName(out, "twitter:card", "summary_large_image");
+    out = setMetaName(out, "twitter:title", title);
+    out = setMetaName(out, "twitter:description", description);
+    out = setMetaName(out, "twitter:image", image);
+
+    // Add twitter:site only if you have an actual handle.
+    return out;
+}
+
 function injectApp(html, appHtml) {
     // Prefer exact placeholder from your index.html
     if (html.includes('<div id="app"></div>')) {
@@ -277,6 +335,8 @@ async function main() {
     const seasonStart = 2025;
     const seasonLabel = "2025–26";
     const maxRound = 38;
+    const SITE_NAME = "Timeline";
+    const OG_DEFAULT_IMAGE = "https://timelinefootball.com/og/og-default.png";
 
     const rounds = await listMatchdayRounds();
     if (!rounds.length) {
@@ -306,6 +366,23 @@ async function main() {
             `English Premier League 2025–26 Matchweek ${round} results with goals, cards, VAR and substitution timelines.`
         );
         out = setCanonical(out, canonical);
+
+        const ogTitle = `EPL 2025–26 Matchweek ${round} Timelines | Timeline Football`;
+        const ogDesc = `English Premier League 2025–26 Matchweek ${round} results with goals, cards, VAR and substitution timelines.`;
+
+        out = setOpenGraph(out, {
+            title: ogTitle,
+            description: ogDesc,
+            url: canonical,
+            image: OG_DEFAULT_IMAGE,
+            siteName: SITE_NAME,
+        });
+
+        out = setTwitterCard(out, {
+            title: ogTitle,
+            description: ogDesc,
+            image: OG_DEFAULT_IMAGE,
+        });
 
         // ---- JSON-LD (matchweek page) ----
         const ld = matchweekJsonLd({
@@ -349,6 +426,23 @@ async function main() {
     );
 
     out = setCanonical(out, canonical);
+
+    const ogTitle = `EPL ${seasonLabel} Matchweeks 1–${maxRound} | Timeline Football`;
+    const ogDesc = `Browse English Premier League ${seasonLabel} match timelines by matchweek (1–${maxRound}).`;
+
+    out = setOpenGraph(out, {
+        title: ogTitle,
+        description: ogDesc,
+        url: canonical,
+        image: OG_DEFAULT_IMAGE,
+        siteName: SITE_NAME,
+    });
+
+    out = setTwitterCard(out, {
+        title: ogTitle,
+        description: ogDesc,
+        image: OG_DEFAULT_IMAGE,
+    });
 
     const matchweekStartDates = await buildMatchweekStartDateMap(rounds);
 

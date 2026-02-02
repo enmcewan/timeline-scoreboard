@@ -50,7 +50,7 @@ export function createRenderEventText(esc) {
                 : "";
 
             return `
-            <span class="player player-red" title="${evt.comments || ""}">${player}</span>
+            <span class="player player-red" title="${evt.comments || "other"}">${player}</span>
             ${yellowIcon}
             <span class="card red"
                   title="${second ? "Red card (2nd yellow)" : "Red card"}"
@@ -60,7 +60,7 @@ export function createRenderEventText(esc) {
 
         if (evt.kind === "yellow") {
             return `
-                <span class="player player-yellow" title="${evt.comments || ""}">${player}</span>
+                <span class="player player-yellow" title="${evt.comments || "other"}">${player}</span>
                 <span class="card yellow" title="Yellow card" aria-label="Yellow card" role="img"></span>
             `;
         }
