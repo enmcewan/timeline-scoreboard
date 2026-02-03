@@ -423,6 +423,11 @@ footer {
   margin-left: 0.15rem;
 }
 
+.foul {
+  font-style: italic;
+  opacity: 0.85;
+}
+
 .var-event {
   color: var(--card-bg);
   background-color: var(--accent);
@@ -436,7 +441,8 @@ footer {
   margin-left: 0;
 }
 
-.var {
+.var,
+.foul {
   font-size: 14px;
 }
 
@@ -648,6 +654,10 @@ span.sub {
 
 .mw-nav a:hover {
   text-decoration: underline;
+}
+
+.nav-arrow {
+  vertical-align: middle;
 }
 
 .is-disabled {

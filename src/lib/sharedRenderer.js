@@ -38,31 +38,41 @@ export function createRenderEventText(esc) {
         const player = formatPlayerName(esc(evt.player ?? ""));
         const playerIn = formatPlayerName(esc(evt.inPlayer ?? ""));
         const playerOut = formatPlayerName(esc(evt.outPlayer ?? ""));
+        const card = evt.kind === "red" || evt.kind === "yellow";
 
-        if (evt.kind === "red") {
-            const second = evt.secondYellow === true;
+        if (card) {
 
-            const yellowIcon = second
-                ? `<span class="card yellow second-yellow"
+            const reason = evt.comments ? esc(evt.comments) : "other";
+            const meta = reason ? ` <span class="event-meta foul">(${reason})</span>` : "";
+
+            if (evt.kind === "red") {
+                const second = evt.secondYellow === true;
+
+                const yellowIcon = second
+                    ? `<span class="card yellow second-yellow"
                      title="Second yellow card"
                      aria-label="Second yellow card"
                      role="img"></span>`
-                : "";
+                    : "";
 
-            return `
-            <span class="player player-red" title="${evt.comments || "other"}">${player}</span>
+                return `
+            <span class="player player-red">${player}</span>
             ${yellowIcon}
             <span class="card red"
-                  title="${second ? "Red card (2nd yellow)" : "Red card"}"
-                  aria-label="${second ? "Red card (2nd yellow)" : "Red card"}" role="img"></span>
+                  title="${second ? "Red card (2nd yellow)" : "Straight Red card"}"
+                  aria-label="${second ? "Red card (2nd yellow)" : "Straight Red card"}" role="img">
+            </span>
+            ${meta}
         `;
-        }
+            }
 
-        if (evt.kind === "yellow") {
-            return `
-                <span class="player player-yellow" title="${evt.comments || "other"}">${player}</span>
+            if (evt.kind === "yellow") {
+                return `
+                <span class="player player-yellow">${player}</span>
                 <span class="card yellow" title="Yellow card" aria-label="Yellow card" role="img"></span>
+                ${meta}
             `;
+            }
         }
 
         // goal
@@ -87,10 +97,10 @@ export function createRenderEventText(esc) {
                     </span>
                   `;
 
-            const metaBits = `${assist || ""}${detail || ""}`;
+            const meta = `${assist || ""}${detail || ""}`;
 
             return `
-                ${label}${goalImg}${metaBits ? ` <span class="event-meta">${metaBits}</span>` : ""}
+                ${label}${goalImg}${meta ? ` <span class="event-meta">${meta}</span>` : ""}
             `;
 
         }
@@ -137,23 +147,23 @@ export function createRenderEventText(esc) {
             const vgd = evt.kind === "var-goal-disallowed" ? `<span class="var var-no-goal">${varEvent + ' (Disallowed'})</span>` : "";
             const vga = evt.kind === "var-goal-confirmed" ? `<span class="var var-goal-confirmed">${varEvent + ' (Confirmed'})</span>` : "";
 
-            let metaBits = `${vgc}${vgdo}${vgd}${vga}`;
+            let meta = `${vgc}${vgdo}${vgd}${vga}`;
 
             if (vgc || vgdo || vgd) {
 
                 return `
-              <span class="player var-player">${player}</span>
-              ${varIcon}
-              ${metaBits ? ` <span class="event-meta">${metaBits}</span>` : ""}
-          `;
+                    <span class="player var-player">${player}</span>
+                    ${varIcon}
+                    ${meta ? ` <span class="event-meta">${meta}</span>` : ""}
+                `;
 
             }
 
             if (vga) {
 
                 return `
-            ${metaBits ? ` <span class="event-meta">${metaBits}</span>` : ""}
-        `;
+                    ${meta ? ` <span class="event-meta">${meta}</span>` : ""}
+                `;
 
             }
 
@@ -167,12 +177,12 @@ export function createRenderEventText(esc) {
             const vgd = evt.kind === "var-pen-confirmed" ? `<span class="var var-pen-awarded">${varEvent + ' (Pen Awarded'})</span>` : "";
             const vcu = evt.kind === "var-card-upgrade" ? `<span class="var var-card-upgrade">${varEvent + ' (Card Upgraded'})</span>` : "";
 
-            let metaBits = `${vgc}${vgd}${vcu}`;
+            let meta = `${vgc}${vgd}${vcu}`;
 
             return `
-              <span class="player var-player">${player}</span>
-              ${metaBits ? ` <span class="event-meta">${metaBits}</span>` : ""}
-          `;
+                <span class="player var-player">${player}</span>
+                ${meta ? ` <span class="event-meta">${meta}</span>` : ""}
+            `;
         }
 
         // Substitution
@@ -180,7 +190,7 @@ export function createRenderEventText(esc) {
 
             return `
                 <span class="player subbed">${playerOut}</span>
-                <span class="evt-svg sub-arrow" aria-hidden="true">
+                <span class="evt-svg sub-arrow" aria-hidden="true" title="Substitution">
                     <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                         <use href="/img/misc/sub.svg" />
                     </svg>
@@ -218,90 +228,91 @@ export function createRenderEventRow(esc, renderEventText) {
 }
 
 export function createRenderMatchCard({
-  esc,
-  teamsById,
-  sortedEvents,
-  isVisibleInMode,
-  renderEventRow,       // function (evt, mode) => html
-  getModeForMatchId,    // function (matchId) => mode string
-  formatKickoff         // optional: (isoString) => string
+    esc,
+    teamsById,
+    sortedEvents,
+    isVisibleInMode,
+    renderEventRow,       // function (evt, mode) => html
+    getModeForMatchId,    // function (matchId) => mode string
+    formatKickoff         // optional: (isoString) => string
 }) {
-  const fmtKick =
-    formatKickoff ??
-    ((iso) =>
-      iso
-        ? new Date(iso).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" })
-        : "TBD");
+    const fmtKick =
+        formatKickoff ??
+        ((iso) =>
+            iso
+                ? new Date(iso).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" })
+                : "TBD");
 
-  return function renderMatchCard(match) {
-    const home = teamsById[match.homeTeamId];
-    const away = teamsById[match.awayTeamId];
+    return function renderMatchCard(match) {
 
-    if (!home || !away) {
-      throw new Error(`Unknown team id(s): ${match.homeTeamId}, ${match.awayTeamId}`);
-    }
+        const home = teamsById[match.homeTeamId];
+        const away = teamsById[match.awayTeamId];
 
-    const mode = getModeForMatchId(String(match.id));
+        if (!home || !away) {
+            throw new Error(`Unknown team id(s): ${match.homeTeamId}, ${match.awayTeamId}`);
+        }
 
-    const gameStatus = esc(match.status?.state ?? "");
+        const mode = getModeForMatchId(String(match.id));
 
-    let halfTimeScore = "";
-    let gameMinute = parseInt(gameStatus, 10);
-    if (Number.isNaN(gameMinute)) gameMinute = 0;
+        const gameStatus = esc(match.status?.state ?? "");
 
-    if (gameMinute > 45 || gameStatus === "FT") {
-      halfTimeScore = `(HT ${esc(match.status?.halfTimeScore ?? "")})`;
-    }
+        let halfTimeScore = "";
+        let gameMinute = parseInt(gameStatus, 10);
+        if (Number.isNaN(gameMinute)) gameMinute = 0;
 
-    const allEvents = sortedEvents(match.events || []);
-    const eventsHtml = allEvents
-      .filter((evt) => isVisibleInMode(evt, mode))
-      .map((evt) => renderEventRow(evt, mode))
-      .join("");
+        if (gameMinute > 45 || gameStatus === "FT") {
+            halfTimeScore = `(HT ${esc(match.status?.halfTimeScore ?? "")})`;
+        }
 
-    const kickoffTime = fmtKick(match.kickoff);
+        const allEvents = sortedEvents(match.events || []);
+        const eventsHtml = allEvents
+            .filter((evt) => isVisibleInMode(evt, mode))
+            .map((evt) => renderEventRow(evt, mode))
+            .join("");
 
-    return `
-      <div class="match-card" data-match-id="${match.id}">
-        <div class="match-date">${esc(kickoffTime)}</div>
+        const kickoffTime = fmtKick(match.kickoff);
 
-        <header class="match-header">
-          <div class="ht-cont">
-            <div class="team-badge-cont ${match.homeTeamId}" title="${esc(home.nicknames[0] || "")}">
-              <img class="team-badge ${match.homeTeamId}" src="${esc(home.badge)}" alt="${esc(home.name)} badge" />
+        return `
+            <div class="match-card" data-match-id="${match.id}">
+                <div class="match-date">${esc(kickoffTime)}</div>
+
+                <header class="match-header">
+                <div class="ht-cont">
+                    <div class="team-badge-cont ${match.homeTeamId}" title="${esc(home.nicknames[0] || "")}">
+                    <img class="team-badge ${match.homeTeamId}" src="${esc(home.badge)}" alt="${esc(home.name)} badge" />
+                    </div>
+                    <div class="team home">${esc(home.display || home.name)}</div>
+                </div>
+
+                <div class="score-container">
+                    <div class="score">
+                    <div class="score-home">${esc(match.score.home)}</div>
+                    <span class="separator" aria-hidden="true"></span>
+                    <div class="score-away">${esc(match.score.away)}</div>
+                    </div>
+                    <div class="match-status">
+                    <span class="half-time">${gameStatus} ${halfTimeScore}</span>
+                    </div>
+                </div>
+
+                <div class="at-cont">
+                    <div class="team-badge-cont ${match.awayTeamId}" title="${esc(away.nicknames[0] || "")}">
+                    <img class="team-badge ${match.awayTeamId}" src="${esc(away.badge)}" alt="${esc(away.name)} badge" />
+                    </div>
+                    <div class="team away">${esc(away.display || away.name)}</div>
+                </div>
+                </header>
+
+                <div class="match-body">${eventsHtml}</div>
+
+                <footer class="match-footer">
+                <span class="footer-label">Venue:</span>
+                <span class="footer-data">${esc(match.venue)}</span>
+                <button class="timeline-toggle" aria-expanded="false">
+                    ${mode === "full" ? "Show Result" : "Show Timeline"}
+                </button>
+                </footer>
             </div>
-            <div class="team home">${esc(home.display || home.name)}</div>
-          </div>
-
-          <div class="score-container">
-            <div class="score">
-              <div class="score-home">${esc(match.score.home)}</div>
-              <span class="separator" aria-hidden="true"></span>
-              <div class="score-away">${esc(match.score.away)}</div>
-            </div>
-            <div class="match-status">
-              <span class="half-time">${gameStatus} ${halfTimeScore}</span>
-            </div>
-          </div>
-
-          <div class="at-cont">
-            <div class="team-badge-cont ${match.awayTeamId}" title="${esc(away.nicknames[0] || "")}">
-              <img class="team-badge ${match.awayTeamId}" src="${esc(away.badge)}" alt="${esc(away.name)} badge" />
-            </div>
-            <div class="team away">${esc(away.display || away.name)}</div>
-          </div>
-        </header>
-
-        <div class="match-body">${eventsHtml}</div>
-
-        <footer class="match-footer">
-          <span class="footer-label">Venue:</span>
-          <span class="footer-data">${esc(match.venue)}</span>
-          <button class="timeline-toggle" aria-expanded="false">
-            ${mode === "full" ? "Show Result" : "Show Timeline"}
-          </button>
-        </footer>
-      </div>
-    `;
-  };
+        `;
+    };
 }

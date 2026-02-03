@@ -317,8 +317,8 @@ function buildMatchweekPrevNextNav({ seasonStart, seasonLabel, round, maxRound }
     <nav class="mw-nav" aria-label="Matchweek navigation">
       <a id="mw-hub" class="mw-nav__hub" href="${hub}">EPL ${seasonLabel} matchweeks</a>
       <div class="mw-nav__pager">
-        ${prev ? `<a id="mw-prev" class="mw-nav__prev" href="${prev}" rel="prev">← Matchweek ${round - 1}</a>` : `<span class="mw-nav__prev is-disabled" aria-disabled="true">← Matchweek ${round - 1}</span>`}
-        ${next ? `<a id="mw-next" class="mw-nav__next" href="${next}" rel="next">Matchweek ${round + 1} →</a>` : `<span class="mw-nav__next is-disabled" aria-disabled="true">Matchweek ${round + 1} →</span>`}
+        ${prev ? `<a id="mw-prev" class="mw-nav__prev" href="${prev}" rel="prev">Matchweek ${round - 1}</a>` : `<span class="mw-nav__prev is-disabled" aria-disabled="true">Matchweek ${round - 1}</span>`}
+        ${next ? `<a id="mw-next" class="mw-nav__next" href="${next}" rel="next">Matchweek ${round + 1} →</a>` : `<span class="mw-nav__next is-disabled" aria-disabled="true">Matchweek ${round + 1}</span>`}
       </div>
     </nav>
   `.trim();

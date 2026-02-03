@@ -54,11 +54,28 @@ function updateHeaderNav(round) {
   hub.textContent = `EPL ${SEASON_LABEL} matchweeks`;
   hub.href = `/epl/${SEASON_START}/`;
 
+  
+  const arrowLeft = `
+                      <span class="nav-arrow">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+                              <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"/>
+                          </svg>    
+                      </span>
+                  `;
+
+  const arrowRight = `
+                      <span class="nav-arrow">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
+                              <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0M4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z"/>
+                          </svg>  
+                      </span>
+                  `;
+
   // prev
   if (round > 1) {
     prev.style.display = "";
     prev.href = `/epl/${SEASON_START}/matchweek/${round - 1}/`;
-    prev.textContent = `← Matchweek ${round - 1}`;
+    prev.innerHTML = `${arrowLeft} Matchweek ${round - 1}`;
     prev.setAttribute("aria-disabled", "false");
   } else {
     prev.style.display = "none"; // or disable visually
@@ -68,7 +85,7 @@ function updateHeaderNav(round) {
   if (round < MAX_ROUND) {
     next.style.display = "";
     next.href = `/epl/${SEASON_START}/matchweek/${round + 1}/`;
-    next.textContent = `Matchweek ${round + 1} →`;
+    next.innerHTML = `Matchweek ${round + 1} ${arrowRight}`;
     next.setAttribute("aria-disabled", "false");
   } else {
     next.style.display = "none";
@@ -309,7 +326,7 @@ document.addEventListener("change", (e) => {
   updateHeaderNav(currentRound);
 
   // reset global + per-card state for the new matchday
-  globalViewMode = VIEW_MODES.COMPACT;
+  globalViewMode = VIEW_MODES.FULL;
   showAllAriaPressed = "false";
 
   history.replaceState(null, "", `/epl/2025/matchweek/${currentRound}/`);
