@@ -22,7 +22,7 @@ const MATCHDAYS_DIR = path.join(
 
 const PLAYERS_FILE = path.join(
   ROOT,
-  "public",
+  "src",
   "data",
   "leagues",
   LEAGUE,
