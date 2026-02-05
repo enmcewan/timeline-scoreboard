@@ -158,6 +158,7 @@ const renderEventRow = createRenderEventRow(esc, renderEventText);
 const renderMatchCard = createRenderMatchCard({
   esc,
   teamsById: teams,
+  // playersById: players,
   sortedEvents,
   isVisibleInMode,          // the shared one you already import
   renderEventRow,

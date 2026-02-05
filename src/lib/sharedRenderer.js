@@ -1,3 +1,7 @@
+import playerData from "../data/leagues/epl/2025/players.json" with { type: "json" };
+
+const players = playerData || {}; // preventing app failure from missing file
+
 export const VIEW_MODES = {
     COMPACT: "compact",
     FULL: "full",
@@ -16,6 +20,12 @@ function formatPlayerName(fullName = "") {
     const initial = first.charAt(0).toUpperCase();
     const lastName = rest.join(" ");
     return `${initial}. ${lastName}`;
+}
+
+function getPlayerTitle(playerId, fallbackName) {
+    if (!playerId) return fallbackName || "";
+    const p = players?.[String(playerId)];
+    return p?.fullName || p?.name || fallbackName || "";
 }
 
 export function isVisibleInMode(evt, mode) {
@@ -38,6 +48,9 @@ export function createRenderEventText(esc) {
         const player = formatPlayerName(esc(evt.player ?? ""));
         const playerIn = formatPlayerName(esc(evt.inPlayer ?? ""));
         const playerOut = formatPlayerName(esc(evt.outPlayer ?? ""));
+        const playerTitle = getPlayerTitle(evt.playerId, evt.player);
+        const assistTitle = getPlayerTitle(evt.assistId, evt.assist);
+
         const card = evt.kind === "red" || evt.kind === "yellow";
 
         if (card) {
@@ -56,7 +69,7 @@ export function createRenderEventText(esc) {
                     : "";
 
                 return `
-            <span class="player player-red">${player}</span>
+            <span class="player player-red" title="${esc(playerTitle)}">${player}</span>
             ${yellowIcon}
             <span class="card red"
                   title="${second ? "Red card (2nd yellow)" : "Straight Red card"}"
@@ -68,7 +81,7 @@ export function createRenderEventText(esc) {
 
             if (evt.kind === "yellow") {
                 return `
-                <span class="player player-yellow">${player}</span>
+                <span class="player player-yellow" title="${esc(playerTitle)}">${player}</span>
                 <span class="card yellow" title="Yellow card" aria-label="Yellow card" role="img"></span>
                 ${meta}
             `;
@@ -78,13 +91,13 @@ export function createRenderEventText(esc) {
         // goal
         if (evt.kind === "goal" || evt.kind === "own-goal") {
 
-            const assist = evt.assist ? `<span class="assist">(${formatPlayerName(esc(evt.assist))})</span>` : "";
+            const assist = evt.assist ? `<span class="assist" title="${esc(assistTitle)}">(${formatPlayerName(esc(evt.assist))})</span>` : "";
 
             let detail = "";
             if (evt.detail === "pen") { detail = `<span class="goal-detail">(Pen)</span>`; };
             if (evt.kind === "own-goal") { detail = `</span><span class="own-goal-label" title="Own Goal" aria-label="Own Goal"> (Own Goal)</span>`; };
 
-            const label = `<span class="player-goal">${player}</span>`;
+            const label = `<span class="player-goal" title="${esc(playerTitle)}">${player}</span>`;
             const isOwnGoal = evt.kind === "own-goal";
             const cls = isOwnGoal ? "evt-svg og-goal-ball" : "evt-svg goal-ball";
             const title = isOwnGoal ? "Own Goal" : "Goal";
@@ -121,7 +134,7 @@ export function createRenderEventText(esc) {
             }
 
             return `
-                <span class="player">${player}</span>
+                <span class="player" title="${esc(playerTitle)}">${player}</span>
                 ${missImg}
                 <span class="missed-pen-label">(missed pen)</span>
             `;
@@ -152,7 +165,7 @@ export function createRenderEventText(esc) {
             if (vgc || vgdo || vgd) {
 
                 return `
-                    <span class="player var-player">${player}</span>
+                    <span class="player var-player" title="${esc(playerTitle)}">${player}</span>
                     ${varIcon}
                     ${meta ? ` <span class="event-meta">${meta}</span>` : ""}
                 `;
@@ -180,7 +193,7 @@ export function createRenderEventText(esc) {
             let meta = `${vgc}${vgd}${vcu}`;
 
             return `
-                <span class="player var-player">${player}</span>
+                <span class="player var-player" title="${esc(playerTitle)}">${player}</span>
                 ${meta ? ` <span class="event-meta">${meta}</span>` : ""}
             `;
         }
@@ -189,14 +202,14 @@ export function createRenderEventText(esc) {
         if (evt.kind === "sub") {
 
             return `
-                <span class="player subbed">${playerOut}</span>
+                <span class="player subbed" title="${esc(playerTitle)}">${playerOut}</span>
                 <span class="evt-svg sub-arrow" aria-hidden="true" title="Substitution">
                     <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                         <use href="/img/misc/sub.svg" />
                     </svg>
                 </span>
                 <span class="event-meta">
-                    <span class="sub">${playerIn}</span>
+                    <span class="sub" title="${esc(assistTitle)}">${playerIn}</span>
                 </span>
             `;
         }

@@ -3,6 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 import teams from "../data/leagues/epl/2025/teams.json" with { type: "json" };
+
 import { renderMatchweekHTML } from "../lib/prerender/render.js";
 
 const __filename = fileURLToPath(import.meta.url);

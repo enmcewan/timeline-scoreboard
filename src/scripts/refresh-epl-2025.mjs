@@ -8,7 +8,6 @@ const __dirname = path.dirname(__filename);
 
 console.log("SCRIPT STARTED");
 
-
 /* ------------ PATHS – ADJUST TO YOUR TREE ------------- */
 
 const FIXTURES_RAW_PATH = path.join(
@@ -141,7 +140,9 @@ function transformEventsForFixture(rawEvents, fixtureId, homeApiId, awayApiId) {
       team: teamSide,
       kind,
       player: playerName,
+      playerId: ev.player?.id ?? null,
       assist: assistName,
+      assistId: ev.assist?.id ?? null,
       inPlayer,
       outPlayer,
       detail,
