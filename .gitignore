@@ -32,4 +32,3 @@ package.json.readme.txt
 public/data/**
 src/data/dev/**
 src/data/leagues/epl/2025/matchdays/**
-src/data/leagues/epl/2025/players.json
