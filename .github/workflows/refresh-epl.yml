@@ -52,9 +52,11 @@ jobs:
         run: npm run update:matchdays
 
       - name: Build players cache
+        if: steps.gate.outputs.should_deploy == '1'
         run: node src/scripts/build-players-cache.mjs
         env:
           APIFOOTBALL_KEY: ${{ secrets.APIFOOTBALL_KEY }}
+
 
       - name: Build
         if: steps.gate.outputs.should_deploy == '1'
