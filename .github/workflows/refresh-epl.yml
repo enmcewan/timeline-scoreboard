@@ -57,7 +57,6 @@ jobs:
         env:
           APIFOOTBALL_KEY: ${{ secrets.APIFOOTBALL_KEY }}
 
-
       - name: Build
         if: steps.gate.outputs.should_deploy == '1'
         run: npm run build:prerender
@@ -79,3 +78,36 @@ jobs:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         run: npx netlify deploy --dir dist --prod --site "$NETLIFY_SITE_ID" --no-build
+
+      - name: Determine current round
+        if: steps.gate.outputs.should_deploy == '1'
+        id: current_round
+        run: |
+          out=$(node src/scripts/get-current-round.mjs)
+          echo "$out"
+          echo "$out" >> $GITHUB_OUTPUT
+
+      - name: Submit IndexNow (current matchweek)
+        if: steps.gate.outputs.should_deploy == '1'
+        env:
+          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+          ROUND: ${{ steps.current_round.outputs.round }}
+        run: |
+          cat > indexnow.json << EOF
+          {
+            "host": "timelinefootball.com",
+            "key": "${INDEXNOW_KEY}",
+            "keyLocation": "https://timelinefootball.com/${INDEXNOW_KEY}.txt",
+            "urlList": [
+              "https://timelinefootball.com/epl/2025/matchweek/${ROUND}/"
+            ]
+          }
+          EOF
+
+          code=$(curl -s -o /dev/null -w "%{http_code}" \
+            -H "Content-Type: application/json" \
+            -d @indexnow.json \
+            https://api.indexnow.org/indexnow)
+
+          echo "IndexNow HTTP status: $code"
+          test "$code" = "200" -o "$code" = "202"

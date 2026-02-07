@@ -8,13 +8,7 @@ if (process.env.FORCE_REFRESH === "true" || process.env.FORCE_REFRESH === "1") {
   process.exit(0);
 }
 
-
-const CANDIDATE_FIXTURE_PATHS = [
-  // adjust/add if your repo stores fixtures elsewhere
-  "public/data/dev/fixtures.raw.json",
-  "src/data/leagues/epl/2025/fixtures.raw.json",
-  "src/data/leagues/epl/fixtures.raw.json",
-];
+const CANDIDATE_FIXTURE_PATHS = "public/data/dev/fixtures.raw.json";
 
 const LIVE_STATUS = new Set([
   "1H", "HT", "2H", "ET", "BT", "P", // in-play variants
