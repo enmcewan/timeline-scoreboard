@@ -87,22 +87,31 @@ jobs:
           echo "$out"
           echo "$out" >> $GITHUB_OUTPUT
 
-      - name: Submit IndexNow (current matchweek)
+      - name: Submit IndexNow (current + previous matchweek)
         if: steps.gate.outputs.should_deploy == '1'
         env:
           INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
           ROUND: ${{ steps.current_round.outputs.round }}
         run: |
+          # Build url list JSON fragments
+          urls="\"https://timelinefootball.com/epl/2025/matchweek/${ROUND}/\""
+          if [ "${ROUND}" -gt 1 ]; then
+            prev=$((ROUND-1))
+            urls="${urls}, \"https://timelinefootball.com/epl/2025/matchweek/${prev}/\""
+          fi
+
+          # Write payload
           cat > indexnow.json << EOF
           {
             "host": "timelinefootball.com",
             "key": "${INDEXNOW_KEY}",
             "keyLocation": "https://timelinefootball.com/${INDEXNOW_KEY}.txt",
-            "urlList": [
-              "https://timelinefootball.com/epl/2025/matchweek/${ROUND}/"
-            ]
+            "urlList": [ ${urls} ]
           }
           EOF
+
+          echo "Submitting IndexNow payload:"
+          cat indexnow.json
 
           code=$(curl -s -o /dev/null -w "%{http_code}" \
             -H "Content-Type: application/json" \
