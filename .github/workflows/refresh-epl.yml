@@ -45,6 +45,10 @@ jobs:
             echo "should_deploy=0" >> "$GITHUB_OUTPUT"
           fi
 
+      - name: Mark start time
+        if: steps.gate.outputs.should_deploy == '1'
+        run: echo "START_TS=$(date +%s)" >> $GITHUB_ENV
+
       - name: Refresh events + matchdays
         if: steps.gate.outputs.should_deploy == '1'
         env:
@@ -95,9 +99,15 @@ jobs:
         run: |
           # Build url list JSON fragments
           urls="\"https://timelinefootball.com/epl/2025/matchweek/${ROUND}/\""
+
           if [ "${ROUND}" -gt 1 ]; then
             prev=$((ROUND-1))
-            urls="${urls}, \"https://timelinefootball.com/epl/2025/matchweek/${prev}/\""
+            prevFile="public/data/leagues/epl/2025/matchdays/${prev}.json"
+
+            # If previous round file was modified during this run, include it
+            if [ -f "$prevFile" ] && [ "$(stat -c %Y "$prevFile")" -ge "${START_TS}" ]; then
+              urls="${urls}, \"https://timelinefootball.com/epl/2025/matchweek/${prev}/\""
+            fi
           fi
 
           # Write payload

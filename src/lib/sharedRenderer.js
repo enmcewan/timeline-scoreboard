@@ -54,68 +54,67 @@ export function createRenderEventText(esc) {
         const card = evt.kind === "red" || evt.kind === "yellow";
 
         if (card) {
+            const isRed = evt.kind === "red";
+            const isSecondYellow = isRed && evt.secondYellow === true;
+            const color = isRed ? "red" : "yellow";
 
-            const reason = evt.comments ? esc(evt.comments) : "other";
-            const meta = reason ? ` <span class="event-meta foul">(${reason})</span>` : "";
-
-            if (evt.kind === "red") {
-                const second = evt.secondYellow === true;
-
-                const yellowIcon = second
-                    ? `<span class="card yellow second-yellow"
-                     title="Second yellow card"
-                     aria-label="Second yellow card"
-                     role="img"></span>`
-                    : "";
-
-                return `
-            <span class="player player-red" title="${esc(playerTitle)}">${player}</span>
-            ${yellowIcon}
-            <span class="card red"
-                  title="${second ? "Red card (2nd yellow)" : "Straight Red card"}"
-                  aria-label="${second ? "Red card (2nd yellow)" : "Straight Red card"}" role="img">
-            </span>
-            ${meta}
-        `;
+            let cardTitle = "Yellow card";
+            if (isRed) {
+                cardTitle = isSecondYellow ? "Red card (2nd yellow)" : "Straight Red card";
             }
 
-            if (evt.kind === "yellow") {
-                return `
-                <span class="player player-yellow" title="${esc(playerTitle)}">${player}</span>
-                <span class="card yellow" title="Yellow card" aria-label="Yellow card" role="img"></span>
-                ${meta}
-            `;
-            }
+            const reason = esc(evt.comments) || "other";
+            const meta = ` <span class="event-meta foul">(${reason})</span>`;
+
+            const secondYellowIcon = isSecondYellow
+                ? `<span class="card yellow second-yellow" title="Second yellow card" aria-label="Second yellow card" role="img"></span>`
+                : "";
+
+            const mainCardIcon = `<span class="card ${color}" title="${cardTitle}" aria-label="${cardTitle}" role="img"></span>`;
+
+            return `
+                    <span class="player player-${color}" title="${esc(playerTitle)}">${player}</span>
+                    ${secondYellowIcon}
+                    ${mainCardIcon}
+                    ${meta}
+                `;
         }
 
         // goal
         if (evt.kind === "goal" || evt.kind === "own-goal") {
+            const isOG = evt.kind === "own-goal";
 
-            const assist = evt.assist ? `<span class="assist" title="${esc(assistTitle)}">(${formatPlayerName(esc(evt.assist))})</span>` : "";
+            // 1. Build the Goal Icon
+            const iconClass = isOG ? "og-goal-ball" : "goal-ball";
+            const iconTitle = isOG ? "Own Goal" : "Goal";
+            const goalImg = `
+                            <span class="evt-svg ${iconClass}" title="${iconTitle}">
+                                <svg width="18" height="18" viewBox="0 0 16 16"><use href="/img/misc/ball.svg"></use></svg>
+                            </span>
+                        `;
 
-            let detail = "";
-            if (evt.detail === "pen") { detail = `<span class="goal-detail">(Pen)</span>`; };
-            if (evt.kind === "own-goal") { detail = `</span><span class="own-goal-label" title="Own Goal" aria-label="Own Goal"> (Own Goal)</span>`; };
+            // 2. Collect Metadata (The Clean Way)
+            const metaParts = [];
 
-            const label = `<span class="player-goal" title="${esc(playerTitle)}">${player}</span>`;
-            const isOwnGoal = evt.kind === "own-goal";
-            const cls = isOwnGoal ? "evt-svg og-goal-ball" : "evt-svg goal-ball";
-            const title = isOwnGoal ? "Own Goal" : "Goal";
+            if (evt.assist) {
+                metaParts.push(`<span class="assist" title="${esc(assistTitle)}">(${formatPlayerName(esc(evt.assist))})</span>`);
+            }
 
-            let goalImg = `
-                    <span class="${cls}" title="${title}">
-                        <svg width="18" height="18" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                            <use href="/img/misc/ball.svg"></use>
-                        </svg>
-                    </span>
-                  `;
+            if (evt.detail === "pen") {
+                metaParts.push(`<span class="goal-detail">(Pen)</span>`);
+            }
 
-            const meta = `${assist || ""}${detail || ""}`;
+            if (isOG) {
+                metaParts.push(`<span class="own-goal-label" title="Own Goal">(Own Goal)</span>`);
+            }
 
-            return `
-                ${label}${goalImg}${meta ? ` <span class="event-meta">${meta}</span>` : ""}
-            `;
+            // 3. Assemble
+            const playerLabel = `<span class="player-goal" title="${esc(playerTitle)}">${player}</span>`;
+            const metaHtml = metaParts.length > 0
+                ? ` <span class="event-meta">${metaParts.join(" ")}</span>`
+                : "";
 
+            return `${playerLabel}${goalImg}${metaHtml}`;
         }
 
         /* NEW: missed penalty */
@@ -125,9 +124,8 @@ export function createRenderEventText(esc) {
             if (mode === VIEW_MODES.FULL) {
                 missImg = `
                     <span class="evt-svg missed-pen-ball" title="Missed penalty" aria-label="Missed penalty">
-                        <svg width="16" height="16" viewBox="0 0 16 16"
-                            xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                        <use href="/img/misc/ball.svg"></use>
+                        <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <use href="/img/misc/ball.svg"></use>
                         </svg>
                     </span>
                 `;
@@ -142,60 +140,66 @@ export function createRenderEventText(esc) {
 
         if (evt.kind.startsWith("var-goal-")) {
 
-            let varIcon = "";
-            if (mode === VIEW_MODES.FULL) {
-                varIcon = `
-                <span class="evt-svg var-goal-cancelled-icon" title="Disallowed (VAR)" aria-label="Goal Disallowed (VAR)">
-                    <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                        <use href="/img/misc/ball.svg"></use>
-                    </svg>
-                </span>
-                `;
-            }
+            // 1. Define the configurations in one place
+            const GOAL_VAR_MAP = {
+                "var-goal-cancelled": { css: "var-no-goal", label: "Overturned", isDisallowed: true },
+                "var-goal-disallowed-offside": { css: "var-no-goal", label: "Offside", isDisallowed: true },
+                "var-goal-disallowed": { css: "var-no-goal", label: "Disallowed", isDisallowed: true },
+                "var-goal-confirmed": { css: "var-goal-confirmed", label: "Confirmed", isDisallowed: false }
+            };
 
-            let varEvent = '<span class="var-event">VAR</span>';
+            const config = GOAL_VAR_MAP[evt.kind];
 
-            const vgc = evt.kind === "var-goal-cancelled" ? `<span class="var var-no-goal">${varEvent + ' (Overturned'})</span>` : "";
-            const vgdo = evt.kind === "var-goal-disallowed-offside" ? `<span class="var var-no-goal">${varEvent + ' (Offside'})</span>` : "";
-            const vgd = evt.kind === "var-goal-disallowed" ? `<span class="var var-no-goal">${varEvent + ' (Disallowed'})</span>` : "";
-            const vga = evt.kind === "var-goal-confirmed" ? `<span class="var var-goal-confirmed">${varEvent + ' (Confirmed'})</span>` : "";
+            if (config) {
+                // 2. Handle the Icon logic
+                const showIcon = mode === VIEW_MODES.FULL && config.isDisallowed;
+                const varIcon = showIcon ? `
+                    <span class="evt-svg var-goal-cancelled-icon" title="Disallowed (VAR)" aria-label="Goal Disallowed (VAR)">
+                        <svg width="16" height="16" viewBox="0 0 16 16"><use href="/img/misc/ball.svg"></use></svg>
+                    </span>
+                ` : "";
 
-            let meta = `${vgc}${vgdo}${vgd}${vga}`;
+                // 3. Build the Meta tag
+                const meta = ` <span class="event-meta">
+                                    <span class="var ${config.css}"><span class="var-event">VAR</span> (${config.label})</span>
+                                </span>
+                            `;
 
-            if (vgc || vgdo || vgd) {
+                // 4. Return based on whether it was disallowed or confirmed
+                if (config.isDisallowed) {
+                    return `
+                                <span class="player var-player" title="${esc(playerTitle)}">${player}</span>
+                                ${varIcon}
+                                ${meta}
+                            `;
+                }
 
-                return `
-                    <span class="player var-player" title="${esc(playerTitle)}">${player}</span>
-                    ${varIcon}
-                    ${meta ? ` <span class="event-meta">${meta}</span>` : ""}
-                `;
-
-            }
-
-            if (vga) {
-
-                return `
-                    ${meta ? ` <span class="event-meta">${meta}</span>` : ""}
-                `;
-
+                return meta;
             }
 
         }
 
         if (evt.kind === "var-pen-cancelled" || evt.kind === "var-pen-confirmed" || evt.kind === "var-card-upgrade") {
 
-            let varEvent = '<span class="var-event">VAR</span>';
+            const varConfigs = {
+                "var-pen-cancelled": { css: "var-no-goal", label: "Pen Overturned" },
+                "var-pen-confirmed": { css: "var-pen-awarded", label: "Pen Awarded" },
+                "var-card-upgrade": { css: "var-card-upgrade", label: "Card Upgraded" }
+            };
 
-            const vgc = evt.kind === "var-pen-cancelled" ? `<span class="var var-no-goal">${varEvent + ' (Pen Overturned'})</span>` : "";
-            const vgd = evt.kind === "var-pen-confirmed" ? `<span class="var var-pen-awarded">${varEvent + ' (Pen Awarded'})</span>` : "";
-            const vcu = evt.kind === "var-card-upgrade" ? `<span class="var var-card-upgrade">${varEvent + ' (Card Upgraded'})</span>` : "";
+            const config = varConfigs[evt.kind];
 
-            let meta = `${vgc}${vgd}${vcu}`;
+            if (config) {
+                const meta = `
+                    <span class="var ${config.css}">
+                        <span class="var-event">VAR</span> (${config.label})
+                    </span>`;
 
-            return `
-                <span class="player var-player" title="${esc(playerTitle)}">${player}</span>
-                ${meta ? ` <span class="event-meta">${meta}</span>` : ""}
-            `;
+                return `
+                    <span class="player var-player" title="${esc(playerTitle)}">${player}</span>
+                    <span class="event-meta">${meta}</span>
+                `;
+            }
         }
 
         // Substitution
@@ -286,31 +290,31 @@ export function createRenderMatchCard({
         const kickoffTime = fmtKick(match.kickoff);
 
         return `
-            <div class="match-card" data-match-id="${match.id}">
+            <article class="match-card" data-match-id="${match.id}">
                 <div class="match-date">${esc(kickoffTime)}</div>
 
                 <header class="match-header">
                 <div class="ht-cont">
                     <div class="team-badge-cont ${match.homeTeamId}" title="${esc(home.nicknames[0] || "")}">
-                    <img class="team-badge ${match.homeTeamId}" src="${esc(home.badge)}" alt="${esc(home.name)} badge" />
+                        <img class="team-badge ${match.homeTeamId}" src="${esc(home.badge)}" alt="${esc(home.name)} badge" />
                     </div>
                     <div class="team home">${esc(home.display || home.name)}</div>
                 </div>
 
                 <div class="score-container">
                     <div class="score">
-                    <div class="score-home">${esc(match.score.home)}</div>
-                    <span class="separator" aria-hidden="true"></span>
-                    <div class="score-away">${esc(match.score.away)}</div>
+                        <div class="score-home">${esc(match.score.home)}</div>
+                        <span class="separator" aria-hidden="true"></span>
+                        <div class="score-away">${esc(match.score.away)}</div>
                     </div>
                     <div class="match-status">
-                    <span class="half-time">${gameStatus} ${halfTimeScore}</span>
+                        <span class="half-time">${gameStatus} ${halfTimeScore}</span>
                     </div>
                 </div>
 
                 <div class="at-cont">
                     <div class="team-badge-cont ${match.awayTeamId}" title="${esc(away.nicknames[0] || "")}">
-                    <img class="team-badge ${match.awayTeamId}" src="${esc(away.badge)}" alt="${esc(away.name)} badge" />
+                        <img class="team-badge ${match.awayTeamId}" src="${esc(away.badge)}" alt="${esc(away.name)} badge" />
                     </div>
                     <div class="team away">${esc(away.display || away.name)}</div>
                 </div>
@@ -319,13 +323,13 @@ export function createRenderMatchCard({
                 <div class="match-body">${eventsHtml}</div>
 
                 <footer class="match-footer">
-                <span class="footer-label">Venue:</span>
-                <span class="footer-data">${esc(match.venue)}</span>
-                <button class="timeline-toggle" aria-expanded="false">
-                    ${mode === "full" ? "Show Result" : "Show Timeline"}
-                </button>
+                    <span class="footer-label">Venue:</span>
+                    <span class="footer-data">${esc(match.venue)}</span>
+                    <button class="timeline-toggle" aria-expanded="false">
+                        ${mode === "full" ? "Show Result" : "Show Timeline"}
+                    </button>
                 </footer>
-            </div>
+            </article>
         `;
     };
 }
