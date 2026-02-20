@@ -89,7 +89,9 @@ export function createRenderEventText(esc) {
             const iconTitle = isOG ? "Own Goal" : "Goal";
             const goalImg = `
                             <span class="evt-svg ${iconClass}" title="${iconTitle}">
-                                <svg width="18" height="18" viewBox="0 0 16 16"><use href="/img/misc/ball.svg"></use></svg>
+                                <svg width="18" height="18" viewBox="0 0 16 16">
+                                    <use href="/img/misc/ball.svg"></use>
+                                </svg>
                             </span>
                         `;
 

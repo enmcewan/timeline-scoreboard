@@ -248,25 +248,70 @@ async function buildMatchweekStartDateMap(rounds) {
     return out
 }
 
-function buildSeasonHubHtml({ seasonStart, seasonLabel, maxRound, matchweekStartDates }) {
-    const cards = Array.from({ length: maxRound }, (_, i) => {
-        const round = i + 1;
-        const displayRound = round.toString().padStart(2, "0");
+const HUB_STAT_ICONS = {
+  goals: `<span class="evt-svg goal-ball" title="Goals">
+    <svg width="18" height="18" viewBox="0 0 16 16"><use href="/img/misc/ball.svg"></use></svg>
+  </span>`,
+  ownGoals: `<span class="evt-svg og-goal-ball" title="Own Goals">
+    <svg width="18" height="18" viewBox="0 0 16 16"><use href="/img/misc/ball.svg"></use></svg>
+  </span>`,
+  yellows: `<span class="card yellow" title="Yellow cards" aria-label="Yellow cards" role="img"></span>`,
+  reds: `<span class="card red" title="Red cards" aria-label="Red cards" role="img"></span>`,
+  var: `<span class="var-event" title="VAR events" aria-label="VAR events">VAR</span>`
+};
 
-        const startDate = matchweekStartDates?.[round] ?? ""; // fallback if missing
-        const dateLine = startDate ? `${startDate}` : `EPL ${seasonLabel}`;
 
-        return `
+function buildSeasonHubHtml({ seasonStart, seasonLabel, maxRound, matchweekMeta }) {
+  const cards = Array.from({ length: maxRound }, (_, i) => {
+    const round = i + 1;
+    const displayRound = round.toString().padStart(2, "0");
+
+    const meta = matchweekMeta?.[round] ?? {};
+    const startDate = meta.startDate ?? "";
+    const status = meta.status ?? "not-started";
+    const stats = meta.stats ?? null;
+
+    const dateLine = startDate || `EPL ${seasonLabel}`;
+
+    const statusLabel =
+      status === "completed"
+        ? "Completed"
+        : status === "in-progress"
+        ? "In Progress"
+        : "Not Started";
+
+    const statusHtml = `
+      <div class="mw-status mw-status--${status}">
+        ${statusLabel}
+      </div>
+    `;
+
+    const statsHtml =
+    status !== "not-started" && stats
+        ? `
+        <div class="mw-stats" aria-label="Matchweek stats">
+            <span class="mw-stat">${HUB_STAT_ICONS.goals}<span class="mw-stat__num">${stats.goals}</span></span>
+            <span class="mw-stat">${HUB_STAT_ICONS.ownGoals}<span class="mw-stat__num">${stats.ownGoals}</span></span>
+            <span class="mw-stat">${HUB_STAT_ICONS.yellows}<span class="mw-stat__num">${stats.yellows}</span></span>
+            <span class="mw-stat">${HUB_STAT_ICONS.reds}<span class="mw-stat__num">${stats.reds}</span></span>
+            <span class="mw-stat">${HUB_STAT_ICONS.var}<span class="mw-stat__num">${stats.var}</span></span>
+        </div>
+        `
+        : "";
+
+    return `
       <a href="/epl/${seasonStart}/matchweek/${round}/" class="mw-card">
         <div class="mw-number">${displayRound}</div>
         <div class="mw-label">Matchweek</div>
         <div class="mw-divider"></div>
         <div class="mw-date">${dateLine}</div>
+        ${statusHtml}
+        ${statsHtml}
       </a>
     `;
-    }).join("\n");
+  }).join("\n");
 
-    return `
+  return `
     <section class="season-hub">
       <h2>Matchweeks ${seasonLabel}</h2>
       <p>
@@ -282,7 +327,6 @@ function buildSeasonHubHtml({ seasonStart, seasonLabel, maxRound, matchweekStart
     </section>
   `.trim();
 }
-
 
 function stripAppScripts(html) {
     // Remove any module scripts (Vite-built bundle or dev script tag)
@@ -327,6 +371,64 @@ function buildMatchweekPrevNextNav({ seasonStart, seasonLabel, round, maxRound }
 
 function injectBeforeApp(html, extraHtml) {
     return html.replace('<div class="nav-container"></div>', `<div class="nav-container">${extraHtml}</div>`);
+}
+
+function normState(s) {
+    return String(s ?? "").trim().toUpperCase();
+}
+
+function matchweekStatus(md) {
+    const states = (md.matches || []).map(m => normState(m.status?.state)).filter(Boolean);
+    if (!states.length) return "not-started";
+    if (states.every(s => s === "FT")) return "completed";
+    if (states.every(s => s === "NS")) return "not-started";
+    return "in-progress";
+}
+
+function matchweekStats(md) {
+    const out = { goals: 0, ownGoals: 0, yellows: 0, reds: 0, var: 0 };
+
+    for (const m of md.matches || []) {
+        for (const e of m.events || []) {
+            const kind = String(e.kind || "").toLowerCase();
+            const rawType = String(e.rawType || "").toLowerCase();
+            const rawDetail = String(e.rawDetail || "").toLowerCase();
+
+            if (rawType === "var" || kind.startsWith("var-")) { out.var++; continue; }
+
+            if (kind === "goal" || kind === "own-goal" || rawType === "goal") {
+                out.goals++;
+                if (kind === "own-goal" || rawDetail === "own goal") out.ownGoals++;
+                continue;
+            }
+
+            if (kind === "yellow") out.yellows++;
+            if (kind === "red") out.reds++;
+        }
+    }
+
+    return out;
+}
+
+async function buildMatchweekMetaMap(rounds) {
+    const fmt = new Intl.DateTimeFormat("en-US", { month: "short", day: "2-digit", year: "numeric" });
+    const out = {};
+
+    for (const round of rounds) {
+        const mdPath = path.join(MATCHDAYS_DIR, `${round}.json`);
+        const md = JSON.parse(await fs.readFile(mdPath, "utf8"));
+
+        const iso = getMatchweekStartKickoffISO(md);
+        const startDate = iso ? fmt.format(new Date(iso)) : "";
+
+        out[round] = {
+            startDate,
+            status: matchweekStatus(md),
+            stats: matchweekStats(md),
+        };
+    }
+
+    return out;
 }
 
 async function main() {
@@ -445,13 +547,15 @@ async function main() {
         image: OG_DEFAULT_IMAGE,
     });
 
-    const matchweekStartDates = await buildMatchweekStartDateMap(rounds);
+    const matchweekMeta = await buildMatchweekMetaMap(rounds);
+
+    console.log("MW25 meta:", matchweekMeta[25]);
 
     const hubHtml = buildSeasonHubHtml({
         seasonStart,
         seasonLabel,
         maxRound,
-        matchweekStartDates
+        matchweekMeta
     });
 
     out = injectApp(out, hubHtml);

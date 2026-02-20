@@ -577,7 +577,7 @@ span.sub {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 1.5rem;
+  padding: 1.5rem 0.5rem;
   background: var(--card-bg);
   border: 1px solid #e0e0e0;
   border-radius: 12px;
@@ -622,11 +622,19 @@ span.sub {
   border-color: #4a1a5c;
   transform: translateY(-4px);
   box-shadow: 0 10px 20px rgba(74, 26, 92, 0.15);
+  --accent: #ede6f0;
+}
+
+.mw-card:hover .var-event {
+  background-color: #ede6f0;
+  color: #4a1a5c;
 }
 
 .mw-card:hover .mw-number,
 .mw-card:hover .mw-label,
-.mw-card:hover .mw-date {
+.mw-card:hover .mw-date,
+.mw-card:hover .mw-status,
+.mw-card:hover .mw-stats {
   color: #ffffff;
 }
 
@@ -658,6 +666,46 @@ span.sub {
 
 .nav-arrow {
   vertical-align: middle;
+}
+
+.mw-status {
+  font-size: 0.75rem;
+  margin-top: 0.3rem;
+  font-weight: 500;
+}
+
+.mw-status--completed {
+  opacity: 0.85;
+}
+
+.mw-status--in-progress {
+  font-weight: 600;
+}
+
+.mw-status--not-started {
+  opacity: 0.6;
+}
+
+.mw-stats {
+  display: flex;
+  gap: 0.4rem;
+  margin-top: 0.75rem;
+  font-size: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.mw-stats span {
+  white-space: nowrap;
+}
+
+.mw-stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.mw-stat__num {
+  font-variant-numeric: tabular-nums;
 }
 
 .is-disabled {
