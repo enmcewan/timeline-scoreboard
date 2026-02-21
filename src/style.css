@@ -612,7 +612,7 @@ span.sub {
 }
 
 .mw-date {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   color: #666;
 }
 
@@ -669,7 +669,7 @@ span.sub {
 }
 
 .mw-status {
-  font-size: 0.75rem;
+  font-size: 0.95rem;
   margin-top: 0.3rem;
   font-weight: 500;
 }
@@ -689,8 +689,8 @@ span.sub {
 .mw-stats {
   display: flex;
   gap: 0.4rem;
-  margin-top: 0.75rem;
-  font-size: 0.8rem;
+  margin-top: 1.25rem;
+  font-size: 0.875rem;
   flex-wrap: wrap;
 }
 
@@ -745,7 +745,7 @@ span.sub {
 
   .match-date {
     margin-top: 0.5rem;
-    margin-bottom: 0;
+    margin-bottom: 1rem;
   }
 
   .match-card {
@@ -846,16 +846,6 @@ span.sub {
     margin-left: 0;
   }
 
-  /* Keep the icons sitting with the player on line 1 */
-  /* .event .evt-svg.goal-ball,
-  .event .evt-svg.og-goal-ball,
-  .event .evt-svg.missed-pen-ball,
-  .event .evt-svg.var-goal-cancelled-icon,
-  .event .evt-svg.sub-arrow {
-    margin: 0;
-    vertical-align: baseline;
-  } */
-
   .event .event-meta {
     display: inline-block;
     /* margin-left: 0.25rem; */
@@ -882,5 +872,28 @@ span.sub {
     font-size: 0.9rem;
     padding: 0.2rem 0.5rem;
     max-width: 6rem;
+  }
+
+  .mw-label {
+    margin-bottom: 0.4rem;
+  }
+
+  .mw-divider {
+    margin-bottom: 0.4rem;
+  }
+
+  .mw-date, .mw-status {
+    font-size: 1rem;
+  }
+
+  .mw-status {
+    font-size: 0.95rem;
+    margin-top: 0.3rem;
+    font-weight: 500;
+  }
+
+  .mw-stats {
+    transform: scale(1.2);
+    margin-top: 1.25rem;
   }
 }

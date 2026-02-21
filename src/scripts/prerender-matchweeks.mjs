@@ -313,7 +313,7 @@ function buildSeasonHubHtml({ seasonStart, seasonLabel, maxRound, matchweekMeta 
 
   return `
     <section class="season-hub">
-      <h2>Matchweeks ${seasonLabel}</h2>
+      <h2>Matchweeks</h2>
       <p>
         Browse match timelines by matchweek for the EPL ${seasonLabel} season.
         Each matchweek page includes goals, cards, VAR decisions, and substitutions in chronological order.
