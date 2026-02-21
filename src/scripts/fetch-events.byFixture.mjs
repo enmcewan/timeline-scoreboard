@@ -18,6 +18,44 @@ const REFRESH_WINDOW_MS = REFRESH_WINDOW_HOURS * 60 * 60 * 1000;
 const UPCOMING_WINDOW_HOURS = 6;
 const UPCOMING_WINDOW_MS = UPCOMING_WINDOW_HOURS * 60 * 60 * 1000;
 
+function sleep(ms) {
+  return new Promise((r) => setTimeout(r, ms));
+}
+
+function isTransientApiError(err) {
+  const msg = String(err?.message || err);
+  // Your thrown message includes "503 Service Unavailable"
+  return (
+    msg.includes("503") ||
+    msg.includes("502") ||
+    msg.includes("504") ||
+    msg.includes("429") ||
+    msg.toLowerCase().includes("timeout") ||
+    msg.toLowerCase().includes("econnreset") ||
+    msg.toLowerCase().includes("socket hang up")
+  );
+}
+
+async function fetchWithRetry(fn, { tries = 5, baseDelayMs = 750 } = {}) {
+  let lastErr;
+  for (let attempt = 1; attempt <= tries; attempt++) {
+    try {
+      return await fn();
+    } catch (err) {
+      lastErr = err;
+      if (!isTransientApiError(err) || attempt === tries) throw err;
+
+      const jitter = Math.floor(Math.random() * 250);
+      const delay = baseDelayMs * Math.pow(2, attempt - 1) + jitter;
+      console.warn(
+        `Transient API error (attempt ${attempt}/${tries}): ${String(err?.message || err)}`
+      );
+      console.warn(`Retrying in ${delay}ms...`);
+      await sleep(delay);
+    }
+  }
+  throw lastErr;
+}
 
 async function readExistingEventsFile() {
   try {
@@ -62,8 +100,10 @@ async function fetchEventsForFixture(fixtureId) {
   });
 
   if (!res.ok) {
+    let body = "";
+    try { body = await res.text(); } catch { }
     throw new Error(
-      `Events fetch failed for fixture ${fixtureId}: ${res.status} ${res.statusText}`
+      `Events fetch failed for fixture ${fixtureId}: ${res.status} ${res.statusText}${body ? ` | ${body.slice(0, 200)}` : ""}`
     );
   }
 
@@ -136,14 +176,28 @@ async function main() {
 
     console.log(`→ FETCH ${fixtureId}: ${homeName} vs ${awayName}`);
 
-    const events = await fetchEventsForFixture(fixtureId);
+    // const events = await fetchEventsForFixture(fixtureId);
+    let events = null;
+
+    try {
+      events = await fetchWithRetry(
+        () => fetchEventsForFixture(fixtureId),
+        { tries: 5, baseDelayMs: 750 }
+      );
+    } catch (err) {
+      console.error(
+        `SKIP ${fixtureId} (${homeName} vs ${awayName}) after retries: ${String(err?.message || err)}`
+      );
+      // continue to next fixture without throwing
+      continue;
+    }
 
     // Replace this fixture's events in the map
     const merged = (events || []).map((e) => ({ fixtureId, ...e }));
     eventsByFixture.set(fixtureId, merged);
 
     fetchedFixtures++;
-    await new Promise((r) => setTimeout(r, 50));
+    await new Promise((r) => setTimeout(r, 150));
   }
 
   // Flatten back to your original format
