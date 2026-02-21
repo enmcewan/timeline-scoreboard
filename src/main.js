@@ -92,43 +92,63 @@ function updateHeaderNav(round) {
   }
 }
 
-function pickInitialRound(matchdays) {
-  const now = Date.now();
-  const GRACE_MS = 6 * 60 * 60 * 1000; // 6h buffer for late updates / timezones
-
-  const rounds = Object.entries(matchdays)
-    .map(([roundStr, md]) => {
-      const round = Number(roundStr);
-      const times = (md.matches || [])
-        .map((m) => Date.parse(m.kickoff))
-        .filter(Number.isFinite);
-
-      if (!times.length) return null;
-
-      return {
-        round,
-        minKickoff: Math.min(...times),
-        maxKickoff: Math.max(...times),
-      };
-    })
-    .filter(Boolean)
-    .sort((a, b) => a.minKickoff - b.minKickoff);
-
-  if (!rounds.length) return null;
-
-  // 1) Prefer the round we are currently inside (earliest..latest)
-  const current = rounds.find(
-    (r) => now >= r.minKickoff - GRACE_MS && now <= r.maxKickoff + GRACE_MS
-  );
-  if (current) return current.round;
-
-  // 2) Otherwise pick the next upcoming round (closest future)
-  const next = rounds.find((r) => r.minKickoff > now);
-  if (next) return next.round;
-
-  // 3) Otherwise fall back to the most recent past round
-  return rounds[rounds.length - 1].round;
+function isCompletedState(state) {
+  const s = String(state ?? "").trim().toUpperCase();
+  return s === "FT" || s === "AET" || s === "PEN";
 }
+
+function pickCurrentRoundByCompletion(matchdays) {
+  const rounds = Object.keys(matchdays).map(Number).filter(Number.isFinite).sort((a, b) => a - b);
+  for (const r of rounds) {
+    const md = matchdays[r];
+    const matches = md?.matches || [];
+    if (!matches.length) continue;
+
+    // If any match is not completed, this round is the current one
+    if (matches.some(m => !isCompletedState(m.status?.state))) {
+      return r;
+    }
+  }
+  return null;
+}
+
+// function pickInitialRound(matchdays) {
+//   const now = Date.now();
+//   const GRACE_MS = 6 * 60 * 60 * 1000; // 6h buffer for late updates / timezones
+
+//   const rounds = Object.entries(matchdays)
+//     .map(([roundStr, md]) => {
+//       const round = Number(roundStr);
+//       const times = (md.matches || [])
+//         .map((m) => Date.parse(m.kickoff))
+//         .filter(Number.isFinite);
+
+//       if (!times.length) return null;
+
+//       return {
+//         round,
+//         minKickoff: Math.min(...times),
+//         maxKickoff: Math.max(...times),
+//       };
+//     })
+//     .filter(Boolean)
+//     .sort((a, b) => a.minKickoff - b.minKickoff);
+
+//   if (!rounds.length) return null;
+
+//   // 1) Prefer the round we are currently inside (earliest..latest)
+//   const current = rounds.find(
+//     (r) => now >= r.minKickoff - GRACE_MS && now <= r.maxKickoff + GRACE_MS
+//   );
+//   if (current) return current.round;
+
+//   // 2) Otherwise pick the next upcoming round (closest future)
+//   const next = rounds.find((r) => r.minKickoff > now);
+//   if (next) return next.round;
+
+//   // 3) Otherwise fall back to the most recent past round
+//   return rounds[rounds.length - 1].round;
+// }
 
 function setPageMetaForRound(round) {
   const title = `EPL 2025–26 Matchweek ${round} Timelines | Timeline Football`;
@@ -227,10 +247,16 @@ async function init() {
 
   const routeRound = getRoundFromPathname();
 
+  // const initialRound =
+  //   (routeRound && MATCHDAYS[routeRound] ? routeRound : null) ??
+  //   pickInitialRound(MATCHDAYS) ??
+  //   allRounds[allRounds.length - 1];
+
   const initialRound =
-    (routeRound && MATCHDAYS[routeRound] ? routeRound : null) ??
-    pickInitialRound(MATCHDAYS) ??
-    allRounds[allRounds.length - 1];
+  (routeRound && MATCHDAYS[routeRound] ? routeRound : null) ??
+  pickCurrentRoundByCompletion(MATCHDAYS) ??
+  allRounds[allRounds.length - 1];
+
 
   currentRound = initialRound;
   setPageMetaForRound(currentRound);
