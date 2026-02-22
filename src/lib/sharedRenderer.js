@@ -63,7 +63,8 @@ export function createRenderEventText(esc) {
                 cardTitle = isSecondYellow ? "Red card (2nd yellow)" : "Straight Red card";
             }
 
-            const reason = esc(evt.comments) || "other";
+            let reason = esc(evt.comments) || "other";
+            reason ? 'null' : reason = "other";
             const meta = ` <span class="event-meta foul">(${reason})</span>`;
 
             const secondYellowIcon = isSecondYellow
