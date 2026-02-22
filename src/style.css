@@ -748,6 +748,10 @@ span.sub {
     margin-bottom: 1rem;
   }
 
+  .matchweek-grid {
+    padding: 2rem;
+  }
+
   .match-card {
     padding: 0.25rem 0.15rem;
     box-shadow: var(--card-shadow-mb);
@@ -882,7 +886,8 @@ span.sub {
     margin-bottom: 0.4rem;
   }
 
-  .mw-date, .mw-status {
+  .mw-date,
+  .mw-status {
     font-size: 1rem;
   }
 

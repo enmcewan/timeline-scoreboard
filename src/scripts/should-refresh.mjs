@@ -65,7 +65,7 @@ function isFinished(statusShort) {
 
 function shouldRefresh(fixtures, nowMs) {
   const PRE_MS = 10 * 60 * 1000;     // 10 mins before kickoff
-  const POST_MS = 110 * 60 * 1000;   // 110 mins after kickoff (105 + buffer)
+  const POST_MS = 120 * 60 * 1000;   // 110 mins after kickoff (105 + buffer)
 
   // statuses we never refresh for
   const DEAD = new Set(["PST", "CANC", "ABD", "SUSP", "INT", "WO", "TBD"]);
