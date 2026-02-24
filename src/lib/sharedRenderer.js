@@ -64,7 +64,7 @@ export function createRenderEventText(esc) {
             }
 
             let reason = esc(evt.comments) || "other";
-            reason ? 'null' : reason = "other";
+            if (!reason || reason === "null" || reason === "undefined") reason = "other";
             const meta = ` <span class="event-meta foul">(${reason})</span>`;
 
             const secondYellowIcon = isSecondYellow
@@ -292,16 +292,21 @@ export function createRenderMatchCard({
 
         const kickoffTime = fmtKick(match.kickoff);
 
+        const homeHref = `/epl/2025-26/team/${match.homeTeamId}/`;
+        const awayHref = `/epl/2025-26/team/${match.awayTeamId}/`;
+
         return `
-            <article class="match-card" data-match-id="${match.id}">
+            <article id="fixture-${match.id}" class="match-card" data-match-id="${match.id}">
                 <div class="match-date">${esc(kickoffTime)}</div>
 
                 <header class="match-header">
                 <div class="ht-cont">
+                    <a href="${esc(homeHref)}" class="team-link">
                     <div class="team-badge-cont ${match.homeTeamId}" title="${esc(home.nicknames[0] || "")}">
                         <img class="team-badge ${match.homeTeamId}" src="${esc(home.badge)}" alt="${esc(home.name)} badge" />
                     </div>
-                    <div class="team home">${esc(home.display || home.name)}</div>
+                    <div class="team home" title="Team Page">${esc(home.display || home.name)}</div>
+                    </a>
                 </div>
 
                 <div class="score-container">
@@ -316,10 +321,12 @@ export function createRenderMatchCard({
                 </div>
 
                 <div class="at-cont">
+                    <a href="${esc(awayHref)}" class="team-link">
                     <div class="team-badge-cont ${match.awayTeamId}" title="${esc(away.nicknames[0] || "")}">
                         <img class="team-badge ${match.awayTeamId}" src="${esc(away.badge)}" alt="${esc(away.name)} badge" />
                     </div>
-                    <div class="team away">${esc(away.display || away.name)}</div>
+                    <div class="team away" title="Team Page">${esc(away.display || away.name)}</div>
+                    </a>
                 </div>
                 </header>
 

@@ -5,7 +5,14 @@
     "altNames": ["Arsenal", "Arsenal FC", "AFC"],
     "nicknames": ["The Gunners"],
     "badge": "/img/badges/epl/arsenal.svg",
-    "apiTeamId": 42
+    "apiTeamId": 42,
+    "venue": {
+      "name": "Emirates Stadium",
+      "city": "London",
+      "capacity": 60383,
+      "surface": "grass",
+      "image": "/img/venues/arsenal.webp"
+    }
   },
   "aston-villa": {
     "name": "Aston Villa",
@@ -13,7 +20,14 @@
     "altNames": ["Aston Villa", "Villa", "Aston Villa FC", "AVFC"],
     "nicknames": ["The Villans"],
     "badge": "/img/badges/epl/aston-villa.svg",
-    "apiTeamId": 66
+    "apiTeamId": 66,
+    "venue": {
+      "name": "Villa Park",
+      "city": "Birmingham",
+      "capacity": 42824,
+      "surface": "grass",
+      "image": "/img/venues/aston-villa.webp"
+    }
   },
   "bournemouth": {
     "name": "AFC Bournemouth",
@@ -21,7 +35,14 @@
     "altNames": ["Bournemouth", "AFC Bournemouth", "A.F.C. Bournemouth"],
     "nicknames": ["The Cherries"],
     "badge": "/img/badges/epl/bournemouth.svg",
-    "apiTeamId": 35
+    "apiTeamId": 35,
+    "venue": {
+      "name": "Vitality Stadium",
+      "city": "Bournemouth, Dorset",
+      "capacity": 12000,
+      "surface": "grass",
+      "image": "/img/venues/bournemouth.webp"
+    }
   },
   "brentford": {
     "name": "Brentford",
@@ -29,7 +50,14 @@
     "altNames": ["Brentford", "Brentford FC"],
     "nicknames": ["The Bees"],
     "badge": "/img/badges/epl/brentford.svg",
-    "apiTeamId": 55
+    "apiTeamId": 55,
+    "venue": {
+      "name": "Gtech Community Stadium",
+      "city": "Brentford, Middlesex",
+      "capacity": 17250,
+      "surface": "grass",
+      "image": "/img/venues/brentford.webp"
+    }
   },
   "brighton": {
     "name": "Brighton & Hove Albion",
@@ -37,7 +65,14 @@
     "altNames": ["Brighton", "Brighton & Hove Albion", "Brighton and Hove Albion", "BHA", "BHAFC"],
     "nicknames": ["The Seagulls", "Albion"],
     "badge": "/img/badges/epl/brighton.svg",
-    "apiTeamId": 51
+    "apiTeamId": 51,
+    "venue": {
+      "name": "American Express Stadium",
+      "city": "Falmer, East Sussex",
+      "capacity": 31872,
+      "surface": "grass",
+      "image": "/img/venues/brighton.webp"
+    }
   },
   "burnley": {
     "name": "Burnley",
@@ -45,7 +80,14 @@
     "altNames": ["Burnley", "Burnley FC"],
     "nicknames": ["The Clarets"],
     "badge": "/img/badges/epl/burnley.svg",
-    "apiTeamId": 44
+    "apiTeamId": 44,
+    "venue": {
+      "name": "Turf Moor",
+      "city": "Burnley",
+      "capacity": 22546,
+      "surface": "grass",
+      "image": "/img/venues/burnley.webp"
+    }
   },
   "chelsea": {
     "name": "Chelsea",
@@ -53,7 +95,14 @@
     "altNames": ["Chelsea", "Chelsea FC", "CFC"],
     "nicknames": ["The Blues"],
     "badge": "/img/badges/epl/chelsea.svg",
-    "apiTeamId": 49
+    "apiTeamId": 49,
+    "venue": {
+      "name": "Stamford Bridge",
+      "city": "London",
+      "capacity": 41841,
+      "surface": "grass",
+      "image": "/img/venues/chelsea.webp"
+    }
   },
   "crystal-palace": {
     "name": "Crystal Palace",
@@ -61,7 +110,14 @@
     "altNames": ["Crystal Palace", "Palace", "Crystal Palace FC", "CPFC"],
     "nicknames": ["The Eagles"],
     "badge": "/img/badges/epl/crystal-palace.svg",
-    "apiTeamId": 52
+    "apiTeamId": 52,
+    "venue": {
+      "name": "Selhurst Park",
+      "city": "London",
+      "capacity": 26309,
+      "surface": "grass",
+      "image": "/img/venues/crystal-palace.webp"
+    }
   },
   "everton": {
     "name": "Everton",
@@ -69,7 +125,14 @@
     "altNames": ["Everton", "Everton FC", "EFC"],
     "nicknames": ["The Toffees"],
     "badge": "/img/badges/epl/everton.svg",
-    "apiTeamId": 45
+    "apiTeamId": 45,
+    "venue": {
+      "name": "Hill Dickinson Stadium",
+      "city": "Liverpool, Merseyside",
+      "capacity": 52888,
+      "surface": "grass",
+      "image": "/img/venues/everton.webp"
+    }
   },
   "fulham": {
     "name": "Fulham",
@@ -77,7 +140,14 @@
     "altNames": ["Fulham", "Fulham FC"],
     "nicknames": ["The Cottagers"],
     "badge": "/img/badges/epl/fulham.svg",
-    "apiTeamId": 36
+    "apiTeamId": 36,
+    "venue": {
+      "name": "Craven Cottage",
+      "city": "London",
+      "capacity": 29589,
+      "surface": "grass",
+      "image": "/img/venues/fulham.webp"
+    }
   },
   "leeds": {
     "name": "Leeds United",
@@ -85,7 +155,14 @@
     "altNames": ["Leeds", "Leeds Utd", "Leeds United", "LUFC"],
     "nicknames": ["The Whites"],
     "badge": "/img/badges/epl/leeds-united.svg",
-    "apiTeamId": 63
+    "apiTeamId": 63,
+    "venue": {
+      "name": "Elland Road",
+      "city": "Leeds, West Yorkshire",
+      "capacity": 40204,
+      "surface": "grass",
+      "image": "/img/venues/leeds.webp"
+    }
   },
   "liverpool": {
     "name": "Liverpool",
@@ -93,7 +170,14 @@
     "altNames": ["Liverpool", "Liverpool FC", "LFC"],
     "nicknames": ["The Reds"],
     "badge": "/img/badges/epl/liverpool.svg",
-    "apiTeamId": 40
+    "apiTeamId": 40,
+    "venue": {
+      "name": "Anfield",
+      "city": "Liverpool",
+      "capacity": 61276,
+      "surface": "grass",
+      "image": "/img/venues/liverpool.webp"
+    }
   },
   "manchester-city": {
     "name": "Manchester City",
@@ -101,7 +185,14 @@
     "altNames": ["Man City", "Manchester City", "Manchester City FC", "MCFC"],
     "nicknames": ["The Citizens", "City"],
     "badge": "/img/badges/epl/manchester-city.svg",
-    "apiTeamId": 50
+    "apiTeamId": 50,
+    "venue": {
+      "name": "Etihad Stadium",
+      "city": "Manchester",
+      "capacity": 55097,
+      "surface": "grass",
+      "image": "/img/venues/manchester-city.webp"
+    }
   },
   "manchester-united": {
     "name": "Manchester United",
@@ -109,7 +200,14 @@
     "altNames": ["Man U", "Man United", "Man Utd", "Manchester Utd", "Manchester United", "MUFC"],
     "nicknames": ["The Red Devils"],
     "badge": "/img/badges/epl/manchester-united.svg",
-    "apiTeamId": 33
+    "apiTeamId": 33,
+    "venue": {
+      "name": "Old Trafford",
+      "city": "Manchester",
+      "capacity": 76212,
+      "surface": "grass",
+      "image": "/img/venues/manchester-united.webp"
+    }
   },
   "newcastle": {
     "name": "Newcastle United",
@@ -117,7 +215,14 @@
     "altNames": ["Newcastle", "Newcastle Utd", "Newcastle United", "NUFC"],
     "nicknames": ["The Magpies"],
     "badge": "/img/badges/epl/newcastle.svg",
-    "apiTeamId": 34
+    "apiTeamId": 34,
+    "venue": {
+      "name": "St. James' Park",
+      "city": "Newcastle upon Tyne",
+      "capacity": 52758,
+      "surface": "grass",
+      "image": "/img/venues/newcastle.webp"
+    }
   },
   "nottingham-forest": {
     "name": "Nottingham Forest",
@@ -125,7 +230,14 @@
     "altNames": ["Nottingham Forest", "Forest", "Nott'm Forest", "NFFC"],
     "nicknames": ["The Tricky Trees", "Forest"],
     "badge": "/img/badges/epl/nottingham-forest.svg",
-    "apiTeamId": 65
+    "apiTeamId": 65,
+    "venue": {
+      "name": "The City Ground",
+      "city": "Nottingham, Nottinghamshire",
+      "capacity": 30576,
+      "surface": "grass",
+      "image": "/img/venues/nottingham-forest.webp"
+    }
   },
   "sunderland": {
     "name": "Sunderland",
@@ -133,7 +245,14 @@
     "altNames": ["Sunderland", "Sunderland AFC", "SAFC"],
     "nicknames": ["The Black Cats"],
     "badge": "/img/badges/epl/sunderland.svg",
-    "apiTeamId": 746
+    "apiTeamId": 746,
+    "venue": {
+      "name": "Stadium of Light",
+      "city": "Sunderland",
+      "capacity": 49000,
+      "surface": "grass",
+      "image": "/img/venues/sunderland.webp"
+    }
   },
   "tottenham": {
     "name": "Tottenham Hotspur",
@@ -141,7 +260,14 @@
     "altNames": ["Tottenham", "Tottenham Hotspur", "Spurs", "THFC"],
     "nicknames": ["The Lilywhites"],
     "badge": "/img/badges/epl/tottenham.svg",
-    "apiTeamId": 47
+    "apiTeamId": 47,
+    "venue": {
+      "name": "Tottenham Hotspur Stadium",
+      "city": "London",
+      "capacity": 62850,
+      "surface": "grass",
+      "image": "/img/venues/tottenham.webp"
+    }
   },
   "west-ham": {
     "name": "West Ham United",
@@ -149,7 +275,14 @@
     "altNames": ["West Ham", "West Ham Utd", "West Ham United", "WHUFC"],
     "nicknames": ["The Hammers", "The Irons"],
     "badge": "/img/badges/epl/west-ham.svg",
-    "apiTeamId": 48
+    "apiTeamId": 48,
+    "venue": {
+      "name": "London Stadium",
+      "city": "London",
+      "capacity": 64472,
+      "surface": "grass",
+      "image": "/img/venues/west-ham.webp"
+    }
   },
   "wolves": {
     "name": "Wolverhampton Wanderers",
@@ -157,6 +290,13 @@
     "altNames": ["Wolves", "Wolverhampton", "Wolverhampton Wanderers", "WWFC"],
     "nicknames": ["Old Gold"],
     "badge": "/img/badges/epl/wolves.svg",
-    "apiTeamId": 39
+    "apiTeamId": 39,
+    "venue": {
+      "name": "Molineux Stadium",
+      "city": "Wolverhampton, West Midlands",
+      "capacity": 34624,
+      "surface": "grass",
+      "image": "/img/venues/wolves.webp"
+    }
   }
 }

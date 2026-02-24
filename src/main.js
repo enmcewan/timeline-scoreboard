@@ -32,13 +32,14 @@ async function loadAllMatchdays() {
 }
 
 function getRoundFromPathname() {
-  const m = window.location.pathname.match(/\/epl\/2025\/matchweek\/(\d+)(?:\/|$)/); // fixe for ...matchweek/10 - no trailing slash
+  const m = window.location.pathname.match(/\/epl\/2025-26\/matchweek\/(\d+)(?:\/|$)/); // fixe for ...matchweek/10 - no trailing slash
   if (!m) return null;
   const n = Number(m[1]);
   return Number.isFinite(n) ? n : null;
 }
 
-const SEASON_START = 2025;
+// const SEASON_START = 2025;
+const SEASON_PATH = "2025-26"; // for URLs and file paths, to distinguish from 2024-25 data during transition
 const SEASON_LABEL = "2025–26";
 
 function updateHeaderNav(round) {
@@ -52,7 +53,7 @@ function updateHeaderNav(round) {
   if (!hub || !prev || !next) return;
 
   hub.textContent = `EPL ${SEASON_LABEL} matchweeks`;
-  hub.href = `/epl/${SEASON_START}/`;
+  hub.href = `/epl/${SEASON_PATH}/`;
 
   
   const arrowLeft = `
@@ -74,7 +75,7 @@ function updateHeaderNav(round) {
   // prev
   if (round > 1) {
     prev.style.display = "";
-    prev.href = `/epl/${SEASON_START}/matchweek/${round - 1}/`;
+    prev.href = `/epl/${SEASON_PATH}/matchweek/${round - 1}/`;
     prev.innerHTML = `${arrowLeft} Matchweek ${round - 1}`;
     prev.setAttribute("aria-disabled", "false");
   } else {
@@ -84,7 +85,7 @@ function updateHeaderNav(round) {
   // next
   if (round < MAX_ROUND) {
     next.style.display = "";
-    next.href = `/epl/${SEASON_START}/matchweek/${round + 1}/`;
+    next.href = `/epl/${SEASON_PATH}/matchweek/${round + 1}/`;
     next.innerHTML = `Matchweek ${round + 1} ${arrowRight}`;
     next.setAttribute("aria-disabled", "false");
   } else {
@@ -163,7 +164,7 @@ function setPageMetaForRound(round) {
   }
   meta.setAttribute("content", desc);
 
-  const canonicalHref = `${window.location.origin}/epl/2025/matchweek/${round}/`;
+  const canonicalHref = `${window.location.origin}/epl/2025-26/matchweek/${round}/`;
   let canon = document.querySelector('link[rel="canonical"]');
   if (!canon) {
     canon = document.createElement("link");
@@ -270,7 +271,7 @@ async function init() {
 
   if (window.location.pathname === "/") {
     // ... after currentRound is computed and validated
-    window.location.replace(`/epl/2025/matchweek/${currentRound}/`);
+    window.location.replace(`/epl/2025-26/matchweek/${currentRound}/`);
     return;
   }
 
@@ -356,7 +357,7 @@ document.addEventListener("change", (e) => {
   globalViewMode = VIEW_MODES.FULL;
   showAllAriaPressed = "false";
 
-  history.replaceState(null, "", `/epl/2025/matchweek/${currentRound}/`);
+  history.replaceState(null, "", `/epl/2025-26/matchweek/${currentRound}/`);
   setPageMetaForRound(currentRound);
 
 

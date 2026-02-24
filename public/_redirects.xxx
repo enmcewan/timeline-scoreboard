@@ -1,6 +1,0 @@
-# Serve prerendered matchweek HTML explicitly (with or without trailing slash)
-/epl/2025/matchweek/:round/  /epl/2025/matchweek/:round/index.html  200
-/epl/2025/matchweek/:round   /epl/2025/matchweek/:round/index.html  200
-
-# SPA fallback: any other deep link refresh should still load the app
-/*                         /index.html                             200

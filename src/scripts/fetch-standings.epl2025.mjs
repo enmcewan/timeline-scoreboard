@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 const API_KEY = process.env.APIFOOTBALL_KEY;
 const LEAGUE = 39;
 const SEASON = 2025;
+const SEASON_PATH = "2025-26";
 
 if (!API_KEY) {
   console.error("Missing APIFOOTBALL_KEY env var (APIFOOTBALL_KEY)");
@@ -100,7 +101,7 @@ async function main() {
 
   const normalized = normalizeStandings(apiJson);
 
-  writeJson(`/public/data/leagues/epl/${SEASON}/standings.json`, normalized);
+  writeJson(`/public/data/leagues/epl/${SEASON_PATH}/standings.json`, normalized);
 
   console.log(
     `Done. Rows: ${normalized.table.length}, Updated: ${normalized.league.updated ?? "n/a"}`

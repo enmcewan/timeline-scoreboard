@@ -1,6 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import teams from "../data/leagues/epl/2025/teams.json" with { type: "json" };
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -10,7 +11,7 @@ const DIST_DIR = path.join(ROOT, "dist");
 
 // Change later if you decide on www, but this is fine for now:
 const SITE_ORIGIN = "https://timelinefootball.com";
-const MATCH_HUB = "https://timelinefootball.com/epl/2025/";
+const MATCH_HUB = "https://timelinefootball.com/epl/2025-26/";
 
 function xmlEscape(s) {
   return String(s)
@@ -22,7 +23,7 @@ function xmlEscape(s) {
 }
 
 async function listMatchweekPages() {
-  const base = path.join(DIST_DIR, "epl", "2025", "matchweek");
+  const base = path.join(DIST_DIR, "epl", "2025-26", "matchweek");
   let rounds = [];
   try {
     const entries = await fs.readdir(base, { withFileTypes: true });
@@ -52,10 +53,25 @@ async function main() {
     priority: "0.8",
   });
 
+    // table
+  urls.push({
+    loc: `${SITE_ORIGIN}/epl/2025-26/table/`,
+    changefreq: "hourly",
+    priority: "0.8",
+  });
+
+  // teams
+  for (const slug of Object.keys(teams)) {
+    urls.push({
+      loc: `${SITE_ORIGIN}/epl/2025-26/team/${slug}/`,
+      changefreq: "daily",
+      priority: "0.7",
+    });
+  }
   // matchweeks
   for (const r of rounds) {
     urls.push({
-      loc: `${SITE_ORIGIN}/epl/2025/matchweek/${r}/`,
+      loc: `${SITE_ORIGIN}/epl/2025-26/matchweek/${r}/`,
       changefreq: "hourly",
       priority: "0.8",
     });

@@ -23,6 +23,274 @@ const MATCHDAYS_DIR = path.join(
     "matchdays"
 );
 
+const STANDINGS_PATH = path.join(
+    ROOT,
+    "public",
+    "data",
+    "leagues",
+    "epl",
+    "2025",
+    "standings.json"
+);
+
+function formatISODate(iso) {
+    if (!iso) return "";
+    const d = new Date(iso);
+    if (Number.isNaN(d.getTime())) return String(iso);
+    return new Intl.DateTimeFormat("en-US", { year: "numeric", month: "short", day: "2-digit" }).format(d);
+}
+
+function buildApiTeamIdToSlugMap(teamsBySlug) {
+    const map = new Map();
+    for (const [slug, t] of Object.entries(teamsBySlug)) {
+        if (map.has(t.apiTeamId)) {
+            throw new Error(`Duplicate apiTeamId ${t.apiTeamId} in teams.json (${map.get(t.apiTeamId)} and ${slug})`);
+        }
+        map.set(t.apiTeamId, slug);
+    }
+    return map;
+}
+
+function getStandingsRows(standingsJson) {
+    // adapt to your normalized structure if needed
+    if (Array.isArray(standingsJson)) return standingsJson;
+    if (Array.isArray(standingsJson.table)) return standingsJson.table;
+    if (Array.isArray(standingsJson.rows)) return standingsJson.rows;
+    if (Array.isArray(standingsJson.standings)) return standingsJson.standings;
+    if (Array.isArray(standingsJson.response)) return standingsJson.response;
+    throw new Error("Standings rows array not found in standings.json");
+}
+
+function buildLeagueTableHtml({ seasonPath, seasonLabel, rows, teamsBySlug, apiIdToSlug, updatedLabel }) {
+    const bodyRows = rows.map((r) => {
+        const slug = apiIdToSlug.get(r.teamApiId);
+        if (!slug) throw new Error(`Standings teamApiId ${r.teamApiId} not found in teams.json`);
+        const team = teamsBySlug[slug];
+
+        const all = r.all || {};
+        return `
+      <tr>
+        <td>${r.rank ?? ""}</td>
+        <td class="tbl-team">
+          <img src="${team.badge}" alt="${escapeAttr(team.name)} badge" width="28" height="28" loading="lazy">
+          <a class="tbl-link" href="/epl/${seasonPath}/team/${slug}/">${team.name}</a><span>&#9655;</span>
+        </td>
+        <td class="text-center">${all.p ?? ""}</td>
+        <td class="text-center">${all.w ?? ""}</td>
+        <td class="text-center">${all.d ?? ""}</td>
+        <td class="text-center">${all.l ?? ""}</td>
+        <td class="text-center">${all.gf ?? ""}</td>
+        <td class="text-center">${all.ga ?? ""}</td>
+        <td class="text-center">${r.gd ?? ""}</td>
+        <td class="text-center"><strong>${r.points ?? ""}</strong></td>
+        <td class="text-center mono tbl-form">${escapeAttr(r.form ?? "")}</td>
+      </tr>
+    `.trim();
+    }).join("\n");
+
+    return `
+    <section class="league-table-page">
+      <h2 class="text-center">${seasonLabel} Table</h2>
+      ${updatedLabel ? `<p class="muted">Last updated: ${updatedLabel}</p>` : ""}
+      <div class="table-scroll" role="region" aria-label="League table" tabindex="0">
+        <table class="league-table">
+            <thead>
+            <tr>
+                <th scope="col">Pos</th>
+                <th scope="col">Team</th>
+                <th scope="col">P</th>
+                <th scope="col">W</th>
+                <th scope="col">D</th>
+                <th scope="col">L</th>
+                <th scope="col">GF</th>
+                <th scope="col">GA</th>
+                <th scope="col">GD</th>
+                <th scope="col">Pts</th>
+                <th scope="col">Form</th>
+            </tr>
+            </thead>
+            <tbody>
+            ${bodyRows}
+            </tbody>
+        </table>
+      </div>
+    </section>
+  `.trim();
+}
+
+function buildTeamMatchesIndex({ roundsData, teamsBySlug, seasonPath }) {
+    // Map: slug -> matches[]
+    const out = {};
+    for (const slug of Object.keys(teamsBySlug)) out[slug] = [];
+
+    for (const md of roundsData) {
+        const round = md.round;
+        for (const m of md.matches || []) {
+            const home = m.homeTeamId;
+            const away = m.awayTeamId;
+
+            if (!teamsBySlug[home] || !teamsBySlug[away]) {
+                throw new Error(`Unknown team slug in matchday ${round}: ${home} vs ${away}`);
+            }
+
+            const fixtureId = m.id;
+            const kickoff = m.kickoff;
+            const state = m.status?.state ?? "";
+            const href = `/epl/${seasonPath}/matchweek/${round}/#fixture-${fixtureId}`;
+
+            // home entry
+            out[home].push({
+                round,
+                fixtureId,
+                kickoff,
+                isHome: true,
+                opponentSlug: away,
+                opponentName: teamsBySlug[away].name,
+                scoreFor: m.score?.home ?? null,
+                scoreAgainst: m.score?.away ?? null,
+                state,
+                href
+            });
+
+            // away entry
+            out[away].push({
+                round,
+                fixtureId,
+                kickoff,
+                isHome: false,
+                opponentSlug: home,
+                opponentName: teamsBySlug[home].name,
+                scoreFor: m.score?.away ?? null,
+                scoreAgainst: m.score?.home ?? null,
+                state,
+                href
+            });
+        }
+    }
+
+    // Sort each list by kickoff
+    for (const slug of Object.keys(out)) {
+        out[slug].sort((a, b) => Date.parse(a.kickoff) - Date.parse(b.kickoff));
+    }
+
+    return out;
+}
+
+function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, matches, updatedLabel }) {
+    const all = standingsRow?.all || null;
+
+    const summary = standingsRow && all
+        ? `${team.name} are ${standingsRow.rank}th in the EPL ${seasonLabel} table with ${standingsRow.points} points from ${all.p} matches (${all.w}W-${all.d}D-${all.l}L) and a goal difference of ${standingsRow.gd >= 0 ? "+" : ""}${standingsRow.gd}.`
+        : `${team.name} EPL ${seasonLabel} season page with results and match timelines by matchweek.`;
+
+    const rowsHtml = (matches || []).map((m) => {
+        const date = m.kickoff ? formatISODate(m.kickoff) : "";
+        const vsAt = m.isHome ? "H &nbsp;" : "A &nbsp;";
+        const score = (m.scoreFor != null && m.scoreAgainst != null) ? `${m.scoreFor}–${m.scoreAgainst}` : "–";
+
+        return `
+      <tr>
+        <td class="text-center">${date}</td>
+        <td>${vsAt} <a class="tbl-link" href="/epl/${seasonPath}/team/${m.opponentSlug}/">${m.opponentName} &#9655;</a></td>
+        <td class="text-center">${score}</td>
+        <td class="text-center">${escapeAttr(m.state)}</td>
+        <td class="text-center"><a class="tbl-link" href="${m.href}">Timeline &#9655;</a></td>
+      </tr>
+    `.trim();
+    }).join("\n");
+
+    const v = team.venue;
+
+    const venueHtml = v?.name ? `
+        <div class="team-venue">
+            ${v.image ? `<img class="team-venue__img" src="${v.image}" alt="${escapeAttr(v.name)}" loading="lazy">` : ""}
+            <div class="team-venue__meta">
+            <div class="team-venue__name"><strong>${escapeAttr(v.name)}</strong></div>
+            <div class="muted">
+                ${escapeAttr(v.city || "")}
+                ${v.capacity ? ` • Capacity ${Number(v.capacity).toLocaleString("en-US")}` : ""}
+                ${v.surface ? ` • ${escapeAttr(v.surface)}` : ""}
+            </div>
+            </div>
+        </div>
+    ` : "";
+
+    return `
+    <section class="team-page">
+      <div class="team-header">
+        <img src="${team.badge}" alt="${escapeAttr(team.name)} badge" width="72" height="72" loading="lazy">
+        <div>
+          <h2>${team.name} - ${team.nicknames?.[0] ?? ""}</h2>
+          ${updatedLabel ? `<p class="muted">Last updated: ${updatedLabel}</p>` : ""}
+        </div>
+      </div>
+
+      ${venueHtml}
+
+      ${standingsRow && all ? `
+        <div class="team-strip" role="group" aria-label="Team table summary">
+          <div><span class="muted">Position</span><strong>${standingsRow.rank}</strong></div>
+          <div><span class="muted">Points</span><strong>${standingsRow.points}</strong></div>
+          <div><span class="muted">GD</span><strong>${standingsRow.gd >= 0 ? "+" : ""}${standingsRow.gd}</strong></div>
+          <div><span class="muted">Record</span><strong>${all.w}-${all.d}-${all.l}</strong></div>
+          <div><span class="muted">Played</span><strong>${all.p}</strong></div>
+          <div><span class="muted">Form</span><strong class="mono">${escapeAttr(standingsRow.form ?? "")}</strong></div>
+        </div>
+      ` : ""}
+
+    <h2 class="text-center">Matches</h2>
+    <div class="table-scroll" role="region" aria-label="League table" tabindex="0">
+        <table class="team-matches">
+            <thead>
+            <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Opponent</th>
+                <th scope="col">Score</th>
+                <th scope="col">Status</th>
+                <th scope="col">Match</th>
+            </tr>
+            </thead>
+            <tbody>
+            ${rowsHtml}
+            </tbody>
+        </table>
+    </div>
+      <nav class="page-nav" aria-label="Team page navigation">
+        <a href="/epl/${seasonPath}/table/">League table &#9655;</a>
+        <a href="/epl/${seasonPath}/">Season hub &#9655;</a>
+      </nav>
+    </section>
+  `.trim();
+}
+
+function tableJsonLd({ seasonLabel, rows, teamsBySlug, apiIdToSlug }) {
+    return {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        name: `English Premier League ${seasonLabel} league table`,
+        itemListOrder: "https://schema.org/ItemListOrderAscending",
+        numberOfItems: rows.length,
+        itemListElement: rows.map((r, i) => {
+            const slug = apiIdToSlug.get(r.teamApiId);
+            const team = teamsBySlug[slug];
+            return {
+                "@type": "ListItem",
+                position: i + 1,
+                item: teamToJsonLd(team)
+            };
+        })
+    };
+}
+
+function teamPageJsonLd({ team, seasonLabel }) {
+    return {
+        "@context": "https://schema.org",
+        ...teamToJsonLd(team),
+        sport: "https://schema.org/Soccer",
+        description: `${team.name} EPL ${seasonLabel} season page with results and match timelines by matchweek.`
+    };
+}
+
 function escapeAttr(s) {
     return String(s ?? "").replace(/"/g, "&quot;");
 }
@@ -249,46 +517,46 @@ async function buildMatchweekStartDateMap(rounds) {
 }
 
 const HUB_STAT_ICONS = {
-  goals: `<span class="evt-svg goal-ball" title="Goals">
+    goals: `<span class="evt-svg goal-ball" title="Goals">
     <svg width="18" height="18" viewBox="0 0 16 16"><use href="/img/misc/ball.svg"></use></svg>
   </span>`,
-  ownGoals: `<span class="evt-svg og-goal-ball" title="Own Goals">
+    ownGoals: `<span class="evt-svg og-goal-ball" title="Own Goals">
     <svg width="18" height="18" viewBox="0 0 16 16"><use href="/img/misc/ball.svg"></use></svg>
   </span>`,
-  yellows: `<span class="card yellow" title="Yellow cards" aria-label="Yellow cards" role="img"></span>`,
-  reds: `<span class="card red" title="Red cards" aria-label="Red cards" role="img"></span>`,
-  var: `<span class="var-event" title="VAR events" aria-label="VAR events">VAR</span>`
+    yellows: `<span class="card yellow" title="Yellow cards" aria-label="Yellow cards" role="img"></span>`,
+    reds: `<span class="card red" title="Red cards" aria-label="Red cards" role="img"></span>`,
+    var: `<span class="var-event" title="VAR events" aria-label="VAR events">VAR</span>`
 };
 
 
-function buildSeasonHubHtml({ seasonStart, seasonLabel, maxRound, matchweekMeta }) {
-  const cards = Array.from({ length: maxRound }, (_, i) => {
-    const round = i + 1;
-    const displayRound = round.toString().padStart(2, "0");
+function buildSeasonHubHtml({ seasonPath, seasonLabel, maxRound, matchweekMeta }) {
+    const cards = Array.from({ length: maxRound }, (_, i) => {
+        const round = i + 1;
+        const displayRound = round.toString().padStart(2, "0");
 
-    const meta = matchweekMeta?.[round] ?? {};
-    const startDate = meta.startDate ?? "";
-    const status = meta.status ?? "not-started";
-    const stats = meta.stats ?? null;
+        const meta = matchweekMeta?.[round] ?? {};
+        const startDate = meta.startDate ?? "";
+        const status = meta.status ?? "not-started";
+        const stats = meta.stats ?? null;
 
-    const dateLine = startDate || `EPL ${seasonLabel}`;
+        const dateLine = startDate || `EPL ${seasonLabel}`;
 
-    const statusLabel =
-      status === "completed"
-        ? "Completed"
-        : status === "in-progress"
-        ? "In Progress"
-        : "Not Started";
+        const statusLabel =
+            status === "completed"
+                ? "Completed"
+                : status === "in-progress"
+                    ? "In Progress"
+                    : "Not Started";
 
-    const statusHtml = `
+        const statusHtml = `
       <div class="mw-status mw-status--${status}">
         ${statusLabel}
       </div>
     `;
 
-    const statsHtml =
-    status !== "not-started" && stats
-        ? `
+        const statsHtml =
+            status !== "not-started" && stats
+                ? `
         <div class="mw-stats" aria-label="Matchweek stats">
             <span class="mw-stat">${HUB_STAT_ICONS.goals}<span class="mw-stat__num">${stats.goals}</span></span>
             <span class="mw-stat">${HUB_STAT_ICONS.ownGoals}<span class="mw-stat__num">${stats.ownGoals}</span></span>
@@ -297,10 +565,10 @@ function buildSeasonHubHtml({ seasonStart, seasonLabel, maxRound, matchweekMeta 
             <span class="mw-stat">${HUB_STAT_ICONS.var}<span class="mw-stat__num">${stats.var}</span></span>
         </div>
         `
-        : "";
+                : "";
 
-    return `
-      <a href="/epl/${seasonStart}/matchweek/${round}/" class="mw-card">
+        return `
+      <a href="/epl/${seasonPath}/matchweek/${round}/" class="mw-card">
         <div class="mw-number">${displayRound}</div>
         <div class="mw-label">Matchweek</div>
         <div class="mw-divider"></div>
@@ -309,21 +577,26 @@ function buildSeasonHubHtml({ seasonStart, seasonLabel, maxRound, matchweekMeta 
         ${statsHtml}
       </a>
     `;
-  }).join("\n");
+    }).join("\n");
 
-  return `
+    return `
     <section class="season-hub">
-      <h2>Matchweeks</h2>
-      <p>
-        Browse match timelines by matchweek for the EPL ${seasonLabel} season.
-        Each matchweek page includes goals, cards, VAR decisions, and substitutions in chronological order.
-      </p>
 
-      <nav aria-label="Matchweeks">
-        <div class="matchweek-grid">
-          ${cards}
+        <div class="season-links">
+            <a class="season-link" href="/epl/${seasonPath}/table/">League table &#9655;</a>
         </div>
-      </nav>
+        <h2>Matchweeks</h2>
+        <p>
+            Browse match timelines by matchweek for the EPL ${seasonLabel} season.
+            Each matchweek page includes goals, cards, VAR decisions, and substitutions in chronological order.
+        </p>
+
+        <nav aria-label="Matchweeks">
+            <div class="matchweek-grid">
+            ${cards}
+            </div>
+        </nav>
+
     </section>
   `.trim();
 }
@@ -353,10 +626,10 @@ async function listMatchdayRounds() {
         .sort((a, b) => a - b);
 }
 
-function buildMatchweekPrevNextNav({ seasonStart, seasonLabel, round, maxRound }) {
-    const prev = round > 1 ? `/epl/${seasonStart}/matchweek/${round - 1}/` : null;
-    const next = round < maxRound ? `/epl/${seasonStart}/matchweek/${round + 1}/` : null;
-    const hub = `/epl/${seasonStart}/`;
+function buildMatchweekPrevNextNav({ seasonPath, seasonLabel, round, maxRound }) {
+    const prev = round > 1 ? `/epl/${seasonPath}/matchweek/${round - 1}/` : null;
+    const next = round < maxRound ? `/epl/${seasonPath}/matchweek/${round + 1}/` : null;
+    const hub = `/epl/${seasonPath}/`;
 
     return `
     <nav class="mw-nav" aria-label="Matchweek navigation">
@@ -435,8 +708,9 @@ async function main() {
 
     const template = await fs.readFile(DIST_INDEX, "utf8");
 
-    const seasonStart = 2025;
-    const seasonLabel = "2025–26";
+    const seasonStart = 2025;        // data folder
+    const seasonPath = "2025-26";   // URL path
+    const seasonLabel = "2025–26";   // display label
     const maxRound = 38;
     const SITE_NAME = "Timeline";
     const OG_DEFAULT_IMAGE = "https://timelinefootball.com/og/og-default.png";
@@ -457,7 +731,7 @@ async function main() {
             globalMode: "compact",
         });
 
-        const pagePath = `/epl/2025/matchweek/${round}/`;
+        const pagePath = `/epl/2025-26/matchweek/${round}/`;
 
         // NOTE: We'll swap this to your live domain in the SEO step.
         const canonical = `https://timelinefootball.com${pagePath}`;
@@ -500,7 +774,7 @@ async function main() {
         // ---------------------------------
 
         const navHtml = buildMatchweekPrevNextNav({
-            seasonStart,
+            seasonPath,
             seasonLabel,
             round,
             maxRound
@@ -510,14 +784,14 @@ async function main() {
 
         out = injectApp(out, appHtml);
 
-        const outDir = path.join(ROOT, "dist", "epl", "2025", "matchweek", String(round));
+        const outDir = path.join(ROOT, "dist", "epl", String(seasonPath), "matchweek", String(round));
         await fs.mkdir(outDir, { recursive: true });
         await fs.writeFile(path.join(outDir, "index.html"), out, "utf8");
 
         console.log(`Prerendered ${pagePath}`);
     }
 
-    const hubPath = `/epl/${seasonStart}/`;
+    const hubPath = `/epl/${seasonPath}/`;
     const canonical = `https://timelinefootball.com${hubPath}`;
 
     let out = template;
@@ -552,7 +826,7 @@ async function main() {
     console.log("MW25 meta:", matchweekMeta[25]);
 
     const hubHtml = buildSeasonHubHtml({
-        seasonStart,
+        seasonPath,
         seasonLabel,
         maxRound,
         matchweekMeta
@@ -561,7 +835,7 @@ async function main() {
     out = injectApp(out, hubHtml);
 
     // write it
-    const seasonOutDir = path.join(ROOT, "dist", "epl", "2025");
+    const seasonOutDir = path.join(ROOT, "dist", "epl", String(seasonPath));
     await fs.mkdir(seasonOutDir, { recursive: true });
 
     const hubOutFile = path.join(seasonOutDir, "index.html");
@@ -573,7 +847,155 @@ async function main() {
     out = stripMatchdayShell(out);
     await fs.writeFile(hubOutFile, out, "utf8");
 
-    console.log("Prerendered /epl/2025/");
+    // ------------------------------
+    // Table + Team pages
+    // ------------------------------
+    const standingsJson = JSON.parse(await fs.readFile(STANDINGS_PATH, "utf8"));
+    const standingsRows = getStandingsRows(standingsJson);
+
+    const apiIdToSlug = buildApiTeamIdToSlugMap(teams);
+
+    // standings timestamp (use whatever you store; adapt key names here)
+    const updatedISO = standingsJson.updated || standingsJson.updatedAt || standingsJson.lastUpdated || null;
+    const updatedLabel = updatedISO ? formatISODate(updatedISO) : "";
+
+    // Load all matchdays once (for team match lists)
+    const roundsData = [];
+    for (const round of rounds) {
+        const mdPath = path.join(MATCHDAYS_DIR, `${round}.json`);
+        roundsData.push(JSON.parse(await fs.readFile(mdPath, "utf8")));
+    }
+
+    const matchesByTeam = buildTeamMatchesIndex({ roundsData, teamsBySlug: teams, seasonPath });
+
+    // standings lookup
+    const standingsByApiId = new Map(standingsRows.map(r => [r.teamApiId, r]));
+
+    // ---- Table page ----
+    {
+        const pagePath = `/epl/${seasonPath}/table/`;
+        const canonical = `https://timelinefootball.com${pagePath}`;
+
+        let page = template;
+
+        const title = `EPL ${seasonLabel} Table | Timeline Football`;
+        const desc = `English Premier League ${seasonLabel} league table with points, goal difference, form, and links to each team’s results and timelines.`;
+
+        page = setTitle(page, title);
+        page = setDescription(page, desc);
+        page = setCanonical(page, canonical);
+
+        page = setOpenGraph(page, {
+            title,
+            description: desc,
+            url: canonical,
+            image: OG_DEFAULT_IMAGE,
+            siteName: SITE_NAME,
+        });
+
+        page = setTwitterCard(page, {
+            title,
+            description: desc,
+            image: OG_DEFAULT_IMAGE,
+        });
+
+        const navHtml = `<nav class="mw-nav" aria-label="EPL navigation">
+        <a class="mw-nav__hub" href="/epl/${seasonPath}/">EPL ${seasonLabel} matchweeks &#9655;</a>
+        <div class="mw-nav__pager">
+          <span class="mw-nav__prev is-disabled" aria-disabled="true"></span>
+          <span class="mw-nav__next is-disabled" aria-disabled="true"></span>
+        </div>
+      </nav>`;
+        page = injectBeforeApp(page, navHtml);
+
+        const tableHtml = buildLeagueTableHtml({
+            seasonPath,
+            seasonLabel,
+            rows: standingsRows,
+            teamsBySlug: teams,
+            apiIdToSlug,
+            updatedLabel
+        });
+
+        page = injectApp(page, tableHtml);
+
+        page = setJsonLd(page, tableJsonLd({ seasonLabel, rows: standingsRows, teamsBySlug: teams, apiIdToSlug }));
+
+        // Table page should not boot SPA and should not show matchday shell
+        page = stripAppScripts(page);
+        page = stripMatchdayShell(page);
+
+        const outDir = path.join(ROOT, "dist", "epl", String(seasonPath), "table");
+        await fs.mkdir(outDir, { recursive: true });
+        await fs.writeFile(path.join(outDir, "index.html"), page, "utf8");
+
+        console.log(`Prerendered ${pagePath}`);
+    }
+
+    // ---- Team pages ----
+    for (const [slug, team] of Object.entries(teams)) {
+        const pagePath = `/epl/${seasonPath}/team/${slug}/`;
+        const canonical = `https://timelinefootball.com${pagePath}`;
+
+        let page = template;
+
+        const standingsRow = standingsByApiId.get(team.apiTeamId) || null;
+
+        const title = `${team.name} EPL ${seasonLabel} | Results & Match Timelines`;
+        const desc = `${team.name} EPL ${seasonLabel} season page: current league position, results list, and links to matchweek timelines.`;
+
+        page = setTitle(page, title);
+        page = setDescription(page, desc);
+        page = setCanonical(page, canonical);
+
+        page = setOpenGraph(page, {
+            title,
+            description: desc,
+            url: canonical,
+            image: OG_DEFAULT_IMAGE,
+            siteName: SITE_NAME,
+        });
+
+        page = setTwitterCard(page, {
+            title,
+            description: desc,
+            image: OG_DEFAULT_IMAGE,
+        });
+
+        const navHtml = `<nav class="mw-nav" aria-label="EPL navigation">
+        <a class="mw-nav__hub" href="/epl/${seasonPath}/">EPL ${seasonLabel} matchweeks &#9655;</a>
+        <div class="mw-nav__pager">
+          <a class="mw-nav__prev" href="/epl/${seasonPath}/table/">League table &#9655;</a>
+          <span class="mw-nav__next is-disabled" aria-disabled="true"></span>
+        </div>
+      </nav>`;
+        page = injectBeforeApp(page, navHtml);
+
+        const teamHtml = buildTeamPageHtml({
+            seasonPath,
+            seasonLabel,
+            slug,
+            team,
+            standingsRow,
+            matches: matchesByTeam[slug] || [],
+            updatedLabel
+        });
+
+        page = injectApp(page, teamHtml);
+
+        page = setJsonLd(page, teamPageJsonLd({ team, seasonLabel }));
+
+        page = stripAppScripts(page);
+        page = stripMatchdayShell(page);
+
+        const outDir = path.join(ROOT, "dist", "epl", String(seasonPath), "team", slug);
+        await fs.mkdir(outDir, { recursive: true });
+        await fs.writeFile(path.join(outDir, "index.html"), page, "utf8");
+
+        console.log(`Prerendered ${pagePath}`);
+    }
+
+    console.log("Prerendered /epl/2025-26/");
 
 }
 
