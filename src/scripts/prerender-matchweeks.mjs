@@ -29,7 +29,7 @@ const STANDINGS_PATH = path.join(
     "data",
     "leagues",
     "epl",
-    "2025",
+    "2025-26",
     "standings.json"
 );
 
