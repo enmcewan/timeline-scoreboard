@@ -823,8 +823,6 @@ async function main() {
 
     const matchweekMeta = await buildMatchweekMetaMap(rounds);
 
-    console.log("MW25 meta:", matchweekMeta[25]);
-
     const hubHtml = buildSeasonHubHtml({
         seasonPath,
         seasonLabel,
