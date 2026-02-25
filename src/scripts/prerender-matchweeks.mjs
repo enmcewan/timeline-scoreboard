@@ -71,9 +71,11 @@ function buildLeagueTableHtml({ seasonPath, seasonLabel, rows, teamsBySlug, apiI
         return `
       <tr>
         <td>${r.rank ?? ""}</td>
-        <td class="tbl-team">
-          <img src="${team.badge}" alt="${escapeAttr(team.name)} badge" width="28" height="28" loading="lazy">
-          <a class="tbl-link" href="/epl/${seasonPath}/team/${slug}/">${team.name}</a><span>&#9655;</span>
+        <td class="text-center">
+          <img class="${slug}" src="${team.badge}" alt="${escapeAttr(team.name)} badge" height="28" loading="lazy">
+        </td>
+        <td class="table-team">
+            <a class="tbl-link" href="/epl/${seasonPath}/team/${slug}/">${team.name}</a><span> &#9655;</span>
         </td>
         <td class="text-center">${all.p ?? ""}</td>
         <td class="text-center">${all.w ?? ""}</td>
@@ -97,6 +99,7 @@ function buildLeagueTableHtml({ seasonPath, seasonLabel, rows, teamsBySlug, apiI
             <thead>
             <tr>
                 <th scope="col">Pos</th>
+                <th scope="col"></th>
                 <th scope="col">Team</th>
                 <th scope="col">P</th>
                 <th scope="col">W</th>
@@ -218,7 +221,7 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
     return `
     <section class="team-page">
       <div class="team-header">
-        <img src="${team.badge}" alt="${escapeAttr(team.name)} badge" width="72" height="72" loading="lazy">
+        <img class="slug ${slug}" src="${team.badge}" alt="${escapeAttr(team.name)} badge" height="72" loading="lazy">
         <div>
           <h2>${team.name} - ${team.nicknames?.[0] ?? ""}</h2>
           ${updatedLabel ? `<p class="muted">Last updated: ${updatedLabel}</p>` : ""}

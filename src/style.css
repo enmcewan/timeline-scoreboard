@@ -52,7 +52,7 @@
     filter: brightness(1.05) contrast(1.05);
   }
 
-  .team-badge.tottenham {
+  .team-badge.tottenham, .tottenham {
     filter: invert();
   }
 }
@@ -855,7 +855,7 @@ td {
 
 .team-strip .muted {
   font-size: 0.8rem;
-  color: rgba(0, 0, 0, 0.65);
+  color: var(--text-muted)
 }
 
 /* --- Venue block --- */
@@ -889,6 +889,16 @@ td {
   gap: 1rem;
   margin-top: 1rem;
   justify-content: center;
+  color: var(--text-muted);
+}
+
+.page-nav a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.page-nav a:hover {
+  text-decoration: underline;
 }
 
 .team-header,
