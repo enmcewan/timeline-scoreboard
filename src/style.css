@@ -116,7 +116,7 @@ body.dark-mode {
 .mono {
   font-family: monospace;
   letter-spacing: 3px;
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
 
 body {
@@ -755,6 +755,10 @@ span.sub {
   opacity: 0.5;
 }
 
+td {
+  white-space: nowrap;
+}
+
 /* --- Shared page width --- */
 .team-page,
 .league-table-page {
@@ -1008,7 +1012,7 @@ table {
   .team.home,
   .team.away {
     font-size: 1.15rem;
-    margin-top: 0.25rem;
+    margin-top: 0.5rem;
   }
 
   .score {
