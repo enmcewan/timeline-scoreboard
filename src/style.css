@@ -322,6 +322,16 @@ footer {
   text-decoration: none;
 }
 
+.team-link{
+  display: inline-flex;        /* not block, not row */
+  flex-direction: column;      /* badge over name */
+  align-items: center;         /* horizontal centering */
+  justify-content: center;     /* vertical centering */
+  gap: .35rem;                 /* space between badge and name */
+  min-width: 0;
+  text-align: center;
+}
+
 .score {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
