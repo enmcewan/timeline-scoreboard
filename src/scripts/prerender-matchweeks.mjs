@@ -192,14 +192,14 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
         const score = (m.scoreFor != null && m.scoreAgainst != null) ? `${m.scoreFor}–${m.scoreAgainst}` : "–";
 
         return `
-      <tr>
-        <td class="text-center">${date}</td>
-        <td>${vsAt} <a class="tbl-link" href="/epl/${seasonPath}/team/${m.opponentSlug}/">${m.opponentName} &#9655;</a></td>
-        <td class="text-center">${score}</td>
-        <td class="text-center">${escapeAttr(m.state)}</td>
-        <td class="text-center"><a class="tbl-link" href="${m.href}">Timeline &#9655;</a></td>
-      </tr>
-    `.trim();
+                <tr>
+                    <td class="text-center">${date}</td>
+                    <td>${vsAt} <a class="tbl-link" href="/epl/${seasonPath}/team/${m.opponentSlug}/">${m.opponentName} &#9655;</a></td>
+                    <td class="text-center">${score}</td>
+                    <td class="text-center">${escapeAttr(m.state)}</td>
+                    <td class="text-center"><a class="tbl-link" href="${m.href}">Timeline &#9655;</a></td>
+                </tr>
+            `.trim();
     }).join("\n");
 
     const v = team.venue;
@@ -258,10 +258,6 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
             </tbody>
         </table>
     </div>
-      <nav class="page-nav" aria-label="Team page navigation">
-        <a href="/epl/${seasonPath}/table/">League table &#9655;</a>
-        <a href="/epl/${seasonPath}/">Season hub &#9655;</a>
-      </nav>
     </section>
   `.trim();
 }
@@ -521,18 +517,18 @@ async function buildMatchweekStartDateMap(rounds) {
 
 const HUB_STAT_ICONS = {
     goals: `<span class="evt-svg goal-ball" title="Goals">
-    <svg width="18" height="18" viewBox="0 0 16 16"><use href="/img/misc/ball.svg"></use></svg>
-  </span>`,
+        <svg width="18" height="18" viewBox="0 0 16 16"><use href="/img/misc/ball.svg"></use></svg>
+    </span>`,
     ownGoals: `<span class="evt-svg og-goal-ball" title="Own Goals">
-    <svg width="18" height="18" viewBox="0 0 16 16"><use href="/img/misc/ball.svg"></use></svg>
-  </span>`,
+        <svg width="18" height="18" viewBox="0 0 16 16"><use href="/img/misc/ball.svg"></use></svg>
+    </span>`,
     yellows: `<span class="card yellow" title="Yellow cards" aria-label="Yellow cards" role="img"></span>`,
     reds: `<span class="card red" title="Red cards" aria-label="Red cards" role="img"></span>`,
     var: `<span class="var-event" title="VAR events" aria-label="VAR events">VAR</span>`
 };
 
-
 function buildSeasonHubHtml({ seasonPath, seasonLabel, maxRound, matchweekMeta }) {
+
     const cards = Array.from({ length: maxRound }, (_, i) => {
         const round = i + 1;
         const displayRound = round.toString().padStart(2, "0");
@@ -552,35 +548,35 @@ function buildSeasonHubHtml({ seasonPath, seasonLabel, maxRound, matchweekMeta }
                     : "Not Started";
 
         const statusHtml = `
-      <div class="mw-status mw-status--${status}">
-        ${statusLabel}
-      </div>
-    `;
+            <div class="mw-status mw-status--${status}">
+                ${statusLabel}
+            </div>
+        `;
 
         const statsHtml =
             status !== "not-started" && stats
-                ? `
-        <div class="mw-stats" aria-label="Matchweek stats">
-            <span class="mw-stat">${HUB_STAT_ICONS.goals}<span class="mw-stat__num">${stats.goals}</span></span>
-            <span class="mw-stat">${HUB_STAT_ICONS.ownGoals}<span class="mw-stat__num">${stats.ownGoals}</span></span>
-            <span class="mw-stat">${HUB_STAT_ICONS.yellows}<span class="mw-stat__num">${stats.yellows}</span></span>
-            <span class="mw-stat">${HUB_STAT_ICONS.reds}<span class="mw-stat__num">${stats.reds}</span></span>
-            <span class="mw-stat">${HUB_STAT_ICONS.var}<span class="mw-stat__num">${stats.var}</span></span>
-        </div>
-        `
-                : "";
+            ? `
+                <div class="mw-stats" aria-label="Matchweek stats">
+                    <span class="mw-stat">${HUB_STAT_ICONS.goals}<span class="mw-stat__num">${stats.goals}</span></span>
+                    <span class="mw-stat">${HUB_STAT_ICONS.ownGoals}<span class="mw-stat__num">${stats.ownGoals}</span></span>
+                    <span class="mw-stat">${HUB_STAT_ICONS.yellows}<span class="mw-stat__num">${stats.yellows}</span></span>
+                    <span class="mw-stat">${HUB_STAT_ICONS.reds}<span class="mw-stat__num">${stats.reds}</span></span>
+                    <span class="mw-stat">${HUB_STAT_ICONS.var}<span class="mw-stat__num">${stats.var}</span></span>
+                </div>
+            `
+        : "";
 
         return `
-      <a href="/epl/${seasonPath}/matchweek/${round}/" class="mw-card">
-        <div class="mw-number">${displayRound}</div>
-        <div class="mw-label">Matchweek</div>
-        <div class="mw-divider"></div>
-        <div class="mw-date">${dateLine}</div>
-        ${statusHtml}
-        ${statsHtml}
-      </a>
-    `;
-    }).join("\n");
+                <a href="/epl/${seasonPath}/matchweek/${round}/" class="mw-card">
+                    <div class="mw-number">${displayRound}</div>
+                    <div class="mw-label">Matchweek</div>
+                    <div class="mw-divider"></div>
+                    <div class="mw-date">${dateLine}</div>
+                    ${statusHtml}
+                    ${statsHtml}
+                </a>
+            `;
+        }).join("\n");
 
     return `
     <section class="season-hub">
