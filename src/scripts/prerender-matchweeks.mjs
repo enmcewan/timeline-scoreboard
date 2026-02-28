@@ -70,7 +70,7 @@ function buildLeagueTableHtml({ seasonPath, seasonLabel, rows, teamsBySlug, apiI
         const all = r.all || {};
         return `
       <tr>
-        <td>${r.rank ?? ""}</td>
+        <td id="${r.rank ?? ""}">${r.rank ?? ""}</td>
         <td class="text-center">
           <img class="${slug}" src="${team.badge}" alt="${escapeAttr(team.name)} badge" height="28" loading="lazy">
         </td>
@@ -232,7 +232,11 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
 
       ${standingsRow && all ? `
         <div class="team-strip" role="group" aria-label="Team table summary">
-          <div><span class="muted">Position</span><strong>${standingsRow.rank}</strong></div>
+          <div><span class="muted">Position</span>
+            <strong>
+                <a class="tbl-link" href="/epl/2025-26/table/#${standingsRow.rank}">${standingsRow.rank} ▷</a>
+            </strong>
+          </div>
           <div><span class="muted">Points</span><strong>${standingsRow.points}</strong></div>
           <div><span class="muted">GD</span><strong>${standingsRow.gd >= 0 ? "+" : ""}${standingsRow.gd}</strong></div>
           <div><span class="muted">Record</span><strong>${all.w}-${all.d}-${all.l}</strong></div>
