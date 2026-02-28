@@ -759,6 +759,15 @@ td {
   white-space: nowrap;
 }
 
+.table-team {
+  font-size: larger;
+}
+
+thead tr {
+  background: var(--accent-soft);
+  border: solid 1px var(--accent);
+}
+
 /* --- Shared page width --- */
 .team-page,
 .league-table-page {

@@ -75,7 +75,7 @@ function buildLeagueTableHtml({ seasonPath, seasonLabel, rows, teamsBySlug, apiI
           <img class="${slug}" src="${team.badge}" alt="${escapeAttr(team.name)} badge" height="28" loading="lazy">
         </td>
         <td class="table-team">
-            <a class="tbl-link" href="/epl/${seasonPath}/team/${slug}/">${team.name}</a><span> &#9655;</span>
+            <strong><a class="tbl-link" href="/epl/${seasonPath}/team/${slug}/">${team.name}</a></strong><span> &#9655;</span>
         </td>
         <td class="text-center">${all.p ?? ""}</td>
         <td class="text-center">${all.w ?? ""}</td>
@@ -194,8 +194,8 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
         return `
                 <tr>
                     <td class="text-center">${date}</td>
-                    <td>${vsAt} <a class="tbl-link" href="/epl/${seasonPath}/team/${m.opponentSlug}/">${m.opponentName} &#9655;</a></td>
-                    <td class="text-center">${score}</td>
+                    <td>${vsAt} <strong><a class="tbl-link" href="/epl/${seasonPath}/team/${m.opponentSlug}/">${m.opponentName} &#9655;</a></strong></td>
+                    <td class="text-center"><strong>${score}</strong></td>
                     <td class="text-center">${escapeAttr(m.state)}</td>
                     <td class="text-center"><a class="tbl-link" href="${m.href}">Timeline &#9655;</a></td>
                 </tr>
@@ -237,7 +237,7 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
           <div><span class="muted">GD</span><strong>${standingsRow.gd >= 0 ? "+" : ""}${standingsRow.gd}</strong></div>
           <div><span class="muted">Record</span><strong>${all.w}-${all.d}-${all.l}</strong></div>
           <div><span class="muted">Played</span><strong>${all.p}</strong></div>
-          <div><span class="muted">Form</span><strong class="mono">${escapeAttr(standingsRow.form ?? "")}</strong></div>
+          <div><span class="muted">Form</span><strong class="mono">${[...escapeAttr(standingsRow.form ?? "")].reverse().join("")}</strong></div>
         </div>
       ` : ""}
 
