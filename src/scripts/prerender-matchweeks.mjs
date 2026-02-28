@@ -85,7 +85,7 @@ function buildLeagueTableHtml({ seasonPath, seasonLabel, rows, teamsBySlug, apiI
         <td class="text-center">${all.ga ?? ""}</td>
         <td class="text-center">${r.gd ?? ""}</td>
         <td class="text-center"><strong>${r.points ?? ""}</strong></td>
-        <td class="text-center mono tbl-form">${escapeAttr(r.form ?? "")}</td>
+        <td class="text-center mono tbl-form">${[...escapeAttr(r.form)].reverse().join("") ?? ""}</td>
       </tr>
     `.trim();
     }).join("\n");
