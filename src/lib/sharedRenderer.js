@@ -1,4 +1,5 @@
 import playerData from "../data/leagues/epl/2025/players.json" with { type: "json" };
+import { computePerfExec } from "./powerMeter.js";
 
 const players = playerData || {}; // preventing app failure from missing file
 
@@ -272,6 +273,35 @@ export function createRenderMatchCard({
             throw new Error(`Unknown team id(s): ${match.homeTeamId}, ${match.awayTeamId}`);
         }
 
+        const state = String(match.status?.state || "").toUpperCase();
+        const hasStats = !!(match.statistics?.home && match.statistics?.away);
+
+        const statsH = match.statistics?.home ?? {};
+        const statsA = match.statistics?.away ?? {};
+
+        const pre = match.context?.preMatch ?? {};
+        // console.log("PREMATCH", match.id, pre);
+
+        console.log("MATCH CONTEXT", match.id, match.context);
+
+        const pe = (state === "FT" && hasStats)
+            ? computePerfExec(match, {
+                homeRank: pre.homePosition,
+                awayRank: pre.awayPosition,
+                homeForm: pre.homeForm,
+                awayForm: pre.awayForm,
+
+                homeCards: { yc: statsH.ycMinutes ?? [], rc: statsH.rcMinutes ?? [] },
+                awayCards: { yc: statsA.ycMinutes ?? [], rc: statsA.rcMinutes ?? [] },
+
+                homeDisallowedGoals: statsH.disallowedGoals ?? 0,
+                awayDisallowedGoals: statsA.disallowedGoals ?? 0,
+
+                homeOwnGoalsFor: statsH.ownGoalsFor ?? 0,
+                awayOwnGoalsFor: statsA.ownGoalsFor ?? 0,
+
+            }) : null;
+
         const mode = getModeForMatchId(String(match.id));
 
         const gameStatus = esc(match.status?.state ?? "");
@@ -295,40 +325,172 @@ export function createRenderMatchCard({
         const homeHref = `/epl/2025-26/team/${match.homeTeamId}/`;
         const awayHref = `/epl/2025-26/team/${match.awayTeamId}/`;
 
+        const stat = (side, key, fallback = " - ") =>
+            match.statistics?.[side]?.[key] ?? fallback;
+
+        const statNum = (side, key, fallback = " - ") => {
+            const v = match.statistics?.[side]?.[key];
+            return (v === 0 || (typeof v === "number" && Number.isFinite(v))) ? v : fallback;
+        };
+
+        // +/- from 50 for execution index
+
+        const homeEx = pe ? pe.homeExec : null;
+        const awayEx = pe ? pe.awayExec : null;
+
+        const exDelta = (v) => (v == null ? null : Math.round(v - 50));
+
+        const homeExDelta = exDelta(homeEx);
+        const awayExDelta = exDelta(awayEx);
+
+        const exNegWidth = (v) => {
+            if (v == null || v >= 50) return 0;
+            return Math.round(((50 - v) / 50) * 100);
+        };
+
+        const exPosWidth = (v) => {
+            if (v == null || v <= 50) return 0;
+            return Math.round(((v - 50) / 50) * 100);
+        };
+
+        const fmtDelta = (d) => {
+            if (d == null) return "—";
+            if (d > 0) return `+${d}`;
+            return `${d}`;
+        };
+
         return `
             <article id="fixture-${match.id}" class="match-card" data-match-id="${match.id}">
                 <div class="match-date">${esc(kickoffTime)}</div>
 
                 <header class="match-header">
-                <div class="ht-cont">
-                    <a href="${esc(homeHref)}" class="team-link">
-                    <div class="team-badge-cont title="${esc(home.nicknames[0] || "")}">
-                        <img class="team-badge ${match.homeTeamId}" src="${esc(home.badge)}" alt="${esc(home.name)} badge" />
+                    <div class="ht-cont">
+                        <a href="${esc(homeHref)}" class="team-link">
+                        <div class="team-badge-cont title="${esc(home.nicknames[0] || "")}">
+                            <img class="team-badge ${match.homeTeamId}" src="${esc(home.badge)}" alt="${esc(home.name)} badge" />
+                        </div>
+                        <div class="team home" title="Team Page">${esc(home.display || home.name)}</div>
+                        </a>
                     </div>
-                    <div class="team home" title="Team Page">${esc(home.display || home.name)}</div>
-                    </a>
-                </div>
 
-                <div class="score-container">
-                    <div class="score">
-                        <div class="score-home">${esc(match.score.home)}</div>
-                        <span class="separator" aria-hidden="true"></span>
-                        <div class="score-away">${esc(match.score.away)}</div>
+                    <div class="score-container">
+                        <div class="score">
+                            <div class="score-home">${esc(match.score.home)}</div>
+                            <span class="separator" aria-hidden="true"></span>
+                            <div class="score-away">${esc(match.score.away)}</div>
+                        </div>
+                        <div class="match-status">
+                            <span class="half-time">${gameStatus} ${halfTimeScore}</span>
+                        </div>
                     </div>
-                    <div class="match-status">
-                        <span class="half-time">${gameStatus} ${halfTimeScore}</span>
-                    </div>
-                </div>
 
-                <div class="at-cont">
-                    <a href="${esc(awayHref)}" class="team-link">
-                    <div class="team-badge-cont title="${esc(away.nicknames[0] || "")}">
-                        <img class="team-badge ${match.awayTeamId}" src="${esc(away.badge)}" alt="${esc(away.name)} badge" />
+                    <div class="at-cont">
+                        <a href="${esc(awayHref)}" class="team-link">
+                        <div class="team-badge-cont title="${esc(away.nicknames[0] || "")}">
+                            <img class="team-badge ${match.awayTeamId}" src="${esc(away.badge)}" alt="${esc(away.name)} badge" />
+                        </div>
+                        <div class="team away" title="Team Page">${esc(away.display || away.name)}</div>
+                        </a>
                     </div>
-                    <div class="team away" title="Team Page">${esc(away.display || away.name)}</div>
-                    </a>
-                </div>
                 </header>
+
+                <section class="power-meter" aria-label="Match power meter">
+                    <!-- HOME -->
+                    <div class="pm-team pm-team--home">
+                        <div class="pm-team__label">${esc(home.display || home.name)}</div>
+
+                        <div class="pm-grid">
+                            <!-- Perf row -->
+                            <div class="pm-row">
+                                <div class="pm-row__name" title="Match Control Index">mX</div>
+                                <div class="pm-bar" role="img" aria-label="Performance ${pe ? pe.homePerf : "—"} out of 100">
+                                    <div class="pm-bar__fill" style="width: ${pe ? pe.homePerf : 0}%;"></div>
+                                </div>
+                                <div class="pm-row__val">${pe ? pe.homePerf : " - "}</div>
+                            </div>
+                            <!-- Exec row -->
+                            <div class="pm-row">
+                                <div class="pm-row__name" title="Execution">eX</div>
+                                <div class="pm-exbar" role="img" aria-label="Execution ${homeEx ?? "not available"}">
+                                    <div class="pm-exbar__half pm-exbar__half--neg">
+                                    <div class="pm-exbar__fill pm-exbar__fill--neg" style="width: ${exNegWidth(homeEx)}%;"></div>
+                                    </div>
+                                    <div class="pm-exbar__mid">|</div>
+                                    <div class="pm-exbar__half pm-exbar__half--pos">
+                                    <div class="pm-exbar__fill pm-exbar__fill--pos" style="width: ${exPosWidth(homeEx)}%;"></div>
+                                    </div>
+                                </div>
+                                <div class="pm-row__val">${fmtDelta(homeExDelta)}</div>
+                            </div>
+                            <!-- Power (spans both rows) -->
+                            <div class="pm-power" aria-label="Power rating">
+                                <div class="pm-power__num">${pe ? pe.homePower : " - "}</div>
+                                <div class="pm-power__label">Rating</div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- AWAY -->
+                    <div class="pm-team pm-team--away">
+                        <div class="pm-team__label">${esc(away.display || away.name)}</div>
+
+                        <div class="pm-grid">
+                            <!-- Perf row -->
+                            <div class="pm-row">
+                                <div class="pm-row__name" title="Match Control Index">mX</div>
+                                <div class="pm-bar" role="img" aria-label="Performance ${pe ? pe.awayPerf : "—"} out of 100">
+                                    <div class="pm-bar__fill" style="width: ${pe ? pe.awayPerf : 0}%;"></div>
+                                </div>
+                                <div class="pm-row__val">${pe ? pe.awayPerf : " - "}</div>
+                            </div>
+                            <!-- Exec row -->
+                            <div class="pm-row">
+                                <div class="pm-row__name" title="Execution">eX</div>
+                                <div class="pm-exbar" role="img" aria-label="Execution ${awayEx ?? "not available"}">
+                                    <div class="pm-exbar__half pm-exbar__half--neg">
+                                    <div class="pm-exbar__fill pm-exbar__fill--neg" style="width: ${exNegWidth(awayEx)}%;"></div>
+                                    </div>
+                                    <div class="pm-exbar__mid">|</div>
+                                    <div class="pm-exbar__half pm-exbar__half--pos">
+                                    <div class="pm-exbar__fill pm-exbar__fill--pos" style="width: ${exPosWidth(awayEx)}%;"></div>
+                                    </div>
+                                </div>
+                                <div class="pm-row__val">${fmtDelta(awayExDelta)}</div>
+                            </div>
+                            <!-- Power (spans both rows) -->
+                                <div class="pm-power" aria-label="Power rating">
+                                <div class="pm-power__num">${pe ? pe.awayPower : " - "}</div>
+                                <div class="pm-power__label">Rating</div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- STATS -->
+                    <div class="pm-stats" aria-label="Team match stats">
+                        <div class="pm-stat"><span class="k">xG</span><span class="v">${statNum("home", "xg")}</span></div>
+                        <div class="pm-stat"><span class="k">Poss</span><span class="v">${stat("home", "poss")}</span></div>
+                        <div class="pm-stat"><span class="k">Shots</span><span class="v">${statNum("home", "shots")}</span></div>
+                        <div class="pm-stat"><span class="k">SoT</span><span class="v">${statNum("home", "sot")}</span></div>
+                        <div class="pm-stat"><span class="k">Corners</span><span class="v">${statNum("home", "corners")}</span></div>
+                        <div class="pm-stat"><span class="k">Fouls</span><span class="v">${statNum("home", "fouls")}</span></div>
+                        <div class="pm-stat"><span class="k">YC</span><span class="v">${statNum("home", "yc")}</span></div>
+                        <div class="pm-stat"><span class="k">RC</span><span class="v">${statNum("home", "rc")}</span></div>
+                        <div class="pm-stat"><span class="k" title="VAR-Disallowed">VAR-D</span><span class="v">${statNum("home", "disallowedGoals", 0)}</span></div>
+                    </div>
+                    <div class="pm-stats" aria-label="Team match stats">
+                        <div class="pm-stat"><span class="k">xG</span><span class="v">${statNum("away", "xg")}</span></div>
+                        <div class="pm-stat"><span class="k">Poss</span><span class="v">${stat("away", "poss")}</span></div>
+                        <div class="pm-stat"><span class="k">Shots</span><span class="v">${statNum("away", "shots")}</span></div>
+                        <div class="pm-stat"><span class="k">SoT</span><span class="v">${statNum("away", "sot")}</span></div>
+                        <div class="pm-stat"><span class="k">Corners</span><span class="v">${statNum("away", "corners")}</span></div>
+                        <div class="pm-stat"><span class="k">Fouls</span><span class="v">${statNum("away", "fouls")}</span></div>
+                        <div class="pm-stat"><span class="k">YC</span><span class="v">${statNum("away", "yc")}</span></div>
+                        <div class="pm-stat"><span class="k">RC</span><span class="v">${statNum("away", "rc")}</span></div>
+                        <div class="pm-stat"><span class="k" title="VAR-Disallowed">VAR-D</span><span class="v">${statNum("away", "disallowedGoals", 0)}</span></div>
+                    </div>
+                </section>
 
                 <div class="match-body">${eventsHtml}</div>
 

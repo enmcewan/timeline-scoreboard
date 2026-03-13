@@ -22,6 +22,7 @@
   /* lines */
   --border-subtle: rgba(0, 0, 0, 0.08);
   --score-separator: #111;
+  --border-radius: 0.4rem;
 }
 
 /* Automatic dark mode based on OS preference */
@@ -52,7 +53,8 @@
     filter: brightness(1.05) contrast(1.05);
   }
 
-  .team-badge.tottenham, .tottenham {
+  .team-badge.tottenham,
+  .tottenham {
     filter: invert();
   }
 }
@@ -232,7 +234,7 @@ footer {
   max-width: 640px;
   /* width: 100%; */
   padding: 0.75rem;
-  border-radius: 0.4rem;
+  border-radius: var(--border-radius);
   background: var(--card-bg);
   box-shadow: var(--card-shadow);
   height: 100%;
@@ -313,6 +315,7 @@ footer {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  margin-top: 0.5rem;
 }
 
 .team-link,
@@ -322,12 +325,12 @@ footer {
   text-decoration: none;
 }
 
-.team-link{
-  display: inline-flex;        /* not block, not row */
-  flex-direction: column;      /* badge over name */
-  align-items: center;         /* horizontal centering */
-  justify-content: center;     /* vertical centering */
-  gap: .35rem;                 /* space between badge and name */
+.team-link {
+  display: inline-flex; /* not block, not row */
+  flex-direction: column; /* badge over name */
+  align-items: center; /* horizontal centering */
+  justify-content: center; /* vertical centering */
+  gap: 0.35rem; /* space between badge and name */
   min-width: 0;
   text-align: center;
 }
@@ -373,10 +376,204 @@ footer {
   font-variant-numeric: tabular-nums;
 }
 
+/* --- Power Meter --- */
+
+/* --- Power Meter layout (Perf/Exec + Rating) --- */
+.pm-grid {
+  display: grid;
+  grid-template-columns: auto 1fr auto 2.75rem; /* label | bar | % | rating */
+  grid-template-rows: auto auto;
+  gap: 0.5rem 0.5rem;
+  align-items: center;
+}
+
+.pm-grid .pm-row__name {
+  grid-column: 1;
+}
+.pm-grid .pm-bar {
+  grid-column: 2;
+}
+.pm-grid .pm-row__val {
+  grid-column: 3;
+}
+
+.pm-power {
+  grid-column: 4;
+  grid-row: 1 / span 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  padding-left: 0.25rem;
+}
+
+.pm-power__num {
+  font-size: 1.85rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.pm-power__label {
+  font-size: 0.85rem;
+  opacity: 0.75;
+  line-height: 1.1;
+}
+
+.power-meter {
+  margin: 1.1rem auto 0;
+  width: min(720px, 100%);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  font-size: smaller;
+}
+
+.pm-team {
+  padding: 0.85rem 0.9rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: .4rem;
+  background: var(--card-bg);
+  color: var(--accent);
+}
+
+.pm-team__label {
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+  text-align: center;
+  display: none;
+}
+
+/* .pm-row {
+  display: grid;
+  grid-template-columns: 46px 1fr 34px;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0.45rem 0;
+} */
+
+.pm-grid .pm-row {
+  display: contents;
+}
+
+.pm-row__name {
+  font-weight: 600;
+  opacity: 0.8;
+}
+
+.pm-row__val {
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  font-weight: 700;
+}
+
+.pm-bar {
+  position: relative;
+  height: 12px;
+  /* border-radius: 999px; */
+  background: var(--border-subtle);
+  overflow: hidden;
+}
+
+.pm-bar__fill {
+  height: 100%;
+  /* border-radius: 999px; */
+  background: currentColor; /* inherits your theme text color */
+  opacity: 0.65;
+}
+
+/* make home/away subtly different (optional) */
+/* .pm-team--home {
+  color: #4a1365;
+}
+.pm-team--away {
+  color: #4a1365;
+} */
+
+.pm-exbar{
+  display: grid;
+  grid-template-columns: 1fr 5px 1fr;
+  align-items: center;
+  gap: 0;
+  height: 14px;
+}
+
+.pm-exbar__half{
+  position: relative;
+  height: 12px;
+  background: rgba(0,0,0,.08);
+  overflow: hidden;
+}
+
+/* .pm-exbar__half--neg{
+  border-radius: 999px 0 0 999px;
+}
+
+.pm-exbar__half--pos{
+  border-radius: 0 999px 999px 0;
+} */
+
+.pm-exbar__fill{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+}
+
+.pm-exbar__fill--neg{
+  right: 0;
+  background: #c0392b;
+  /* border-radius: 999px 0 0 999px; */
+}
+
+.pm-exbar__fill--pos{
+  left: 0;
+  background: #2e8b57;
+  /* border-radius: 0 999px 999px 0; */
+}
+
+.pm-exbar__mid{
+  font-size: .72rem;
+  line-height: 1;
+  text-align: center;
+  opacity: .75;
+  font-weight: 700;
+}
+
+.pm-stats {
+  padding: 0.85rem 0.9rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: .4rem;
+  background: var(--card-bg);
+  color: var(--accent);
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr; /* 3 columns, auto-layout */
+  gap: 0.35rem 0.9rem;
+}
+
+.pm-stat {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.6rem;
+  font-size: smaller;
+}
+
+.pm-stat .k {
+  opacity: 0.75;
+  font-weight: 600;
+}
+
+.pm-stat .v {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+
 /* Body / events */
 .match-body {
   padding-top: 0.65rem;
-  border-top: 1px solid var(--accent);
+  border: 1px solid var(--border-subtle);
+  border-radius: 0.4rem;
 }
 
 .match-body .row {
@@ -864,7 +1061,7 @@ thead tr {
 
 .team-strip .muted {
   font-size: 0.8rem;
-  color: var(--text-muted)
+  color: var(--text-muted);
 }
 
 /* --- Venue block --- */
@@ -970,7 +1167,6 @@ table {
 }
 
 @media (max-width: 480px) {
-
   #app {
     min-height: 100vh;
     display: block;
@@ -1031,7 +1227,6 @@ table {
   .team.home,
   .team.away {
     font-size: 1.15rem;
-    margin-top: 0.5rem;
   }
 
   .score {
@@ -1152,5 +1347,15 @@ table {
   .team-matches th,
   .team-matches td {
     padding: 0.333rem;
+  }
+
+  .power-meter {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .pm-team__label {
+    text-align: left;
+    display: block;
   }
 }
