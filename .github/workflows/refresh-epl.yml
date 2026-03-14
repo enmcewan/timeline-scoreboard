@@ -66,10 +66,9 @@ jobs:
         env:
           APIFOOTBALL_KEY: ${{ secrets.APIFOOTBALL_KEY }}
 
-      - name: Fetch standings
-        run: node src/scripts/fetch-standings.epl2025.mjs
-        env:
-          APIFOOTBALL_KEY: ${{ secrets.APIFOOTBALL_KEY }}
+      - name: Build season context
+        if: steps.gate.outputs.should_deploy == '1'
+        run: npm run build:season-context
 
       - name: Build
         if: steps.gate.outputs.should_deploy == '1'

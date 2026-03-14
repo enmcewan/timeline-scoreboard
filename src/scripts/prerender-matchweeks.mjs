@@ -561,7 +561,7 @@ function buildSeasonHubHtml({ seasonPath, seasonLabel, maxRound, matchweekMeta }
 
         const statsHtml =
             status !== "not-started" && stats
-            ? `
+                ? `
                 <div class="mw-stats" aria-label="Matchweek stats">
                     <span class="mw-stat">${HUB_STAT_ICONS.goals}<span class="mw-stat__num">${stats.goals}</span></span>
                     <span class="mw-stat">${HUB_STAT_ICONS.ownGoals}<span class="mw-stat__num">${stats.ownGoals}</span></span>
@@ -570,7 +570,7 @@ function buildSeasonHubHtml({ seasonPath, seasonLabel, maxRound, matchweekMeta }
                     <span class="mw-stat">${HUB_STAT_ICONS.var}<span class="mw-stat__num">${stats.var}</span></span>
                 </div>
             `
-        : "";
+                : "";
 
         return `
                 <a href="/epl/${seasonPath}/matchweek/${round}/" class="mw-card">
@@ -582,7 +582,7 @@ function buildSeasonHubHtml({ seasonPath, seasonLabel, maxRound, matchweekMeta }
                     ${statsHtml}
                 </a>
             `;
-        }).join("\n");
+    }).join("\n");
 
     return `
     <section class="season-hub">
@@ -742,15 +742,18 @@ async function main() {
         const canonical = `https://timelinefootball.com${pagePath}`;
 
         let out = template;
-        out = setTitle(out, `EPL 2025–26 Matchweek ${round} Timelines | Timeline Football`);
+        out = setTitle(
+            out,
+            `Premier League Matchweek ${round} Analysis, Stats & Power Ratings | Timeline Football`
+        );
         out = setDescription(
             out,
-            `English Premier League 2025–26 Matchweek ${round} results with goals, cards, VAR and substitution timelines.`
+            `Premier League Matchweek ${round} analysis with match stats, xG, Match Control (mX), Execution (eX) and power ratings for every game.`
         );
         out = setCanonical(out, canonical);
 
-        const ogTitle = `EPL 2025–26 Matchweek ${round} Timelines | Timeline Football`;
-        const ogDesc = `English Premier League 2025–26 Matchweek ${round} results with goals, cards, VAR and substitution timelines.`;
+        const ogTitle = `Premier League Matchweek ${round} Analysis, Stats & Power Ratings | Timeline Football`;
+        const ogDesc = `Premier League Matchweek ${round} analysis with match stats, xG, Match Control (mX), Execution (eX) and power ratings for every game.`;
 
         out = setOpenGraph(out, {
             title: ogTitle,

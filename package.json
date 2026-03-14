@@ -3,22 +3,24 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "fetch:fixtures": "node src/scripts/fetch-fixtures.mjs",
-    "fetch:events": "node src/scripts/fetch-events.byFixture.mjs",
-    "refresh:epl2025": "node src/scripts/refresh-epl-2025.mjs",
-    "refresh:epl2025table": "node src/scripts/fetch-standings.epl2025.mjs",
-    "refresh:all": "npm run fetch:fixtures && npm run fetch:events && npm run refresh:epl2025",
-    "gate:refresh": "node src/scripts/should-refresh.mjs --fixtures public/data/dev/fixtures.raw.json",
-    "refresh:smart": "npm run gate:refresh | tee /dev/stderr | node -e \"let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{if(d.includes('REFRESH=1')) process.exit(0); console.log('Gate: skip refresh'); process.exit(42);});\" && npm run refresh:all",
-    "update:matchdays": "npm run fetch:events && npm run refresh:epl2025",
-    "prerender": "node src/scripts/prerender-matchweeks.mjs",
-    "sitemap": "node src/scripts/generate-sitemap.mjs",
-    "build:prerender": "npm run build && npm run prerender && npm run sitemap"
-  },
+"scripts": {
+  "dev": "vite",
+  "build": "vite build",
+  "preview": "vite preview",
+  "fetch:fixtures": "node src/scripts/fetch-fixtures.mjs",
+  "fetch:events": "node src/scripts/fetch-events.byFixture.mjs",
+  "refresh:epl2025": "node src/scripts/refresh-epl-2025.mjs",
+  "refresh:epl2025table": "node src/scripts/fetch-standings.epl2025.mjs",
+  "refresh:all": "npm run fetch:fixtures && npm run fetch:events && npm run refresh:epl2025",
+  "gate:refresh": "node src/scripts/should-refresh.mjs --fixtures public/data/dev/fixtures.raw.json",
+  "refresh:smart": "npm run gate:refresh | tee /dev/stderr | node -e \"let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{if(d.includes('REFRESH=1')) process.exit(0); console.log('Gate: skip refresh'); process.exit(42);});\" && npm run refresh:all",
+  "update:matchdays": "npm run fetch:events && npm run refresh:epl2025",
+  "build:season-context": "node src/scripts/build-season-context.mjs",
+  "prerender": "node src/scripts/prerender-matchweeks.mjs",
+  "sitemap": "node src/scripts/generate-sitemap.mjs",
+  "build:prerender": "npm run build && npm run prerender && npm run sitemap",
+  "build:full": "npm run build:season-context && npm run build:prerender"
+},
   "devDependencies": {
     "vite": "^7.2.4"
   }

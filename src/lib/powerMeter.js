@@ -186,7 +186,7 @@ function siegeLateLossAdjustment(match, losingSide) {
 
     if (!siege) return 0;
 
-    console.log(`Applying siege late loss adjustment for ${losingSide} in match ${match.id}`);
+    // console.log(`Applying siege late loss adjustment for ${losingSide} in match ${match.id}`);
 
     // strength of the adjustment
     let bonus = 0;
@@ -565,20 +565,20 @@ export function computePerfExec(match, ctx) {
 
         if (gd === 1 && totalXg < 2.2 && totalSot <= 5) {
             r -= 10;
-            console.log("Low-quality narrow-win clip");
+            // console.log("Low-quality narrow-win clip");
         }
 
         r = applyExpectation(r, expectN);
 
-        console.log({ swing, homeExpectN, awayExpectN });
+        // console.log({ swing, homeExpectN, awayExpectN });
 
         if (rawGoalsFor === rawGoalsAgainst) {
             if (expectN > 0) {
                 r += Math.round(expectN * 8);
-                console.log("Underdog draw bonus");
+                // console.log("Underdog draw bonus");
             } else if (expectN < 0) {
                 r += Math.round(expectN * 4);
-                console.log("Favorite draw clip");
+                // console.log("Favorite draw clip");
             }
         }
 
@@ -587,12 +587,12 @@ export function computePerfExec(match, ctx) {
         if (rawGoalsFor > rawGoalsAgainst) {
             if (expectN > UPSET_THRESHOLD) {
                 r += Math.round(expectN * 10);
-                console.log("Underdog win bonus");
+                // console.log("Underdog win bonus");
             }
         } else if (rawGoalsFor < rawGoalsAgainst) {
             if (expectN < -UPSET_THRESHOLD) {
                 r += Math.round(expectN * 6);
-                console.log("Favorite loss clip");
+                // console.log("Favorite loss clip");
             }
         }
 

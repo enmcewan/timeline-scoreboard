@@ -65,6 +65,8 @@ export function createRenderEventText(esc) {
             }
 
             let reason = esc(evt.comments) || "other";
+            if (reason === "Professional foul last man") reason = "Pro-foul: last man";
+            if (reason === "Unsportsmanlike conduct") reason = "Unsportsmanlike";
             if (!reason || reason === "null" || reason === "undefined") reason = "other";
             const meta = ` <span class="event-meta foul">(${reason})</span>`;
 
@@ -282,7 +284,7 @@ export function createRenderMatchCard({
         const pre = match.context?.preMatch ?? {};
         // console.log("PREMATCH", match.id, pre);
 
-        console.log("MATCH CONTEXT", match.id, match.context);
+        // console.log("MATCH CONTEXT", match.id, match.context);
 
         const pe = (state === "FT" && hasStats)
             ? computePerfExec(match, {
@@ -394,7 +396,7 @@ export function createRenderMatchCard({
                     </div>
                 </header>
 
-                <section class="power-meter" aria-label="Match power meter">
+                <section id="stats" class="power-meter" aria-label="Match power meter">
                     <!-- HOME -->
                     <div class="pm-team pm-team--home">
                         <div class="pm-team__label">${esc(home.display || home.name)}</div>
@@ -410,7 +412,7 @@ export function createRenderMatchCard({
                             </div>
                             <!-- Exec row -->
                             <div class="pm-row">
-                                <div class="pm-row__name" title="Execution">eX</div>
+                                <div class="pm-row__name" title="Execution Index">eX</div>
                                 <div class="pm-exbar" role="img" aria-label="Execution ${homeEx ?? "not available"}">
                                     <div class="pm-exbar__half pm-exbar__half--neg">
                                     <div class="pm-exbar__fill pm-exbar__fill--neg" style="width: ${exNegWidth(homeEx)}%;"></div>
@@ -469,25 +471,25 @@ export function createRenderMatchCard({
 
                     <!-- STATS -->
                     <div class="pm-stats" aria-label="Team match stats">
-                        <div class="pm-stat"><span class="k">xG</span><span class="v">${statNum("home", "xg")}</span></div>
-                        <div class="pm-stat"><span class="k">Poss</span><span class="v">${stat("home", "poss")}</span></div>
-                        <div class="pm-stat"><span class="k">Shots</span><span class="v">${statNum("home", "shots")}</span></div>
-                        <div class="pm-stat"><span class="k">SoT</span><span class="v">${statNum("home", "sot")}</span></div>
-                        <div class="pm-stat"><span class="k">Corners</span><span class="v">${statNum("home", "corners")}</span></div>
-                        <div class="pm-stat"><span class="k">Fouls</span><span class="v">${statNum("home", "fouls")}</span></div>
-                        <div class="pm-stat"><span class="k">YC</span><span class="v">${statNum("home", "yc")}</span></div>
-                        <div class="pm-stat"><span class="k">RC</span><span class="v">${statNum("home", "rc")}</span></div>
+                        <div class="pm-stat"><span class="k" title="Expected Goals">xG</span><span class="v">${statNum("home", "xg")}</span></div>
+                        <div class="pm-stat"><span class="k" title="Possession">Poss</span><span class="v">${stat("home", "poss")}</span></div>
+                        <div class="pm-stat"><span class="k" title="Total Shots">Shots</span><span class="v">${statNum("home", "shots")}</span></div>
+                        <div class="pm-stat"><span class="k" title="Shots: On Target, Inside Box, Blocked">S:TIB</span><span class="v">${statNum("home", "sot")} ${statNum("home", "shotsInsideBox")} ${statNum("home", "blockedShots")}</span></div>
+                        <div class="pm-stat"><span class="k" title="Corners">Corners</span><span class="v">${statNum("home", "corners")}</span></div>
+                        <div class="pm-stat"><span class="k" title="Fouls">Fouls</span><span class="v">${statNum("home", "fouls")}</span></div>
+                        <div class="pm-stat"><span class="k" title="Yellow Cards">YC</span><span class="v">${statNum("home", "yc")}</span></div>
+                        <div class="pm-stat"><span class="k" title="Red Cards">RC</span><span class="v">${statNum("home", "rc")}</span></div>
                         <div class="pm-stat"><span class="k" title="VAR-Disallowed">VAR-D</span><span class="v">${statNum("home", "disallowedGoals", 0)}</span></div>
                     </div>
                     <div class="pm-stats" aria-label="Team match stats">
-                        <div class="pm-stat"><span class="k">xG</span><span class="v">${statNum("away", "xg")}</span></div>
-                        <div class="pm-stat"><span class="k">Poss</span><span class="v">${stat("away", "poss")}</span></div>
-                        <div class="pm-stat"><span class="k">Shots</span><span class="v">${statNum("away", "shots")}</span></div>
-                        <div class="pm-stat"><span class="k">SoT</span><span class="v">${statNum("away", "sot")}</span></div>
-                        <div class="pm-stat"><span class="k">Corners</span><span class="v">${statNum("away", "corners")}</span></div>
-                        <div class="pm-stat"><span class="k">Fouls</span><span class="v">${statNum("away", "fouls")}</span></div>
-                        <div class="pm-stat"><span class="k">YC</span><span class="v">${statNum("away", "yc")}</span></div>
-                        <div class="pm-stat"><span class="k">RC</span><span class="v">${statNum("away", "rc")}</span></div>
+                        <div class="pm-stat"><span class="k" title="Expected Goals">xG</span><span class="v">${statNum("away", "xg")}</span></div>
+                        <div class="pm-stat"><span class="k" title="Possession">Poss</span><span class="v">${stat("away", "poss")}</span></div>
+                        <div class="pm-stat"><span class="k" title="Total Shots">Shots</span><span class="v">${statNum("away", "shots")}</span></div>
+                        <div class="pm-stat"><span class="k" title="Shots: On Target, Inside Box, Blocked">S:TIB</span><span class="v">${statNum("away", "sot")} ${statNum("away", "shotsInsideBox")} ${statNum("away", "blockedShots")}</span></div>
+                        <div class="pm-stat"><span class="k" title="Corners">Corners</span><span class="v">${statNum("away", "corners")}</span></div>
+                        <div class="pm-stat"><span class="k" title="Fouls">Fouls</span><span class="v">${statNum("away", "fouls")}</span></div>
+                        <div class="pm-stat"><span class="k" title="Yellow Cards">YC</span><span class="v">${statNum("away", "yc")}</span></div>
+                        <div class="pm-stat"><span class="k" title="Red Cards">RC</span><span class="v">${statNum("away", "rc")}</span></div>
                         <div class="pm-stat"><span class="k" title="VAR-Disallowed">VAR-D</span><span class="v">${statNum("away", "disallowedGoals", 0)}</span></div>
                     </div>
                 </section>

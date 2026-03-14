@@ -55,7 +55,7 @@ function updateHeaderNav(round) {
   hub.textContent = `EPL ${SEASON_LABEL} matchweeks`;
   hub.href = `/epl/${SEASON_PATH}/`;
 
-  
+
   const arrowLeft = `
                       <span class="nav-arrow">
                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
@@ -113,44 +113,6 @@ function pickCurrentRoundByCompletion(matchdays) {
   return null;
 }
 
-// function pickInitialRound(matchdays) {
-//   const now = Date.now();
-//   const GRACE_MS = 6 * 60 * 60 * 1000; // 6h buffer for late updates / timezones
-
-//   const rounds = Object.entries(matchdays)
-//     .map(([roundStr, md]) => {
-//       const round = Number(roundStr);
-//       const times = (md.matches || [])
-//         .map((m) => Date.parse(m.kickoff))
-//         .filter(Number.isFinite);
-
-//       if (!times.length) return null;
-
-//       return {
-//         round,
-//         minKickoff: Math.min(...times),
-//         maxKickoff: Math.max(...times),
-//       };
-//     })
-//     .filter(Boolean)
-//     .sort((a, b) => a.minKickoff - b.minKickoff);
-
-//   if (!rounds.length) return null;
-
-//   // 1) Prefer the round we are currently inside (earliest..latest)
-//   const current = rounds.find(
-//     (r) => now >= r.minKickoff - GRACE_MS && now <= r.maxKickoff + GRACE_MS
-//   );
-//   if (current) return current.round;
-
-//   // 2) Otherwise pick the next upcoming round (closest future)
-//   const next = rounds.find((r) => r.minKickoff > now);
-//   if (next) return next.round;
-
-//   // 3) Otherwise fall back to the most recent past round
-//   return rounds[rounds.length - 1].round;
-// }
-
 function setPageMetaForRound(round) {
   const title = `EPL 2025–26 Matchweek ${round} Timelines | Timeline Football`;
   document.title = title;
@@ -189,6 +151,7 @@ const renderMatchCard = createRenderMatchCard({
 let currentRound = null;
 let currentMatches = [];
 let globalViewMode = VIEW_MODES.FULL; // start compact like you want
+let statsShown = true;
 
 const viewModes = new Map();
 
@@ -207,7 +170,7 @@ function renderAllMatches() {
 }
 
 let showAllAriaPressed = "false";
-let roundName = "Matchweek"; // keep your variable
+let roundName = "MW"; // keep your variable
 
 function renderControls() {
 
@@ -237,6 +200,28 @@ function renderControls() {
   showAllBtn.setAttribute("aria-pressed", showAllAriaPressed);
 }
 
+const statsToggleBtn = document.getElementById("show-stats");
+
+if (statsToggleBtn) {
+  applyStatsVisibility();
+
+  statsToggleBtn.addEventListener("click", () => {
+    statsShown = !statsShown;
+    applyStatsVisibility();
+  });
+}
+
+function applyStatsVisibility() {
+  document.querySelectorAll(".power-meter").forEach((el) => {
+    el.hidden = !statsShown;
+  });
+
+  const btn = document.getElementById("show-stats");
+  if (btn) {
+    btn.setAttribute("aria-pressed", statsShown ? "true" : "false");
+    btn.textContent = statsShown ? "Hide Stats" : "Show Stats";
+  }
+}
 async function init() {
 
   const allRounds = await loadAllMatchdays();
@@ -254,9 +239,9 @@ async function init() {
   //   allRounds[allRounds.length - 1];
 
   const initialRound =
-  (routeRound && MATCHDAYS[routeRound] ? routeRound : null) ??
-  pickCurrentRoundByCompletion(MATCHDAYS) ??
-  allRounds[allRounds.length - 1];
+    (routeRound && MATCHDAYS[routeRound] ? routeRound : null) ??
+    pickCurrentRoundByCompletion(MATCHDAYS) ??
+    allRounds[allRounds.length - 1];
 
 
   currentRound = initialRound;
@@ -288,6 +273,7 @@ async function init() {
 
   renderControls();
   renderAllMatches();
+  applyStatsVisibility();
 }
 
 init().catch((err) => {
@@ -311,6 +297,7 @@ document.addEventListener("click", (e) => {
 
     renderControls();
     renderAllMatches();
+    applyStatsVisibility();
     return;
   }
 
@@ -339,6 +326,7 @@ document.addEventListener("click", (e) => {
   // re-render everything for now (simpler + safe)
   renderControls();
   renderAllMatches();
+  applyStatsVisibility();
 });
 
 document.addEventListener("change", (e) => {
@@ -367,4 +355,5 @@ document.addEventListener("change", (e) => {
   // re-render with the new round's matches
   renderControls();
   renderAllMatches();
+  applyStatsVisibility();
 });
