@@ -266,6 +266,15 @@ export function createRenderMatchCard({
                 ? new Date(iso).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" })
                 : "TBD");
 
+    function isHalfTimeOrLater(state) {
+        const s = String(state || "").toUpperCase().trim();
+
+        if (s === "HT" || s === "FT") return true;
+
+        const minute = parseInt(s, 10);
+        return Number.isFinite(minute) && minute >= 45;
+    }
+
     return function renderMatchCard(match) {
 
         const home = teamsById[match.homeTeamId];
@@ -286,7 +295,7 @@ export function createRenderMatchCard({
 
         // console.log("MATCH CONTEXT", match.id, match.context);
 
-        const pe = ((state === "FT" || state === "HT") && hasStats)
+        const pe = ((isHalfTimeOrLater(state)) && hasStats)
             ? computePerfExec(match, {
                 homeRank: pre.homePosition,
                 awayRank: pre.awayPosition,
