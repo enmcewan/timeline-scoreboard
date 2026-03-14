@@ -286,7 +286,7 @@ export function createRenderMatchCard({
 
         // console.log("MATCH CONTEXT", match.id, match.context);
 
-        const pe = (state === "FT" && hasStats)
+        const pe = ((state === "FT" || state === "HT") && hasStats)
             ? computePerfExec(match, {
                 homeRank: pre.homePosition,
                 awayRank: pre.awayPosition,
