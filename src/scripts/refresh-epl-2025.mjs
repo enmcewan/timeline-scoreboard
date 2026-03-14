@@ -50,19 +50,6 @@ if (!API_KEY) {
   process.exit(1);
 }
 
-const TARGET_ROUNDS = (() => {
-  const raw = process.env.TARGET_ROUNDS?.trim();
-  console.log("TARGET_ROUNDS:", raw ? raw : "(none)");
-  if (!raw) return null;
-
-  const rounds = raw
-    .split(",")
-    .map((s) => Number(s.trim()))
-    .filter(Number.isFinite);
-
-  return rounds.length ? new Set(rounds) : null;
-})();
-
 async function apiGet(pathname) {
   const url = `${BASE_URL}${pathname}`;
   const res = await fetch(url, { headers: { "x-apisports-key": API_KEY } });
@@ -402,22 +389,10 @@ async function main() {
   const matchdays = new Map();
 
   for (const f of fixtures) {
-
     const fixtureId = String(f.fixture.id);
-
-    // const md = parseMatchdayNumber(f.league.round);
-    // if (!md) {
-    //   console.warn("Could not parse matchday for fixture", fixtureId, f.league.round);
-    //   continue;
-    // }
-
     const md = parseMatchdayNumber(f.league.round);
     if (!md) {
       console.warn("Could not parse matchday for fixture", fixtureId, f.league.round);
-      continue;
-    }
-
-    if (TARGET_ROUNDS && !TARGET_ROUNDS.has(md)) {
       continue;
     }
 

@@ -49,35 +49,10 @@ jobs:
         if: steps.gate.outputs.should_deploy == '1'
         run: echo "START_TS=$(date +%s)" >> $GITHUB_ENV
 
-      - name: Determine refresh rounds
-        if: steps.gate.outputs.should_deploy == '1'
-        id: refresh_rounds
-        run: |
-          out=$(node src/scripts/get-current-round.mjs)
-          echo "$out"
-
-          round=$(echo "$out" | sed -n 's/^round=\([0-9][0-9]*\)$/\1/p')
-          if [ -z "$round" ]; then
-            echo "Failed to determine current round"
-            exit 1
-          fi
-
-          prev=$((round - 1))
-          if [ "$prev" -lt 1 ]; then
-            prev=1
-          fi
-
-          echo "round=$round" >> "$GITHUB_OUTPUT"
-          echo "prev=$prev" >> "$GITHUB_OUTPUT"
-          echo "target_rounds=$prev,$round" >> "$GITHUB_OUTPUT"
-
-          echo "Using TARGET_ROUNDS=$prev,$round"
-
       - name: Refresh events + matchdays
         if: steps.gate.outputs.should_deploy == '1'
         env:
           APIFOOTBALL_KEY: ${{ secrets.APIFOOTBALL_KEY }}
-          TARGET_ROUNDS: ${{ steps.refresh_rounds.outputs.target_rounds }}
         run: npm run update:matchdays
 
       - name: Fetch standings
@@ -88,6 +63,11 @@ jobs:
       - name: Build players cache
         if: steps.gate.outputs.should_deploy == '1'
         run: node src/scripts/build-players-cache.mjs
+        env:
+          APIFOOTBALL_KEY: ${{ secrets.APIFOOTBALL_KEY }}
+
+      - name: Fetch standings
+        run: node src/scripts/fetch-standings.epl2025.mjs
         env:
           APIFOOTBALL_KEY: ${{ secrets.APIFOOTBALL_KEY }}
 
