@@ -1,0 +1,25 @@
+name: Test Standings API
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-standings:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Install
+        run: npm ci
+
+      - name: Run standings script only
+        env:
+          APIFOOTBALL_KEY: ${{ secrets.APIFOOTBALL_KEY }}
+        run: node src/scripts/fetch-standings.epl2025.mjs

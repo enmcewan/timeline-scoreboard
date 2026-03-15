@@ -313,6 +313,13 @@ export function createRenderMatchCard({
 
             }) : null;
 
+        // console.log("PE RESULT", {
+        //     matchId: match.id,
+        //     state,
+        //     hasStats,
+        //     pe
+        // });
+
         const mode = getModeForMatchId(String(match.id));
 
         const gameStatus = esc(match.status?.state ?? "");

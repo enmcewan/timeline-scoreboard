@@ -50,13 +50,42 @@ async function fetchJson(url) {
   }
 }
 
-function normalizeStandings(apiJson) {
-  const league = apiJson?.response?.[0]?.league;
-  const table = league?.standings?.[0]; // first group in standings matrix
+function inspectApiPayload(apiJson) {
+  const apiErrors = apiJson?.errors ?? {};
+  const errorKeys = Object.keys(apiErrors);
 
-  if (!league || !Array.isArray(table)) {
-    throw new Error("Unexpected standings response shape (missing league/standings).");
+  if (errorKeys.length > 0) {
+    const msg = errorKeys
+      .map((k) => `${k}: ${apiErrors[k]}`)
+      .join(" | ");
+    return { ok: false, reason: `API returned error payload: ${msg}` };
   }
+
+  if (!Array.isArray(apiJson?.response)) {
+    return { ok: false, reason: "API returned no response array." };
+  }
+
+  if (apiJson.response.length === 0) {
+    return { ok: false, reason: "API returned an empty response array." };
+  }
+
+  const league = apiJson.response[0]?.league;
+  const table = league?.standings?.[0];
+
+  if (!league) {
+    return { ok: false, reason: "API response missing response[0].league." };
+  }
+
+  if (!Array.isArray(table)) {
+    return { ok: false, reason: "API response missing league.standings[0] array." };
+  }
+
+  return { ok: true };
+}
+
+function normalizeStandings(apiJson) {
+  const league = apiJson.response[0].league;
+  const table = league.standings[0];
 
   const updated =
     table.find((r) => r?.update)?.update ??
@@ -93,14 +122,15 @@ function normalizeStandings(apiJson) {
 
 async function main() {
   const url = `https://v3.football.api-sports.io/standings?league=${LEAGUE}&season=${SEASON}`;
-
   const apiJson = await fetchJson(url);
 
-  // optional: dev dump for inspection
-  // writeJson("/public/data/dev/standings.raw.json", apiJson);
+  const inspection = inspectApiPayload(apiJson);
+  if (!inspection.ok) {
+    console.warn(`Standings update skipped: ${inspection.reason}`);
+    process.exit(0);
+  }
 
   const normalized = normalizeStandings(apiJson);
-
   writeJson(`/public/data/leagues/epl/${SEASON_PATH}/standings.json`, normalized);
 
   console.log(
