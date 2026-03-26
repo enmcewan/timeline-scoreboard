@@ -16,7 +16,7 @@ const MATCHDAYS_DIR = path.join(
   "data",
   "leagues",
   LEAGUE,
-  SEASON,
+  "2025-26",
   "matchdays"
 );
 
