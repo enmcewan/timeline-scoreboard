@@ -15,7 +15,7 @@ const MATCHDAYS_DIR = path.join(
   "leagues",
   LEAGUE,
   SEASON,
-  "matchdays"
+  "matchweeks"
 );
 
 const GRACE_MS = 6 * 60 * 60 * 1000;
