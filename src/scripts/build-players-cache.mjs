@@ -17,7 +17,7 @@ const MATCHDAYS_DIR = path.join(
   "leagues",
   LEAGUE,
   "2025-26",
-  "matchdays"
+  "matchweeks"
 );
 
 const PLAYERS_FILE = path.join(
