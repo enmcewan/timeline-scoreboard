@@ -372,10 +372,23 @@ export function createRenderMatchCard({
         };
 
         const fmtDelta = (d) => {
-            if (d == null) return "—";
+            if (d == null) return "-";
             if (d > 0) return `+${d}`;
             return `${d}`;
         };
+
+        let homeScore;
+        let awayScore;
+
+        if (match.status.state === 'NS') {
+
+            homeScore = '-';
+            awayScore = '-';
+        } else {
+
+            homeScore = esc(match.score.home);
+            awayScore = esc(match.score.away);
+        }
 
         return `
             <article id="fixture-${match.id}" class="match-card" data-match-id="${match.id}">
@@ -393,9 +406,9 @@ export function createRenderMatchCard({
 
                     <div class="score-container">
                         <div class="score">
-                            <div class="score-home">${esc(match.score.home)}</div>
+                            <div class="score-home">${homeScore}</div>
                             <span class="separator" aria-hidden="true"></span>
-                            <div class="score-away">${esc(match.score.away)}</div>
+                            <div class="score-away">${awayScore}</div>
                         </div>
                         <div class="match-status">
                             <span class="half-time">${gameStatus} ${halfTimeScore}</span>

@@ -19,8 +19,8 @@ const MATCHDAYS_DIR = path.join(
     "data",
     "leagues",
     "epl",
-    "2025",
-    "matchdays"
+    "2025-26",
+    "matchweeks"
 );
 
 const STANDINGS_PATH = path.join(
@@ -741,19 +741,22 @@ async function main() {
         // NOTE: We'll swap this to your live domain in the SEO step.
         const canonical = `https://timelinefootball.com${pagePath}`;
 
+        const title = `EPL 2025-26 Matchweek ${round} Timelines, Stats & Ratings | Timeline Football`;
+        const desc = ` English Premier League 2025-26 Matchweek ${round} event timelines, stats and performance ratings.`;
+
         let out = template;
         out = setTitle(
             out,
-            `Premier League Matchweek ${round} Analysis, Stats & Power Ratings | Timeline Football`
+            title
         );
         out = setDescription(
             out,
-            `Premier League Matchweek ${round} analysis with match stats, xG, Match Control (mX), Execution (eX) and power ratings for every game.`
+            desc
         );
         out = setCanonical(out, canonical);
 
-        const ogTitle = `Premier League Matchweek ${round} Analysis, Stats & Power Ratings | Timeline Football`;
-        const ogDesc = `Premier League Matchweek ${round} analysis with match stats, xG, Match Control (mX), Execution (eX) and power ratings for every game.`;
+        const ogTitle = title;
+        const ogDesc = desc;
 
         out = setOpenGraph(out, {
             title: ogTitle,

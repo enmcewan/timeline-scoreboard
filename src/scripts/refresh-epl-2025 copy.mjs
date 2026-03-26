@@ -8,7 +8,7 @@ const __dirname = path.dirname(__filename);
 
 console.log("REFRESH EPL SCRIPT STARTED");
 
-/* ------------ PATHS ------------- */
+/* ------------ PATHS – ADJUST TO YOUR TREE ------------- */
 
 const FIXTURES_RAW_PATH = path.join(
   __dirname,
@@ -34,7 +34,7 @@ const EVENTS_RAW_PATH = path.join(
   "events.raw.json"
 );
 
-const MATCHWEEKS_DIR = path.join(
+const MATCHDAYS_DIR = path.join(
   __dirname,
   "..",
   "..",
@@ -57,22 +57,11 @@ if (!API_KEY) {
 async function apiGet(pathname) {
   const url = `${BASE_URL}${pathname}`;
   const res = await fetch(url, { headers: { "x-apisports-key": API_KEY } });
-
   if (!res.ok) {
     const txt = await res.text().catch(() => "");
     throw new Error(`API ${res.status} for ${url}\n${txt}`);
   }
-
-  const json = await res.json();
-
-  if (json?.errors && Object.keys(json.errors).length) {
-    const msg = Object.entries(json.errors)
-      .map(([k, v]) => `${k}: ${v}`)
-      .join(" | ");
-    throw new Error(`API returned error payload for ${url}: ${msg}`);
-  }
-
-  return json;
+  return res.json();
 }
 
 const toNum = (v, fallback = 0) => {
@@ -96,15 +85,21 @@ function normalizeTeamStats(statArray) {
   return {
     xg: Number(toNum(m["expected_goals"], 0).toFixed(2)),
     poss: m["Ball Possession"] ?? "0%",
+
     shots: toNum(m["Total Shots"], 0),
     sot: toNum(m["Shots on Goal"], 0),
+
+    // NEW pressure metrics
     shotsInsideBox: toNum(m["Shots insidebox"], 0),
     blockedShots: toNum(m["Blocked Shots"], 0),
     saves: toNum(m["Goalkeeper Saves"], 0),
+
     corners: toNum(m["Corner Kicks"], 0),
     fouls: toNum(m["Fouls"], 0),
+
     yc: toNum(m["Yellow Cards"], 0),
     rc: toNum(m["Red Cards"], 0),
+
     goalsPrevented: toNum(m["goals_prevented"], 0),
   };
 }
@@ -138,38 +133,11 @@ function slugTeamName(name) {
     .replace(/(^-|-$)/g, "");
 }
 
-function parseMatchweekNumber(round) {
+function parseMatchdayNumber(round) {
+  // e.g. "Regular Season - 18" -> 18
   if (!round) return null;
   const m = String(round).match(/(\d+)\s*$/);
   return m ? Number(m[1]) : null;
-}
-
-function getCurrentRound(fixtures) {
-  const rounds = fixtures
-    .map((fx) => parseMatchweekNumber(fx?.league?.round))
-    .filter(Number.isFinite)
-    .sort((a, b) => a - b);
-
-  if (!rounds.length) return null;
-
-  const completedStates = new Set(["FT", "AET", "PEN"]);
-
-  for (const round of [...new Set(rounds)]) {
-    const roundFixtures = fixtures.filter(
-      (fx) => parseMatchweekNumber(fx?.league?.round) === round
-    );
-
-    if (!roundFixtures.length) continue;
-
-    const hasIncomplete = roundFixtures.some((fx) => {
-      const s = String(fx?.fixture?.status?.short ?? "").toUpperCase();
-      return !completedStates.has(s);
-    });
-
-    if (hasIncomplete) return round;
-  }
-
-  return rounds[rounds.length - 1];
 }
 
 function minuteLabel(time) {
@@ -184,12 +152,16 @@ function normaliseEventKind(type, detail) {
   const d = (detail || "").toLowerCase();
 
   if (t === "goal") {
-    if (d.includes("own")) return { kind: "own-goal", detail: "og" };
+    if (d.includes("own")) {
+      return { kind: "own-goal", detail: "og" };
+    }
     if (d.includes("penalty")) {
-      if (d.includes("missed")) return { kind: "penalty-miss", detail: "missed pen" };
+      if (d.includes("missed")) {
+        return { kind: "penalty-miss", detail: "missed pen" };
+      }
       return { kind: "goal", detail: "pen" };
     }
-    return { kind: "goal", detail: "" };
+    return { kind: "goal", detail: "" }; // normal goal
   }
 
   if (t === "card") {
@@ -197,7 +169,9 @@ function normaliseEventKind(type, detail) {
     if (d.includes("yellow")) return { kind: "yellow", detail: "" };
   }
 
-  if (t === "subst") return { kind: "sub", detail: "" };
+  if (t === "subst") {
+    return { kind: "sub", detail: "" };
+  }
 
   if (t === "var") {
     if (d.includes("goal cancelled")) return { kind: "var-goal-cancelled", detail: "" };
@@ -215,6 +189,7 @@ function normaliseEventKind(type, detail) {
 /* ------------ EVENT TRANSFORM ------------- */
 
 function transformEventsForFixture(rawEvents, fixtureId, homeApiId, awayApiId) {
+  // rawEvents: array of API events *for this fixture only*
   return rawEvents.map((ev, index) => {
     const { kind, detail } = normaliseEventKind(ev.type, ev.detail);
 
@@ -223,7 +198,7 @@ function transformEventsForFixture(rawEvents, fixtureId, homeApiId, awayApiId) {
         ? "home"
         : ev.team?.id === awayApiId
           ? "away"
-          : "home";
+          : "home"; // fallback
 
     const playerName = ev.player?.name ?? "";
     const assistName = ev.assist?.name ?? "";
@@ -232,6 +207,7 @@ function transformEventsForFixture(rawEvents, fixtureId, homeApiId, awayApiId) {
     let outPlayer;
 
     if (kind === "sub") {
+      // API-Football: player = OUT, assist = IN
       inPlayer = assistName;
       outPlayer = playerName;
     }
@@ -295,6 +271,8 @@ function transformFixtureAndEvents(rawFixture, rawEventsForFixture) {
     awayApiId
   );
 
+  // --- derive discipline + VAR stats from normalized events ---
+
   const homeYcMinutes = [];
   const awayYcMinutes = [];
   const homeRcMinutes = [];
@@ -305,7 +283,7 @@ function transformFixtureAndEvents(rawFixture, rawEventsForFixture) {
   let awayOwnGoalsFor = 0;
 
   for (const e of events) {
-    const minute = Number(e.elapsed ?? 0);
+    const minute = Number(e.elapsed ?? 0);   // ignore extra for now
 
     if (e.kind === "yellow") {
       if (e.team === "home") homeYcMinutes.push(minute);
@@ -338,7 +316,7 @@ function transformFixtureAndEvents(rawFixture, rawEventsForFixture) {
     id: matchId,
     league: lg.name,
     venue: fx.venue?.name ?? "",
-    attendance: null,
+    attendance: null, // API-Football doesn't give this
     kickoff: fx.date,
     homeTeamId: slugTeamName(teams.home.name),
     awayTeamId: slugTeamName(teams.away.name),
@@ -351,6 +329,7 @@ function transformFixtureAndEvents(rawFixture, rawEventsForFixture) {
       halfTimeScore: htScore,
     },
     events,
+
     statistics: {
       home: {
         ycMinutes: homeYcMinutes,
@@ -371,9 +350,11 @@ function transformFixtureAndEvents(rawFixture, rawEventsForFixture) {
 /* ------------ GROUP EVENTS BY FIXTURE ------------- */
 
 function groupEventsByFixture(eventsResponseArray) {
+  // responseArray is events.raw.json.response
   const byFixture = new Map();
 
   for (const ev of eventsResponseArray) {
+    // depending on your fetch script, this may be ev.fixture.id or ev.fixtureId
     const fixtureId =
       ev.fixture?.id ??
       ev.fixtureId ??
@@ -389,50 +370,6 @@ function groupEventsByFixture(eventsResponseArray) {
   }
 
   return byFixture;
-}
-
-/* ------------ EXISTING MATCHWEEKS CACHE ------------- */
-
-async function readExistingMatchweeks() {
-  const byRound = new Map();
-  const byFixtureId = new Map();
-
-  try {
-    const files = await fs.readdir(MATCHWEEKS_DIR);
-    for (const file of files) {
-      if (!file.endsWith(".json")) continue;
-
-      const fullPath = path.join(MATCHWEEKS_DIR, file);
-      const txt = await fs.readFile(fullPath, "utf8");
-      const json = JSON.parse(txt);
-
-      const round = Number(json?.round);
-      const matches = Array.isArray(json?.matches) ? json.matches : [];
-
-      if (!Number.isFinite(round)) continue;
-
-      byRound.set(round, matches);
-
-      for (const match of matches) {
-        byFixtureId.set(String(match.id), match);
-      }
-    }
-  } catch {
-    // no existing cache yet
-  }
-
-  return { byRound, byFixtureId };
-}
-
-function upsertMatch(roundMap, round, match) {
-  const arr = roundMap.get(round) ?? [];
-  const key = String(match.id);
-  const idx = arr.findIndex((m) => String(m.id) === key);
-
-  if (idx >= 0) arr[idx] = match;
-  else arr.push(match);
-
-  roundMap.set(round, arr);
 }
 
 /* ------------ MAIN ------------- */
@@ -452,58 +389,40 @@ async function main() {
 
   const eventsByFixture = groupEventsByFixture(eventsArr);
 
-  const { byRound: existingMatchweeks, byFixtureId: existingMatchesByFixtureId } =
-    await readExistingMatchweeks();
-
-  const currentRound = getCurrentRound(fixtures);
-  const previousRound = currentRound && currentRound > 1 ? currentRound - 1 : currentRound;
-  const forcedRounds = new Set([previousRound, currentRound].filter(Number.isFinite));
-
-  console.log(`Always refresh rounds: ${[...forcedRounds].sort((a, b) => a - b).join(", ")}`);
-
-  const matchweeks = new Map(existingMatchweeks);
-  const touchedRounds = new Set();
+  // matchdayNumber -> array of internal matches
+  const matchdays = new Map();
 
   for (const f of fixtures) {
     const fixtureId = String(f.fixture.id);
-    const round = parseMatchweekNumber(f.league.round);
-
-    if (!round) {
-      console.warn("Could not parse matchweek for fixture", fixtureId, f.league.round);
-      continue;
-    }
-
-    const existingMatch = existingMatchesByFixtureId.get(fixtureId);
-    const shouldForceRefresh = forcedRounds.has(round);
-    const shouldBuildMissing = !existingMatch;
-
-    if (!shouldForceRefresh && !shouldBuildMissing) {
+    const md = parseMatchdayNumber(f.league.round);
+    if (!md) {
+      console.warn("Could not parse matchday for fixture", fixtureId, f.league.round);
       continue;
     }
 
     const rawEventsForFixture = eventsByFixture.get(fixtureId) ?? [];
-    const rebuiltMatch = transformFixtureAndEvents(f, rawEventsForFixture);
 
+    const internalMatch = transformFixtureAndEvents(
+      f,
+      rawEventsForFixture
+    );
+
+    // --- NEW: attach fixture statistics (safe + resilient) ---
     try {
       const homeApiId = f.teams?.home?.id;
       const awayApiId = f.teams?.away?.id;
 
       if (homeApiId && awayApiId) {
         const stats = await fetchFixtureStatistics(fixtureId, homeApiId, awayApiId);
-
+        // if (stats) internalMatch.statistics = stats;
         if (stats) {
-          const prevHome = rebuiltMatch.statistics?.home ?? {};
-          const prevAway = rebuiltMatch.statistics?.away ?? {};
+          const prevHome = internalMatch.statistics?.home ?? {};
+          const prevAway = internalMatch.statistics?.away ?? {};
 
-          rebuiltMatch.statistics = {
+          internalMatch.statistics = {
             home: { ...stats.home, ...prevHome },
             away: { ...stats.away, ...prevAway },
           };
-        } else if (existingMatch?.statistics?.home?.xg != null && existingMatch?.statistics?.away?.xg != null) {
-          console.warn(`No fresh stats for fixture ${fixtureId}; keeping existing match.`);
-          upsertMatch(matchweeks, round, existingMatch);
-          touchedRounds.add(round);
-          continue;
         } else {
           console.warn(`No stats for fixture ${fixtureId}`);
         }
@@ -511,43 +430,40 @@ async function main() {
         console.warn(`Missing home/away api ids for fixture ${fixtureId}`);
       }
     } catch (e) {
-      if (existingMatch?.statistics?.home?.xg != null && existingMatch?.statistics?.away?.xg != null) {
-        console.warn(`Stats fetch failed for fixture ${fixtureId}; keeping existing match. ${e.message}`);
-        upsertMatch(matchweeks, round, existingMatch);
-        touchedRounds.add(round);
-        continue;
-      }
-
+      // keep going; don’t break refresh if API is flaky
       console.warn(`Stats fetch failed for fixture ${fixtureId}: ${e.message}`);
     }
 
-    upsertMatch(matchweeks, round, rebuiltMatch);
-    touchedRounds.add(round);
+    if (!matchdays.has(md)) matchdays.set(md, []);
+    matchdays.get(md).push(internalMatch);
   }
 
-  await fs.mkdir(MATCHWEEKS_DIR, { recursive: true });
+  // ensure output directory
+  await fs.mkdir(MATCHDAYS_DIR, { recursive: true });
 
-  const roundsToWrite =
-    touchedRounds.size > 0
-      ? [...touchedRounds].sort((a, b) => a - b)
-      : [...matchweeks.keys()].sort((a, b) => a - b);
+  // write one file per matchday
+  const sortedDays = [...matchdays.keys()].sort((a, b) => a - b);
 
-  for (const round of roundsToWrite) {
-    const matches = [...(matchweeks.get(round) ?? [])];
+  for (const md of sortedDays) {
+    const matches = matchdays.get(md);
+
+    // sort by kickoff time just to keep things consistent
     matches.sort((a, b) => new Date(a.kickoff) - new Date(b.kickoff));
 
     const outObj = {
-      season: 2025,
-      round,
-      matches,
+      season: 2025,      // or derive from fixturesRaw.league.season if you prefer
+      round: md,         // numeric round: 1, 2, 3, ...
+      matches,           // the array we already built
     };
 
-    const outPath = path.join(MATCHWEEKS_DIR, `${round}.json`);
+    const outPath = path.join(MATCHDAYS_DIR, `${md}.json`);
     await fs.writeFile(outPath, JSON.stringify(outObj, null, 2), "utf8");
-    console.log(`Wrote matchweek ${round} → ${outPath} (${matches.length} matches)`);
+    console.log(
+      `Wrote matchday ${md} → ${outPath} (${matches.length} matches)`
+    );
   }
 
-  console.log("Done refreshing matchweeks.");
+  console.log("Done rebuilding matchdays.");
 }
 
 main().catch((err) => {

@@ -11,7 +11,7 @@ const ALL_ROUNDS = Array.from({ length: 38 }, (_, i) => i + 1);
 async function loadAllMatchdays() {
   const results = await Promise.allSettled(
     ALL_ROUNDS.map(async (round) => {
-      const res = await fetch(`/data/leagues/epl/2025/matchdays/${round}.json`, {
+      const res = await fetch(`/data/leagues/epl/2025-26/matchweeks/${round}.json`, {
         cache: "no-store",
       });
       if (!res.ok) return null; // allow missing rounds early season

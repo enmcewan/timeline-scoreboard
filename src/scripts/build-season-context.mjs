@@ -14,8 +14,8 @@ const MATCHDAYS_DIR = path.join(
   "data",
   "leagues",
   "epl",
-  "2025",
-  "matchdays"
+  "2025-26",
+  "matchweeks"
 );
 
 function readJson(filePath) {

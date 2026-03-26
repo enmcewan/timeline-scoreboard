@@ -2,11 +2,10 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-// --- CONFIG: put your real API-Football key + fixture id here ---
-const API_KEY = process.env.APIFOOTBALL_KEY;     // <- paste it here temporarily
-const FIXTURE_ID = 1035043;                     // <- replace with an actual EPL fixture id
-const LEAGUE = 39;                       // <- replace with actual league id if needed
-const SEASON = 2025;                   // <- replace with actual season if needed
+const API_KEY = process.env.APIFOOTBALL_KEY;
+const LEAGUE = 39;
+const SEASON = 2025;
+const DATAPATH = "/public/data/leagues/epl/2025-26/";
 
 if (!API_KEY) {
   console.error("Missing APIFOOTBALL_KEY env var (APIFOOTBALL_KEY)");
@@ -25,6 +24,57 @@ function writeJson(relativePath, data) {
   console.log(`Wrote: ${full}`);
 }
 
+function sleep(ms) {
+  return new Promise((r) => setTimeout(r, ms));
+}
+
+function isTransientApiError(err) {
+  const msg = String(err?.message || err);
+  return (
+    msg.includes("503") ||
+    msg.includes("502") ||
+    msg.includes("504") ||
+    msg.includes("429") ||
+    msg.toLowerCase().includes("timeout") ||
+    msg.toLowerCase().includes("econnreset") ||
+    msg.toLowerCase().includes("socket hang up")
+  );
+}
+
+async function fetchWithRetry(fn, { tries = 5, baseDelayMs = 750 } = {}) {
+  let lastErr;
+  for (let attempt = 1; attempt <= tries; attempt++) {
+    try {
+      return await fn();
+    } catch (err) {
+      lastErr = err;
+      if (!isTransientApiError(err) || attempt === tries) throw err;
+
+      const jitter = Math.floor(Math.random() * 250);
+      const delay = baseDelayMs * Math.pow(2, attempt - 1) + jitter;
+      console.warn(
+        `Transient API error (attempt ${attempt}/${tries}): ${String(err?.message || err)}`
+      );
+      console.warn(`Retrying in ${delay}ms...`);
+      await sleep(delay);
+    }
+  }
+  throw lastErr;
+}
+
+function validateApiPayload(json) {
+  if (json?.errors && Object.keys(json.errors).length) {
+    const msg = Object.entries(json.errors)
+      .map(([k, v]) => `${k}: ${v}`)
+      .join(" | ");
+    throw new Error(`API returned error payload: ${msg}`);
+  }
+
+  if (!Array.isArray(json?.response)) {
+    throw new Error("API returned no response array.");
+  }
+}
+
 async function fetchJson(url) {
   console.log(`Fetching: ${url}`);
 
@@ -38,29 +88,32 @@ async function fetchJson(url) {
 
   const body = await res.text();
 
-  // If non-2xx, show the body so we see the error from API-Football
   if (!res.ok) {
     console.error("Error response body:\n", body);
     throw new Error(`HTTP ${res.status} from ${url}`);
   }
 
+  let json;
   try {
-    return JSON.parse(body);
+    json = JSON.parse(body);
   } catch (e) {
     console.error("Failed to parse JSON body:\n", body);
     throw e;
   }
-}
 
-// https://v3.football.api-sports.io/fixtures?league=39&season=2025
+  validateApiPayload(json);
+  return json;
+}
 
 async function main() {
   const fixturesUrl = `https://v3.football.api-sports.io/fixtures?league=${LEAGUE}&season=${SEASON}`;
 
-  const data = await fetchJson(fixturesUrl);
+  const data = await fetchWithRetry(
+    () => fetchJson(fixturesUrl),
+    { tries: 5, baseDelayMs: 750 }
+  );
 
-  writeJson("/public/data/dev/fixtures.raw.json", data);
-
+  writeJson(`${DATAPATH}fixtures.raw.json`, data);
 
   console.log("Done.");
 }

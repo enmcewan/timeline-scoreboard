@@ -195,13 +195,13 @@ footer {
   gap: .5rem;
 }
 
-/* .matchday-container,
-.show-all-container {
-  width: 50%;
-} */
-
 .matchday-container {
   text-align: end;
+}
+
+#round-label {
+  position: relative;
+  top: 2px;
 }
 
 .show-all-container {

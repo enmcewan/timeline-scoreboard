@@ -2,7 +2,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-import fixturesRaw from "../../public/data/dev/fixtures.raw.json" with { type: "json" };
+import fixturesRaw from "../../public/data/leagues/epl/2025-26/fixtures.raw.json" with { type: "json" };
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -10,10 +10,7 @@ const __dirname = path.dirname(__filename);
 const API_KEY = process.env.APIFOOTBALL_KEY;
 const BASE_URL = "https://v3.football.api-sports.io";
 
-const OUT_PATH = path.join(__dirname, "../../public/data/dev/events.raw.json");
-
-const REFRESH_WINDOW_HOURS = 24;
-const REFRESH_WINDOW_MS = REFRESH_WINDOW_HOURS * 60 * 60 * 1000;
+const OUT_PATH = path.join(__dirname, "../../public/data/leagues/epl/2025-26/events.raw.json");
 
 const UPCOMING_WINDOW_HOURS = 6;
 const UPCOMING_WINDOW_MS = UPCOMING_WINDOW_HOURS * 60 * 60 * 1000;
@@ -24,7 +21,6 @@ function sleep(ms) {
 
 function isTransientApiError(err) {
   const msg = String(err?.message || err);
-  // Your thrown message includes "503 Service Unavailable"
   return (
     msg.includes("503") ||
     msg.includes("502") ||
@@ -63,31 +59,55 @@ async function readExistingEventsFile() {
     const json = JSON.parse(txt);
     return Array.isArray(json?.response) ? json.response : [];
   } catch {
-    return []; // no file yet
+    return [];
   }
 }
 
-function kickoffMs(fx) {
-  const t = Date.parse(fx?.fixture?.date);
-  return Number.isFinite(t) ? t : NaN;
+function parseMatchdayNumber(round) {
+  if (!round) return null;
+  const m = String(round).match(/(\d+)\s*$/);
+  return m ? Number(m[1]) : null;
 }
 
-function shouldFetchFixture(fx, existingFixtureIds) {
+function getCurrentRound(fixtures) {
+  const rounds = fixtures
+    .map((fx) => parseMatchdayNumber(fx?.league?.round))
+    .filter(Number.isFinite)
+    .sort((a, b) => a - b);
+
+  if (!rounds.length) return null;
+
+  const completedStates = new Set(["FT", "AET", "PEN"]);
+
+  for (const round of [...new Set(rounds)]) {
+    const roundFixtures = fixtures.filter(
+      (fx) => parseMatchdayNumber(fx?.league?.round) === round
+    );
+
+    if (!roundFixtures.length) continue;
+
+    const hasIncomplete = roundFixtures.some((fx) => {
+      const s = String(fx?.fixture?.status?.short ?? "").toUpperCase();
+      return !completedStates.has(s);
+    });
+
+    if (hasIncomplete) return round;
+  }
+
+  return rounds[rounds.length - 1];
+}
+
+function shouldFetchFixture(fx, existingFixtureIds, forcedRounds) {
   const fixtureId = String(fx.fixture?.id);
   if (!fixtureId) return false;
 
-  // If we don't already have any events for this fixture, fetch.
-  if (!existingFixtureIds.has(fixtureId)) return true;
+  const md = parseMatchdayNumber(fx?.league?.round);
 
-  // If it's recent, refetch to catch late corrections.
-  const ko = kickoffMs(fx);
-  if (Number.isFinite(ko)) {
-    const age = Date.now() - ko;
-    if (age >= 0 && age < REFRESH_WINDOW_MS) return true;
-  }
+  // Always refresh current + previous round
+  if (md && forcedRounds.has(md)) return true;
 
-  // Otherwise it's frozen, skip.
-  return false;
+  // Otherwise fetch only if missing
+  return !existingFixtureIds.has(fixtureId);
 }
 
 async function fetchEventsForFixture(fixtureId) {
@@ -101,7 +121,7 @@ async function fetchEventsForFixture(fixtureId) {
 
   if (!res.ok) {
     let body = "";
-    try { body = await res.text(); } catch { }
+    try { body = await res.text(); } catch {}
     throw new Error(
       `Events fetch failed for fixture ${fixtureId}: ${res.status} ${res.statusText}${body ? ` | ${body.slice(0, 200)}` : ""}`
     );
@@ -114,8 +134,7 @@ async function fetchEventsForFixture(fixtureId) {
   }
 
   console.log(
-    `fixture ${fixtureId} → results: ${json.results}, response length: ${json.response?.length ?? 0
-    }`
+    `fixture ${fixtureId} → results: ${json.results}, response length: ${json.response?.length ?? 0}`
   );
 
   return json.response || [];
@@ -129,18 +148,15 @@ async function main() {
 
   const fixtures = fixturesRaw.response || [];
 
-  // Load existing events file (if any)
   const existingEvents = await readExistingEventsFile();
 
-  // Index: which fixtureIds already exist in the file
   const existingFixtureIds = new Set(
     existingEvents
       .map((e) => String(e.fixtureId ?? ""))
       .filter(Boolean)
   );
 
-  // Group existing events by fixture so we can replace per fixture
-  const eventsByFixture = new Map(); // fixtureId -> [events...]
+  const eventsByFixture = new Map();
   for (const e of existingEvents) {
     const fid = String(e.fixtureId ?? "");
     if (!fid) continue;
@@ -148,9 +164,13 @@ async function main() {
     eventsByFixture.get(fid).push(e);
   }
 
+  const currentRound = getCurrentRound(fixtures);
+  const previousRound = currentRound && currentRound > 1 ? currentRound - 1 : currentRound;
+  const forcedRounds = new Set([previousRound, currentRound].filter(Number.isFinite));
+
   console.log(`Fixtures total: ${fixtures.length}`);
   console.log(`Fixtures already cached: ${existingFixtureIds.size}`);
-  console.log(`Incremental fetch (refresh window: ${REFRESH_WINDOW_HOURS}h)`);
+  console.log(`Always refresh rounds: ${[...forcedRounds].sort((a, b) => a - b).join(", ")}`);
 
   let fetchedFixtures = 0;
 
@@ -162,21 +182,20 @@ async function main() {
     if (Number.isFinite(ko)) {
       const now = Date.now();
       if (ko > now + UPCOMING_WINDOW_MS) {
-        // too far in the future
         continue;
       }
     }
 
     const homeName = fx.teams?.home?.name ?? "";
     const awayName = fx.teams?.away?.name ?? "";
+    const md = parseMatchdayNumber(fx?.league?.round);
 
-    if (!shouldFetchFixture(fx, existingFixtureIds)) {
+    if (!shouldFetchFixture(fx, existingFixtureIds, forcedRounds)) {
       continue;
     }
 
-    console.log(`→ FETCH ${fixtureId}: ${homeName} vs ${awayName}`);
+    console.log(`→ FETCH ${fixtureId} [MW ${md}]: ${homeName} vs ${awayName}`);
 
-    // const events = await fetchEventsForFixture(fixtureId);
     let events = null;
 
     try {
@@ -188,21 +207,17 @@ async function main() {
       console.error(
         `SKIP ${fixtureId} (${homeName} vs ${awayName}) after retries: ${String(err?.message || err)}`
       );
-      // continue to next fixture without throwing
       continue;
     }
 
-    // Replace this fixture's events in the map
     const merged = (events || []).map((e) => ({ fixtureId, ...e }));
     eventsByFixture.set(fixtureId, merged);
 
     fetchedFixtures++;
-    await new Promise((r) => setTimeout(r, 150));
+    await sleep(150);
   }
 
-  // Flatten back to your original format
   const allEvents = Array.from(eventsByFixture.values()).flat();
-
 
   const outJson = {
     get: "fixtures/events",
@@ -217,6 +232,7 @@ async function main() {
   };
 
   await fs.writeFile(OUT_PATH, JSON.stringify(outJson, null, 2), "utf8");
+  console.log(`Fetched fixtures this run: ${fetchedFixtures}`);
   console.log(`Wrote ${allEvents.length} events to ${OUT_PATH}`);
 }
 

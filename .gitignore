@@ -29,6 +29,4 @@ package.json.readme.txt
 .secret_sauce/
 
 # Generated runtime data (do not commit)
-public/data/**
 src/data/dev/**
-src/data/leagues/epl/2025/matchdays/**
