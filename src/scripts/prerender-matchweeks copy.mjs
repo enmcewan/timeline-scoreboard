@@ -6,8 +6,6 @@ import teams from "../data/leagues/epl/2025/teams.json" with { type: "json" };
 
 import { renderMatchweekHTML } from "../lib/prerender/render.js";
 
-import { computePerfExec } from "../lib/powerMeter.js";
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -87,7 +85,7 @@ function buildLeagueTableHtml({ seasonPath, seasonLabel, rows, teamsBySlug, apiI
         <td class="text-center">${all.ga ?? ""}</td>
         <td class="text-center">${r.gd ?? ""}</td>
         <td class="text-center"><strong>${r.points ?? ""}</strong></td>
-        <td class="text-center">${renderFormSequence(r.form ?? "")}</td>
+        <td class="text-center mono tbl-form">${[...escapeAttr(r.form)].reverse().join("") ?? ""}</td>
       </tr>
     `.trim();
     }).join("\n");
@@ -181,19 +179,7 @@ function buildTeamMatchesIndex({ roundsData, teamsBySlug, seasonPath }) {
     return out;
 }
 
-function renderFormSequence(formStr = "") {
-    const arr = [...String(formStr)].reverse(); // keep your reverse logic
-
-    return arr.map((r) => {
-        const cls = r === "W" ? "form-W" :
-                    r === "D" ? "form-D" :
-                    r === "L" ? "form-L" : "";
-
-        return `<span class="form-char ${cls}">${r}</span>`;
-    }).join("");
-}
-
-function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, matches, teamSeason, updatedLabel }) {
+function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, matches, updatedLabel }) {
     const all = standingsRow?.all || null;
 
     const summary = standingsRow && all
@@ -234,199 +220,51 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
         </div>
     ` : "";
 
-    const seasonSummaryHtml = teamSeason ? `
-        <section class="team-season-summary">
-            <div title="Average Rating"><span class="muted">Avg Rating: </span><strong>${teamSeason.summary.avgRating ?? "-"}</strong></div>
-            <div title="Average Match Control Index"><span class="muted">Avg mX: </span><strong>${teamSeason.summary.avgMx ?? "-"}</strong></div>
-            <div title="Average Execution Index"><span class="muted">Avg eX: </span><strong>${teamSeason.summary.avgEx ?? "-"}</strong></div>
-        </section>
-    ` : "";
-
-    const chartId = `team-trend-chart-${slug}`;
-
-const teamChartHtml = teamSeason ? `
-        <section class="team-chart-section">
-            <h2 class="text-center">Season Trends</h2>
-            <div class="team-chart-wrap">
-                <canvas id="${chartId}" aria-label="${escapeAttr(team.name)} season trends chart"></canvas>
-            </div>
-        </section>
-    ` : "";
-
-const teamChartScript = teamSeason ? `
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-    (() => {
-        const chartData = ${JSON.stringify(teamSeason.matches || [])};
-        const canvas = document.getElementById(${JSON.stringify(chartId)});
-        if (!canvas || !Array.isArray(chartData) || !chartData.length) return;
-
-        const labels = chartData.map(m => m.mw);
-        const ratingVals = chartData.map(m => m.rating);
-        const mxVals = chartData.map(m => m.mx);
-        const exVals = chartData.map(m => m.ex);
-
-        const resultColors = chartData.map(m => {
-            if (m.result === "W") return "#16a34a";
-            if (m.result === "D") return "#ca8a04";
-            return "#dc2626";
-        });
-
-        new Chart(canvas, {
-            type: "line",
-            data: {
-                labels,
-                datasets: [
-                    {
-                        label: "Rating",
-                        data: ratingVals,
-                        borderColor: "#2563eb",
-                        backgroundColor: resultColors,
-                        pointBackgroundColor: resultColors,
-                        pointBorderColor: resultColors,
-                        pointRadius: 4,
-                        pointHoverRadius: 6,
-                        borderWidth: 4,
-                        tension: 0.25
-                    },
-                    {
-                        label: "Avg Rating",
-                        data: Array(labels.length).fill(${teamSeason.summary.avgRating ?? 0}),
-                        borderColor: "#94a3b8",
-                        borderDash: [5, 5],
-                        pointRadius: 0,
-                        borderWidth: 2
-                    },
-                    {
-                        label: "mX",
-                        data: mxVals,
-                        borderColor: "#6b7280",
-                        backgroundColor: "#6b7280",
-                        pointBackgroundColor: "#6b7280",
-                        pointBorderColor: "#6b7280",
-                        pointRadius: 0,
-                        pointHoverRadius: 0,
-                        borderWidth: 2,
-                        tension: 0.25,
-                        opacity: 0.7
-                    },
-                    {
-                        label: "eX",
-                        data: exVals,
-                        borderColor: "#9333ea",
-                        backgroundColor: "#9333ea",
-                        pointBackgroundColor: "#9333ea",
-                        pointBorderColor: "#9333ea",
-                        pointRadius: 0,
-                        pointHoverRadius: 0,
-                        borderWidth: 2,
-                        tension: 0.25,
-                        opacity: 0.7
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                interaction: {
-                    mode: "index",
-                    intersect: false
-                },
-                plugins: {
-                    tooltip: {
-                        callbacks: {
-                            title: (items) => {
-                                const i = items[0].dataIndex;
-                                const m = chartData[i];
-                                return "MW " + m.mw + " • " + (m.homeAway === "H" ? "Home" : "Away");
-                            },
-                            beforeBody: (items) => {
-                                const i = items[0].dataIndex;
-                                const m = chartData[i];
-                                return [
-                                    (m.homeAway === "H" ? "vs " : "@ ") + (m.opponentName || m.opponent),
-                                    "Score: " + m.score + " (" + m.result + ")"
-                                ];
-                            }
-                        }
-                    },
-                    legend: {
-                        position: "top"
-                    }
-                },
-                scales: {
-                    y: {
-                        min: 0,
-                        max: 100,
-                            grid: {
-                                color: "rgba(0,0,0,0.08)"
-                            },
-                        ticks: {
-                                autoSkip: true,
-                                maxTicksLimit: 12
-                        }
-                    },
-                      x: {
-                        grid: {
-                        color: "rgba(0,0,0,0.05)"
-                        }
-                    }
-                }
-            }
-        });
-    })();
-    </script>
-    ` : "";
-
     return `
-        <section class="team-page">
-        <div class="team-header">
-            <img class="slug ${slug}" src="${team.badge}" alt="${escapeAttr(team.name)} badge" height="72" loading="lazy">
-            <div>
-            <h2>${team.name} - ${team.nicknames?.[0] ?? ""}</h2>
-            ${updatedLabel ? `<p class="muted">Last updated: ${updatedLabel}</p>` : ""}
-            </div>
+    <section class="team-page">
+      <div class="team-header">
+        <img class="slug ${slug}" src="${team.badge}" alt="${escapeAttr(team.name)} badge" height="72" loading="lazy">
+        <div>
+          <h2>${team.name} - ${team.nicknames?.[0] ?? ""}</h2>
+          ${updatedLabel ? `<p class="muted">Last updated: ${updatedLabel}</p>` : ""}
         </div>
+      </div>
 
-        ${venueHtml}
+      ${venueHtml}
 
-        ${standingsRow && all ? `
-            <div class="team-strip" role="group" aria-label="Team table summary">
-                <div><span class="muted">Position</span>
-                    <strong>
-                        <a class="tbl-link" href="/epl/2025-26/table/#${standingsRow.rank}">${standingsRow.rank} ▷</a>
-                    </strong>
-                </div>
-                <div><span class="muted">Points</span><strong>${standingsRow.points}</strong></div>
-                <div><span class="muted">GD</span><strong>${standingsRow.gd >= 0 ? "+" : ""}${standingsRow.gd}</strong></div>
-                <div><span class="muted">Record</span><strong>${all.w}-${all.d}-${all.l}</strong></div>
-                <div><span class="muted">Played</span><strong>${all.p}</strong></div>
-                <div><span class="muted">Form</span><strong class="form-seq">${renderFormSequence(standingsRow.form ?? "")}</strong></div>
-            </div>
-        ` : ""}
-
-        ${seasonSummaryHtml}
-        ${teamChartHtml}
-
-        <h2 class="text-center">Matches</h2>
-        <div class="table-scroll" role="region" aria-label="League table" tabindex="0">
-            <table class="team-matches">
-                <thead>
-                <tr>
-                    <th scope="col">Date</th>
-                    <th scope="col">Opponent</th>
-                    <th scope="col">Score</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Match</th>
-                </tr>
-                </thead>
-                <tbody>
-                ${rowsHtml}
-                </tbody>
-            </table>
+      ${standingsRow && all ? `
+        <div class="team-strip" role="group" aria-label="Team table summary">
+          <div><span class="muted">Position</span>
+            <strong>
+                <a class="tbl-link" href="/epl/2025-26/table/#${standingsRow.rank}">${standingsRow.rank} ▷</a>
+            </strong>
+          </div>
+          <div><span class="muted">Points</span><strong>${standingsRow.points}</strong></div>
+          <div><span class="muted">GD</span><strong>${standingsRow.gd >= 0 ? "+" : ""}${standingsRow.gd}</strong></div>
+          <div><span class="muted">Record</span><strong>${all.w}-${all.d}-${all.l}</strong></div>
+          <div><span class="muted">Played</span><strong>${all.p}</strong></div>
+          <div><span class="muted">Form</span><strong class="mono">${[...escapeAttr(standingsRow.form ?? "")].reverse().join("")}</strong></div>
         </div>
-         ${teamChartScript}
-        </section>
+      ` : ""}
+
+    <h2 class="text-center">Matches</h2>
+    <div class="table-scroll" role="region" aria-label="League table" tabindex="0">
+        <table class="team-matches">
+            <thead>
+            <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Opponent</th>
+                <th scope="col">Score</th>
+                <th scope="col">Status</th>
+                <th scope="col">Match</th>
+            </tr>
+            </thead>
+            <tbody>
+            ${rowsHtml}
+            </tbody>
+        </table>
+    </div>
+    </section>
   `.trim();
 }
 
@@ -871,182 +709,6 @@ async function buildMatchweekMetaMap(rounds) {
     return out;
 }
 
-
-function averageOrNull(arr) {
-    if (!arr.length) return null;
-    return Number((arr.reduce((a, b) => a + b, 0) / arr.length).toFixed(1));
-}
-
-function isCompletedState(state) {
-    const s = String(state || "").toUpperCase().trim();
-    return s === "FT";
-}
-
-function buildTeamSeason({ roundsData, teamsBySlug }) {
-    const out = {};
-
-    for (const slug of Object.keys(teamsBySlug)) {
-        out[slug] = {
-            summary: {
-                played: 0,
-                wins: 0,
-                draws: 0,
-                losses: 0,
-                gf: 0,
-                ga: 0,
-                gd: 0,
-                points: 0,
-                avgMx: null,
-                avgEx: null,
-                avgRating: null,
-                last5: []
-            },
-            matches: []
-        };
-    }
-
-    for (const md of roundsData) {
-        const mw = md.round;
-
-        for (const match of md.matches || []) {
-
-            const state = String(match.status?.state || "").toUpperCase();
-
-            // ONLY completed matches count for team season stats/chart data
-            if (!isCompletedState(state)) continue;
-
-            const homeSlug = match.homeTeamId;
-            const awaySlug = match.awayTeamId;
-
-            if (!out[homeSlug] || !out[awaySlug]) continue;
-
-            const homeGoals = Number(match?.score?.home ?? 0);
-            const awayGoals = Number(match?.score?.away ?? 0);
-
-            const homeResult =
-                homeGoals > awayGoals ? "W" :
-                    homeGoals < awayGoals ? "L" : "D";
-
-            const awayResult =
-                awayGoals > homeGoals ? "W" :
-                    awayGoals < homeGoals ? "L" : "D";
-
-            const hasStats = !!(match.statistics?.home && match.statistics?.away);
-
-            const statsH = match.statistics?.home ?? {};
-            const statsA = match.statistics?.away ?? {};
-            const pre = match.context?.preMatch ?? {};
-
-            const pe = hasStats
-                ? computePerfExec(match, {
-                    homeRank: pre.homePosition,
-                    awayRank: pre.awayPosition,
-                    homeForm: pre.homeForm,
-                    awayForm: pre.awayForm,
-
-                    homeCards: { yc: statsH.ycMinutes ?? [], rc: statsH.rcMinutes ?? [] },
-                    awayCards: { yc: statsA.ycMinutes ?? [], rc: statsA.rcMinutes ?? [] },
-
-                    homeDisallowedGoals: statsH.disallowedGoals ?? 0,
-                    awayDisallowedGoals: statsA.disallowedGoals ?? 0,
-
-                    homeOwnGoalsFor: statsH.ownGoalsFor ?? 0,
-                    awayOwnGoalsFor: statsA.ownGoalsFor ?? 0,
-                })
-                : null;
-
-            out[homeSlug].matches.push({
-                mw,
-                kickoff: match.kickoff,
-                opponent: awaySlug,
-                opponentName: teamsBySlug[awaySlug]?.name ?? awaySlug,
-                homeAway: "H",
-                score: `${homeGoals}–${awayGoals}`,
-                result: homeResult,
-                mx: pe ? pe.homePerf : null,
-                ex: pe ? pe.homeExec : null,
-                rating: pe ? pe.homePower : null
-            });
-
-            out[awaySlug].matches.push({
-                mw,
-                kickoff: match.kickoff,
-                opponent: homeSlug,
-                opponentName: teamsBySlug[homeSlug]?.name ?? homeSlug,
-                homeAway: "A",
-                score: `${awayGoals}–${homeGoals}`,
-                result: awayResult,
-                mx: pe ? pe.awayPerf : null,
-                ex: pe ? pe.awayExec : null,
-                rating: pe ? pe.awayPower : null
-            });
-        }
-    }
-
-    for (const slug of Object.keys(out)) {
-
-        const matches = out[slug].matches.sort((a, b) => {
-            const aTime = Date.parse(a.kickoff || "");
-            const bTime = Date.parse(b.kickoff || "");
-
-            if (Number.isFinite(aTime) && Number.isFinite(bTime) && aTime !== bTime) {
-                return aTime - bTime;
-            }
-
-            return a.mw - b.mw;
-        });
-
-        let wins = 0;
-        let draws = 0;
-        let losses = 0;
-        let gf = 0;
-        let ga = 0;
-
-        const mxVals = [];
-        const exVals = [];
-        const ratingVals = [];
-
-        for (const m of matches) {
-            if (m.result === "W") wins += 1;
-            else if (m.result === "D") draws += 1;
-            else if (m.result === "L") losses += 1;
-
-            const [forGoals, againstGoals] = String(m.score)
-                .split("–")
-                .map((n) => Number(n));
-
-            gf += Number.isFinite(forGoals) ? forGoals : 0;
-            ga += Number.isFinite(againstGoals) ? againstGoals : 0;
-
-            if (typeof m.mx === "number") mxVals.push(m.mx);
-            if (typeof m.ex === "number") exVals.push(m.ex);
-            if (typeof m.rating === "number") ratingVals.push(m.rating);
-        }
-
-        out[slug].summary = {
-            played: matches.length,
-            wins,
-            draws,
-            losses,
-            gf,
-            ga,
-            gd: gf - ga,
-            points: wins * 3 + draws,
-            avgMx: averageOrNull(mxVals),
-            avgEx: averageOrNull(exVals),
-            avgRating: averageOrNull(ratingVals),
-            last5: matches.slice(-5).map((m) => m.result),
-
-            // TEMP DEBUG
-            mxVals,
-            exVals,
-            ratingVals
-        };
-    }
-
-    return out;
-}
-
 async function main() {
 
     const template = await fs.readFile(DIST_INDEX, "utf8");
@@ -1215,11 +877,6 @@ async function main() {
 
     const matchesByTeam = buildTeamMatchesIndex({ roundsData, teamsBySlug: teams, seasonPath });
 
-    const teamSeasonBySlug = buildTeamSeason({
-        roundsData,
-        teamsBySlug: teams
-    });
-
     // standings lookup
     const standingsByApiId = new Map(standingsRows.map(r => [r.teamApiId, r]));
 
@@ -1294,7 +951,7 @@ async function main() {
         const standingsRow = standingsByApiId.get(team.apiTeamId) || null;
 
         const title = `${team.name} EPL ${seasonLabel} | Results & Match Timelines`;
-        const desc = `${team.name} EPL ${seasonLabel} season page: current league status, ratings, results, season trends and matchweek timeline links.`;
+        const desc = `${team.name} EPL ${seasonLabel} season page: current league position, results list, and links to matchweek timelines.`;
 
         page = setTitle(page, title);
         page = setDescription(page, desc);
@@ -1321,7 +978,7 @@ async function main() {
                             <span class="mw-nav__next is-disabled" aria-disabled="true"></span>
                             </div>
                         </nav>`;
-
+                        
         page = injectBeforeApp(page, navHtml);
 
         const teamHtml = buildTeamPageHtml({
@@ -1331,7 +988,6 @@ async function main() {
             team,
             standingsRow,
             matches: matchesByTeam[slug] || [],
-            teamSeason: teamSeasonBySlug[slug] || null,
             updatedLabel
         });
 
