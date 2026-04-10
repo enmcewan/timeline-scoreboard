@@ -2,6 +2,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { parseMatchweekNumber, getForcedRefreshRounds } from "../lib/utils.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -138,11 +139,11 @@ function slugTeamName(name) {
     .replace(/(^-|-$)/g, "");
 }
 
-function parseMatchweekNumber(round) {
-  if (!round) return null;
-  const m = String(round).match(/(\d+)\s*$/);
-  return m ? Number(m[1]) : null;
-}
+// function parseMatchweekNumber(round) {
+//   if (!round) return null;
+//   const m = String(round).match(/(\d+)\s*$/);
+//   return m ? Number(m[1]) : null;
+// }
 
 function getCurrentRound(fixtures) {
   const rounds = fixtures
@@ -455,11 +456,17 @@ async function main() {
   const { byRound: existingMatchweeks, byFixtureId: existingMatchesByFixtureId } =
     await readExistingMatchweeks();
 
-  const currentRound = getCurrentRound(fixtures);
-  const previousRound = currentRound && currentRound > 1 ? currentRound - 1 : currentRound;
-  const forcedRounds = new Set([previousRound, currentRound].filter(Number.isFinite));
+  // const currentRound = getCurrentRound(fixtures);
+  // const previousRound = currentRound && currentRound > 1 ? currentRound - 1 : currentRound;
+  // const forcedRounds = new Set([previousRound, currentRound].filter(Number.isFinite));
 
-  console.log(`Always refresh rounds: ${[...forcedRounds].sort((a, b) => a - b).join(", ")}`);
+  // console.log(`Always refresh rounds: ${[...forcedRounds].sort((a, b) => a - b).join(", ")}`);
+
+  const forcedRounds = getForcedRefreshRounds(fixtures);
+
+  console.log(
+    `Always refresh rounds: ${[...forcedRounds].sort((a, b) => a - b).join(", ")}`
+  );
 
   const matchweeks = new Map(existingMatchweeks);
   const touchedRounds = new Set();

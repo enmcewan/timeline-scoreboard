@@ -19,7 +19,7 @@
   "prerender": "node src/scripts/prerender-matchweeks.mjs",
   "sitemap": "node src/scripts/generate-sitemap.mjs",
   "build:prerender": "npm run build && npm run prerender && npm run sitemap",
-  "build:full": "npm run refresh:epl2025table && run build:season-context && npm run build:prerender"
+  "build:full": "npm run refresh:epl2025table && npm run build:season-context && npm run build:prerender"
 },
   "devDependencies": {
     "vite": "^7.2.4"

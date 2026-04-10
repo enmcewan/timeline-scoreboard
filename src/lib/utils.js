@@ -1,10 +1,10 @@
 export function esc(s) {
-    return String(s)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#39;");
+  return String(s)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
 }
 
 export function minuteToNumber(minStr) {
@@ -15,18 +15,18 @@ export function minuteToNumber(minStr) {
 
   // Strip everything except digits and plus signs: "45'+2" -> "45+2"
   s = s.replace(/[^0-9+]/g, "");
- 
+
   if (!s) return Number.POSITIVE_INFINITY;
 
   let baseStr, extraStr;
 
   if (s.includes("+")) {
     [baseStr, extraStr] = s.split("+", 2);
-  } else {    
+  } else {
     baseStr = s;
     extraStr = "0";
   }
- 
+
   const base = Number(baseStr);
   const extra = Number(extraStr);
 
@@ -112,3 +112,97 @@ export function sortedEvents(events) {
   return compressed.map(({ __idx, ...rest }) => rest);
 }
 
+export function parseMatchweekNumber(round) {
+  if (!round) return null;
+  const m = String(round).match(/(\d+)\s*$/);
+  return m ? Number(m[1]) : null;
+}
+
+export function getForcedRefreshRounds(fixtures, now = new Date()) {
+  const FINAL = new Set(["FT", "AET", "PEN"]);
+  const LIVE = new Set(["1H", "HT", "2H", "ET", "BT", "P", "LIVE"]);
+  const TERMINAL_NONFINAL = new Set(["CANC", "ABD", "AWD", "WO"]);
+  const POSTPONED = new Set(["PST"]);
+
+  const startedRounds = new Set();
+  const unresolvedStartedRounds = new Set();
+  const postponedRounds = new Set();
+  const nearNowRounds = new Set();
+
+  const nowMs = now.getTime();
+  const LOOKBACK_MS = 12 * 60 * 60 * 1000;
+  const LOOKAHEAD_MS = 48 * 60 * 60 * 1000;
+
+  for (const fx of fixtures) {
+    const round = parseMatchweekNumber(fx?.league?.round);
+    if (!Number.isFinite(round)) continue;
+
+    const status = String(fx?.fixture?.status?.short ?? "").toUpperCase();
+    const kickoffMs = Date.parse(fx?.fixture?.date ?? "");
+
+    const hasKickoff = Number.isFinite(kickoffMs);
+    const hasStarted = hasKickoff && kickoffMs <= nowMs;
+
+    if (hasStarted) {
+      startedRounds.add(round);
+    }
+
+    const isFinal = FINAL.has(status);
+    const isTerminalNonFinal = TERMINAL_NONFINAL.has(status);
+    const isLive = LIVE.has(status);
+    const isPostponed = POSTPONED.has(status);
+
+    // Only treat as unresolved if:
+    // 1. It has started AND is not finished
+    // OR
+    // 2. It is explicitly postponed
+    if (
+      (hasStarted && !isFinal && !isTerminalNonFinal) ||
+      isPostponed
+    ) {
+      unresolvedStartedRounds.add(round);
+    }
+
+    // Keep postponed rounds in scope, but do not let plain future NS rounds do that
+    if (isPostponed) {
+      postponedRounds.add(round);
+    }
+
+    const isNearNow =
+      hasKickoff &&
+      kickoffMs >= nowMs - LOOKBACK_MS &&
+      kickoffMs <= nowMs + LOOKAHEAD_MS;
+
+    // Near-now catches today's / imminent fixtures even if still NS
+    if (isLive || isNearNow) {
+      nearNowRounds.add(round);
+    }
+  }
+
+  const latestStartedRound =
+    startedRounds.size > 0 ? Math.max(...startedRounds) : null;
+
+  const forcedRounds = new Set([
+    ...unresolvedStartedRounds,
+    ...postponedRounds,
+    ...nearNowRounds,
+  ]);
+
+  if (latestStartedRound != null) {
+    forcedRounds.add(latestStartedRound);
+    if (latestStartedRound > 1) {
+      forcedRounds.add(latestStartedRound - 1);
+    }
+  }
+
+  console.log("Refresh round selection:", {
+    latestStartedRound,
+    startedRounds: [...startedRounds].sort((a, b) => a - b),
+    unresolvedStartedRounds: [...unresolvedStartedRounds].sort((a, b) => a - b),
+    postponedRounds: [...postponedRounds].sort((a, b) => a - b),
+    nearNowRounds: [...nearNowRounds].sort((a, b) => a - b),
+    forcedRounds: [...forcedRounds].sort((a, b) => a - b),
+  });
+
+  return forcedRounds;
+}

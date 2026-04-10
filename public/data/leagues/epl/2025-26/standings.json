@@ -4,7 +4,7 @@
     "name": "Premier League",
     "country": "England",
     "season": 2025,
-    "updated": "2026-03-25T00:00:00+00:00"
+    "updated": "2026-04-10T00:00:00+00:00"
   },
   "table": [
     {
@@ -87,7 +87,7 @@
       "gd": 8,
       "form": "LDLWW",
       "status": "same",
-      "description": "Promotion - Europa League (League phase)",
+      "description": "Promotion - Champions League (League phase)",
       "all": {
         "p": 31,
         "w": 14,
@@ -105,7 +105,7 @@
       "gd": 15,
       "form": "LLWLD",
       "status": "same",
-      "description": null,
+      "description": "Promotion - Europa League (League phase)",
       "all": {
         "p": 31,
         "w": 13,
@@ -297,13 +297,31 @@
     },
     {
       "rank": 17,
+      "teamApiId": 48,
+      "teamName": "West Ham",
+      "points": 32,
+      "gd": -17,
+      "form": "WLDWL",
+      "status": "same",
+      "description": null,
+      "all": {
+        "p": 32,
+        "w": 8,
+        "d": 8,
+        "l": 16,
+        "gf": 40,
+        "ga": 57
+      }
+    },
+    {
+      "rank": 18,
       "teamApiId": 47,
       "teamName": "Tottenham",
       "points": 30,
       "gd": -10,
       "form": "LDLLL",
       "status": "same",
-      "description": null,
+      "description": "Relegation - Championship",
       "all": {
         "p": 31,
         "w": 7,
@@ -311,24 +329,6 @@
         "l": 15,
         "gf": 40,
         "ga": 50
-      }
-    },
-    {
-      "rank": 18,
-      "teamApiId": 48,
-      "teamName": "West Ham",
-      "points": 29,
-      "gd": -21,
-      "form": "LDWLD",
-      "status": "same",
-      "description": "Relegation - Championship",
-      "all": {
-        "p": 31,
-        "w": 7,
-        "d": 8,
-        "l": 16,
-        "gf": 36,
-        "ga": 57
       }
     },
     {
@@ -354,17 +354,17 @@
       "teamApiId": 39,
       "teamName": "Wolves",
       "points": 17,
-      "gd": -30,
-      "form": "DWWLD",
+      "gd": -34,
+      "form": "LDWWL",
       "status": "same",
       "description": "Relegation - Championship",
       "all": {
-        "p": 31,
+        "p": 32,
         "w": 3,
         "d": 8,
-        "l": 20,
+        "l": 21,
         "gf": 24,
-        "ga": 54
+        "ga": 58
       }
     }
   ]

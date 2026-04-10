@@ -331,6 +331,22 @@
           "disallowedGoals": 0,
           "ownGoalsFor": 0
         }
+      },
+      "context": {
+        "preMatch": {
+          "homeForm": "L",
+          "awayForm": "D",
+          "homePosition": 19,
+          "awayPosition": 11,
+          "homePoints": 0,
+          "awayPoints": 1,
+          "homePlayed": 1,
+          "awayPlayed": 1,
+          "homeGD": -3,
+          "awayGD": 0,
+          "homeGF": 0,
+          "awayGF": 0
+        }
       }
     },
     {
@@ -684,6 +700,22 @@
           "rcMinutes": [],
           "disallowedGoals": 0,
           "ownGoalsFor": 0
+        }
+      },
+      "context": {
+        "preMatch": {
+          "homeForm": "W",
+          "awayForm": "W",
+          "homePosition": 1,
+          "awayPosition": 3,
+          "homePoints": 3,
+          "awayPoints": 3,
+          "homePlayed": 1,
+          "awayPlayed": 1,
+          "homeGD": 4,
+          "awayGD": 3,
+          "homeGF": 4,
+          "awayGF": 3
         }
       }
     },
@@ -1060,6 +1092,22 @@
           "disallowedGoals": 0,
           "ownGoalsFor": 0
         }
+      },
+      "context": {
+        "preMatch": {
+          "homeForm": "L",
+          "awayForm": "L",
+          "homePosition": 16,
+          "awayPosition": 20,
+          "homePoints": 0,
+          "awayPoints": 0,
+          "homePlayed": 1,
+          "awayPlayed": 1,
+          "homeGD": -2,
+          "awayGD": -4,
+          "homeGF": 2,
+          "awayGF": 0
+        }
       }
     },
     {
@@ -1346,6 +1394,22 @@
           "rcMinutes": [],
           "disallowedGoals": 0,
           "ownGoalsFor": 0
+        }
+      },
+      "context": {
+        "preMatch": {
+          "homeForm": "L",
+          "awayForm": "W",
+          "homePosition": 18,
+          "awayPosition": 2,
+          "homePoints": 0,
+          "awayPoints": 3,
+          "homePlayed": 1,
+          "awayPlayed": 1,
+          "homeGD": -3,
+          "awayGD": 3,
+          "homeGF": 0,
+          "awayGF": 3
         }
       }
     },
@@ -1652,6 +1716,22 @@
           "rcMinutes": [],
           "disallowedGoals": 0,
           "ownGoalsFor": 0
+        }
+      },
+      "context": {
+        "preMatch": {
+          "homeForm": "L",
+          "awayForm": "D",
+          "homePosition": 17,
+          "awayPosition": 10,
+          "homePoints": 0,
+          "awayPoints": 1,
+          "homePlayed": 1,
+          "awayPlayed": 1,
+          "homeGD": -2,
+          "awayGD": 0,
+          "homeGF": 1,
+          "awayGF": 0
         }
       }
     },
@@ -2004,6 +2084,22 @@
           "rcMinutes": [],
           "disallowedGoals": 0,
           "ownGoalsFor": 0
+        }
+      },
+      "context": {
+        "preMatch": {
+          "homeForm": "W",
+          "awayForm": "W",
+          "homePosition": 6,
+          "awayPosition": 7,
+          "homePoints": 3,
+          "awayPoints": 3,
+          "homePlayed": 1,
+          "awayPlayed": 1,
+          "homeGD": 1,
+          "awayGD": 1,
+          "homeGF": 1,
+          "awayGF": 1
         }
       }
     },
@@ -2359,6 +2455,22 @@
           "disallowedGoals": 0,
           "ownGoalsFor": 0
         }
+      },
+      "context": {
+        "preMatch": {
+          "homeForm": "L",
+          "awayForm": "D",
+          "homePosition": 14,
+          "awayPosition": 8,
+          "homePoints": 0,
+          "awayPoints": 1,
+          "homePlayed": 1,
+          "awayPlayed": 1,
+          "homeGD": -1,
+          "awayGD": 0,
+          "homeGF": 0,
+          "awayGF": 1
+        }
       }
     },
     {
@@ -2696,6 +2808,22 @@
           "disallowedGoals": 0,
           "ownGoalsFor": 0
         }
+      },
+      "context": {
+        "preMatch": {
+          "homeForm": "D",
+          "awayForm": "W",
+          "homePosition": 12,
+          "awayPosition": 5,
+          "homePoints": 1,
+          "awayPoints": 3,
+          "homePlayed": 1,
+          "awayPlayed": 1,
+          "homeGD": 0,
+          "awayGD": 2,
+          "homeGF": 0,
+          "awayGF": 3
+        }
       }
     },
     {
@@ -2998,6 +3126,22 @@
           "rcMinutes": [],
           "disallowedGoals": 0,
           "ownGoalsFor": 1
+        }
+      },
+      "context": {
+        "preMatch": {
+          "homeForm": "D",
+          "awayForm": "L",
+          "homePosition": 9,
+          "awayPosition": 15,
+          "homePoints": 1,
+          "awayPoints": 0,
+          "homePlayed": 1,
+          "awayPlayed": 1,
+          "homeGD": 0,
+          "awayGD": -1,
+          "homeGF": 1,
+          "awayGF": 0
         }
       }
     },
@@ -3436,6 +3580,22 @@
           "rcMinutes": [],
           "disallowedGoals": 0,
           "ownGoalsFor": 0
+        }
+      },
+      "context": {
+        "preMatch": {
+          "homeForm": "D",
+          "awayForm": "W",
+          "homePosition": 13,
+          "awayPosition": 4,
+          "homePoints": 1,
+          "awayPoints": 3,
+          "homePlayed": 1,
+          "awayPlayed": 1,
+          "homeGD": 0,
+          "awayGD": 2,
+          "homeGF": 0,
+          "awayGF": 4
         }
       }
     }
