@@ -65,53 +65,6 @@ async function readExistingEventsFile() {
   }
 }
 
-// function parseMatchweekNumber(round) {
-//   if (!round) return null;
-//   const m = String(round).match(/(\d+)\s*$/);
-//   return m ? Number(m[1]) : null;
-// }
-
-function getCurrentRound(fixtures) {
-  const rounds = fixtures
-    .map((fx) => parseMatchweekNumber(fx?.league?.round))
-    .filter(Number.isFinite)
-    .sort((a, b) => a - b);
-
-  if (!rounds.length) return null;
-
-  const completedStates = new Set(["FT", "AET", "PEN"]);
-
-  for (const round of [...new Set(rounds)]) {
-    const roundFixtures = fixtures.filter(
-      (fx) => parseMatchweekNumber(fx?.league?.round) === round
-    );
-
-    if (!roundFixtures.length) continue;
-
-    const hasIncomplete = roundFixtures.some((fx) => {
-      const s = String(fx?.fixture?.status?.short ?? "").toUpperCase();
-      return !completedStates.has(s);
-    });
-
-    if (hasIncomplete) return round;
-  }
-
-  return rounds[rounds.length - 1];
-}
-
-// function shouldFetchFixture(fx, existingFixtureIds, forcedRounds) {
-//   const fixtureId = String(fx.fixture?.id);
-//   if (!fixtureId) return false;
-
-//   const md = parseMatchdayNumber(fx?.league?.round);
-
-//   // Always refresh current + previous round
-//   if (md && forcedRounds.has(md)) return true;
-
-//   // Otherwise fetch only if missing
-//   return !existingFixtureIds.has(fixtureId);
-// }
-
 function shouldFetchFixture(fx, existingFixtureIds, forcedRounds) {
   const fixtureId = String(fx.fixture?.id ?? "");
   if (!fixtureId) return false;
@@ -181,19 +134,11 @@ async function main() {
     eventsByFixture.get(fid).push(e);
   }
 
-  // const currentRound = getCurrentRound(fixtures);
-  // const previousRound = currentRound && currentRound > 1 ? currentRound - 1 : currentRound;
-  // const forcedRounds = new Set([previousRound, currentRound].filter(Number.isFinite));
+  const forcedRounds = getForcedRefreshRounds(fixtures);
 
   // console.log(`Fixtures total: ${fixtures.length}`);
   // console.log(`Fixtures already cached: ${existingFixtureIds.size}`);
   // console.log(`Always refresh rounds: ${[...forcedRounds].sort((a, b) => a - b).join(", ")}`);
-
-  const forcedRounds = getForcedRefreshRounds(fixtures);
-
-  console.log(`Fixtures total: ${fixtures.length}`);
-  console.log(`Fixtures already cached: ${existingFixtureIds.size}`);
-  console.log(`Always refresh rounds: ${[...forcedRounds].sort((a, b) => a - b).join(", ")}`);
 
   let fetchedFixtures = 0;
 

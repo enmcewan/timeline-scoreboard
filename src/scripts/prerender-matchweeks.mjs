@@ -262,9 +262,13 @@ const teamChartScript = teamSeason ? `
         if (!canvas || !Array.isArray(chartData) || !chartData.length) return;
 
         const labels = chartData.map(m => m.mw);
-        const ratingVals = chartData.map(m => m.rating);
-        const mxVals = chartData.map(m => m.mx);
-        const exVals = chartData.map(m => m.ex);
+        const ratingVals = chartData.map(m => m.rating ?? null);
+        const mxVals = chartData.map(m => m.mx ?? null);
+        const exDeltaVals = chartData.map(m => (
+            typeof m.ex === "number" ? m.ex - 50 : null
+        ));
+
+        const avgRating = ${JSON.stringify(teamSeason.summary.avgRating ?? 0)};
 
         const resultColors = chartData.map(m => {
             if (m.result === "W") return "#16a34a";
@@ -272,56 +276,79 @@ const teamChartScript = teamSeason ? `
             return "#dc2626";
         });
 
+        const exBarColors = exDeltaVals.map(v => {
+            if (v == null) return "rgba(0,0,0,0)";
+            return v >= 0
+                ? "rgba(34, 197, 94, 0.24)"
+                : "rgba(220, 38, 38, 0.14)";
+        });
+
+        const exBorderColors = exDeltaVals.map(v => {
+            if (v == null) return "rgba(0,0,0,0)";
+            return v >= 0
+                ? "rgb(46 139 87)"
+                : "rgb(192 57 43)";
+        });
+
         new Chart(canvas, {
-            type: "line",
+            type: "bar",
             data: {
                 labels,
                 datasets: [
                     {
+                        type: "bar",
+                        label: "eX Δ",
+                        data: exDeltaVals,
+                        yAxisID: "yEx",
+                        backgroundColor: exBarColors,
+                        borderColor: exBorderColors,
+                        borderWidth: 0,
+                        borderRadius: 1,
+                        barPercentage: 0.72,
+                        categoryPercentage: 0.82,
+                        order: 4
+                    },
+                    {
+                        type: "line",
                         label: "Rating",
                         data: ratingVals,
-                        borderColor: "#2563eb",
+                        yAxisID: "y",
+                        borderColor: "#3b0a45",
                         backgroundColor: resultColors,
                         pointBackgroundColor: resultColors,
                         pointBorderColor: resultColors,
                         pointRadius: 4,
                         pointHoverRadius: 6,
-                        borderWidth: 4,
-                        tension: 0.25
+                        pointBorderWidth: 0,
+                        borderWidth: 4.5,
+                        tension: 0.22,
+                        order: 1
                     },
                     {
+                        type: "line",
                         label: "Avg Rating",
-                        data: Array(labels.length).fill(${teamSeason.summary.avgRating ?? 0}),
-                        borderColor: "#94a3b8",
-                        borderDash: [5, 5],
+                        data: Array(labels.length).fill(avgRating),
+                        yAxisID: "y",
+                        borderColor: "rgba(79, 92, 110, 0.65)",
+                        borderDash: [6, 6],
                         pointRadius: 0,
-                        borderWidth: 2
+                        pointHoverRadius: 0,
+                        borderWidth: 2,
+                        tension: 0,
+                        order: 2
                     },
                     {
+                        type: "line",
                         label: "mX",
                         data: mxVals,
-                        borderColor: "#6b7280",
-                        backgroundColor: "#6b7280",
-                        pointBackgroundColor: "#6b7280",
-                        pointBorderColor: "#6b7280",
+                        yAxisID: "y",
+                        borderColor: "rgba(107, 114, 128, 0.5)",
                         pointRadius: 0,
                         pointHoverRadius: 0,
-                        borderWidth: 2,
-                        tension: 0.25,
-                        opacity: 0.7
-                    },
-                    {
-                        label: "eX",
-                        data: exVals,
-                        borderColor: "#9333ea",
-                        backgroundColor: "#9333ea",
-                        pointBackgroundColor: "#9333ea",
-                        pointBorderColor: "#9333ea",
-                        pointRadius: 0,
-                        pointHoverRadius: 0,
-                        borderWidth: 2,
-                        tension: 0.25,
-                        opacity: 0.7
+                        borderWidth: 1.5,
+                        borderDash: [4, 3],
+                        tension: 0.22,
+                        order: 3
                     }
                 ]
             },
@@ -343,32 +370,65 @@ const teamChartScript = teamSeason ? `
                             beforeBody: (items) => {
                                 const i = items[0].dataIndex;
                                 const m = chartData[i];
-                                return [
+                                const lines = [
                                     (m.homeAway === "H" ? "vs " : "@ ") + (m.opponentName || m.opponent),
                                     "Score: " + m.score + " (" + m.result + ")"
                                 ];
-                            }
-                        }
+
+                                if (typeof m.rating === "number") lines.push("Rating: " + Math.round(m.rating));
+                                if (typeof m.mx === "number") lines.push("mX: " + Math.round(m.mx));
+                                if (typeof m.ex === "number") {
+                                    const delta = Math.round(m.ex - 50);
+                                    lines.push("eX Δ: " + (delta >= 0 ? "+" : "") + delta);
+                                }
+
+                                return lines;
+                            },
+                            label: () => ""
+                        },
+                        displayColors: false
                     },
                     legend: {
-                        position: "top"
+                        position: "top",
+                        labels: {
+                            boxWidth: 14,
+                            color: "#4b5563",
+                            usePointStyle: false
+                        }
                     }
                 },
                 scales: {
                     y: {
+                        position: "left",
                         min: 0,
                         max: 100,
-                            grid: {
-                                color: "rgba(0,0,0,0.08)"
-                            },
+                        grid: {
+                            color: "rgba(0,0,0,0.06)"
+                        },
                         ticks: {
-                                autoSkip: true,
-                                maxTicksLimit: 12
+                            color: "#6b7280",
+                            maxTicksLimit: 6
                         }
                     },
-                      x: {
+                    yEx: {
+                        position: "right",
+                        min: -50,
+                        max: 50,
                         grid: {
-                        color: "rgba(0,0,0,0.05)"
+                            drawOnChartArea: false
+                        },
+                        ticks: {
+                            color: "#9ca3af",
+                            callback: (v) => v > 0 ? "+" + v : v,
+                            maxTicksLimit: 5
+                        }
+                    },
+                    x: {
+                        grid: {
+                            color: "rgba(0,0,0,0.04)"
+                        },
+                        ticks: {
+                            color: "#6b7280"
                         }
                     }
                 }

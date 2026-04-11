@@ -139,40 +139,6 @@ function slugTeamName(name) {
     .replace(/(^-|-$)/g, "");
 }
 
-// function parseMatchweekNumber(round) {
-//   if (!round) return null;
-//   const m = String(round).match(/(\d+)\s*$/);
-//   return m ? Number(m[1]) : null;
-// }
-
-function getCurrentRound(fixtures) {
-  const rounds = fixtures
-    .map((fx) => parseMatchweekNumber(fx?.league?.round))
-    .filter(Number.isFinite)
-    .sort((a, b) => a - b);
-
-  if (!rounds.length) return null;
-
-  const completedStates = new Set(["FT", "AET", "PEN"]);
-
-  for (const round of [...new Set(rounds)]) {
-    const roundFixtures = fixtures.filter(
-      (fx) => parseMatchweekNumber(fx?.league?.round) === round
-    );
-
-    if (!roundFixtures.length) continue;
-
-    const hasIncomplete = roundFixtures.some((fx) => {
-      const s = String(fx?.fixture?.status?.short ?? "").toUpperCase();
-      return !completedStates.has(s);
-    });
-
-    if (hasIncomplete) return round;
-  }
-
-  return rounds[rounds.length - 1];
-}
-
 function minuteLabel(time) {
   const base = time?.elapsed ?? 0;
   const extra = time?.extra;
@@ -456,17 +422,11 @@ async function main() {
   const { byRound: existingMatchweeks, byFixtureId: existingMatchesByFixtureId } =
     await readExistingMatchweeks();
 
-  // const currentRound = getCurrentRound(fixtures);
-  // const previousRound = currentRound && currentRound > 1 ? currentRound - 1 : currentRound;
-  // const forcedRounds = new Set([previousRound, currentRound].filter(Number.isFinite));
-
-  // console.log(`Always refresh rounds: ${[...forcedRounds].sort((a, b) => a - b).join(", ")}`);
-
   const forcedRounds = getForcedRefreshRounds(fixtures);
 
-  console.log(
-    `Always refresh rounds: ${[...forcedRounds].sort((a, b) => a - b).join(", ")}`
-  );
+  // console.log(
+  //   `Always refresh rounds: ${[...forcedRounds].sort((a, b) => a - b).join(", ")}`
+  // );
 
   const matchweeks = new Map(existingMatchweeks);
   const touchedRounds = new Set();
