@@ -4,7 +4,7 @@
     "name": "Premier League",
     "country": "England",
     "season": 2025,
-    "updated": "2026-04-10T00:00:00+00:00"
+    "updated": "2026-04-12T00:00:00+00:00"
   },
   "table": [
     {
@@ -12,34 +12,34 @@
       "teamApiId": 42,
       "teamName": "Arsenal",
       "points": 70,
-      "gd": 39,
-      "form": "WWWWD",
+      "gd": 38,
+      "form": "LWWWW",
       "status": "same",
       "description": "Promotion - Champions League (League phase)",
       "all": {
-        "p": 31,
+        "p": 32,
         "w": 21,
         "d": 7,
-        "l": 3,
-        "gf": 61,
-        "ga": 22
+        "l": 4,
+        "gf": 62,
+        "ga": 24
       }
     },
     {
       "rank": 2,
       "teamApiId": 50,
       "teamName": "Manchester City",
-      "points": 61,
-      "gd": 32,
-      "form": "DDWWW",
+      "points": 64,
+      "gd": 35,
+      "form": "WDDWW",
       "status": "same",
       "description": "Promotion - Champions League (League phase)",
       "all": {
-        "p": 30,
-        "w": 18,
+        "p": 31,
+        "w": 19,
         "d": 7,
         "l": 5,
-        "gf": 60,
+        "gf": 63,
         "ga": 28
       }
     },
@@ -65,35 +65,35 @@
       "rank": 4,
       "teamApiId": 66,
       "teamName": "Aston Villa",
-      "points": 54,
+      "points": 55,
       "gd": 5,
-      "form": "WLLLD",
+      "form": "DWLLL",
       "status": "same",
       "description": "Promotion - Champions League (League phase)",
       "all": {
-        "p": 31,
+        "p": 32,
         "w": 16,
-        "d": 6,
+        "d": 7,
         "l": 9,
-        "gf": 42,
-        "ga": 37
+        "gf": 43,
+        "ga": 38
       }
     },
     {
       "rank": 5,
       "teamApiId": 40,
       "teamName": "Liverpool",
-      "points": 49,
-      "gd": 8,
-      "form": "LDLWW",
+      "points": 52,
+      "gd": 10,
+      "form": "WLDLW",
       "status": "same",
       "description": "Promotion - Champions League (League phase)",
       "all": {
-        "p": 31,
-        "w": 14,
+        "p": 32,
+        "w": 15,
         "d": 7,
         "l": 10,
-        "gf": 50,
+        "gf": 52,
         "ga": 42
       }
     },
@@ -102,161 +102,161 @@
       "teamApiId": 49,
       "teamName": "Chelsea",
       "points": 48,
-      "gd": 15,
-      "form": "LLWLD",
+      "gd": 12,
+      "form": "LLLWL",
       "status": "same",
       "description": "Promotion - Europa League (League phase)",
       "all": {
-        "p": 31,
+        "p": 32,
         "w": 13,
         "d": 9,
-        "l": 9,
+        "l": 10,
         "gf": 53,
-        "ga": 38
+        "ga": 41
       }
     },
     {
       "rank": 7,
       "teamApiId": 55,
       "teamName": "Brentford",
-      "points": 46,
+      "points": 47,
       "gd": 4,
-      "form": "DDDWL",
+      "form": "DDDDW",
       "status": "same",
       "description": null,
       "all": {
-        "p": 31,
+        "p": 32,
         "w": 13,
-        "d": 7,
+        "d": 8,
         "l": 11,
-        "gf": 46,
-        "ga": 42
+        "gf": 48,
+        "ga": 44
       }
     },
     {
       "rank": 8,
       "teamApiId": 45,
       "teamName": "Everton",
-      "points": 46,
+      "points": 47,
       "gd": 2,
-      "form": "WLWWL",
+      "form": "DWLWW",
       "status": "same",
       "description": null,
       "all": {
-        "p": 31,
+        "p": 32,
         "w": 13,
-        "d": 7,
+        "d": 8,
         "l": 11,
-        "gf": 37,
-        "ga": 35
-      }
-    },
-    {
-      "rank": 9,
-      "teamApiId": 36,
-      "teamName": "Fulham",
-      "points": 44,
-      "gd": -1,
-      "form": "WDLWW",
-      "status": "same",
-      "description": null,
-      "all": {
-        "p": 31,
-        "w": 13,
-        "d": 5,
-        "l": 13,
-        "gf": 43,
-        "ga": 44
-      }
-    },
-    {
-      "rank": 10,
-      "teamApiId": 51,
-      "teamName": "Brighton",
-      "points": 43,
-      "gd": 4,
-      "form": "WWLWW",
-      "status": "same",
-      "description": null,
-      "all": {
-        "p": 31,
-        "w": 11,
-        "d": 10,
-        "l": 10,
-        "gf": 41,
+        "gf": 39,
         "ga": 37
       }
     },
     {
-      "rank": 11,
+      "rank": 9,
+      "teamApiId": 51,
+      "teamName": "Brighton",
+      "points": 46,
+      "gd": 6,
+      "form": "WWWLW",
+      "status": "same",
+      "description": null,
+      "all": {
+        "p": 32,
+        "w": 12,
+        "d": 10,
+        "l": 10,
+        "gf": 43,
+        "ga": 37
+      }
+    },
+    {
+      "rank": 10,
       "teamApiId": 746,
       "teamName": "Sunderland",
-      "points": 43,
-      "gd": -4,
-      "form": "WLWDL",
+      "points": 46,
+      "gd": -3,
+      "form": "WWLWD",
+      "status": "same",
+      "description": null,
+      "all": {
+        "p": 32,
+        "w": 12,
+        "d": 10,
+        "l": 10,
+        "gf": 33,
+        "ga": 36
+      }
+    },
+    {
+      "rank": 11,
+      "teamApiId": 35,
+      "teamName": "Bournemouth",
+      "points": 45,
+      "gd": -1,
+      "form": "WDDDD",
+      "status": "same",
+      "description": null,
+      "all": {
+        "p": 32,
+        "w": 10,
+        "d": 15,
+        "l": 7,
+        "gf": 48,
+        "ga": 49
+      }
+    },
+    {
+      "rank": 12,
+      "teamApiId": 36,
+      "teamName": "Fulham",
+      "points": 44,
+      "gd": -3,
+      "form": "LWDLW",
+      "status": "same",
+      "description": null,
+      "all": {
+        "p": 32,
+        "w": 13,
+        "d": 5,
+        "l": 14,
+        "gf": 43,
+        "ga": 46
+      }
+    },
+    {
+      "rank": 13,
+      "teamApiId": 52,
+      "teamName": "Crystal Palace",
+      "points": 42,
+      "gd": -1,
+      "form": "WDWLW",
       "status": "same",
       "description": null,
       "all": {
         "p": 31,
         "w": 11,
-        "d": 10,
-        "l": 10,
-        "gf": 32,
+        "d": 9,
+        "l": 11,
+        "gf": 35,
         "ga": 36
       }
     },
     {
-      "rank": 12,
+      "rank": 14,
       "teamApiId": 34,
       "teamName": "Newcastle",
       "points": 42,
-      "gd": -1,
-      "form": "LWWLL",
+      "gd": -2,
+      "form": "LLWWL",
       "status": "same",
       "description": null,
       "all": {
-        "p": 31,
+        "p": 32,
         "w": 12,
         "d": 6,
-        "l": 13,
-        "gf": 44,
-        "ga": 45
-      }
-    },
-    {
-      "rank": 13,
-      "teamApiId": 35,
-      "teamName": "Bournemouth",
-      "points": 42,
-      "gd": -2,
-      "form": "DDDDD",
-      "status": "same",
-      "description": null,
-      "all": {
-        "p": 31,
-        "w": 9,
-        "d": 15,
-        "l": 7,
-        "gf": 46,
-        "ga": 48
-      }
-    },
-    {
-      "rank": 14,
-      "teamApiId": 52,
-      "teamName": "Crystal Palace",
-      "points": 39,
-      "gd": -2,
-      "form": "DWLWL",
-      "status": "same",
-      "description": null,
-      "all": {
-        "p": 30,
-        "w": 10,
-        "d": 9,
-        "l": 11,
-        "gf": 33,
-        "ga": 35
+        "l": 14,
+        "gf": 45,
+        "ga": 47
       }
     },
     {
@@ -281,18 +281,18 @@
       "rank": 16,
       "teamApiId": 65,
       "teamName": "Nottingham Forest",
-      "points": 32,
+      "points": 33,
       "gd": -12,
-      "form": "WDDLL",
+      "form": "DWDDL",
       "status": "same",
       "description": null,
       "all": {
-        "p": 31,
+        "p": 32,
         "w": 8,
-        "d": 8,
+        "d": 9,
         "l": 15,
-        "gf": 31,
-        "ga": 43
+        "gf": 32,
+        "ga": 44
       }
     },
     {
@@ -318,17 +318,17 @@
       "teamApiId": 47,
       "teamName": "Tottenham",
       "points": 30,
-      "gd": -10,
-      "form": "LDLLL",
+      "gd": -11,
+      "form": "LLDLL",
       "status": "same",
       "description": "Relegation - Championship",
       "all": {
-        "p": 31,
+        "p": 32,
         "w": 7,
         "d": 9,
-        "l": 15,
+        "l": 16,
         "gf": 40,
-        "ga": 50
+        "ga": 51
       }
     },
     {
@@ -336,17 +336,17 @@
       "teamApiId": 44,
       "teamName": "Burnley",
       "points": 20,
-      "gd": -28,
-      "form": "LDLLD",
+      "gd": -30,
+      "form": "LLDLL",
       "status": "same",
       "description": "Relegation - Championship",
       "all": {
-        "p": 31,
+        "p": 32,
         "w": 4,
         "d": 8,
-        "l": 19,
+        "l": 20,
         "gf": 33,
-        "ga": 61
+        "ga": 63
       }
     },
     {

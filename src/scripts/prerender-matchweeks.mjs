@@ -186,8 +186,8 @@ function renderFormSequence(formStr = "") {
 
     return arr.map((r) => {
         const cls = r === "W" ? "form-W" :
-                    r === "D" ? "form-D" :
-                    r === "L" ? "form-L" : "";
+            r === "D" ? "form-D" :
+                r === "L" ? "form-L" : "";
 
         return `<span class="form-char ${cls}">${r}</span>`;
     }).join("");
@@ -244,22 +244,36 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
 
     const chartId = `team-trend-chart-${slug}`;
 
-const teamChartHtml = teamSeason ? `
+    const teamChartHtml = teamSeason ? `
         <section class="team-chart-section">
             <h2 class="text-center">Season Trends</h2>
-            <div class="team-chart-wrap">
-                <canvas id="${chartId}" aria-label="${escapeAttr(team.name)} season trends chart"></canvas>
+
+            <div class="team-chart-block">
+                <h3 class="team-chart-title text-center">Rating</h3>
+                <div class="team-chart-wrap">
+                    <canvas id="${chartId}-rating" aria-label="${escapeAttr(team.name)} rating chart"></canvas>
+                </div>
+            </div>
+
+            <div class="team-chart-block">
+                <h3 class="team-chart-title text-center">Performance Breakdown</h3>
+                <div class="team-chart-wrap team-chart-wrap-compact">
+                    <canvas id="${chartId}-perf" aria-label="${escapeAttr(team.name)} performance breakdown chart"></canvas>
+                </div>
             </div>
         </section>
     ` : "";
 
-const teamChartScript = teamSeason ? `
+    const teamChartScript = teamSeason ? `
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
     (() => {
         const chartData = ${JSON.stringify(teamSeason.matches || [])};
-        const canvas = document.getElementById(${JSON.stringify(chartId)});
-        if (!canvas || !Array.isArray(chartData) || !chartData.length) return;
+        if (!Array.isArray(chartData) || !chartData.length) return;
+
+        const ratingCanvas = document.getElementById(${JSON.stringify(chartId + "-rating")});
+        const perfCanvas = document.getElementById(${JSON.stringify(chartId + "-perf")});
+        if (!ratingCanvas || !perfCanvas) return;
 
         const labels = chartData.map(m => m.mw);
         const ratingVals = chartData.map(m => m.rating ?? null);
@@ -268,7 +282,30 @@ const teamChartScript = teamSeason ? `
             typeof m.ex === "number" ? m.ex - 50 : null
         ));
 
+        function rollingAvg(arr, window = 5) {
+            return arr.map((_, i) => {
+                const start = Math.max(0, i - window + 1);
+                const slice = arr.slice(start, i + 1).filter(v => typeof v === "number");
+                if (!slice.length) return null;
+                return slice.reduce((a, b) => a + b, 0) / slice.length;
+            });
+        }
+
         const avgRating = ${JSON.stringify(teamSeason.summary.avgRating ?? 0)};
+
+        function rollingAvg(arr, windowSize = 5) {
+            return arr.map((_, i) => {
+                const start = Math.max(0, i - windowSize + 1);
+                const slice = arr
+                    .slice(start, i + 1)
+                    .filter(v => typeof v === "number" && Number.isFinite(v));
+
+                if (!slice.length) return null;
+                return slice.reduce((sum, v) => sum + v, 0) / slice.length;
+            });
+        }
+
+        const rollingRatingVals = rollingAvg(ratingVals, 5);
 
         const resultColors = chartData.map(m => {
             if (m.result === "W") return "#16a34a";
@@ -279,40 +316,47 @@ const teamChartScript = teamSeason ? `
         const exBarColors = exDeltaVals.map(v => {
             if (v == null) return "rgba(0,0,0,0)";
             return v >= 0
-                ? "rgba(34, 197, 94, 0.24)"
-                : "rgba(220, 38, 38, 0.14)";
+                ? "rgba(34, 197, 94, 0.48)"
+                : "rgba(220, 38, 38, 0.42)";
         });
 
-        const exBorderColors = exDeltaVals.map(v => {
-            if (v == null) return "rgba(0,0,0,0)";
-            return v >= 0
-                ? "rgb(46 139 87)"
-                : "rgb(192 57 43)";
-        });
+        const sharedTooltip = {
+            callbacks: {
+                title: (items) => {
+                    const i = items[0].dataIndex;
+                    const m = chartData[i];
+                    return "MW " + m.mw + " • " + (m.homeAway === "H" ? "Home" : "Away");
+                },
+                beforeBody: (items) => {
+                    const i = items[0].dataIndex;
+                    const m = chartData[i];
+                    const lines = [
+                        (m.homeAway === "H" ? "vs " : "@ ") + (m.opponentName || m.opponent),
+                        "Score: " + m.score + " (" + m.result + ")"
+                    ];
 
-        new Chart(canvas, {
-            type: "bar",
+                    if (typeof m.rating === "number") lines.push("Rating: " + Math.round(m.rating));
+                    if (typeof m.mx === "number") lines.push("mX: " + Math.round(m.mx));
+                    if (typeof m.ex === "number") {
+                        const delta = Math.round(m.ex - 50);
+                        lines.push("eX Δ: " + (delta >= 0 ? "+" : "") + delta);
+                    }
+
+                    return lines;
+                },
+                label: () => ""
+            },
+            displayColors: false
+        };
+
+        new Chart(ratingCanvas, {
+            type: "line",
             data: {
                 labels,
                 datasets: [
                     {
-                        type: "bar",
-                        label: "eX Δ",
-                        data: exDeltaVals,
-                        yAxisID: "yEx",
-                        backgroundColor: exBarColors,
-                        borderColor: exBorderColors,
-                        borderWidth: 0,
-                        borderRadius: 1,
-                        barPercentage: 0.72,
-                        categoryPercentage: 0.82,
-                        order: 4
-                    },
-                    {
-                        type: "line",
                         label: "Rating",
                         data: ratingVals,
-                        yAxisID: "y",
                         borderColor: "#3b0a45",
                         backgroundColor: resultColors,
                         pointBackgroundColor: resultColors,
@@ -325,29 +369,24 @@ const teamChartScript = teamSeason ? `
                         order: 1
                     },
                     {
-                        type: "line",
-                        label: "Avg Rating",
+                        label: "Form (Last 5)",
+                        data: rollingRatingVals,
+                        borderColor: "rgba(59, 10, 69, 0.45)",
+                        pointRadius: 0,
+                        pointHoverRadius: 0,
+                        borderWidth: 2.5,
+                        tension: 0.28,
+                        order: 2
+                    },
+                    {
+                        label: "Season Avg",
                         data: Array(labels.length).fill(avgRating),
-                        yAxisID: "y",
-                        borderColor: "rgba(79, 92, 110, 0.65)",
+                        borderColor: "rgba(79, 92, 110, 0.35)",
                         borderDash: [6, 6],
                         pointRadius: 0,
                         pointHoverRadius: 0,
                         borderWidth: 2,
                         tension: 0,
-                        order: 2
-                    },
-                    {
-                        type: "line",
-                        label: "mX",
-                        data: mxVals,
-                        yAxisID: "y",
-                        borderColor: "rgba(107, 114, 128, 0.5)",
-                        pointRadius: 0,
-                        pointHoverRadius: 0,
-                        borderWidth: 1.5,
-                        borderDash: [4, 3],
-                        tension: 0.22,
                         order: 3
                     }
                 ]
@@ -360,34 +399,7 @@ const teamChartScript = teamSeason ? `
                     intersect: false
                 },
                 plugins: {
-                    tooltip: {
-                        callbacks: {
-                            title: (items) => {
-                                const i = items[0].dataIndex;
-                                const m = chartData[i];
-                                return "MW " + m.mw + " • " + (m.homeAway === "H" ? "Home" : "Away");
-                            },
-                            beforeBody: (items) => {
-                                const i = items[0].dataIndex;
-                                const m = chartData[i];
-                                const lines = [
-                                    (m.homeAway === "H" ? "vs " : "@ ") + (m.opponentName || m.opponent),
-                                    "Score: " + m.score + " (" + m.result + ")"
-                                ];
-
-                                if (typeof m.rating === "number") lines.push("Rating: " + Math.round(m.rating));
-                                if (typeof m.mx === "number") lines.push("mX: " + Math.round(m.mx));
-                                if (typeof m.ex === "number") {
-                                    const delta = Math.round(m.ex - 50);
-                                    lines.push("eX Δ: " + (delta >= 0 ? "+" : "") + delta);
-                                }
-
-                                return lines;
-                            },
-                            label: () => ""
-                        },
-                        displayColors: false
-                    },
+                    tooltip: sharedTooltip,
                     legend: {
                         position: "top",
                         labels: {
@@ -403,11 +415,86 @@ const teamChartScript = teamSeason ? `
                         min: 0,
                         max: 100,
                         grid: {
-                            color: "rgba(0,0,0,0.06)"
+                            color: "rgba(0,0,0,0.05)"
                         },
                         ticks: {
                             color: "#6b7280",
                             maxTicksLimit: 6
+                        }
+                    },
+                    x: {
+                        grid: {
+                            color: "rgba(0,0,0,0.03)"
+                        },
+                        ticks: {
+                            color: "#6b7280"
+                        }
+                    }
+                }
+            }
+        });
+
+        new Chart(perfCanvas, {
+            type: "bar",
+            data: {
+                labels,
+                datasets: [
+                    {
+                        type: "bar",
+                        label: "eX Δ",
+                        data: exDeltaVals,
+                        yAxisID: "yEx",
+                        backgroundColor: exBarColors,
+                        borderWidth: 0,
+                        borderRadius: 1,
+                        barPercentage: 0.72,
+                        categoryPercentage: 0.82,
+                        order: 2
+                    },
+                    {
+                        type: "line",
+                        label: "mX",
+                        data: mxVals,
+                        yAxisID: "y",
+                        borderColor: "rgba(55, 65, 81, 0.65)",
+                        pointRadius: 0,
+                        pointHoverRadius: 0,
+                        borderWidth: 2,
+                        borderDash: [],
+                        tension: 0.22,
+                        order: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: {
+                    mode: "index",
+                    intersect: false
+                },
+                plugins: {
+                    tooltip: sharedTooltip,
+                    legend: {
+                        position: "top",
+                        labels: {
+                            boxWidth: 14,
+                            color: "#4b5563",
+                            usePointStyle: false
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        position: "left",
+                        min: 0,
+                        max: 100,
+                        grid: {
+                            color: "rgba(0,0,0,0.04)"
+                        },
+                        ticks: {
+                            color: "#6b7280",
+                            maxTicksLimit: 5
                         }
                     },
                     yEx: {
@@ -425,7 +512,7 @@ const teamChartScript = teamSeason ? `
                     },
                     x: {
                         grid: {
-                            color: "rgba(0,0,0,0.04)"
+                            color: "rgba(0,0,0,0.03)"
                         },
                         ticks: {
                             color: "#6b7280"
