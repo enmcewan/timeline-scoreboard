@@ -261,6 +261,7 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
                     <canvas id="${chartId}-perf" aria-label="${escapeAttr(team.name)} performance breakdown chart"></canvas>
                 </div>
             </div>
+            <div class="chart-hint">Click a match to view details</div>
         </section>
     ` : "";
 
@@ -274,6 +275,17 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
         const ratingCanvas = document.getElementById(${JSON.stringify(chartId + "-rating")});
         const perfCanvas = document.getElementById(${JSON.stringify(chartId + "-perf")});
         if (!ratingCanvas || !perfCanvas) return;
+
+        console.log("ratingCanvas:", ratingCanvas);
+        console.log("perfCanvas:", perfCanvas);
+
+        ratingCanvas.addEventListener("click", () => {
+            console.log("RAW canvas click: rating");
+        });
+
+        perfCanvas.addEventListener("click", () => {
+            console.log("RAW canvas click: perf");
+        });
 
         const labels = chartData.map(m => m.mw);
         const ratingVals = chartData.map(m => m.rating ?? null);
@@ -349,6 +361,20 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
             displayColors: false
         };
 
+        const seasonPath = ${JSON.stringify(seasonPath)};
+
+        function openMatchFromChart(match) {
+            console.log("chart click match:", match);
+
+            if (!match?.mw || !match?.fixtureId) {
+                console.warn("Missing mw or fixtureId on chart match:", match);
+                return;
+            }
+
+            const url = "/epl/" + seasonPath + "/matchweek/" + match.mw + "/#fixture-" + match.fixtureId;
+            window.location.assign(url);
+        }
+
         new Chart(ratingCanvas, {
             type: "line",
             data: {
@@ -395,8 +421,17 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
                 responsive: true,
                 maintainAspectRatio: false,
                 interaction: {
-                    mode: "index",
-                    intersect: false
+                    mode: "nearest",
+                    intersect: true
+                },
+                onClick: (event, elements) => {
+                    if (!elements.length) return;
+                    const index = elements[0].index;
+                    openMatchFromChart(chartData[index]);
+                },
+
+                onHover: (event, elements, chart) => {
+                    chart.canvas.style.cursor = elements.length ? "pointer" : "default";
                 },
                 plugins: {
                     tooltip: sharedTooltip,
@@ -472,6 +507,15 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
                 interaction: {
                     mode: "index",
                     intersect: false
+                },
+                onClick: (event, elements) => {
+                    if (!elements.length) return;
+                    const index = elements[0].index;
+                    openMatchFromChart(chartData[index]);
+                },
+
+                onHover: (event, elements, chart) => {
+                    chart.canvas.style.cursor = elements.length ? "pointer" : "default";
                 },
                 plugins: {
                     tooltip: sharedTooltip,
@@ -1104,6 +1148,7 @@ function buildTeamSeason({ roundsData, teamsBySlug }) {
 
             out[homeSlug].matches.push({
                 mw,
+                fixtureId: match.id, 
                 kickoff: match.kickoff,
                 opponent: awaySlug,
                 opponentName: teamsBySlug[awaySlug]?.name ?? awaySlug,
@@ -1117,6 +1162,7 @@ function buildTeamSeason({ roundsData, teamsBySlug }) {
 
             out[awaySlug].matches.push({
                 mw,
+                fixtureId: match.id, 
                 kickoff: match.kickoff,
                 opponent: homeSlug,
                 opponentName: teamsBySlug[homeSlug]?.name ?? homeSlug,
