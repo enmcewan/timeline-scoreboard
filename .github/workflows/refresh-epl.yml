@@ -3,7 +3,11 @@ permissions:
   
 on:
   schedule:
-    - cron: "*/12 * * * *"   # every 15 minutes
+    - cron: "7 * * * *"
+    - cron: "19 * * * *"
+    - cron: "31 * * * *"
+    - cron: "43 * * * *"
+    - cron: "55 * * * *"
   workflow_dispatch:
     inputs:
       force_refresh:
