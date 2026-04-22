@@ -462,7 +462,9 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
                             color: "rgba(0,0,0,0.03)"
                         },
                         ticks: {
-                            color: "#6b7280"
+                            color: "#6b7280",
+                            maxRotation: 0,
+                            autoSkip: false
                         }
                     }
                 }
@@ -559,7 +561,9 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
                             color: "rgba(0,0,0,0.03)"
                         },
                         ticks: {
-                            color: "#6b7280"
+                            color: "#6b7280",
+                            maxRotation: 0,
+                            autoSkip: false
                         }
                     }
                 }
@@ -778,12 +782,19 @@ function teamToJsonLd(team) {
 }
 
 function statusToEventStatus(state) {
+
     const st = String(state || "").toUpperCase();
-    if (st === "FT") return "https://schema.org/EventCompleted";
-    if (st === "NS") return "https://schema.org/EventScheduled";
-    if (st === "HT") return "https://schema.org/EventInProgress";
-    if (st.includes("'")) return "https://schema.org/EventInProgress";
-    return undefined; // omit for weird/unknown states
+    // if (st === "FT") return "https://schema.org/EventCompleted";
+    // if (st === "NS") return "https://schema.org/EventScheduled";
+    // if (st === "HT") return "https://schema.org/EventInProgress";
+    // if (st.includes("'")) return "https://schema.org/EventInProgress";
+    // return undefined; // omit for weird/unknown states
+
+    // Fix for valid schema.org EventStatus values based on match status
+
+    if (st === "PST") return "https://schema.org/EventPostponed";
+
+    return "https://schema.org/EventScheduled";
 }
 
 function matchToSportsEventLd(match, teamsById, pageUrl) {
@@ -794,9 +805,18 @@ function matchToSportsEventLd(match, teamsById, pageUrl) {
     const homeName = home?.name ?? String(match.homeTeamId);
     const awayName = away?.name ?? String(match.awayTeamId);
 
+    let eventName = ""
+
+    // Optional: include final score only when FT
+    if (String(match.status?.state || "").toUpperCase() === "FT") {
+        eventName = `${homeName} ${match.score?.home}–${match.score?.away} ${awayName}`;
+    } else {
+        eventName = `${homeName} vs ${awayName}`;
+    }
+
     const evt = {
         "@type": "SportsEvent",
-        name: `${homeName} vs ${awayName}`,
+        name: `${eventName}`,
         startDate: match.kickoff,
         sport: "https://schema.org/Soccer",
         url: `${pageUrl}#fixture-${match.id}`,
@@ -812,12 +832,6 @@ function matchToSportsEventLd(match, teamsById, pageUrl) {
 
     const es = statusToEventStatus(match.status?.state);
     if (es) evt.eventStatus = es;
-
-    // Optional: include final score only when FT
-    if (String(match.status?.state || "").toUpperCase() === "FT") {
-        evt.homeScore = match.score?.home;
-        evt.awayScore = match.score?.away;
-    }
 
     return evt;
 }

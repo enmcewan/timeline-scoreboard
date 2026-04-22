@@ -4,7 +4,7 @@
     "name": "Premier League",
     "country": "England",
     "season": 2025,
-    "updated": "2026-04-12T00:00:00+00:00"
+    "updated": "2026-04-19T00:00:00+00:00"
   },
   "table": [
     {
@@ -47,54 +47,54 @@
       "rank": 3,
       "teamApiId": 33,
       "teamName": "Manchester United",
-      "points": 55,
+      "points": 58,
       "gd": 13,
-      "form": "DWLWW",
+      "form": "WLDWL",
       "status": "same",
       "description": "Promotion - Champions League (League phase)",
       "all": {
-        "p": 31,
-        "w": 15,
+        "p": 33,
+        "w": 16,
         "d": 10,
-        "l": 6,
-        "gf": 56,
-        "ga": 43
+        "l": 7,
+        "gf": 58,
+        "ga": 45
       }
     },
     {
       "rank": 4,
       "teamApiId": 66,
       "teamName": "Aston Villa",
-      "points": 55,
-      "gd": 5,
-      "form": "DWLLL",
+      "points": 58,
+      "gd": 6,
+      "form": "WDWLL",
       "status": "same",
       "description": "Promotion - Champions League (League phase)",
       "all": {
-        "p": 32,
-        "w": 16,
+        "p": 33,
+        "w": 17,
         "d": 7,
         "l": 9,
-        "gf": 43,
-        "ga": 38
+        "gf": 47,
+        "ga": 41
       }
     },
     {
       "rank": 5,
       "teamApiId": 40,
       "teamName": "Liverpool",
-      "points": 52,
-      "gd": 10,
-      "form": "WLDLW",
+      "points": 55,
+      "gd": 11,
+      "form": "WWLDL",
       "status": "same",
       "description": "Promotion - Champions League (League phase)",
       "all": {
-        "p": 32,
-        "w": 15,
+        "p": 33,
+        "w": 16,
         "d": 7,
         "l": 10,
-        "gf": 52,
-        "ga": 42
+        "gf": 54,
+        "ga": 43
       }
     },
     {
@@ -102,32 +102,32 @@
       "teamApiId": 49,
       "teamName": "Chelsea",
       "points": 48,
-      "gd": 12,
-      "form": "LLLWL",
+      "gd": 11,
+      "form": "LLLLW",
       "status": "same",
       "description": "Promotion - Europa League (League phase)",
       "all": {
-        "p": 32,
+        "p": 33,
         "w": 13,
         "d": 9,
-        "l": 10,
+        "l": 11,
         "gf": 53,
-        "ga": 41
+        "ga": 42
       }
     },
     {
       "rank": 7,
       "teamApiId": 55,
       "teamName": "Brentford",
-      "points": 47,
+      "points": 48,
       "gd": 4,
-      "form": "DDDDW",
+      "form": "DDDDD",
       "status": "same",
       "description": null,
       "all": {
-        "p": 32,
+        "p": 33,
         "w": 13,
-        "d": 8,
+        "d": 9,
         "l": 11,
         "gf": 48,
         "ga": 44
@@ -135,89 +135,89 @@
     },
     {
       "rank": 8,
-      "teamApiId": 45,
-      "teamName": "Everton",
-      "points": 47,
-      "gd": 2,
-      "form": "DWLWW",
+      "teamApiId": 35,
+      "teamName": "Bournemouth",
+      "points": 48,
+      "gd": 0,
+      "form": "WWDDD",
       "status": "same",
       "description": null,
       "all": {
-        "p": 32,
-        "w": 13,
-        "d": 8,
-        "l": 11,
-        "gf": 39,
-        "ga": 37
+        "p": 33,
+        "w": 11,
+        "d": 15,
+        "l": 7,
+        "gf": 50,
+        "ga": 50
       }
     },
     {
       "rank": 9,
       "teamApiId": 51,
       "teamName": "Brighton",
-      "points": 46,
+      "points": 47,
       "gd": 6,
-      "form": "WWWLW",
+      "form": "DWWWL",
       "status": "same",
       "description": null,
       "all": {
-        "p": 32,
+        "p": 33,
         "w": 12,
-        "d": 10,
+        "d": 11,
         "l": 10,
-        "gf": 43,
-        "ga": 37
+        "gf": 45,
+        "ga": 39
       }
     },
     {
       "rank": 10,
-      "teamApiId": 746,
-      "teamName": "Sunderland",
-      "points": 46,
-      "gd": -3,
-      "form": "WWLWD",
+      "teamApiId": 45,
+      "teamName": "Everton",
+      "points": 47,
+      "gd": 1,
+      "form": "LDWLW",
       "status": "same",
       "description": null,
       "all": {
-        "p": 32,
-        "w": 12,
-        "d": 10,
-        "l": 10,
-        "gf": 33,
-        "ga": 36
+        "p": 33,
+        "w": 13,
+        "d": 8,
+        "l": 12,
+        "gf": 40,
+        "ga": 39
       }
     },
     {
       "rank": 11,
-      "teamApiId": 35,
-      "teamName": "Bournemouth",
-      "points": 45,
-      "gd": -1,
-      "form": "WDDDD",
+      "teamApiId": 746,
+      "teamName": "Sunderland",
+      "points": 46,
+      "gd": -4,
+      "form": "LWWLW",
       "status": "same",
       "description": null,
       "all": {
-        "p": 32,
-        "w": 10,
-        "d": 15,
-        "l": 7,
-        "gf": 48,
-        "ga": 49
+        "p": 33,
+        "w": 12,
+        "d": 10,
+        "l": 11,
+        "gf": 36,
+        "ga": 40
       }
     },
     {
       "rank": 12,
       "teamApiId": 36,
       "teamName": "Fulham",
-      "points": 44,
+      "points": 45,
       "gd": -3,
-      "form": "LWDLW",
+      "form": "DLWDL",
       "status": "same",
       "description": null,
       "all": {
-        "p": 32,
+        "p": 33,
         "w": 13,
-        "d": 5,
+        "d": 6,
         "l": 14,
         "gf": 43,
         "ga": 46
@@ -246,53 +246,53 @@
       "teamApiId": 34,
       "teamName": "Newcastle",
       "points": 42,
-      "gd": -2,
-      "form": "LLWWL",
+      "gd": -3,
+      "form": "LLLWW",
       "status": "same",
       "description": null,
       "all": {
-        "p": 32,
+        "p": 33,
         "w": 12,
         "d": 6,
-        "l": 14,
-        "gf": 45,
-        "ga": 47
+        "l": 15,
+        "gf": 46,
+        "ga": 49
       }
     },
     {
       "rank": 15,
       "teamApiId": 63,
       "teamName": "Leeds",
-      "points": 33,
-      "gd": -11,
-      "form": "DDLLD",
+      "points": 39,
+      "gd": -7,
+      "form": "WWDDL",
       "status": "same",
       "description": null,
       "all": {
-        "p": 31,
-        "w": 7,
+        "p": 33,
+        "w": 9,
         "d": 12,
         "l": 12,
-        "gf": 37,
-        "ga": 48
+        "gf": 42,
+        "ga": 49
       }
     },
     {
       "rank": 16,
       "teamApiId": 65,
       "teamName": "Nottingham Forest",
-      "points": 33,
-      "gd": -12,
-      "form": "DWDDL",
+      "points": 36,
+      "gd": -9,
+      "form": "WDWDD",
       "status": "same",
       "description": null,
       "all": {
-        "p": 32,
-        "w": 8,
+        "p": 33,
+        "w": 9,
         "d": 9,
         "l": 15,
-        "gf": 32,
-        "ga": 44
+        "gf": 36,
+        "ga": 45
       }
     },
     {
@@ -317,18 +317,18 @@
       "rank": 18,
       "teamApiId": 47,
       "teamName": "Tottenham",
-      "points": 30,
+      "points": 31,
       "gd": -11,
-      "form": "LLDLL",
+      "form": "DLLDL",
       "status": "same",
       "description": "Relegation - Championship",
       "all": {
-        "p": 32,
+        "p": 33,
         "w": 7,
-        "d": 9,
+        "d": 10,
         "l": 16,
-        "gf": 40,
-        "ga": 51
+        "gf": 42,
+        "ga": 53
       }
     },
     {
@@ -336,17 +336,17 @@
       "teamApiId": 44,
       "teamName": "Burnley",
       "points": 20,
-      "gd": -30,
-      "form": "LLDLL",
+      "gd": -33,
+      "form": "LLLDL",
       "status": "same",
       "description": "Relegation - Championship",
       "all": {
-        "p": 32,
+        "p": 33,
         "w": 4,
         "d": 8,
-        "l": 20,
-        "gf": 33,
-        "ga": 63
+        "l": 21,
+        "gf": 34,
+        "ga": 67
       }
     },
     {
@@ -354,17 +354,17 @@
       "teamApiId": 39,
       "teamName": "Wolves",
       "points": 17,
-      "gd": -34,
-      "form": "LDWWL",
+      "gd": -37,
+      "form": "LLDWW",
       "status": "same",
       "description": "Relegation - Championship",
       "all": {
-        "p": 32,
+        "p": 33,
         "w": 3,
         "d": 8,
-        "l": 21,
+        "l": 22,
         "gf": 24,
-        "ga": 58
+        "ga": 61
       }
     }
   ]

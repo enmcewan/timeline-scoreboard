@@ -5,7 +5,7 @@
     "league": 39
   },
   "errors": [],
-  "results": 4827,
+  "results": 4979,
   "paging": {
     "current": 1,
     "total": 1
@@ -108400,7 +108400,7 @@
       },
       "player": {
         "id": 368030,
-        "name": "Eli Junior Kroupi"
+        "name": "E. J. Kroupi"
       },
       "assist": {
         "id": null,
@@ -108423,7 +108423,7 @@
       },
       "player": {
         "id": 18979,
-        "name": "Viktor Gyökeres"
+        "name": "V. Gyokeres"
       },
       "assist": {
         "id": null,
@@ -108445,12 +108445,12 @@
         "logo": "https://media.api-sports.io/football/teams/42.png"
       },
       "player": {
-        "id": 127769,
-        "name": "Gabriel Martinelli"
+        "id": 136723,
+        "name": "N. Madueke"
       },
       "assist": {
-        "id": 1946,
-        "name": "Leandro Trossard"
+        "id": 442044,
+        "name": "M. Dowman"
       },
       "type": "subst",
       "detail": "Substitution 1",
@@ -108468,12 +108468,12 @@
         "logo": "https://media.api-sports.io/football/teams/42.png"
       },
       "player": {
-        "id": 136723,
-        "name": "Noni Madueke"
+        "id": 127769,
+        "name": "G. Martinelli"
       },
       "assist": {
-        "id": 442044,
-        "name": "Max Dowman"
+        "id": 1946,
+        "name": "L. Trossard"
       },
       "type": "subst",
       "detail": "Substitution 2",
@@ -108492,14 +108492,37 @@
       },
       "player": {
         "id": 978,
-        "name": "Kai Havertz"
+        "name": "K. Havertz"
       },
       "assist": {
         "id": 19586,
-        "name": "Eberechi Eze"
+        "name": "E. Eze"
       },
       "type": "subst",
       "detail": "Substitution 3",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379279",
+      "time": {
+        "elapsed": 70,
+        "extra": null
+      },
+      "team": {
+        "id": 35,
+        "name": "Bournemouth",
+        "logo": "https://media.api-sports.io/football/teams/35.png"
+      },
+      "player": {
+        "id": 1125,
+        "name": "R. Christie"
+      },
+      "assist": {
+        "id": 1150,
+        "name": "T. Adams"
+      },
+      "type": "subst",
+      "detail": "Substitution 1",
       "comments": null
     },
     {
@@ -108519,30 +108542,7 @@
       },
       "assist": {
         "id": 18870,
-        "name": "David Brooks"
-      },
-      "type": "subst",
-      "detail": "Substitution 1",
-      "comments": null
-    },
-    {
-      "fixtureId": "1379279",
-      "time": {
-        "elapsed": 70,
-        "extra": null
-      },
-      "team": {
-        "id": 35,
-        "name": "Bournemouth",
-        "logo": "https://media.api-sports.io/football/teams/35.png"
-      },
-      "player": {
-        "id": 1125,
-        "name": "Ryan Christie"
-      },
-      "assist": {
-        "id": 1150,
-        "name": "Tyler Adams"
+        "name": "D. Brooks"
       },
       "type": "subst",
       "detail": "Substitution 2",
@@ -108561,7 +108561,7 @@
       },
       "player": {
         "id": 304853,
-        "name": "Alex Scott"
+        "name": "A. Scott"
       },
       "assist": {
         "id": 152856,
@@ -108584,7 +108584,7 @@
       },
       "player": {
         "id": 47315,
-        "name": "Martín Zubimendi"
+        "name": "M. Zubimendi"
       },
       "assist": {
         "id": 643,
@@ -108607,11 +108607,11 @@
       },
       "player": {
         "id": 19959,
-        "name": "Ben White"
+        "name": "B. White"
       },
       "assist": {
         "id": 333682,
-        "name": "Cristhian Mosquera"
+        "name": "C. Mosquera"
       },
       "type": "subst",
       "detail": "Substitution 5",
@@ -108699,11 +108699,11 @@
       },
       "player": {
         "id": 368030,
-        "name": "Eli Junior Kroupi"
+        "name": "E. J. Kroupi"
       },
       "assist": {
         "id": 361485,
-        "name": "Alex Tóth"
+        "name": "A. Toth"
       },
       "type": "subst",
       "detail": "Substitution 3",
@@ -108745,11 +108745,11 @@
       },
       "player": {
         "id": 330437,
-        "name": "Álex Jiménez"
+        "name": "A. Jimenez"
       },
       "assist": {
         "id": 18869,
-        "name": "Adam Smith"
+        "name": "A. Smith"
       },
       "type": "subst",
       "detail": "Substitution 4",
@@ -108772,7 +108772,7 @@
       },
       "assist": {
         "id": 47499,
-        "name": "Enes Ünal"
+        "name": "E. Unal"
       },
       "type": "subst",
       "detail": "Substitution 5",
@@ -109711,7 +109711,7 @@
       },
       "player": {
         "id": 163189,
-        "name": "M. Thiaw"
+        "name": "Malick Thiaw"
       },
       "assist": {
         "id": null,
@@ -109719,7 +109719,7 @@
       },
       "type": "Card",
       "detail": "Yellow Card",
-      "comments": "Holding"
+      "comments": "Foul"
     },
     {
       "fixtureId": "1379283",
@@ -109765,7 +109765,7 @@
       },
       "type": "Card",
       "detail": "Yellow Card",
-      "comments": null
+      "comments": "Foul"
     },
     {
       "fixtureId": "1379283",
@@ -109872,7 +109872,7 @@
       },
       "player": {
         "id": 20355,
-        "name": "A. Ramsdale"
+        "name": "Aaron Ramsdale"
       },
       "assist": {
         "id": null,
@@ -109880,75 +109880,6 @@
       },
       "type": "Card",
       "detail": "Yellow Card",
-      "comments": "Unsportsmanlike conduct"
-    },
-    {
-      "fixtureId": "1379283",
-      "time": {
-        "elapsed": 90,
-        "extra": 4
-      },
-      "team": {
-        "id": 52,
-        "name": "Crystal Palace",
-        "logo": "https://media.api-sports.io/football/teams/52.png"
-      },
-      "player": {
-        "id": 25927,
-        "name": "J. Mateta"
-      },
-      "assist": {
-        "id": null,
-        "name": null
-      },
-      "type": "Goal",
-      "detail": "Penalty",
-      "comments": null
-    },
-    {
-      "fixtureId": "1379283",
-      "time": {
-        "elapsed": 90,
-        "extra": 5
-      },
-      "team": {
-        "id": 34,
-        "name": "Newcastle",
-        "logo": "https://media.api-sports.io/football/teams/34.png"
-      },
-      "player": {
-        "id": 31146,
-        "name": "S. Tonali"
-      },
-      "assist": {
-        "id": 153430,
-        "name": "A. Elanga"
-      },
-      "type": "subst",
-      "detail": "Substitution 4",
-      "comments": null
-    },
-    {
-      "fixtureId": "1379283",
-      "time": {
-        "elapsed": 90,
-        "extra": 5
-      },
-      "team": {
-        "id": 34,
-        "name": "Newcastle",
-        "logo": "https://media.api-sports.io/football/teams/34.png"
-      },
-      "player": {
-        "id": 19163,
-        "name": "J. Murphy"
-      },
-      "assist": {
-        "id": 20649,
-        "name": "Y. Wissa"
-      },
-      "type": "subst",
-      "detail": "Substitution 5",
       "comments": null
     },
     {
@@ -109975,6 +109906,75 @@
       "comments": null
     },
     {
+      "fixtureId": "1379283",
+      "time": {
+        "elapsed": 90,
+        "extra": 5
+      },
+      "team": {
+        "id": 34,
+        "name": "Newcastle",
+        "logo": "https://media.api-sports.io/football/teams/34.png"
+      },
+      "player": {
+        "id": 19163,
+        "name": "J. Murphy"
+      },
+      "assist": {
+        "id": 20649,
+        "name": "Y. Wissa"
+      },
+      "type": "subst",
+      "detail": "Substitution 4",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379283",
+      "time": {
+        "elapsed": 90,
+        "extra": 5
+      },
+      "team": {
+        "id": 34,
+        "name": "Newcastle",
+        "logo": "https://media.api-sports.io/football/teams/34.png"
+      },
+      "player": {
+        "id": 31146,
+        "name": "S. Tonali"
+      },
+      "assist": {
+        "id": 153430,
+        "name": "A. Elanga"
+      },
+      "type": "subst",
+      "detail": "Substitution 5",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379283",
+      "time": {
+        "elapsed": 90,
+        "extra": null
+      },
+      "team": {
+        "id": 52,
+        "name": "Crystal Palace",
+        "logo": "https://media.api-sports.io/football/teams/52.png"
+      },
+      "player": {
+        "id": 25927,
+        "name": "J. Mateta"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Goal",
+      "detail": "Penalty",
+      "comments": null
+    },
+    {
       "fixtureId": "1379286",
       "time": {
         "elapsed": 11,
@@ -109987,7 +109987,7 @@
       },
       "player": {
         "id": 19298,
-        "name": "M. Cash"
+        "name": "Matty Cash"
       },
       "assist": {
         "id": null,
@@ -109995,7 +109995,7 @@
       },
       "type": "Card",
       "detail": "Yellow Card",
-      "comments": "Roughing"
+      "comments": "Foul"
     },
     {
       "fixtureId": "1379286",
@@ -110056,7 +110056,7 @@
       },
       "player": {
         "id": 284428,
-        "name": "O. Hutchinson"
+        "name": "Omari Hutchinson"
       },
       "assist": {
         "id": null,
@@ -110064,7 +110064,7 @@
       },
       "type": "Card",
       "detail": "Yellow Card",
-      "comments": "Tripping"
+      "comments": "Foul"
     },
     {
       "fixtureId": "1379286",
@@ -110087,7 +110087,7 @@
       },
       "type": "Card",
       "detail": "Yellow Card",
-      "comments": "Tripping"
+      "comments": "Foul"
     },
     {
       "fixtureId": "1379286",
@@ -110125,7 +110125,7 @@
       },
       "player": {
         "id": 19191,
-        "name": "J. McGinn"
+        "name": "John McGinn"
       },
       "assist": {
         "id": null,
@@ -110133,7 +110133,7 @@
       },
       "type": "Card",
       "detail": "Yellow Card",
-      "comments": "Holding"
+      "comments": "Foul"
     },
     {
       "fixtureId": "1379286",
@@ -110322,6 +110322,29 @@
     {
       "fixtureId": "1379287",
       "time": {
+        "elapsed": 22,
+        "extra": null
+      },
+      "team": {
+        "id": 47,
+        "name": "Tottenham",
+        "logo": "https://media.api-sports.io/football/teams/47.png"
+      },
+      "player": {
+        "id": 21104,
+        "name": "Randal Kolo Muani"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Var",
+      "detail": "Penalty cancelled",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379287",
+      "time": {
         "elapsed": 28,
         "extra": null
       },
@@ -110332,7 +110355,7 @@
       },
       "player": {
         "id": 30776,
-        "name": "C. Romero"
+        "name": "Cristian Romero"
       },
       "assist": {
         "id": null,
@@ -110340,7 +110363,7 @@
       },
       "type": "Card",
       "detail": "Yellow Card",
-      "comments": "Tripping"
+      "comments": "Foul"
     },
     {
       "fixtureId": "1379287",
@@ -110355,7 +110378,7 @@
       },
       "player": {
         "id": 38750,
-        "name": "B. Brobbey"
+        "name": "Brian Brobbey"
       },
       "assist": {
         "id": null,
@@ -110363,30 +110386,7 @@
       },
       "type": "Card",
       "detail": "Yellow Card",
-      "comments": "Elbowing"
-    },
-    {
-      "fixtureId": "1379287",
-      "time": {
-        "elapsed": 37,
-        "extra": null
-      },
-      "team": {
-        "id": 47,
-        "name": "Tottenham",
-        "logo": "https://media.api-sports.io/football/teams/47.png"
-      },
-      "player": {
-        "id": 152849,
-        "name": "M. van de Ven"
-      },
-      "assist": {
-        "id": null,
-        "name": null
-      },
-      "type": "Card",
-      "detail": "Yellow Card",
-      "comments": "Tripping"
+      "comments": "Foul"
     },
     {
       "fixtureId": "1379287",
@@ -110401,7 +110401,7 @@
       },
       "player": {
         "id": 47519,
-        "name": "P. Porro"
+        "name": "Pedro Porro"
       },
       "assist": {
         "id": null,
@@ -110409,7 +110409,99 @@
       },
       "type": "Card",
       "detail": "Yellow Card",
-      "comments": "Unsportsmanlike conduct"
+      "comments": "Argument"
+    },
+    {
+      "fixtureId": "1379287",
+      "time": {
+        "elapsed": 37,
+        "extra": null
+      },
+      "team": {
+        "id": 47,
+        "name": "Tottenham",
+        "logo": "https://media.api-sports.io/football/teams/47.png"
+      },
+      "player": {
+        "id": 152849,
+        "name": "Micky van de Ven"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Card",
+      "detail": "Yellow Card",
+      "comments": "Foul"
+    },
+    {
+      "fixtureId": "1379287",
+      "time": {
+        "elapsed": 61,
+        "extra": null
+      },
+      "team": {
+        "id": 47,
+        "name": "Tottenham",
+        "logo": "https://media.api-sports.io/football/teams/47.png"
+      },
+      "player": {
+        "id": 328089,
+        "name": "A. Gray"
+      },
+      "assist": {
+        "id": 41104,
+        "name": "J. Palhinha"
+      },
+      "type": "subst",
+      "detail": "Substitution 1",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379287",
+      "time": {
+        "elapsed": 61,
+        "extra": null
+      },
+      "team": {
+        "id": 47,
+        "name": "Tottenham",
+        "logo": "https://media.api-sports.io/football/teams/47.png"
+      },
+      "player": {
+        "id": 2413,
+        "name": "Richarlison"
+      },
+      "assist": {
+        "id": 270510,
+        "name": "M. Tel"
+      },
+      "type": "subst",
+      "detail": "Substitution 2",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379287",
+      "time": {
+        "elapsed": 61,
+        "extra": null
+      },
+      "team": {
+        "id": 47,
+        "name": "Tottenham",
+        "logo": "https://media.api-sports.io/football/teams/47.png"
+      },
+      "player": {
+        "id": 347316,
+        "name": "L. Bergvall"
+      },
+      "assist": {
+        "id": 237129,
+        "name": "P. M. Sarr"
+      },
+      "type": "subst",
+      "detail": "Substitution 3",
+      "comments": null
     },
     {
       "fixtureId": "1379287",
@@ -110432,75 +110524,6 @@
       },
       "type": "Goal",
       "detail": "Normal Goal",
-      "comments": null
-    },
-    {
-      "fixtureId": "1379287",
-      "time": {
-        "elapsed": 62,
-        "extra": null
-      },
-      "team": {
-        "id": 47,
-        "name": "Tottenham",
-        "logo": "https://media.api-sports.io/football/teams/47.png"
-      },
-      "player": {
-        "id": 2413,
-        "name": "Richarlison"
-      },
-      "assist": {
-        "id": 270510,
-        "name": "M. Tel"
-      },
-      "type": "subst",
-      "detail": "Substitution 1",
-      "comments": null
-    },
-    {
-      "fixtureId": "1379287",
-      "time": {
-        "elapsed": 62,
-        "extra": null
-      },
-      "team": {
-        "id": 47,
-        "name": "Tottenham",
-        "logo": "https://media.api-sports.io/football/teams/47.png"
-      },
-      "player": {
-        "id": 347316,
-        "name": "L. Bergvall"
-      },
-      "assist": {
-        "id": 237129,
-        "name": "P. M. Sarr"
-      },
-      "type": "subst",
-      "detail": "Substitution 2",
-      "comments": null
-    },
-    {
-      "fixtureId": "1379287",
-      "time": {
-        "elapsed": 62,
-        "extra": null
-      },
-      "team": {
-        "id": 47,
-        "name": "Tottenham",
-        "logo": "https://media.api-sports.io/football/teams/47.png"
-      },
-      "player": {
-        "id": 328089,
-        "name": "A. Gray"
-      },
-      "assist": {
-        "id": 41104,
-        "name": "J. Palhinha"
-      },
-      "type": "subst",
-      "detail": "Substitution 3",
       "comments": null
     },
     {
@@ -110539,7 +110562,7 @@
       },
       "player": {
         "id": 339201,
-        "name": "C. Rigg"
+        "name": "Chris Rigg"
       },
       "assist": {
         "id": null,
@@ -110547,7 +110570,7 @@
       },
       "type": "Card",
       "detail": "Yellow Card",
-      "comments": "Roughing"
+      "comments": "Foul"
     },
     {
       "fixtureId": "1379287",
@@ -110631,7 +110654,7 @@
       },
       "player": {
         "id": 119121,
-        "name": "T. Hume"
+        "name": "Trai Hume"
       },
       "assist": {
         "id": null,
@@ -110639,7 +110662,7 @@
       },
       "type": "Card",
       "detail": "Yellow Card",
-      "comments": "Tripping"
+      "comments": "Foul"
     },
     {
       "fixtureId": "1379287",
@@ -110677,7 +110700,7 @@
       },
       "player": {
         "id": 425733,
-        "name": "Estevao"
+        "name": "Estêvão"
       },
       "assist": {
         "id": null,
@@ -110685,7 +110708,7 @@
       },
       "type": "Card",
       "detail": "Yellow Card",
-      "comments": "Delay of game"
+      "comments": "Argument"
     },
     {
       "fixtureId": "1379282",
@@ -110700,7 +110723,7 @@
       },
       "player": {
         "id": 19281,
-        "name": "A. Semenyo"
+        "name": "Antoine Semenyo"
       },
       "assist": {
         "id": null,
@@ -110708,7 +110731,7 @@
       },
       "type": "Card",
       "detail": "Yellow Card",
-      "comments": "Tripping"
+      "comments": "Foul"
     },
     {
       "fixtureId": "1379282",
@@ -110746,7 +110769,7 @@
       },
       "player": {
         "id": 47380,
-        "name": "M. Cucurella"
+        "name": "Marc Cucurella"
       },
       "assist": {
         "id": null,
@@ -110754,7 +110777,7 @@
       },
       "type": "Card",
       "detail": "Yellow Card",
-      "comments": "Unsportsmanlike conduct"
+      "comments": "Argument"
     },
     {
       "fixtureId": "1379282",
@@ -110814,12 +110837,12 @@
         "logo": "https://media.api-sports.io/football/teams/49.png"
       },
       "player": {
-        "id": 305834,
-        "name": "Andrey Santos"
+        "id": 425733,
+        "name": "Estêvão"
       },
       "assist": {
-        "id": 282125,
-        "name": "R. Lavia"
+        "id": 284324,
+        "name": "A. Garnacho"
       },
       "type": "subst",
       "detail": "Substitution 1",
@@ -110837,12 +110860,12 @@
         "logo": "https://media.api-sports.io/football/teams/49.png"
       },
       "player": {
-        "id": 425733,
-        "name": "Estevao"
+        "id": 305834,
+        "name": "Andrey Santos"
       },
       "assist": {
-        "id": 284324,
-        "name": "A. Garnacho"
+        "id": 282125,
+        "name": "R. Lavia"
       },
       "type": "subst",
       "detail": "Substitution 2",
@@ -110924,29 +110947,6 @@
         "extra": null
       },
       "team": {
-        "id": 50,
-        "name": "Manchester City",
-        "logo": "https://media.api-sports.io/football/teams/50.png"
-      },
-      "player": {
-        "id": 636,
-        "name": "B. Silva"
-      },
-      "assist": {
-        "id": 2291,
-        "name": "M. Kovacic"
-      },
-      "type": "subst",
-      "detail": "Substitution 4",
-      "comments": null
-    },
-    {
-      "fixtureId": "1379282",
-      "time": {
-        "elapsed": 81,
-        "extra": null
-      },
-      "team": {
         "id": 49,
         "name": "Chelsea",
         "logo": "https://media.api-sports.io/football/teams/49.png"
@@ -110961,6 +110961,29 @@
       },
       "type": "subst",
       "detail": "Substitution 3",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379282",
+      "time": {
+        "elapsed": 81,
+        "extra": null
+      },
+      "team": {
+        "id": 50,
+        "name": "Manchester City",
+        "logo": "https://media.api-sports.io/football/teams/50.png"
+      },
+      "player": {
+        "id": 636,
+        "name": "B. Silva"
+      },
+      "assist": {
+        "id": 2291,
+        "name": "M. Kovacic"
+      },
+      "type": "subst",
+      "detail": "Substitution 4",
       "comments": null
     },
     {
@@ -111022,7 +111045,122 @@
       },
       "player": {
         "id": 308678,
-        "name": "D. Essugo"
+        "name": "Dário Essugo"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Card",
+      "detail": "Yellow Card",
+      "comments": "Foul"
+    },
+    {
+      "fixtureId": "1379295",
+      "time": {
+        "elapsed": 16,
+        "extra": null
+      },
+      "team": {
+        "id": 50,
+        "name": "Manchester City",
+        "logo": "https://media.api-sports.io/football/teams/50.png"
+      },
+      "player": {
+        "id": 156477,
+        "name": "R. Cherki"
+      },
+      "assist": {
+        "id": 41621,
+        "name": "M. Nunes"
+      },
+      "type": "Goal",
+      "detail": "Normal Goal",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379295",
+      "time": {
+        "elapsed": 18,
+        "extra": null
+      },
+      "team": {
+        "id": 42,
+        "name": "Arsenal",
+        "logo": "https://media.api-sports.io/football/teams/42.png"
+      },
+      "player": {
+        "id": 978,
+        "name": "K. Havertz"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Goal",
+      "detail": "Normal Goal",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379295",
+      "time": {
+        "elapsed": 36,
+        "extra": null
+      },
+      "team": {
+        "id": 42,
+        "name": "Arsenal",
+        "logo": "https://media.api-sports.io/football/teams/42.png"
+      },
+      "player": {
+        "id": 333682,
+        "name": "C. Mosquera"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Card",
+      "detail": "Yellow Card",
+      "comments": "Holding"
+    },
+    {
+      "fixtureId": "1379295",
+      "time": {
+        "elapsed": 46,
+        "extra": null
+      },
+      "team": {
+        "id": 42,
+        "name": "Arsenal",
+        "logo": "https://media.api-sports.io/football/teams/42.png"
+      },
+      "player": {
+        "id": 136723,
+        "name": "N. Madueke"
+      },
+      "assist": {
+        "id": 127769,
+        "name": "G. Martinelli"
+      },
+      "type": "subst",
+      "detail": "Substitution 1",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379295",
+      "time": {
+        "elapsed": 60,
+        "extra": null
+      },
+      "team": {
+        "id": 50,
+        "name": "Manchester City",
+        "logo": "https://media.api-sports.io/football/teams/50.png"
+      },
+      "player": {
+        "id": 67971,
+        "name": "M. Guehi"
       },
       "assist": {
         "id": null,
@@ -111031,6 +111169,3364 @@
       "type": "Card",
       "detail": "Yellow Card",
       "comments": "Tripping"
+    },
+    {
+      "fixtureId": "1379295",
+      "time": {
+        "elapsed": 65,
+        "extra": null
+      },
+      "team": {
+        "id": 50,
+        "name": "Manchester City",
+        "logo": "https://media.api-sports.io/football/teams/50.png"
+      },
+      "player": {
+        "id": 1100,
+        "name": "E. Haaland"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Goal",
+      "detail": "Normal Goal",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379295",
+      "time": {
+        "elapsed": 74,
+        "extra": null
+      },
+      "team": {
+        "id": 42,
+        "name": "Arsenal",
+        "logo": "https://media.api-sports.io/football/teams/42.png"
+      },
+      "player": {
+        "id": 19586,
+        "name": "E. Eze"
+      },
+      "assist": {
+        "id": 1946,
+        "name": "L. Trossard"
+      },
+      "type": "subst",
+      "detail": "Substitution 2",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379295",
+      "time": {
+        "elapsed": 74,
+        "extra": null
+      },
+      "team": {
+        "id": 42,
+        "name": "Arsenal",
+        "logo": "https://media.api-sports.io/football/teams/42.png"
+      },
+      "player": {
+        "id": 333682,
+        "name": "C. Mosquera"
+      },
+      "assist": {
+        "id": 19959,
+        "name": "B. White"
+      },
+      "type": "subst",
+      "detail": "Substitution 3",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379295",
+      "time": {
+        "elapsed": 83,
+        "extra": null
+      },
+      "team": {
+        "id": 42,
+        "name": "Arsenal",
+        "logo": "https://media.api-sports.io/football/teams/42.png"
+      },
+      "player": {
+        "id": 22224,
+        "name": "Gabriel"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Card",
+      "detail": "Yellow Card",
+      "comments": "Unsportsmanlike conduct"
+    },
+    {
+      "fixtureId": "1379295",
+      "time": {
+        "elapsed": 83,
+        "extra": null
+      },
+      "team": {
+        "id": 50,
+        "name": "Manchester City",
+        "logo": "https://media.api-sports.io/football/teams/50.png"
+      },
+      "player": {
+        "id": 1100,
+        "name": "E. Haaland"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Card",
+      "detail": "Yellow Card",
+      "comments": "Unsportsmanlike conduct"
+    },
+    {
+      "fixtureId": "1379295",
+      "time": {
+        "elapsed": 84,
+        "extra": null
+      },
+      "team": {
+        "id": 50,
+        "name": "Manchester City",
+        "logo": "https://media.api-sports.io/football/teams/50.png"
+      },
+      "player": {
+        "id": 407914,
+        "name": "P. Guardiola"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Card",
+      "detail": "Yellow Card",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379295",
+      "time": {
+        "elapsed": 84,
+        "extra": null
+      },
+      "team": {
+        "id": 42,
+        "name": "Arsenal",
+        "logo": "https://media.api-sports.io/football/teams/42.png"
+      },
+      "player": {
+        "id": 47315,
+        "name": "M. Zubimendi"
+      },
+      "assist": {
+        "id": 18979,
+        "name": "V. Gyokeres"
+      },
+      "type": "subst",
+      "detail": "Substitution 4",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379295",
+      "time": {
+        "elapsed": 85,
+        "extra": null
+      },
+      "team": {
+        "id": 50,
+        "name": "Manchester City",
+        "logo": "https://media.api-sports.io/football/teams/50.png"
+      },
+      "player": {
+        "id": 156477,
+        "name": "R. Cherki"
+      },
+      "assist": {
+        "id": 631,
+        "name": "P. Foden"
+      },
+      "type": "subst",
+      "detail": "Substitution 1",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379295",
+      "time": {
+        "elapsed": 88,
+        "extra": null
+      },
+      "team": {
+        "id": 50,
+        "name": "Manchester City",
+        "logo": "https://media.api-sports.io/football/teams/50.png"
+      },
+      "player": {
+        "id": 1422,
+        "name": "J. Doku"
+      },
+      "assist": {
+        "id": 266657,
+        "name": "Savinho"
+      },
+      "type": "subst",
+      "detail": "Substitution 2",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379295",
+      "time": {
+        "elapsed": 88,
+        "extra": null
+      },
+      "team": {
+        "id": 50,
+        "name": "Manchester City",
+        "logo": "https://media.api-sports.io/football/teams/50.png"
+      },
+      "player": {
+        "id": 44,
+        "name": "Rodri"
+      },
+      "assist": {
+        "id": 161933,
+        "name": "Nico"
+      },
+      "type": "subst",
+      "detail": "Substitution 3",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379285",
+      "time": {
+        "elapsed": 5,
+        "extra": null
+      },
+      "team": {
+        "id": 63,
+        "name": "Leeds",
+        "logo": "https://media.api-sports.io/football/teams/63.png"
+      },
+      "player": {
+        "id": 48389,
+        "name": "N. Okafor"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Goal",
+      "detail": "Normal Goal",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379285",
+      "time": {
+        "elapsed": 18,
+        "extra": null
+      },
+      "team": {
+        "id": 33,
+        "name": "Manchester United",
+        "logo": "https://media.api-sports.io/football/teams/33.png"
+      },
+      "player": {
+        "id": 1165,
+        "name": "Matheus Cunha"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Card",
+      "detail": "Yellow Card",
+      "comments": "Simulation"
+    },
+    {
+      "fixtureId": "1379285",
+      "time": {
+        "elapsed": 29,
+        "extra": null
+      },
+      "team": {
+        "id": 63,
+        "name": "Leeds",
+        "logo": "https://media.api-sports.io/football/teams/63.png"
+      },
+      "player": {
+        "id": 48389,
+        "name": "N. Okafor"
+      },
+      "assist": {
+        "id": 50739,
+        "name": "B. Aaronson"
+      },
+      "type": "Goal",
+      "detail": "Normal Goal",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379285",
+      "time": {
+        "elapsed": 39,
+        "extra": null
+      },
+      "team": {
+        "id": 63,
+        "name": "Leeds",
+        "logo": "https://media.api-sports.io/football/teams/63.png"
+      },
+      "player": {
+        "id": 19760,
+        "name": "James Justin"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Card",
+      "detail": "Yellow Card",
+      "comments": "Foul"
+    },
+    {
+      "fixtureId": "1379285",
+      "time": {
+        "elapsed": 49,
+        "extra": null
+      },
+      "team": {
+        "id": 33,
+        "name": "Manchester United",
+        "logo": "https://media.api-sports.io/football/teams/33.png"
+      },
+      "player": {
+        "id": 891,
+        "name": "Luke Shaw"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Card",
+      "detail": "Yellow Card",
+      "comments": "Foul"
+    },
+    {
+      "fixtureId": "1379285",
+      "time": {
+        "elapsed": 55,
+        "extra": null
+      },
+      "team": {
+        "id": 33,
+        "name": "Manchester United",
+        "logo": "https://media.api-sports.io/football/teams/33.png"
+      },
+      "player": {
+        "id": 2467,
+        "name": "Lisandro Martínez"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Var",
+      "detail": "Card upgrade",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379285",
+      "time": {
+        "elapsed": 56,
+        "extra": null
+      },
+      "team": {
+        "id": 33,
+        "name": "Manchester United",
+        "logo": "https://media.api-sports.io/football/teams/33.png"
+      },
+      "player": {
+        "id": 2467,
+        "name": "Lisandro Martínez"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Card",
+      "detail": "Red Card",
+      "comments": "Violent conduct"
+    },
+    {
+      "fixtureId": "1379285",
+      "time": {
+        "elapsed": 64,
+        "extra": null
+      },
+      "team": {
+        "id": 33,
+        "name": "Manchester United",
+        "logo": "https://media.api-sports.io/football/teams/33.png"
+      },
+      "player": {
+        "id": 1485,
+        "name": "Bruno Fernandes"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Card",
+      "detail": "Yellow Card",
+      "comments": "Argument"
+    },
+    {
+      "fixtureId": "1379285",
+      "time": {
+        "elapsed": 69,
+        "extra": null
+      },
+      "team": {
+        "id": 33,
+        "name": "Manchester United",
+        "logo": "https://media.api-sports.io/football/teams/33.png"
+      },
+      "player": {
+        "id": 747,
+        "name": "Casemiro"
+      },
+      "assist": {
+        "id": 1485,
+        "name": "B. Fernandes"
+      },
+      "type": "Goal",
+      "detail": "Normal Goal",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379285",
+      "time": {
+        "elapsed": 70,
+        "extra": null
+      },
+      "team": {
+        "id": 33,
+        "name": "Manchester United",
+        "logo": "https://media.api-sports.io/football/teams/33.png"
+      },
+      "player": {
+        "id": 545,
+        "name": "N. Mazraoui"
+      },
+      "assist": {
+        "id": 886,
+        "name": "D. Dalot"
+      },
+      "type": "subst",
+      "detail": "Substitution 1",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379285",
+      "time": {
+        "elapsed": 70,
+        "extra": null
+      },
+      "team": {
+        "id": 33,
+        "name": "Manchester United",
+        "logo": "https://media.api-sports.io/football/teams/33.png"
+      },
+      "player": {
+        "id": 157997,
+        "name": "A. Diallo"
+      },
+      "assist": {
+        "id": 20589,
+        "name": "B. Mbeumo"
+      },
+      "type": "subst",
+      "detail": "Substitution 2",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379285",
+      "time": {
+        "elapsed": 74,
+        "extra": null
+      },
+      "team": {
+        "id": 63,
+        "name": "Leeds",
+        "logo": "https://media.api-sports.io/football/teams/63.png"
+      },
+      "player": {
+        "id": 32966,
+        "name": "A. Tanaka"
+      },
+      "assist": {
+        "id": 129142,
+        "name": "I. Gruev"
+      },
+      "type": "subst",
+      "detail": "Substitution 1",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379285",
+      "time": {
+        "elapsed": 74,
+        "extra": null
+      },
+      "team": {
+        "id": 63,
+        "name": "Leeds",
+        "logo": "https://media.api-sports.io/football/teams/63.png"
+      },
+      "player": {
+        "id": 48389,
+        "name": "N. Okafor"
+      },
+      "assist": {
+        "id": 162128,
+        "name": "W. Gnonto"
+      },
+      "type": "subst",
+      "detail": "Substitution 2",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379285",
+      "time": {
+        "elapsed": 86,
+        "extra": null
+      },
+      "team": {
+        "id": 63,
+        "name": "Leeds",
+        "logo": "https://media.api-sports.io/football/teams/63.png"
+      },
+      "player": {
+        "id": 2279,
+        "name": "Ethan Ampadu"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Card",
+      "detail": "Yellow Card",
+      "comments": "Simulation"
+    },
+    {
+      "fixtureId": "1379285",
+      "time": {
+        "elapsed": 86,
+        "extra": null
+      },
+      "team": {
+        "id": 63,
+        "name": "Leeds",
+        "logo": "https://media.api-sports.io/football/teams/63.png"
+      },
+      "player": {
+        "id": 50739,
+        "name": "B. Aaronson"
+      },
+      "assist": {
+        "id": 18901,
+        "name": "S. Longstaff"
+      },
+      "type": "subst",
+      "detail": "Substitution 3",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379290",
+      "time": {
+        "elapsed": 6,
+        "extra": null
+      },
+      "team": {
+        "id": 36,
+        "name": "Fulham",
+        "logo": "https://media.api-sports.io/football/teams/36.png"
+      },
+      "player": {
+        "id": 2823,
+        "name": "Sasa Lukic"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Card",
+      "detail": "Yellow Card",
+      "comments": "Foul"
+    },
+    {
+      "fixtureId": "1379290",
+      "time": {
+        "elapsed": 43,
+        "extra": null
+      },
+      "team": {
+        "id": 36,
+        "name": "Fulham",
+        "logo": "https://media.api-sports.io/football/teams/36.png"
+      },
+      "player": {
+        "id": 1455,
+        "name": "Alex Iwobi"
+      },
+      "assist": {
+        "id": 1696,
+        "name": "Samuel Chukwueze"
+      },
+      "type": "subst",
+      "detail": "Substitution 1",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379290",
+      "time": {
+        "elapsed": 67,
+        "extra": null
+      },
+      "team": {
+        "id": 36,
+        "name": "Fulham",
+        "logo": "https://media.api-sports.io/football/teams/36.png"
+      },
+      "player": {
+        "id": 195106,
+        "name": "Rodrigo Muniz"
+      },
+      "assist": {
+        "id": 2887,
+        "name": "Raul Jimenez"
+      },
+      "type": "subst",
+      "detail": "Substitution 2",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379290",
+      "time": {
+        "elapsed": 67,
+        "extra": null
+      },
+      "team": {
+        "id": 36,
+        "name": "Fulham",
+        "logo": "https://media.api-sports.io/football/teams/36.png"
+      },
+      "player": {
+        "id": 1161,
+        "name": "Emile Smith Rowe"
+      },
+      "assist": {
+        "id": 389315,
+        "name": "Joshua King"
+      },
+      "type": "subst",
+      "detail": "Substitution 3",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379290",
+      "time": {
+        "elapsed": 81,
+        "extra": null
+      },
+      "team": {
+        "id": 36,
+        "name": "Fulham",
+        "logo": "https://media.api-sports.io/football/teams/36.png"
+      },
+      "player": {
+        "id": 19025,
+        "name": "Tom Cairney"
+      },
+      "assist": {
+        "id": 278133,
+        "name": "Oscar Bobb"
+      },
+      "type": "subst",
+      "detail": "Substitution 4",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379290",
+      "time": {
+        "elapsed": 81,
+        "extra": null
+      },
+      "team": {
+        "id": 36,
+        "name": "Fulham",
+        "logo": "https://media.api-sports.io/football/teams/36.png"
+      },
+      "player": {
+        "id": 19032,
+        "name": "Ryan Sessegnon"
+      },
+      "assist": {
+        "id": 19549,
+        "name": "Antonee Robinson"
+      },
+      "type": "subst",
+      "detail": "Substitution 5",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379296",
+      "time": {
+        "elapsed": 32,
+        "extra": null
+      },
+      "team": {
+        "id": 35,
+        "name": "Bournemouth",
+        "logo": "https://media.api-sports.io/football/teams/35.png"
+      },
+      "player": {
+        "id": 19245,
+        "name": "Marcus Tavernier"
+      },
+      "assist": {
+        "id": 407806,
+        "name": "Rayan"
+      },
+      "type": "Goal",
+      "detail": "Normal Goal",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379296",
+      "time": {
+        "elapsed": 46,
+        "extra": null
+      },
+      "team": {
+        "id": 34,
+        "name": "Newcastle",
+        "logo": "https://media.api-sports.io/football/teams/34.png"
+      },
+      "player": {
+        "id": 284492,
+        "name": "Lewis Hall"
+      },
+      "assist": {
+        "id": 169,
+        "name": "Kieran Trippier"
+      },
+      "type": "subst",
+      "detail": "Substitution 1",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379296",
+      "time": {
+        "elapsed": 52,
+        "extra": null
+      },
+      "team": {
+        "id": 35,
+        "name": "Bournemouth",
+        "logo": "https://media.api-sports.io/football/teams/35.png"
+      },
+      "player": {
+        "id": 1125,
+        "name": "Ryan Christie"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Card",
+      "detail": "Yellow Card",
+      "comments": "Foul"
+    },
+    {
+      "fixtureId": "1379296",
+      "time": {
+        "elapsed": 55,
+        "extra": null
+      },
+      "team": {
+        "id": 35,
+        "name": "Bournemouth",
+        "logo": "https://media.api-sports.io/football/teams/35.png"
+      },
+      "player": {
+        "id": 19245,
+        "name": "Marcus Tavernier"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Card",
+      "detail": "Yellow Card",
+      "comments": "Argument"
+    },
+    {
+      "fixtureId": "1379296",
+      "time": {
+        "elapsed": 62,
+        "extra": null
+      },
+      "team": {
+        "id": 34,
+        "name": "Newcastle",
+        "logo": "https://media.api-sports.io/football/teams/34.png"
+      },
+      "player": {
+        "id": 19192,
+        "name": "Jacob Ramsey"
+      },
+      "assist": {
+        "id": 10135,
+        "name": "Bruno Guimarães"
+      },
+      "type": "subst",
+      "detail": "Substitution 2",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379296",
+      "time": {
+        "elapsed": 62,
+        "extra": null
+      },
+      "team": {
+        "id": 34,
+        "name": "Newcastle",
+        "logo": "https://media.api-sports.io/football/teams/34.png"
+      },
+      "player": {
+        "id": 153430,
+        "name": "Anthony Elanga"
+      },
+      "assist": {
+        "id": 19163,
+        "name": "Jacob Murphy"
+      },
+      "type": "subst",
+      "detail": "Substitution 3",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379296",
+      "time": {
+        "elapsed": 65,
+        "extra": null
+      },
+      "team": {
+        "id": 35,
+        "name": "Bournemouth",
+        "logo": "https://media.api-sports.io/football/teams/35.png"
+      },
+      "player": {
+        "id": 1125,
+        "name": "Ryan Christie"
+      },
+      "assist": {
+        "id": 1150,
+        "name": "Tyler Adams"
+      },
+      "type": "subst",
+      "detail": "Substitution 1",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379296",
+      "time": {
+        "elapsed": 66,
+        "extra": null
+      },
+      "team": {
+        "id": 35,
+        "name": "Bournemouth",
+        "logo": "https://media.api-sports.io/football/teams/35.png"
+      },
+      "player": {
+        "id": 368030,
+        "name": "Eli Junior Kroupi"
+      },
+      "assist": {
+        "id": 18870,
+        "name": "David Brooks"
+      },
+      "type": "subst",
+      "detail": "Substitution 2",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379296",
+      "time": {
+        "elapsed": 68,
+        "extra": null
+      },
+      "team": {
+        "id": 34,
+        "name": "Newcastle",
+        "logo": "https://media.api-sports.io/football/teams/34.png"
+      },
+      "player": {
+        "id": 315237,
+        "name": "William Osula"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Goal",
+      "detail": "Normal Goal",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379296",
+      "time": {
+        "elapsed": 71,
+        "extra": null
+      },
+      "team": {
+        "id": 34,
+        "name": "Newcastle",
+        "logo": "https://media.api-sports.io/football/teams/34.png"
+      },
+      "player": {
+        "id": 315237,
+        "name": "William Osula"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Var",
+      "detail": "Goal confirmed",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379296",
+      "time": {
+        "elapsed": 74,
+        "extra": null
+      },
+      "team": {
+        "id": 34,
+        "name": "Newcastle",
+        "logo": "https://media.api-sports.io/football/teams/34.png"
+      },
+      "player": {
+        "id": 158694,
+        "name": "Valentino Livramento"
+      },
+      "assist": {
+        "id": 18961,
+        "name": "Dan Burn"
+      },
+      "type": "subst",
+      "detail": "Substitution 4",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379296",
+      "time": {
+        "elapsed": 77,
+        "extra": null
+      },
+      "team": {
+        "id": 34,
+        "name": "Newcastle",
+        "logo": "https://media.api-sports.io/football/teams/34.png"
+      },
+      "player": {
+        "id": 38734,
+        "name": "Sven Botman"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Card",
+      "detail": "Yellow Card",
+      "comments": "Foul"
+    },
+    {
+      "fixtureId": "1379296",
+      "time": {
+        "elapsed": 78,
+        "extra": null
+      },
+      "team": {
+        "id": 35,
+        "name": "Bournemouth",
+        "logo": "https://media.api-sports.io/football/teams/35.png"
+      },
+      "player": {
+        "id": 407806,
+        "name": "Rayan"
+      },
+      "assist": {
+        "id": 343576,
+        "name": "Ben Gannon-Doak"
+      },
+      "type": "subst",
+      "detail": "Substitution 3",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379296",
+      "time": {
+        "elapsed": 80,
+        "extra": null
+      },
+      "team": {
+        "id": 34,
+        "name": "Newcastle",
+        "logo": "https://media.api-sports.io/football/teams/34.png"
+      },
+      "player": {
+        "id": 19163,
+        "name": "Jacob Murphy"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Card",
+      "detail": "Yellow Card",
+      "comments": "Foul"
+    },
+    {
+      "fixtureId": "1379296",
+      "time": {
+        "elapsed": 82,
+        "extra": null
+      },
+      "team": {
+        "id": 35,
+        "name": "Bournemouth",
+        "logo": "https://media.api-sports.io/football/teams/35.png"
+      },
+      "player": {
+        "id": 304853,
+        "name": "Alex Scott"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Card",
+      "detail": "Yellow Card",
+      "comments": "Foul"
+    },
+    {
+      "fixtureId": "1379296",
+      "time": {
+        "elapsed": 85,
+        "extra": null
+      },
+      "team": {
+        "id": 35,
+        "name": "Bournemouth",
+        "logo": "https://media.api-sports.io/football/teams/35.png"
+      },
+      "player": {
+        "id": 162267,
+        "name": "Adrien Truffert"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Goal",
+      "detail": "Normal Goal",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379296",
+      "time": {
+        "elapsed": 86,
+        "extra": null
+      },
+      "team": {
+        "id": 34,
+        "name": "Newcastle",
+        "logo": "https://media.api-sports.io/football/teams/34.png"
+      },
+      "player": {
+        "id": 31146,
+        "name": "Sandro Tonali"
+      },
+      "assist": {
+        "id": 158054,
+        "name": "Nick Woltemade"
+      },
+      "type": "subst",
+      "detail": "Substitution 5",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379296",
+      "time": {
+        "elapsed": 89,
+        "extra": null
+      },
+      "team": {
+        "id": 35,
+        "name": "Bournemouth",
+        "logo": "https://media.api-sports.io/football/teams/35.png"
+      },
+      "player": {
+        "id": 19245,
+        "name": "Marcus Tavernier"
+      },
+      "assist": {
+        "id": 361485,
+        "name": "Alex Tóth"
+      },
+      "type": "subst",
+      "detail": "Substitution 4",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379296",
+      "time": {
+        "elapsed": 89,
+        "extra": null
+      },
+      "team": {
+        "id": 35,
+        "name": "Bournemouth",
+        "logo": "https://media.api-sports.io/football/teams/35.png"
+      },
+      "player": {
+        "id": 152856,
+        "name": "Evanilson"
+      },
+      "assist": {
+        "id": 47499,
+        "name": "Enes Unal"
+      },
+      "type": "subst",
+      "detail": "Substitution 5",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379296",
+      "time": {
+        "elapsed": 90,
+        "extra": 4
+      },
+      "team": {
+        "id": 35,
+        "name": "Bournemouth",
+        "logo": "https://media.api-sports.io/football/teams/35.png"
+      },
+      "player": {
+        "id": 118307,
+        "name": "Đorđe Petrović"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Card",
+      "detail": "Yellow Card",
+      "comments": "Time wasting"
+    },
+    {
+      "fixtureId": "1379294",
+      "time": {
+        "elapsed": 18,
+        "extra": null
+      },
+      "team": {
+        "id": 63,
+        "name": "Leeds",
+        "logo": "https://media.api-sports.io/football/teams/63.png"
+      },
+      "player": {
+        "id": 19760,
+        "name": "James Justin"
+      },
+      "assist": {
+        "id": 48389,
+        "name": "Noah Okafor"
+      },
+      "type": "Goal",
+      "detail": "Normal Goal",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379294",
+      "time": {
+        "elapsed": 20,
+        "extra": null
+      },
+      "team": {
+        "id": 63,
+        "name": "Leeds",
+        "logo": "https://media.api-sports.io/football/teams/63.png"
+      },
+      "player": {
+        "id": 48389,
+        "name": "Noah Okafor"
+      },
+      "assist": {
+        "id": 50739,
+        "name": "Brenden Aaronson"
+      },
+      "type": "Goal",
+      "detail": "Normal Goal",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379294",
+      "time": {
+        "elapsed": 38,
+        "extra": null
+      },
+      "team": {
+        "id": 39,
+        "name": "Wolves",
+        "logo": "https://media.api-sports.io/football/teams/39.png"
+      },
+      "player": {
+        "id": 896,
+        "name": "Angel Gomes"
+      },
+      "assist": {
+        "id": 456206,
+        "name": "Mateus Mané"
+      },
+      "type": "subst",
+      "detail": "Substitution 1",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379294",
+      "time": {
+        "elapsed": 46,
+        "extra": null
+      },
+      "team": {
+        "id": 39,
+        "name": "Wolves",
+        "logo": "https://media.api-sports.io/football/teams/39.png"
+      },
+      "player": {
+        "id": 296560,
+        "name": "Jackson Tchatchoua"
+      },
+      "assist": {
+        "id": 449245,
+        "name": "Pedro Lima"
+      },
+      "type": "subst",
+      "detail": "Substitution 2",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379294",
+      "time": {
+        "elapsed": 67,
+        "extra": null
+      },
+      "team": {
+        "id": 63,
+        "name": "Leeds",
+        "logo": "https://media.api-sports.io/football/teams/63.png"
+      },
+      "player": {
+        "id": 48389,
+        "name": "Noah Okafor"
+      },
+      "assist": {
+        "id": 162128,
+        "name": "Wilfried Gnonto"
+      },
+      "type": "subst",
+      "detail": "Substitution 1",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379294",
+      "time": {
+        "elapsed": 67,
+        "extra": null
+      },
+      "team": {
+        "id": 39,
+        "name": "Wolves",
+        "logo": "https://media.api-sports.io/football/teams/39.png"
+      },
+      "player": {
+        "id": 20665,
+        "name": "Jean-Ricner Bellegarde"
+      },
+      "assist": {
+        "id": 282770,
+        "name": "Rodrigo Gomes"
+      },
+      "type": "subst",
+      "detail": "Substitution 3",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379294",
+      "time": {
+        "elapsed": 73,
+        "extra": null
+      },
+      "team": {
+        "id": 63,
+        "name": "Leeds",
+        "logo": "https://media.api-sports.io/football/teams/63.png"
+      },
+      "player": {
+        "id": 50739,
+        "name": "Brenden Aaronson"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Card",
+      "detail": "Yellow Card",
+      "comments": "Argument"
+    },
+    {
+      "fixtureId": "1379294",
+      "time": {
+        "elapsed": 75,
+        "extra": null
+      },
+      "team": {
+        "id": 39,
+        "name": "Wolves",
+        "logo": "https://media.api-sports.io/football/teams/39.png"
+      },
+      "player": {
+        "id": 66407,
+        "name": "Ladislav Krejčí"
+      },
+      "assist": {
+        "id": 24888,
+        "name": "Hee-Chan Hwang"
+      },
+      "type": "subst",
+      "detail": "Substitution 4",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379294",
+      "time": {
+        "elapsed": 78,
+        "extra": null
+      },
+      "team": {
+        "id": 63,
+        "name": "Leeds",
+        "logo": "https://media.api-sports.io/football/teams/63.png"
+      },
+      "player": {
+        "id": 50739,
+        "name": "Brenden Aaronson"
+      },
+      "assist": {
+        "id": 129142,
+        "name": "Ilia Gruev"
+      },
+      "type": "subst",
+      "detail": "Substitution 2",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379294",
+      "time": {
+        "elapsed": 90,
+        "extra": 5
+      },
+      "team": {
+        "id": 63,
+        "name": "Leeds",
+        "logo": "https://media.api-sports.io/football/teams/63.png"
+      },
+      "player": {
+        "id": 18766,
+        "name": "Dominic Calvert-Lewin"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Goal",
+      "detail": "Penalty",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379294",
+      "time": {
+        "elapsed": 90,
+        "extra": 12
+      },
+      "team": {
+        "id": 63,
+        "name": "Leeds",
+        "logo": "https://media.api-sports.io/football/teams/63.png"
+      },
+      "player": {
+        "id": 19760,
+        "name": "James Justin"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Card",
+      "detail": "Yellow Card",
+      "comments": "Foul"
+    },
+    {
+      "fixtureId": "1379294",
+      "time": {
+        "elapsed": 90,
+        "extra": 3
+      },
+      "team": {
+        "id": 39,
+        "name": "Wolves",
+        "logo": "https://media.api-sports.io/football/teams/39.png"
+      },
+      "player": {
+        "id": 280687,
+        "name": "Hugo Bueno"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Card",
+      "detail": "Yellow Card",
+      "comments": "Foul"
+    },
+    {
+      "fixtureId": "1379294",
+      "time": {
+        "elapsed": 90,
+        "extra": null
+      },
+      "team": {
+        "id": 63,
+        "name": "Leeds",
+        "logo": "https://media.api-sports.io/football/teams/63.png"
+      },
+      "player": {
+        "id": 18766,
+        "name": "Dominic Calvert-Lewin"
+      },
+      "assist": {
+        "id": 19461,
+        "name": "Lukas Nmecha"
+      },
+      "type": "subst",
+      "detail": "Substitution 3",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379294",
+      "time": {
+        "elapsed": 90,
+        "extra": null
+      },
+      "team": {
+        "id": 63,
+        "name": "Leeds",
+        "logo": "https://media.api-sports.io/football/teams/63.png"
+      },
+      "player": {
+        "id": 32966,
+        "name": "Ao Tanaka"
+      },
+      "assist": {
+        "id": 18901,
+        "name": "Sean Longstaff"
+      },
+      "type": "subst",
+      "detail": "Substitution 4",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379294",
+      "time": {
+        "elapsed": 90,
+        "extra": null
+      },
+      "team": {
+        "id": 63,
+        "name": "Leeds",
+        "logo": "https://media.api-sports.io/football/teams/63.png"
+      },
+      "player": {
+        "id": 47969,
+        "name": "Gabriel Gudmundsson"
+      },
+      "assist": {
+        "id": 19321,
+        "name": "Joe Rodon"
+      },
+      "type": "subst",
+      "detail": "Substitution 5",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379298",
+      "time": {
+        "elapsed": 20,
+        "extra": null
+      },
+      "team": {
+        "id": 51,
+        "name": "Brighton",
+        "logo": "https://media.api-sports.io/football/teams/51.png"
+      },
+      "player": {
+        "id": 278370,
+        "name": "Diego Gómez"
+      },
+      "assist": {
+        "id": 106835,
+        "name": "Kaoru Mitoma"
+      },
+      "type": "subst",
+      "detail": "Substitution 1",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379298",
+      "time": {
+        "elapsed": 34,
+        "extra": null
+      },
+      "team": {
+        "id": 47,
+        "name": "Tottenham",
+        "logo": "https://media.api-sports.io/football/teams/47.png"
+      },
+      "player": {
+        "id": 18968,
+        "name": "Yves Bissouma"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Card",
+      "detail": "Yellow Card",
+      "comments": "Foul"
+    },
+    {
+      "fixtureId": "1379298",
+      "time": {
+        "elapsed": 37,
+        "extra": null
+      },
+      "team": {
+        "id": 51,
+        "name": "Brighton",
+        "logo": "https://media.api-sports.io/football/teams/51.png"
+      },
+      "player": {
+        "id": 92993,
+        "name": "Mats Wieffer"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Card",
+      "detail": "Yellow Card",
+      "comments": "Foul"
+    },
+    {
+      "fixtureId": "1379298",
+      "time": {
+        "elapsed": 39,
+        "extra": null
+      },
+      "team": {
+        "id": 47,
+        "name": "Tottenham",
+        "logo": "https://media.api-sports.io/football/teams/47.png"
+      },
+      "player": {
+        "id": 47519,
+        "name": "Pedro Porro"
+      },
+      "assist": {
+        "id": 162016,
+        "name": "Xavi Simons"
+      },
+      "type": "Goal",
+      "detail": "Normal Goal",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379298",
+      "time": {
+        "elapsed": 45,
+        "extra": 3
+      },
+      "team": {
+        "id": 51,
+        "name": "Brighton",
+        "logo": "https://media.api-sports.io/football/teams/51.png"
+      },
+      "player": {
+        "id": 106835,
+        "name": "Kaoru Mitoma"
+      },
+      "assist": {
+        "id": 18970,
+        "name": "Pascal Groß"
+      },
+      "type": "Goal",
+      "detail": "Normal Goal",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379298",
+      "time": {
+        "elapsed": 57,
+        "extra": null
+      },
+      "team": {
+        "id": 47,
+        "name": "Tottenham",
+        "logo": "https://media.api-sports.io/football/teams/47.png"
+      },
+      "player": {
+        "id": 21104,
+        "name": "Randal Kolo Muani"
+      },
+      "assist": {
+        "id": 270510,
+        "name": "Mathys Tel"
+      },
+      "type": "subst",
+      "detail": "Substitution 1",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379298",
+      "time": {
+        "elapsed": 57,
+        "extra": null
+      },
+      "team": {
+        "id": 47,
+        "name": "Tottenham",
+        "logo": "https://media.api-sports.io/football/teams/47.png"
+      },
+      "player": {
+        "id": 18968,
+        "name": "Yves Bissouma"
+      },
+      "assist": {
+        "id": 328089,
+        "name": "Archie Gray"
+      },
+      "type": "subst",
+      "detail": "Substitution 2",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379298",
+      "time": {
+        "elapsed": 65,
+        "extra": null
+      },
+      "team": {
+        "id": 47,
+        "name": "Tottenham",
+        "logo": "https://media.api-sports.io/football/teams/47.png"
+      },
+      "player": {
+        "id": 25287,
+        "name": "Kevin Danso"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Card",
+      "detail": "Yellow Card",
+      "comments": "Foul"
+    },
+    {
+      "fixtureId": "1379298",
+      "time": {
+        "elapsed": 67,
+        "extra": null
+      },
+      "team": {
+        "id": 47,
+        "name": "Tottenham",
+        "logo": "https://media.api-sports.io/football/teams/47.png"
+      },
+      "player": {
+        "id": 863,
+        "name": "Rodrigo Bentancur"
+      },
+      "assist": {
+        "id": 41104,
+        "name": "Joao Palhinha"
+      },
+      "type": "subst",
+      "detail": "Substitution 3",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379298",
+      "time": {
+        "elapsed": 75,
+        "extra": null
+      },
+      "team": {
+        "id": 51,
+        "name": "Brighton",
+        "logo": "https://media.api-sports.io/football/teams/51.png"
+      },
+      "player": {
+        "id": 106835,
+        "name": "Kaoru Mitoma"
+      },
+      "assist": {
+        "id": 162007,
+        "name": "Maxim De Cuyper"
+      },
+      "type": "subst",
+      "detail": "Substitution 2",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379298",
+      "time": {
+        "elapsed": 75,
+        "extra": null
+      },
+      "team": {
+        "id": 51,
+        "name": "Brighton",
+        "logo": "https://media.api-sports.io/football/teams/51.png"
+      },
+      "player": {
+        "id": 305730,
+        "name": "Jack Hinshelwood"
+      },
+      "assist": {
+        "id": 19030,
+        "name": "Matt O'Riley"
+      },
+      "type": "subst",
+      "detail": "Substitution 3",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379298",
+      "time": {
+        "elapsed": 75,
+        "extra": null
+      },
+      "team": {
+        "id": 51,
+        "name": "Brighton",
+        "logo": "https://media.api-sports.io/football/teams/51.png"
+      },
+      "player": {
+        "id": 1469,
+        "name": "Danny Welbeck"
+      },
+      "assist": {
+        "id": 90590,
+        "name": "Georginio Rutter"
+      },
+      "type": "subst",
+      "detail": "Substitution 4",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379298",
+      "time": {
+        "elapsed": 76,
+        "extra": null
+      },
+      "team": {
+        "id": 47,
+        "name": "Tottenham",
+        "logo": "https://media.api-sports.io/football/teams/47.png"
+      },
+      "player": {
+        "id": 204039,
+        "name": "Destiny Udogie"
+      },
+      "assist": {
+        "id": 19235,
+        "name": "Djed Spence"
+      },
+      "type": "subst",
+      "detail": "Substitution 4",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379298",
+      "time": {
+        "elapsed": 76,
+        "extra": null
+      },
+      "team": {
+        "id": 47,
+        "name": "Tottenham",
+        "logo": "https://media.api-sports.io/football/teams/47.png"
+      },
+      "player": {
+        "id": 67972,
+        "name": "Conor Gallagher"
+      },
+      "assist": {
+        "id": 347316,
+        "name": "Lucas Bergvall"
+      },
+      "type": "subst",
+      "detail": "Substitution 5",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379298",
+      "time": {
+        "elapsed": 77,
+        "extra": null
+      },
+      "team": {
+        "id": 47,
+        "name": "Tottenham",
+        "logo": "https://media.api-sports.io/football/teams/47.png"
+      },
+      "player": {
+        "id": 162016,
+        "name": "Xavi Simons"
+      },
+      "assist": {
+        "id": 347316,
+        "name": "Lucas Bergvall"
+      },
+      "type": "Goal",
+      "detail": "Normal Goal",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379298",
+      "time": {
+        "elapsed": 78,
+        "extra": null
+      },
+      "team": {
+        "id": 47,
+        "name": "Tottenham",
+        "logo": "https://media.api-sports.io/football/teams/47.png"
+      },
+      "player": {
+        "id": 162016,
+        "name": "Xavi Simons"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Card",
+      "detail": "Yellow Card",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379298",
+      "time": {
+        "elapsed": 82,
+        "extra": null
+      },
+      "team": {
+        "id": 51,
+        "name": "Brighton",
+        "logo": "https://media.api-sports.io/football/teams/51.png"
+      },
+      "player": {
+        "id": 265820,
+        "name": "Yasin Ayari"
+      },
+      "assist": {
+        "id": 392482,
+        "name": "Charalampos Kostoulas"
+      },
+      "type": "subst",
+      "detail": "Substitution 5",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379298",
+      "time": {
+        "elapsed": 90,
+        "extra": 5
+      },
+      "team": {
+        "id": 51,
+        "name": "Brighton",
+        "logo": "https://media.api-sports.io/football/teams/51.png"
+      },
+      "player": {
+        "id": 90590,
+        "name": "Georginio Rutter"
+      },
+      "assist": {
+        "id": 38695,
+        "name": "Jan Paul van Hecke"
+      },
+      "type": "Goal",
+      "detail": "Normal Goal",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379291",
+      "time": {
+        "elapsed": 16,
+        "extra": null
+      },
+      "team": {
+        "id": 49,
+        "name": "Chelsea",
+        "logo": "https://media.api-sports.io/football/teams/49.png"
+      },
+      "player": {
+        "id": 425733,
+        "name": "Estêvão"
+      },
+      "assist": {
+        "id": 284324,
+        "name": "Alejandro Garnacho"
+      },
+      "type": "subst",
+      "detail": "Substitution 1",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379291",
+      "time": {
+        "elapsed": 25,
+        "extra": null
+      },
+      "team": {
+        "id": 33,
+        "name": "Manchester United",
+        "logo": "https://media.api-sports.io/football/teams/33.png"
+      },
+      "player": {
+        "id": 1165,
+        "name": "Matheus Cunha"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Card",
+      "detail": "Yellow Card",
+      "comments": "Foul"
+    },
+    {
+      "fixtureId": "1379291",
+      "time": {
+        "elapsed": 39,
+        "extra": null
+      },
+      "team": {
+        "id": 49,
+        "name": "Chelsea",
+        "logo": "https://media.api-sports.io/football/teams/49.png"
+      },
+      "player": {
+        "id": 341642,
+        "name": "Jorrel Hato"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Card",
+      "detail": "Yellow Card",
+      "comments": "Foul"
+    },
+    {
+      "fixtureId": "1379291",
+      "time": {
+        "elapsed": 43,
+        "extra": null
+      },
+      "team": {
+        "id": 33,
+        "name": "Manchester United",
+        "logo": "https://media.api-sports.io/football/teams/33.png"
+      },
+      "player": {
+        "id": 1165,
+        "name": "Matheus Cunha"
+      },
+      "assist": {
+        "id": 1485,
+        "name": "Bruno Fernandes"
+      },
+      "type": "Goal",
+      "detail": "Normal Goal",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379291",
+      "time": {
+        "elapsed": 80,
+        "extra": null
+      },
+      "team": {
+        "id": 33,
+        "name": "Manchester United",
+        "logo": "https://media.api-sports.io/football/teams/33.png"
+      },
+      "player": {
+        "id": 115589,
+        "name": "Benjamin Šeško"
+      },
+      "assist": {
+        "id": 157997,
+        "name": "Amad Diallo"
+      },
+      "type": "subst",
+      "detail": "Substitution 1",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379291",
+      "time": {
+        "elapsed": 81,
+        "extra": null
+      },
+      "team": {
+        "id": 49,
+        "name": "Chelsea",
+        "logo": "https://media.api-sports.io/football/teams/49.png"
+      },
+      "player": {
+        "id": 22094,
+        "name": "Wesley Fofana"
+      },
+      "assist": {
+        "id": 19720,
+        "name": "Trevoh Chalobah"
+      },
+      "type": "subst",
+      "detail": "Substitution 2",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379291",
+      "time": {
+        "elapsed": 81,
+        "extra": null
+      },
+      "team": {
+        "id": 49,
+        "name": "Chelsea",
+        "logo": "https://media.api-sports.io/football/teams/49.png"
+      },
+      "player": {
+        "id": 161907,
+        "name": "Malo Gusto"
+      },
+      "assist": {
+        "id": 366735,
+        "name": "Josh Acheampong"
+      },
+      "type": "subst",
+      "detail": "Substitution 3",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379291",
+      "time": {
+        "elapsed": 81,
+        "extra": null
+      },
+      "team": {
+        "id": 33,
+        "name": "Manchester United",
+        "logo": "https://media.api-sports.io/football/teams/33.png"
+      },
+      "player": {
+        "id": 1165,
+        "name": "Matheus Cunha"
+      },
+      "assist": {
+        "id": 19220,
+        "name": "Mason Mount"
+      },
+      "type": "subst",
+      "detail": "Substitution 2",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379291",
+      "time": {
+        "elapsed": 87,
+        "extra": null
+      },
+      "team": {
+        "id": 33,
+        "name": "Manchester United",
+        "logo": "https://media.api-sports.io/football/teams/33.png"
+      },
+      "player": {
+        "id": 20589,
+        "name": "Bryan Mbeumo"
+      },
+      "assist": {
+        "id": 70100,
+        "name": "Joshua Zirkzee"
+      },
+      "type": "subst",
+      "detail": "Substitution 3",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379291",
+      "time": {
+        "elapsed": 88,
+        "extra": null
+      },
+      "team": {
+        "id": 49,
+        "name": "Chelsea",
+        "logo": "https://media.api-sports.io/football/teams/49.png"
+      },
+      "player": {
+        "id": 5996,
+        "name": "Enzo Fernández"
+      },
+      "assist": {
+        "id": 282125,
+        "name": "Roméo Lavia"
+      },
+      "type": "subst",
+      "detail": "Substitution 4",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379291",
+      "time": {
+        "elapsed": 90,
+        "extra": 4
+      },
+      "team": {
+        "id": 33,
+        "name": "Manchester United",
+        "logo": "https://media.api-sports.io/football/teams/33.png"
+      },
+      "player": {
+        "id": 284322,
+        "name": "Kobbie Mainoo"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Card",
+      "detail": "Yellow Card",
+      "comments": "Foul"
+    },
+    {
+      "fixtureId": "1379291",
+      "time": {
+        "elapsed": 90,
+        "extra": 1
+      },
+      "team": {
+        "id": 33,
+        "name": "Manchester United",
+        "logo": "https://media.api-sports.io/football/teams/33.png"
+      },
+      "player": {
+        "id": 19220,
+        "name": "Mason Mount"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Card",
+      "detail": "Yellow Card",
+      "comments": "Argument"
+    },
+    {
+      "fixtureId": "1379293",
+      "time": {
+        "elapsed": 22,
+        "extra": null
+      },
+      "team": {
+        "id": 45,
+        "name": "Everton",
+        "logo": "https://media.api-sports.io/football/teams/45.png"
+      },
+      "player": {
+        "id": 2932,
+        "name": "J. Pickford"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Card",
+      "detail": "Yellow Card",
+      "comments": "Unsportsmanlike conduct"
+    },
+    {
+      "fixtureId": "1379293",
+      "time": {
+        "elapsed": 27,
+        "extra": null
+      },
+      "team": {
+        "id": 45,
+        "name": "Everton",
+        "logo": "https://media.api-sports.io/football/teams/45.png"
+      },
+      "player": {
+        "id": 18592,
+        "name": "I. Ndiaye"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Var",
+      "detail": "Goal Disallowed - offside",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379293",
+      "time": {
+        "elapsed": 29,
+        "extra": null
+      },
+      "team": {
+        "id": 40,
+        "name": "Liverpool",
+        "logo": "https://media.api-sports.io/football/teams/40.png"
+      },
+      "player": {
+        "id": 306,
+        "name": "M. Salah"
+      },
+      "assist": {
+        "id": 247,
+        "name": "C. Gakpo"
+      },
+      "type": "Goal",
+      "detail": "Normal Goal",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379293",
+      "time": {
+        "elapsed": 54,
+        "extra": null
+      },
+      "team": {
+        "id": 45,
+        "name": "Everton",
+        "logo": "https://media.api-sports.io/football/teams/45.png"
+      },
+      "player": {
+        "id": 125743,
+        "name": "Beto"
+      },
+      "assist": {
+        "id": 148099,
+        "name": "K. Dewsbury-Hall"
+      },
+      "type": "Goal",
+      "detail": "Normal Goal",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379293",
+      "time": {
+        "elapsed": 58,
+        "extra": null
+      },
+      "team": {
+        "id": 40,
+        "name": "Liverpool",
+        "logo": "https://media.api-sports.io/football/teams/40.png"
+      },
+      "player": {
+        "id": 24760,
+        "name": "G. Mamardashvili"
+      },
+      "assist": {
+        "id": 18889,
+        "name": "F. Woodman"
+      },
+      "type": "subst",
+      "detail": "Substitution 1",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379293",
+      "time": {
+        "elapsed": 72,
+        "extra": null
+      },
+      "team": {
+        "id": 40,
+        "name": "Liverpool",
+        "logo": "https://media.api-sports.io/football/teams/40.png"
+      },
+      "player": {
+        "id": 2864,
+        "name": "A. Isak"
+      },
+      "assist": {
+        "id": 452685,
+        "name": "R. Ngumoha"
+      },
+      "type": "subst",
+      "detail": "Substitution 2",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379293",
+      "time": {
+        "elapsed": 73,
+        "extra": null
+      },
+      "team": {
+        "id": 45,
+        "name": "Everton",
+        "logo": "https://media.api-sports.io/football/teams/45.png"
+      },
+      "player": {
+        "id": 125743,
+        "name": "Beto"
+      },
+      "assist": {
+        "id": 343684,
+        "name": "T. Barry"
+      },
+      "type": "subst",
+      "detail": "Substitution 1",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379293",
+      "time": {
+        "elapsed": 80,
+        "extra": null
+      },
+      "team": {
+        "id": 45,
+        "name": "Everton",
+        "logo": "https://media.api-sports.io/football/teams/45.png"
+      },
+      "player": {
+        "id": 18929,
+        "name": "D. McNeil"
+      },
+      "assist": {
+        "id": 334037,
+        "name": "T. George"
+      },
+      "type": "subst",
+      "detail": "Substitution 2",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379293",
+      "time": {
+        "elapsed": 84,
+        "extra": null
+      },
+      "team": {
+        "id": 40,
+        "name": "Liverpool",
+        "logo": "https://media.api-sports.io/football/teams/40.png"
+      },
+      "player": {
+        "id": 203224,
+        "name": "F. Wirtz"
+      },
+      "assist": {
+        "id": 6716,
+        "name": "A. Mac Allister"
+      },
+      "type": "subst",
+      "detail": "Substitution 3",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379293",
+      "time": {
+        "elapsed": 84,
+        "extra": null
+      },
+      "team": {
+        "id": 40,
+        "name": "Liverpool",
+        "logo": "https://media.api-sports.io/football/teams/40.png"
+      },
+      "player": {
+        "id": 247,
+        "name": "C. Gakpo"
+      },
+      "assist": {
+        "id": 152654,
+        "name": "J. Frimpong"
+      },
+      "type": "subst",
+      "detail": "Substitution 4",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379293",
+      "time": {
+        "elapsed": 86,
+        "extra": null
+      },
+      "team": {
+        "id": 40,
+        "name": "Liverpool",
+        "logo": "https://media.api-sports.io/football/teams/40.png"
+      },
+      "player": {
+        "id": 289,
+        "name": "A. Robertson"
+      },
+      "assist": {
+        "id": 206254,
+        "name": "M. Kerkez"
+      },
+      "type": "subst",
+      "detail": "Substitution 5",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379293",
+      "time": {
+        "elapsed": 87,
+        "extra": null
+      },
+      "team": {
+        "id": 45,
+        "name": "Everton",
+        "logo": "https://media.api-sports.io/football/teams/45.png"
+      },
+      "player": {
+        "id": 17661,
+        "name": "J. Branthwaite"
+      },
+      "assist": {
+        "id": 2934,
+        "name": "M. Keane"
+      },
+      "type": "subst",
+      "detail": "Substitution 3",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379293",
+      "time": {
+        "elapsed": 90,
+        "extra": 10
+      },
+      "team": {
+        "id": 40,
+        "name": "Liverpool",
+        "logo": "https://media.api-sports.io/football/teams/40.png"
+      },
+      "player": {
+        "id": 290,
+        "name": "V. van Dijk"
+      },
+      "assist": {
+        "id": 1096,
+        "name": "D. Szoboszlai"
+      },
+      "type": "Goal",
+      "detail": "Normal Goal",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379293",
+      "time": {
+        "elapsed": 90,
+        "extra": 12
+      },
+      "team": {
+        "id": 45,
+        "name": "Everton",
+        "logo": "https://media.api-sports.io/football/teams/45.png"
+      },
+      "player": {
+        "id": 895,
+        "name": "J. Garner"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Card",
+      "detail": "Yellow Card",
+      "comments": "Tripping"
+    },
+    {
+      "fixtureId": "1379297",
+      "time": {
+        "elapsed": 42,
+        "extra": null
+      },
+      "team": {
+        "id": 65,
+        "name": "Nottingham Forest",
+        "logo": "https://media.api-sports.io/football/teams/65.png"
+      },
+      "player": {
+        "id": 363695,
+        "name": "Murillo"
+      },
+      "assist": {
+        "id": 362711,
+        "name": "Cunha"
+      },
+      "type": "subst",
+      "detail": "Substitution 1",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379297",
+      "time": {
+        "elapsed": 45,
+        "extra": 2
+      },
+      "team": {
+        "id": 44,
+        "name": "Burnley",
+        "logo": "https://media.api-sports.io/football/teams/44.png"
+      },
+      "player": {
+        "id": 36927,
+        "name": "Z. Flemming"
+      },
+      "assist": {
+        "id": 375915,
+        "name": "Q. Hartman"
+      },
+      "type": "Goal",
+      "detail": "Normal Goal",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379297",
+      "time": {
+        "elapsed": 46,
+        "extra": null
+      },
+      "team": {
+        "id": 65,
+        "name": "Nottingham Forest",
+        "logo": "https://media.api-sports.io/football/teams/65.png"
+      },
+      "player": {
+        "id": 129695,
+        "name": "D. Bakwa"
+      },
+      "assist": {
+        "id": 9366,
+        "name": "Igor Jesus"
+      },
+      "type": "subst",
+      "detail": "Substitution 2",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379297",
+      "time": {
+        "elapsed": 62,
+        "extra": null
+      },
+      "team": {
+        "id": 65,
+        "name": "Nottingham Forest",
+        "logo": "https://media.api-sports.io/football/teams/65.png"
+      },
+      "player": {
+        "id": 18746,
+        "name": "M. Gibbs-White"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Goal",
+      "detail": "Normal Goal",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379297",
+      "time": {
+        "elapsed": 64,
+        "extra": null
+      },
+      "team": {
+        "id": 44,
+        "name": "Burnley",
+        "logo": "https://media.api-sports.io/football/teams/44.png"
+      },
+      "player": {
+        "id": 37882,
+        "name": "M. Edwards"
+      },
+      "assist": {
+        "id": 98936,
+        "name": "L. Foster"
+      },
+      "type": "subst",
+      "detail": "Substitution 1",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379297",
+      "time": {
+        "elapsed": 69,
+        "extra": null
+      },
+      "team": {
+        "id": 65,
+        "name": "Nottingham Forest",
+        "logo": "https://media.api-sports.io/football/teams/65.png"
+      },
+      "player": {
+        "id": 18746,
+        "name": "M. Gibbs-White"
+      },
+      "assist": {
+        "id": 284428,
+        "name": "O. Hutchinson"
+      },
+      "type": "Goal",
+      "detail": "Normal Goal",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379297",
+      "time": {
+        "elapsed": 75,
+        "extra": null
+      },
+      "team": {
+        "id": 44,
+        "name": "Burnley",
+        "logo": "https://media.api-sports.io/football/teams/44.png"
+      },
+      "player": {
+        "id": 575,
+        "name": "Florentino"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Card",
+      "detail": "Yellow Card",
+      "comments": "Tripping"
+    },
+    {
+      "fixtureId": "1379297",
+      "time": {
+        "elapsed": 76,
+        "extra": null
+      },
+      "team": {
+        "id": 44,
+        "name": "Burnley",
+        "logo": "https://media.api-sports.io/football/teams/44.png"
+      },
+      "player": {
+        "id": 270508,
+        "name": "L. Ugochukwu"
+      },
+      "assist": {
+        "id": 22,
+        "name": "J. Bruun Larsen"
+      },
+      "type": "subst",
+      "detail": "Substitution 2",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379297",
+      "time": {
+        "elapsed": 76,
+        "extra": null
+      },
+      "team": {
+        "id": 65,
+        "name": "Nottingham Forest",
+        "logo": "https://media.api-sports.io/football/teams/65.png"
+      },
+      "player": {
+        "id": 18931,
+        "name": "C. Wood"
+      },
+      "assist": {
+        "id": 19305,
+        "name": "R. Yates"
+      },
+      "type": "subst",
+      "detail": "Substitution 3",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379297",
+      "time": {
+        "elapsed": 77,
+        "extra": null
+      },
+      "team": {
+        "id": 65,
+        "name": "Nottingham Forest",
+        "logo": "https://media.api-sports.io/football/teams/65.png"
+      },
+      "player": {
+        "id": 18746,
+        "name": "M. Gibbs-White"
+      },
+      "assist": {
+        "id": 19305,
+        "name": "R. Yates"
+      },
+      "type": "Goal",
+      "detail": "Normal Goal",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379297",
+      "time": {
+        "elapsed": 80,
+        "extra": null
+      },
+      "team": {
+        "id": 44,
+        "name": "Burnley",
+        "logo": "https://media.api-sports.io/football/teams/44.png"
+      },
+      "player": {
+        "id": 627,
+        "name": "K. Walker"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Card",
+      "detail": "Yellow Card",
+      "comments": "Tripping"
+    },
+    {
+      "fixtureId": "1379297",
+      "time": {
+        "elapsed": 83,
+        "extra": null
+      },
+      "team": {
+        "id": 44,
+        "name": "Burnley",
+        "logo": "https://media.api-sports.io/football/teams/44.png"
+      },
+      "player": {
+        "id": 196855,
+        "name": "J. Anthony"
+      },
+      "assist": {
+        "id": 161621,
+        "name": "L. Tchaouna"
+      },
+      "type": "subst",
+      "detail": "Substitution 3",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379297",
+      "time": {
+        "elapsed": 83,
+        "extra": null
+      },
+      "team": {
+        "id": 44,
+        "name": "Burnley",
+        "logo": "https://media.api-sports.io/football/teams/44.png"
+      },
+      "player": {
+        "id": 575,
+        "name": "Florentino"
+      },
+      "assist": {
+        "id": 20303,
+        "name": "J. Laurent"
+      },
+      "type": "subst",
+      "detail": "Substitution 4",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379297",
+      "time": {
+        "elapsed": 84,
+        "extra": null
+      },
+      "team": {
+        "id": 44,
+        "name": "Burnley",
+        "logo": "https://media.api-sports.io/football/teams/44.png"
+      },
+      "player": {
+        "id": 36927,
+        "name": "Z. Flemming"
+      },
+      "assist": {
+        "id": 138822,
+        "name": "A. Broja"
+      },
+      "type": "subst",
+      "detail": "Substitution 5",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379297",
+      "time": {
+        "elapsed": 88,
+        "extra": null
+      },
+      "team": {
+        "id": 65,
+        "name": "Nottingham Forest",
+        "logo": "https://media.api-sports.io/football/teams/65.png"
+      },
+      "player": {
+        "id": 284428,
+        "name": "O. Hutchinson"
+      },
+      "assist": {
+        "id": 67943,
+        "name": "Morato"
+      },
+      "type": "subst",
+      "detail": "Substitution 4",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379297",
+      "time": {
+        "elapsed": 89,
+        "extra": null
+      },
+      "team": {
+        "id": 65,
+        "name": "Nottingham Forest",
+        "logo": "https://media.api-sports.io/football/teams/65.png"
+      },
+      "player": {
+        "id": 18746,
+        "name": "M. Gibbs-White"
+      },
+      "assist": {
+        "id": 6056,
+        "name": "N. Dominguez"
+      },
+      "type": "subst",
+      "detail": "Substitution 5",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379297",
+      "time": {
+        "elapsed": 90,
+        "extra": 8
+      },
+      "team": {
+        "id": 65,
+        "name": "Nottingham Forest",
+        "logo": "https://media.api-sports.io/football/teams/65.png"
+      },
+      "player": {
+        "id": 9366,
+        "name": "Igor Jesus"
+      },
+      "assist": {
+        "id": 6056,
+        "name": "N. Dominguez"
+      },
+      "type": "Goal",
+      "detail": "Normal Goal",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379289",
+      "time": {
+        "elapsed": 2,
+        "extra": null
+      },
+      "team": {
+        "id": 66,
+        "name": "Aston Villa",
+        "logo": "https://media.api-sports.io/football/teams/66.png"
+      },
+      "player": {
+        "id": 19366,
+        "name": "O. Watkins"
+      },
+      "assist": {
+        "id": 19191,
+        "name": "J. McGinn"
+      },
+      "type": "Goal",
+      "detail": "Normal Goal",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379289",
+      "time": {
+        "elapsed": 9,
+        "extra": null
+      },
+      "team": {
+        "id": 746,
+        "name": "Sunderland",
+        "logo": "https://media.api-sports.io/football/teams/746.png"
+      },
+      "player": {
+        "id": 339201,
+        "name": "C. Rigg"
+      },
+      "assist": {
+        "id": 365331,
+        "name": "N. Sadiki"
+      },
+      "type": "Goal",
+      "detail": "Normal Goal",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379289",
+      "time": {
+        "elapsed": 36,
+        "extra": null
+      },
+      "team": {
+        "id": 66,
+        "name": "Aston Villa",
+        "logo": "https://media.api-sports.io/football/teams/66.png"
+      },
+      "player": {
+        "id": 19366,
+        "name": "O. Watkins"
+      },
+      "assist": {
+        "id": 138816,
+        "name": "I. Maatsen"
+      },
+      "type": "Goal",
+      "detail": "Normal Goal",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379289",
+      "time": {
+        "elapsed": 46,
+        "extra": null
+      },
+      "team": {
+        "id": 66,
+        "name": "Aston Villa",
+        "logo": "https://media.api-sports.io/football/teams/66.png"
+      },
+      "player": {
+        "id": 19170,
+        "name": "M. Rogers"
+      },
+      "assist": {
+        "id": 19366,
+        "name": "O. Watkins"
+      },
+      "type": "Goal",
+      "detail": "Normal Goal",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379289",
+      "time": {
+        "elapsed": 63,
+        "extra": null
+      },
+      "team": {
+        "id": 746,
+        "name": "Sunderland",
+        "logo": "https://media.api-sports.io/football/teams/746.png"
+      },
+      "player": {
+        "id": 6168,
+        "name": "O. Alderete"
+      },
+      "assist": {
+        "id": 55904,
+        "name": "D. Ballard"
+      },
+      "type": "subst",
+      "detail": "Substitution 1",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379289",
+      "time": {
+        "elapsed": 63,
+        "extra": null
+      },
+      "team": {
+        "id": 746,
+        "name": "Sunderland",
+        "logo": "https://media.api-sports.io/football/teams/746.png"
+      },
+      "player": {
+        "id": 22225,
+        "name": "R. Mandava"
+      },
+      "assist": {
+        "id": 119121,
+        "name": "T. Hume"
+      },
+      "type": "subst",
+      "detail": "Substitution 2",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379289",
+      "time": {
+        "elapsed": 63,
+        "extra": null
+      },
+      "team": {
+        "id": 746,
+        "name": "Sunderland",
+        "logo": "https://media.api-sports.io/football/teams/746.png"
+      },
+      "player": {
+        "id": 339201,
+        "name": "C. Rigg"
+      },
+      "assist": {
+        "id": 336659,
+        "name": "C. Talbi"
+      },
+      "type": "subst",
+      "detail": "Substitution 3",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379289",
+      "time": {
+        "elapsed": 66,
+        "extra": null
+      },
+      "team": {
+        "id": 746,
+        "name": "Sunderland",
+        "logo": "https://media.api-sports.io/football/teams/746.png"
+      },
+      "player": {
+        "id": 365331,
+        "name": "N. Sadiki"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Card",
+      "detail": "Yellow Card",
+      "comments": "Roughing"
+    },
+    {
+      "fixtureId": "1379289",
+      "time": {
+        "elapsed": 70,
+        "extra": null
+      },
+      "team": {
+        "id": 66,
+        "name": "Aston Villa",
+        "logo": "https://media.api-sports.io/football/teams/66.png"
+      },
+      "player": {
+        "id": 138816,
+        "name": "I. Maatsen"
+      },
+      "assist": {
+        "id": 2724,
+        "name": "L. Digne"
+      },
+      "type": "subst",
+      "detail": "Substitution 1",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379289",
+      "time": {
+        "elapsed": 70,
+        "extra": null
+      },
+      "team": {
+        "id": 66,
+        "name": "Aston Villa",
+        "logo": "https://media.api-sports.io/football/teams/66.png"
+      },
+      "player": {
+        "id": 2287,
+        "name": "R. Barkley"
+      },
+      "assist": {
+        "id": 19071,
+        "name": "E. Buendia"
+      },
+      "type": "subst",
+      "detail": "Substitution 2",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379289",
+      "time": {
+        "elapsed": 80,
+        "extra": null
+      },
+      "team": {
+        "id": 66,
+        "name": "Aston Villa",
+        "logo": "https://media.api-sports.io/football/teams/66.png"
+      },
+      "player": {
+        "id": 19191,
+        "name": "J. McGinn"
+      },
+      "assist": {
+        "id": 18,
+        "name": "J. Sancho"
+      },
+      "type": "subst",
+      "detail": "Substitution 3",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379289",
+      "time": {
+        "elapsed": 80,
+        "extra": null
+      },
+      "team": {
+        "id": 66,
+        "name": "Aston Villa",
+        "logo": "https://media.api-sports.io/football/teams/66.png"
+      },
+      "player": {
+        "id": 19366,
+        "name": "O. Watkins"
+      },
+      "assist": {
+        "id": 19194,
+        "name": "T. Abraham"
+      },
+      "type": "subst",
+      "detail": "Substitution 4",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379289",
+      "time": {
+        "elapsed": 84,
+        "extra": null
+      },
+      "team": {
+        "id": 746,
+        "name": "Sunderland",
+        "logo": "https://media.api-sports.io/football/teams/746.png"
+      },
+      "player": {
+        "id": 38750,
+        "name": "B. Brobbey"
+      },
+      "assist": {
+        "id": 84087,
+        "name": "W. Isidor"
+      },
+      "type": "subst",
+      "detail": "Substitution 4",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379289",
+      "time": {
+        "elapsed": 86,
+        "extra": null
+      },
+      "team": {
+        "id": 746,
+        "name": "Sunderland",
+        "logo": "https://media.api-sports.io/football/teams/746.png"
+      },
+      "player": {
+        "id": 119121,
+        "name": "T. Hume"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Goal",
+      "detail": "Normal Goal",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379289",
+      "time": {
+        "elapsed": 87,
+        "extra": null
+      },
+      "team": {
+        "id": 746,
+        "name": "Sunderland",
+        "logo": "https://media.api-sports.io/football/teams/746.png"
+      },
+      "player": {
+        "id": 84087,
+        "name": "W. Isidor"
+      },
+      "assist": {
+        "id": 20638,
+        "name": "E. Le Fee"
+      },
+      "type": "Goal",
+      "detail": "Normal Goal",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379289",
+      "time": {
+        "elapsed": 90,
+        "extra": 3
+      },
+      "team": {
+        "id": 66,
+        "name": "Aston Villa",
+        "logo": "https://media.api-sports.io/football/teams/66.png"
+      },
+      "player": {
+        "id": 19194,
+        "name": "T. Abraham"
+      },
+      "assist": {
+        "id": 2724,
+        "name": "L. Digne"
+      },
+      "type": "Goal",
+      "detail": "Normal Goal",
+      "comments": null
+    },
+    {
+      "fixtureId": "1379289",
+      "time": {
+        "elapsed": 90,
+        "extra": 5
+      },
+      "team": {
+        "id": 746,
+        "name": "Sunderland",
+        "logo": "https://media.api-sports.io/football/teams/746.png"
+      },
+      "player": {
+        "id": 1146,
+        "name": "N. Mukiele"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Card",
+      "detail": "Yellow Card",
+      "comments": "Tripping"
+    },
+    {
+      "fixtureId": "1379289",
+      "time": {
+        "elapsed": 90,
+        "extra": 8
+      },
+      "team": {
+        "id": 66,
+        "name": "Aston Villa",
+        "logo": "https://media.api-sports.io/football/teams/66.png"
+      },
+      "player": {
+        "id": 162714,
+        "name": "A. Onana"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Card",
+      "detail": "Yellow Card",
+      "comments": "Unsportsmanlike conduct"
+    },
+    {
+      "fixtureId": "1379289",
+      "time": {
+        "elapsed": 90,
+        "extra": 8
+      },
+      "team": {
+        "id": 746,
+        "name": "Sunderland",
+        "logo": "https://media.api-sports.io/football/teams/746.png"
+      },
+      "player": {
+        "id": 55904,
+        "name": "D. Ballard"
+      },
+      "assist": {
+        "id": null,
+        "name": null
+      },
+      "type": "Card",
+      "detail": "Yellow Card",
+      "comments": "Unsportsmanlike conduct"
     }
   ]
 }

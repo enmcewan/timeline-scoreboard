@@ -13,8 +13,78 @@
   "response": [
     {
       "fixture": {
-        "id": 1378969,
+        "id": 1379295,
         "referee": "A. Taylor",
+        "timezone": "UTC",
+        "date": "2026-04-19T15:30:00+00:00",
+        "timestamp": 1776612600,
+        "periods": {
+          "first": 1776612600,
+          "second": 1776616200
+        },
+        "venue": {
+          "id": 555,
+          "name": "Etihad Stadium",
+          "city": "Manchester"
+        },
+        "status": {
+          "long": "Second Half",
+          "short": "2H",
+          "elapsed": 90,
+          "extra": null
+        }
+      },
+      "league": {
+        "id": 39,
+        "name": "Premier League",
+        "country": "England",
+        "logo": "https://media.api-sports.io/football/leagues/39.png",
+        "flag": "https://media.api-sports.io/flags/gb-eng.svg",
+        "season": 2025,
+        "round": "Regular Season - 33",
+        "standings": true
+      },
+      "teams": {
+        "home": {
+          "id": 50,
+          "name": "Manchester City",
+          "logo": "https://media.api-sports.io/football/teams/50.png",
+          "winner": true
+        },
+        "away": {
+          "id": 42,
+          "name": "Arsenal",
+          "logo": "https://media.api-sports.io/football/teams/42.png",
+          "winner": false
+        }
+      },
+      "goals": {
+        "home": 2,
+        "away": 1
+      },
+      "score": {
+        "halftime": {
+          "home": 1,
+          "away": 1
+        },
+        "fulltime": {
+          "home": null,
+          "away": null
+        },
+        "extratime": {
+          "home": null,
+          "away": null
+        },
+        "penalty": {
+          "home": null,
+          "away": null
+        }
+      }
+    },
+    {
+      "fixture": {
+        "id": 1378969,
+        "referee": "Anthony Taylor, England",
         "timezone": "UTC",
         "date": "2025-08-15T19:00:00+00:00",
         "timestamp": 1755284400,
@@ -84,7 +154,7 @@
     {
       "fixture": {
         "id": 1378970,
-        "referee": "C. Pawson",
+        "referee": "Craig Pawson, England",
         "timezone": "UTC",
         "date": "2025-08-16T11:30:00+00:00",
         "timestamp": 1755343800,
@@ -154,7 +224,7 @@
     {
       "fixture": {
         "id": 1378974,
-        "referee": "M. Oliver",
+        "referee": "Michael Oliver, England",
         "timezone": "UTC",
         "date": "2025-08-16T14:00:00+00:00",
         "timestamp": 1755352800,
@@ -224,7 +294,7 @@
     {
       "fixture": {
         "id": 1378971,
-        "referee": "S. Barrott",
+        "referee": "Samuel Barrott, England",
         "timezone": "UTC",
         "date": "2025-08-16T14:00:00+00:00",
         "timestamp": 1755352800,
@@ -294,7 +364,7 @@
     {
       "fixture": {
         "id": 1378973,
-        "referee": "R. Jones",
+        "referee": "Robert Jones, England",
         "timezone": "UTC",
         "date": "2025-08-16T14:00:00+00:00",
         "timestamp": 1755352800,
@@ -364,7 +434,7 @@
     {
       "fixture": {
         "id": 1378975,
-        "referee": "J. Gillett",
+        "referee": "Jarred Gillett, Australia",
         "timezone": "UTC",
         "date": "2025-08-16T16:30:00+00:00",
         "timestamp": 1755361800,
@@ -434,7 +504,7 @@
     {
       "fixture": {
         "id": 1378976,
-        "referee": "D. England",
+        "referee": "Darren England, England",
         "timezone": "UTC",
         "date": "2025-08-17T13:00:00+00:00",
         "timestamp": 1755435600,
@@ -504,7 +574,7 @@
     {
       "fixture": {
         "id": 1378972,
-        "referee": "P. Bankes",
+        "referee": "Peter Bankes, England",
         "timezone": "UTC",
         "date": "2025-08-17T13:00:00+00:00",
         "timestamp": 1755435600,
@@ -574,7 +644,7 @@
     {
       "fixture": {
         "id": 1378977,
-        "referee": "S. Hooper",
+        "referee": "Simon Hooper, England",
         "timezone": "UTC",
         "date": "2025-08-17T15:30:00+00:00",
         "timestamp": 1755444600,
@@ -13314,7 +13384,7 @@
     {
       "fixture": {
         "id": 1379159,
-        "referee": "S. Hooper",
+        "referee": "Simon Hooper, England",
         "timezone": "UTC",
         "date": "2026-01-03T12:30:00+00:00",
         "timestamp": 1767443400,
@@ -13594,7 +13664,7 @@
     {
       "fixture": {
         "id": 1379164,
-        "referee": "J. Gillett",
+        "referee": "Jarred Gillett, Australia",
         "timezone": "UTC",
         "date": "2026-01-04T12:30:00+00:00",
         "timestamp": 1767529800,
@@ -14644,7 +14714,7 @@
     {
       "fixture": {
         "id": 1379169,
-        "referee": "A. Taylor",
+        "referee": "Anthony Taylor, England",
         "timezone": "UTC",
         "date": "2026-01-08T20:00:00+00:00",
         "timestamp": 1767902400,
@@ -14714,7 +14784,7 @@
     {
       "fixture": {
         "id": 1379184,
-        "referee": "A. Taylor",
+        "referee": "Anthony Taylor, England",
         "timezone": "UTC",
         "date": "2026-01-17T12:30:00+00:00",
         "timestamp": 1768653000,
@@ -14784,7 +14854,7 @@
     {
       "fixture": {
         "id": 1379183,
-        "referee": "A. Madley",
+        "referee": "Andy Madley, England",
         "timezone": "UTC",
         "date": "2026-01-17T15:00:00+00:00",
         "timestamp": 1768662000,
@@ -14854,7 +14924,7 @@
     {
       "fixture": {
         "id": 1379187,
-        "referee": "J. Gillett",
+        "referee": "Jarred Gillett, Australia",
         "timezone": "UTC",
         "date": "2026-01-17T15:00:00+00:00",
         "timestamp": 1768662000,
@@ -14924,7 +14994,7 @@
     {
       "fixture": {
         "id": 1379181,
-        "referee": "J. Brooks",
+        "referee": "John Brooks, England",
         "timezone": "UTC",
         "date": "2026-01-17T15:00:00+00:00",
         "timestamp": 1768662000,
@@ -14994,7 +15064,7 @@
     {
       "fixture": {
         "id": 1379182,
-        "referee": "C. Kavanagh",
+        "referee": "Chris Kavanagh, England",
         "timezone": "UTC",
         "date": "2026-01-17T15:00:00+00:00",
         "timestamp": 1768662000,
@@ -15064,7 +15134,7 @@
     {
       "fixture": {
         "id": 1379186,
-        "referee": "R. Jones",
+        "referee": "Robert Jones, England",
         "timezone": "UTC",
         "date": "2026-01-17T15:00:00+00:00",
         "timestamp": 1768662000,
@@ -15134,7 +15204,7 @@
     {
       "fixture": {
         "id": 1379185,
-        "referee": "M. Oliver",
+        "referee": "Michael Oliver, England",
         "timezone": "UTC",
         "date": "2026-01-17T17:30:00+00:00",
         "timestamp": 1768671000,
@@ -15204,7 +15274,7 @@
     {
       "fixture": {
         "id": 1379188,
-        "referee": "S. Barrott",
+        "referee": "Samuel Barrott, England",
         "timezone": "UTC",
         "date": "2026-01-18T14:00:00+00:00",
         "timestamp": 1768744800,
@@ -15274,7 +15344,7 @@
     {
       "fixture": {
         "id": 1379179,
-        "referee": "T. Harrington",
+        "referee": "Tony Harrington, England",
         "timezone": "UTC",
         "date": "2026-01-18T16:30:00+00:00",
         "timestamp": 1768753800,
@@ -15344,7 +15414,7 @@
     {
       "fixture": {
         "id": 1379180,
-        "referee": "P. Tierney",
+        "referee": "Paul Tierney, England",
         "timezone": "UTC",
         "date": "2026-01-19T20:00:00+00:00",
         "timestamp": 1768852800,
@@ -15414,7 +15484,7 @@
     {
       "fixture": {
         "id": 1379198,
-        "referee": "T. Bramall",
+        "referee": "Thomas Bramall, England",
         "timezone": "UTC",
         "date": "2026-01-24T12:30:00+00:00",
         "timestamp": 1769257800,
@@ -15484,7 +15554,7 @@
     {
       "fixture": {
         "id": 1379195,
-        "referee": "M. Oliver",
+        "referee": "Michael Oliver, England",
         "timezone": "UTC",
         "date": "2026-01-24T15:00:00+00:00",
         "timestamp": 1769266800,
@@ -15554,7 +15624,7 @@
     {
       "fixture": {
         "id": 1379192,
-        "referee": "P. Bankes",
+        "referee": "Peter Bankes, England",
         "timezone": "UTC",
         "date": "2026-01-24T15:00:00+00:00",
         "timestamp": 1769266800,
@@ -15624,7 +15694,7 @@
     {
       "fixture": {
         "id": 1379196,
-        "referee": "F. Hallam",
+        "referee": "Farai Hallam, England",
         "timezone": "UTC",
         "date": "2026-01-24T15:00:00+00:00",
         "timestamp": 1769266800,
@@ -15694,7 +15764,7 @@
     {
       "fixture": {
         "id": 1379190,
-        "referee": "M. Salisbury",
+        "referee": "Michael Salisbury, England",
         "timezone": "UTC",
         "date": "2026-01-24T17:30:00+00:00",
         "timestamp": 1769275800,
@@ -15764,7 +15834,7 @@
     {
       "fixture": {
         "id": 1379197,
-        "referee": "J. Gillett",
+        "referee": "Jarred Gillett, Australia",
         "timezone": "UTC",
         "date": "2026-01-25T14:00:00+00:00",
         "timestamp": 1769349600,
@@ -15834,7 +15904,7 @@
     {
       "fixture": {
         "id": 1379193,
-        "referee": "D. England",
+        "referee": "Darren England, England",
         "timezone": "UTC",
         "date": "2026-01-25T14:00:00+00:00",
         "timestamp": 1769349600,
@@ -15904,7 +15974,7 @@
     {
       "fixture": {
         "id": 1379191,
-        "referee": "S. Barrott",
+        "referee": "Samuel Barrott, England",
         "timezone": "UTC",
         "date": "2026-01-25T14:00:00+00:00",
         "timestamp": 1769349600,
@@ -15974,7 +16044,7 @@
     {
       "fixture": {
         "id": 1379189,
-        "referee": "C. Pawson",
+        "referee": "Craig Pawson, England",
         "timezone": "UTC",
         "date": "2026-01-25T16:30:00+00:00",
         "timestamp": 1769358600,
@@ -16044,7 +16114,7 @@
     {
       "fixture": {
         "id": 1379194,
-        "referee": "S. Hooper",
+        "referee": "Simon Hooper, England",
         "timezone": "UTC",
         "date": "2026-01-26T20:00:00+00:00",
         "timestamp": 1769457600,
@@ -16114,7 +16184,7 @@
     {
       "fixture": {
         "id": 1379208,
-        "referee": "M. Oliver",
+        "referee": "Michael Oliver, England",
         "timezone": "UTC",
         "date": "2026-01-31T15:00:00+00:00",
         "timestamp": 1769871600,
@@ -16184,7 +16254,7 @@
     {
       "fixture": {
         "id": 1379200,
-        "referee": "C. Kavanagh",
+        "referee": "Chris Kavanagh, England",
         "timezone": "UTC",
         "date": "2026-01-31T15:00:00+00:00",
         "timestamp": 1769871600,
@@ -16254,7 +16324,7 @@
     {
       "fixture": {
         "id": 1379202,
-        "referee": "S. Attwell",
+        "referee": "Stuart Attwell, England",
         "timezone": "UTC",
         "date": "2026-01-31T15:00:00+00:00",
         "timestamp": 1769871600,
@@ -16324,7 +16394,7 @@
     {
       "fixture": {
         "id": 1379201,
-        "referee": "A. Taylor",
+        "referee": "Anthony Taylor, England",
         "timezone": "UTC",
         "date": "2026-01-31T17:30:00+00:00",
         "timestamp": 1769880600,
@@ -16394,7 +16464,7 @@
     {
       "fixture": {
         "id": 1379203,
-        "referee": "S. Hooper",
+        "referee": "Simon Hooper, England",
         "timezone": "UTC",
         "date": "2026-01-31T20:00:00+00:00",
         "timestamp": 1769889600,
@@ -16464,7 +16534,7 @@
     {
       "fixture": {
         "id": 1379204,
-        "referee": "J. Brooks",
+        "referee": "John Brooks, England",
         "timezone": "UTC",
         "date": "2026-02-01T14:00:00+00:00",
         "timestamp": 1769954400,
@@ -16534,7 +16604,7 @@
     {
       "fixture": {
         "id": 1379205,
-        "referee": "T. Harrington",
+        "referee": "Michael Salisbury, England",
         "timezone": "UTC",
         "date": "2026-02-01T14:00:00+00:00",
         "timestamp": 1769954400,
@@ -16604,7 +16674,7 @@
     {
       "fixture": {
         "id": 1379199,
-        "referee": "T. Robinson",
+        "referee": "Tim Robinson, England",
         "timezone": "UTC",
         "date": "2026-02-01T14:00:00+00:00",
         "timestamp": 1769954400,
@@ -16674,7 +16744,7 @@
     {
       "fixture": {
         "id": 1379207,
-        "referee": "R. Jones",
+        "referee": "Robert Jones, England",
         "timezone": "UTC",
         "date": "2026-02-01T16:30:00+00:00",
         "timestamp": 1769963400,
@@ -16744,7 +16814,7 @@
     {
       "fixture": {
         "id": 1379206,
-        "referee": "P. Tierney",
+        "referee": "Paul Tierney, England",
         "timezone": "UTC",
         "date": "2026-02-02T20:00:00+00:00",
         "timestamp": 1770062400,
@@ -16814,7 +16884,7 @@
     {
       "fixture": {
         "id": 1379214,
-        "referee": "P. Bankes",
+        "referee": "Peter Bankes, England",
         "timezone": "UTC",
         "date": "2026-02-06T20:00:00+00:00",
         "timestamp": 1770408000,
@@ -16884,7 +16954,7 @@
     {
       "fixture": {
         "id": 1379216,
-        "referee": "M. Oliver",
+        "referee": "Michael Oliver, England",
         "timezone": "UTC",
         "date": "2026-02-07T12:30:00+00:00",
         "timestamp": 1770467400,
@@ -16954,7 +17024,7 @@
     {
       "fixture": {
         "id": 1379210,
-        "referee": "A. Taylor",
+        "referee": "Anthony Taylor, England",
         "timezone": "UTC",
         "date": "2026-02-07T15:00:00+00:00",
         "timestamp": 1770476400,
@@ -17024,7 +17094,7 @@
     {
       "fixture": {
         "id": 1379213,
-        "referee": "S. Attwell",
+        "referee": "Stuart Attwell, England",
         "timezone": "UTC",
         "date": "2026-02-07T15:00:00+00:00",
         "timestamp": 1770476400,
@@ -17094,7 +17164,7 @@
     {
       "fixture": {
         "id": 1379218,
-        "referee": "J. Gillett",
+        "referee": "Jarred Gillett, Australia",
         "timezone": "UTC",
         "date": "2026-02-07T15:00:00+00:00",
         "timestamp": 1770476400,
@@ -17164,7 +17234,7 @@
     {
       "fixture": {
         "id": 1379209,
-        "referee": "S. Barrott",
+        "referee": "Samuel Barrott, England",
         "timezone": "UTC",
         "date": "2026-02-07T15:00:00+00:00",
         "timestamp": 1770476400,
@@ -17234,7 +17304,7 @@
     {
       "fixture": {
         "id": 1379212,
-        "referee": "D. England",
+        "referee": "Darren England, England",
         "timezone": "UTC",
         "date": "2026-02-07T15:00:00+00:00",
         "timestamp": 1770476400,
@@ -17304,7 +17374,7 @@
     {
       "fixture": {
         "id": 1379217,
-        "referee": "A. Madley",
+        "referee": "Andy Madley, England",
         "timezone": "UTC",
         "date": "2026-02-07T17:30:00+00:00",
         "timestamp": 1770485400,
@@ -17374,7 +17444,7 @@
     {
       "fixture": {
         "id": 1379211,
-        "referee": "T. Bramall",
+        "referee": "Thomas Bramall, England",
         "timezone": "UTC",
         "date": "2026-02-08T14:00:00+00:00",
         "timestamp": 1770559200,
@@ -17444,7 +17514,7 @@
     {
       "fixture": {
         "id": 1379215,
-        "referee": "C. Pawson",
+        "referee": "Craig Pawson, England",
         "timezone": "UTC",
         "date": "2026-02-08T16:30:00+00:00",
         "timestamp": 1770568200,
@@ -17514,7 +17584,7 @@
     {
       "fixture": {
         "id": 1379223,
-        "referee": "A. Madley",
+        "referee": "Andy Madley, England",
         "timezone": "UTC",
         "date": "2026-02-10T19:30:00+00:00",
         "timestamp": 1770751800,
@@ -17584,7 +17654,7 @@
     {
       "fixture": {
         "id": 1379227,
-        "referee": "A. Taylor",
+        "referee": "Anthony Taylor, England",
         "timezone": "UTC",
         "date": "2026-02-10T19:30:00+00:00",
         "timestamp": 1770751800,
@@ -17654,7 +17724,7 @@
     {
       "fixture": {
         "id": 1379221,
-        "referee": "R. Jones",
+        "referee": "Robert Jones, England",
         "timezone": "UTC",
         "date": "2026-02-10T19:30:00+00:00",
         "timestamp": 1770751800,
@@ -17724,7 +17794,7 @@
     {
       "fixture": {
         "id": 1379228,
-        "referee": "S. Hooper",
+        "referee": "Simon Hooper, England",
         "timezone": "UTC",
         "date": "2026-02-10T20:15:00+00:00",
         "timestamp": 1770754500,
@@ -17794,7 +17864,7 @@
     {
       "fixture": {
         "id": 1379224,
-        "referee": "P. Tierney",
+        "referee": "Paul Tierney, England",
         "timezone": "UTC",
         "date": "2026-02-11T19:30:00+00:00",
         "timestamp": 1770838200,
@@ -17864,7 +17934,7 @@
     {
       "fixture": {
         "id": 1379222,
-        "referee": "F. Hallam",
+        "referee": "Farai Hallam, England",
         "timezone": "UTC",
         "date": "2026-02-11T19:30:00+00:00",
         "timestamp": 1770838200,
@@ -17934,7 +18004,7 @@
     {
       "fixture": {
         "id": 1379225,
-        "referee": "T. Robinson",
+        "referee": "Tim Robinson, England",
         "timezone": "UTC",
         "date": "2026-02-11T19:30:00+00:00",
         "timestamp": 1770838200,
@@ -18004,7 +18074,7 @@
     {
       "fixture": {
         "id": 1379219,
-        "referee": "P. Bankes",
+        "referee": "Peter Bankes, England",
         "timezone": "UTC",
         "date": "2026-02-11T19:30:00+00:00",
         "timestamp": 1770838200,
@@ -18074,7 +18144,7 @@
     {
       "fixture": {
         "id": 1379226,
-        "referee": "C. Kavanagh",
+        "referee": "Chris Kavanagh, England",
         "timezone": "UTC",
         "date": "2026-02-11T20:15:00+00:00",
         "timestamp": 1770840900,
@@ -18144,7 +18214,7 @@
     {
       "fixture": {
         "id": 1379220,
-        "referee": "J. Brooks",
+        "referee": "John Brooks, England",
         "timezone": "UTC",
         "date": "2026-02-12T20:00:00+00:00",
         "timestamp": 1770926400,
@@ -18214,7 +18284,7 @@
     {
       "fixture": {
         "id": 1379278,
-        "referee": "P. Tierney",
+        "referee": "Paul Tierney, England",
         "timezone": "UTC",
         "date": "2026-02-18T20:00:00+00:00",
         "timestamp": 1771444800,
@@ -18284,7 +18354,7 @@
     {
       "fixture": {
         "id": 1379231,
-        "referee": "L. Smith",
+        "referee": "Lewis Smith, England",
         "timezone": "UTC",
         "date": "2026-02-21T15:00:00+00:00",
         "timestamp": 1771686000,
@@ -18354,7 +18424,7 @@
     {
       "fixture": {
         "id": 1379230,
-        "referee": "J. Gillett",
+        "referee": "Jarred Gillett, Australia",
         "timezone": "UTC",
         "date": "2026-02-21T15:00:00+00:00",
         "timestamp": 1771686000,
@@ -18424,7 +18494,7 @@
     {
       "fixture": {
         "id": 1379229,
-        "referee": "M. Oliver",
+        "referee": "Michael Oliver, England",
         "timezone": "UTC",
         "date": "2026-02-21T15:00:00+00:00",
         "timestamp": 1771686000,
@@ -18494,7 +18564,7 @@
     {
       "fixture": {
         "id": 1379238,
-        "referee": "S. Barrott",
+        "referee": "Samuel Barrott, England",
         "timezone": "UTC",
         "date": "2026-02-21T17:30:00+00:00",
         "timestamp": 1771695000,
@@ -18564,7 +18634,7 @@
     {
       "fixture": {
         "id": 1379234,
-        "referee": "T. Bramall",
+        "referee": "Thomas Bramall, England",
         "timezone": "UTC",
         "date": "2026-02-21T20:00:00+00:00",
         "timestamp": 1771704000,
@@ -18634,7 +18704,7 @@
     {
       "fixture": {
         "id": 1379232,
-        "referee": "T. Kirk",
+        "referee": "Thomas Kirk, England",
         "timezone": "UTC",
         "date": "2026-02-22T14:00:00+00:00",
         "timestamp": 1771768800,
@@ -18704,7 +18774,7 @@
     {
       "fixture": {
         "id": 1379235,
-        "referee": "A. Taylor",
+        "referee": "Anthony Taylor, England",
         "timezone": "UTC",
         "date": "2026-02-22T14:00:00+00:00",
         "timestamp": 1771768800,
@@ -18774,7 +18844,7 @@
     {
       "fixture": {
         "id": 1379236,
-        "referee": "C. Pawson",
+        "referee": "Craig Pawson, England",
         "timezone": "UTC",
         "date": "2026-02-22T14:00:00+00:00",
         "timestamp": 1771768800,
@@ -18844,7 +18914,7 @@
     {
       "fixture": {
         "id": 1379237,
-        "referee": "P. Bankes",
+        "referee": "Peter Bankes, England",
         "timezone": "UTC",
         "date": "2026-02-22T16:30:00+00:00",
         "timestamp": 1771777800,
@@ -18914,7 +18984,7 @@
     {
       "fixture": {
         "id": 1379233,
-        "referee": "D. England",
+        "referee": "Darren England, England",
         "timezone": "UTC",
         "date": "2026-02-23T20:00:00+00:00",
         "timestamp": 1771876800,
@@ -18984,7 +19054,7 @@
     {
       "fixture": {
         "id": 1379248,
-        "referee": "C. Pawson",
+        "referee": "Craig Pawson, England",
         "timezone": "UTC",
         "date": "2026-02-27T20:00:00+00:00",
         "timestamp": 1772222400,
@@ -19054,7 +19124,7 @@
     {
       "fixture": {
         "id": 1379240,
-        "referee": "J. Gillett",
+        "referee": "Jarred Gillett, Australia",
         "timezone": "UTC",
         "date": "2026-02-28T12:30:00+00:00",
         "timestamp": 1772281800,
@@ -19124,7 +19194,7 @@
     {
       "fixture": {
         "id": 1379247,
-        "referee": "S. Attwell",
+        "referee": "Stuart Attwell, England",
         "timezone": "UTC",
         "date": "2026-02-28T15:00:00+00:00",
         "timestamp": 1772290800,
@@ -19194,7 +19264,7 @@
     {
       "fixture": {
         "id": 1379245,
-        "referee": "T. Robinson",
+        "referee": "Tim Robinson, England",
         "timezone": "UTC",
         "date": "2026-02-28T15:00:00+00:00",
         "timestamp": 1772290800,
@@ -19264,7 +19334,7 @@
     {
       "fixture": {
         "id": 1379242,
-        "referee": "S. Barrott",
+        "referee": "Samuel Barrott, England",
         "timezone": "UTC",
         "date": "2026-02-28T15:00:00+00:00",
         "timestamp": 1772290800,
@@ -19334,7 +19404,7 @@
     {
       "fixture": {
         "id": 1379244,
-        "referee": "P. Bankes",
+        "referee": "Peter Bankes, England",
         "timezone": "UTC",
         "date": "2026-02-28T17:30:00+00:00",
         "timestamp": 1772299800,
@@ -19404,7 +19474,7 @@
     {
       "fixture": {
         "id": 1379246,
-        "referee": "C. Kavanagh",
+        "referee": "Chris Kavanagh, England",
         "timezone": "UTC",
         "date": "2026-03-01T14:00:00+00:00",
         "timestamp": 1772373600,
@@ -19474,7 +19544,7 @@
     {
       "fixture": {
         "id": 1379243,
-        "referee": "T. Bramall",
+        "referee": "Thomas Bramall, England",
         "timezone": "UTC",
         "date": "2026-03-01T14:00:00+00:00",
         "timestamp": 1772373600,
@@ -19544,7 +19614,7 @@
     {
       "fixture": {
         "id": 1379241,
-        "referee": "A. Madley",
+        "referee": "Andy Madley, England",
         "timezone": "UTC",
         "date": "2026-03-01T14:00:00+00:00",
         "timestamp": 1772373600,
@@ -19614,7 +19684,7 @@
     {
       "fixture": {
         "id": 1379239,
-        "referee": "D. England",
+        "referee": "Darren England, England",
         "timezone": "UTC",
         "date": "2026-03-01T16:30:00+00:00",
         "timestamp": 1772382600,
@@ -19684,7 +19754,7 @@
     {
       "fixture": {
         "id": 1379250,
-        "referee": "C. Pawson",
+        "referee": "Craig Pawson, England",
         "timezone": "UTC",
         "date": "2026-03-03T19:30:00+00:00",
         "timestamp": 1772566200,
@@ -19754,7 +19824,7 @@
     {
       "fixture": {
         "id": 1379252,
-        "referee": "T. Robinson",
+        "referee": "Tim Robinson, England",
         "timezone": "UTC",
         "date": "2026-03-03T19:30:00+00:00",
         "timestamp": 1772566200,
@@ -19824,7 +19894,7 @@
     {
       "fixture": {
         "id": 1379254,
-        "referee": "S. Attwell",
+        "referee": "Stuart Attwell, England",
         "timezone": "UTC",
         "date": "2026-03-03T19:30:00+00:00",
         "timestamp": 1772566200,
@@ -19894,7 +19964,7 @@
     {
       "fixture": {
         "id": 1379258,
-        "referee": "T. Bramall",
+        "referee": "Thomas Bramall, England",
         "timezone": "UTC",
         "date": "2026-03-03T20:15:00+00:00",
         "timestamp": 1772568900,
@@ -19964,7 +20034,7 @@
     {
       "fixture": {
         "id": 1379253,
-        "referee": "M. Donohue",
+        "referee": "Matt Donohue, England",
         "timezone": "UTC",
         "date": "2026-03-04T19:30:00+00:00",
         "timestamp": 1772652600,
@@ -20034,7 +20104,7 @@
     {
       "fixture": {
         "id": 1379255,
-        "referee": "D. England",
+        "referee": "Darren England, England",
         "timezone": "UTC",
         "date": "2026-03-04T19:30:00+00:00",
         "timestamp": 1772652600,
@@ -20104,7 +20174,7 @@
     {
       "fixture": {
         "id": 1379251,
-        "referee": "C. Kavanagh",
+        "referee": "Chris Kavanagh, England",
         "timezone": "UTC",
         "date": "2026-03-04T19:30:00+00:00",
         "timestamp": 1772652600,
@@ -20174,7 +20244,7 @@
     {
       "fixture": {
         "id": 1379249,
-        "referee": "J. Gillett",
+        "referee": "Jarred Gillett, Australia",
         "timezone": "UTC",
         "date": "2026-03-04T19:30:00+00:00",
         "timestamp": 1772652600,
@@ -20244,7 +20314,7 @@
     {
       "fixture": {
         "id": 1379256,
-        "referee": "P. Bankes",
+        "referee": "Peter Bankes, England",
         "timezone": "UTC",
         "date": "2026-03-04T20:15:00+00:00",
         "timestamp": 1772655300,
@@ -20314,7 +20384,7 @@
     {
       "fixture": {
         "id": 1379257,
-        "referee": "A. Madley",
+        "referee": "Andy Madley, England",
         "timezone": "UTC",
         "date": "2026-03-05T20:00:00+00:00",
         "timestamp": 1772740800,
@@ -20384,7 +20454,7 @@
     {
       "fixture": {
         "id": 1379261,
-        "referee": "P. Bankes",
+        "referee": "Peter Bankes, England",
         "timezone": "UTC",
         "date": "2026-03-14T15:00:00+00:00",
         "timestamp": 1773500400,
@@ -20454,7 +20524,7 @@
     {
       "fixture": {
         "id": 1379267,
-        "referee": "T. Kirk",
+        "referee": "Thomas Kirk, England",
         "timezone": "UTC",
         "date": "2026-03-14T15:00:00+00:00",
         "timestamp": 1773500400,
@@ -20524,7 +20594,7 @@
     {
       "fixture": {
         "id": 1379259,
-        "referee": "A. Madley",
+        "referee": "Andy Madley, England",
         "timezone": "UTC",
         "date": "2026-03-14T17:30:00+00:00",
         "timestamp": 1773509400,
@@ -20594,7 +20664,7 @@
     {
       "fixture": {
         "id": 1379262,
-        "referee": "P. Tierney",
+        "referee": "Paul Tierney, England",
         "timezone": "UTC",
         "date": "2026-03-14T17:30:00+00:00",
         "timestamp": 1773509400,
@@ -20664,7 +20734,7 @@
     {
       "fixture": {
         "id": 1379268,
-        "referee": "M. Oliver",
+        "referee": "Michael Oliver, England",
         "timezone": "UTC",
         "date": "2026-03-14T20:00:00+00:00",
         "timestamp": 1773518400,
@@ -20734,7 +20804,7 @@
     {
       "fixture": {
         "id": 1379265,
-        "referee": "A. Taylor",
+        "referee": "Anthony Taylor, England",
         "timezone": "UTC",
         "date": "2026-03-15T14:00:00+00:00",
         "timestamp": 1773583200,
@@ -20804,7 +20874,7 @@
     {
       "fixture": {
         "id": 1379263,
-        "referee": "T. Bramall",
+        "referee": "Thomas Bramall, England",
         "timezone": "UTC",
         "date": "2026-03-15T14:00:00+00:00",
         "timestamp": 1773583200,
@@ -20874,7 +20944,7 @@
     {
       "fixture": {
         "id": 1379266,
-        "referee": "S. Barrott",
+        "referee": "Samuel Barrott, England",
         "timezone": "UTC",
         "date": "2026-03-15T14:00:00+00:00",
         "timestamp": 1773583200,
@@ -20944,7 +21014,7 @@
     {
       "fixture": {
         "id": 1379264,
-        "referee": "C. Kavanagh",
+        "referee": "Chris Kavanagh, England",
         "timezone": "UTC",
         "date": "2026-03-15T16:30:00+00:00",
         "timestamp": 1773592200,
@@ -21014,7 +21084,7 @@
     {
       "fixture": {
         "id": 1379260,
-        "referee": "S. Attwell",
+        "referee": "Stuart Attwell, England",
         "timezone": "UTC",
         "date": "2026-03-16T20:00:00+00:00",
         "timestamp": 1773691200,
@@ -21084,7 +21154,7 @@
     {
       "fixture": {
         "id": 1379270,
-        "referee": "S. Attwell",
+        "referee": "Stuart Attwell, England",
         "timezone": "UTC",
         "date": "2026-03-20T20:00:00+00:00",
         "timestamp": 1774036800,
@@ -21154,7 +21224,7 @@
     {
       "fixture": {
         "id": 1379271,
-        "referee": "D. England",
+        "referee": "Darren England, England",
         "timezone": "UTC",
         "date": "2026-03-21T12:30:00+00:00",
         "timestamp": 1774096200,
@@ -21224,7 +21294,7 @@
     {
       "fixture": {
         "id": 1379273,
-        "referee": "C. Kavanagh",
+        "referee": "Chris Kavanagh, England",
         "timezone": "UTC",
         "date": "2026-03-21T15:00:00+00:00",
         "timestamp": 1774105200,
@@ -21294,7 +21364,7 @@
     {
       "fixture": {
         "id": 1379272,
-        "referee": "S. Barrott",
+        "referee": "Samuel Barrott, England",
         "timezone": "UTC",
         "date": "2026-03-21T17:30:00+00:00",
         "timestamp": 1774114200,
@@ -21364,7 +21434,7 @@
     {
       "fixture": {
         "id": 1379274,
-        "referee": "J. Gillett",
+        "referee": "Jarred Gillett, Australia",
         "timezone": "UTC",
         "date": "2026-03-21T20:00:00+00:00",
         "timestamp": 1774123200,
@@ -21434,7 +21504,7 @@
     {
       "fixture": {
         "id": 1379276,
-        "referee": "A. Taylor",
+        "referee": "Anthony Taylor, England",
         "timezone": "UTC",
         "date": "2026-03-22T12:00:00+00:00",
         "timestamp": 1774180800,
@@ -21504,7 +21574,7 @@
     {
       "fixture": {
         "id": 1379277,
-        "referee": "M. Oliver",
+        "referee": "Michael Oliver, England",
         "timezone": "UTC",
         "date": "2026-03-22T14:15:00+00:00",
         "timestamp": 1774188900,
@@ -21574,7 +21644,7 @@
     {
       "fixture": {
         "id": 1379269,
-        "referee": "P. Tierney",
+        "referee": "Paul Tierney, England",
         "timezone": "UTC",
         "date": "2026-03-22T14:15:00+00:00",
         "timestamp": 1774188900,
@@ -21644,7 +21714,7 @@
     {
       "fixture": {
         "id": 1379288,
-        "referee": "J. Gillett",
+        "referee": "Jarred Gillett, Australia",
         "timezone": "UTC",
         "date": "2026-04-10T19:00:00+00:00",
         "timestamp": 1775847600,
@@ -21714,7 +21784,7 @@
     {
       "fixture": {
         "id": 1379279,
-        "referee": "M. Oliver",
+        "referee": "Michael Oliver, England",
         "timezone": "UTC",
         "date": "2026-04-11T11:30:00+00:00",
         "timestamp": 1775907000,
@@ -21784,7 +21854,7 @@
     {
       "fixture": {
         "id": 1379281,
-        "referee": "T. Bramall",
+        "referee": "Thomas Bramall, England",
         "timezone": "UTC",
         "date": "2026-04-11T14:00:00+00:00",
         "timestamp": 1775916000,
@@ -21854,7 +21924,7 @@
     {
       "fixture": {
         "id": 1379280,
-        "referee": "F. Hallam",
+        "referee": "Farai Hallam, England",
         "timezone": "UTC",
         "date": "2026-04-11T14:00:00+00:00",
         "timestamp": 1775916000,
@@ -21924,7 +21994,7 @@
     {
       "fixture": {
         "id": 1379284,
-        "referee": "A. Taylor",
+        "referee": "Anthony Taylor, England",
         "timezone": "UTC",
         "date": "2026-04-11T16:30:00+00:00",
         "timestamp": 1775925000,
@@ -21994,7 +22064,7 @@
     {
       "fixture": {
         "id": 1379283,
-        "referee": "A. Madley",
+        "referee": "Andy Madley, England",
         "timezone": "UTC",
         "date": "2026-04-12T13:00:00+00:00",
         "timestamp": 1775998800,
@@ -22064,7 +22134,7 @@
     {
       "fixture": {
         "id": 1379286,
-        "referee": "M. Salisbury",
+        "referee": "Michael Salisbury, England",
         "timezone": "UTC",
         "date": "2026-04-12T13:00:00+00:00",
         "timestamp": 1775998800,
@@ -22134,7 +22204,7 @@
     {
       "fixture": {
         "id": 1379287,
-        "referee": "R. Jones",
+        "referee": "Robert Jones, England",
         "timezone": "UTC",
         "date": "2026-04-12T13:00:00+00:00",
         "timestamp": 1775998800,
@@ -22273,84 +22343,14 @@
     },
     {
       "fixture": {
-        "id": 1379275,
-        "referee": null,
-        "timezone": "UTC",
-        "date": "2026-03-21T15:00:00+00:00",
-        "timestamp": 1774105200,
-        "periods": {
-          "first": null,
-          "second": null
-        },
-        "venue": {
-          "id": 555,
-          "name": "Etihad Stadium",
-          "city": "Manchester"
-        },
-        "status": {
-          "long": "Match Postponed",
-          "short": "PST",
-          "elapsed": null,
-          "extra": null
-        }
-      },
-      "league": {
-        "id": 39,
-        "name": "Premier League",
-        "country": "England",
-        "logo": "https://media.api-sports.io/football/leagues/39.png",
-        "flag": "https://media.api-sports.io/flags/gb-eng.svg",
-        "season": 2025,
-        "round": "Regular Season - 31",
-        "standings": true
-      },
-      "teams": {
-        "home": {
-          "id": 50,
-          "name": "Manchester City",
-          "logo": "https://media.api-sports.io/football/teams/50.png",
-          "winner": null
-        },
-        "away": {
-          "id": 52,
-          "name": "Crystal Palace",
-          "logo": "https://media.api-sports.io/football/teams/52.png",
-          "winner": null
-        }
-      },
-      "goals": {
-        "home": null,
-        "away": null
-      },
-      "score": {
-        "halftime": {
-          "home": null,
-          "away": null
-        },
-        "fulltime": {
-          "home": null,
-          "away": null
-        },
-        "extratime": {
-          "home": null,
-          "away": null
-        },
-        "penalty": {
-          "home": null,
-          "away": null
-        }
-      }
-    },
-    {
-      "fixture": {
         "id": 1379285,
-        "referee": "P. Tierney",
+        "referee": "Paul Tierney, England",
         "timezone": "UTC",
         "date": "2026-04-13T19:00:00+00:00",
         "timestamp": 1776106800,
         "periods": {
-          "first": null,
-          "second": null
+          "first": 1776106800,
+          "second": 1776110400
         },
         "venue": {
           "id": 556,
@@ -22358,10 +22358,10 @@
           "city": "Manchester"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
-          "extra": null
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
+          "extra": 8
         }
       },
       "league": {
@@ -22379,27 +22379,27 @@
           "id": 33,
           "name": "Manchester United",
           "logo": "https://media.api-sports.io/football/teams/33.png",
-          "winner": null
+          "winner": false
         },
         "away": {
           "id": 63,
           "name": "Leeds",
           "logo": "https://media.api-sports.io/football/teams/63.png",
-          "winner": null
+          "winner": true
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 1,
+        "away": 2
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 2
         },
         "fulltime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 2
         },
         "extratime": {
           "home": null,
@@ -22414,13 +22414,13 @@
     {
       "fixture": {
         "id": 1379290,
-        "referee": null,
+        "referee": "Paul Tierney, England",
         "timezone": "UTC",
         "date": "2026-04-18T11:30:00+00:00",
         "timestamp": 1776511800,
         "periods": {
-          "first": null,
-          "second": null
+          "first": 1776511800,
+          "second": 1776515400
         },
         "venue": {
           "id": 10503,
@@ -22428,10 +22428,10 @@
           "city": "London"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
-          "extra": null
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
+          "extra": 6
         }
       },
       "league": {
@@ -22459,17 +22459,17 @@
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 0,
+        "away": 0
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "fulltime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "extratime": {
           "home": null,
@@ -22484,13 +22484,13 @@
     {
       "fixture": {
         "id": 1379296,
-        "referee": null,
+        "referee": "Thomas Bramall, England",
         "timezone": "UTC",
         "date": "2026-04-18T14:00:00+00:00",
         "timestamp": 1776520800,
         "periods": {
-          "first": null,
-          "second": null
+          "first": 1776520800,
+          "second": 1776524400
         },
         "venue": {
           "id": 562,
@@ -22498,10 +22498,10 @@
           "city": "Newcastle"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
-          "extra": null
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
+          "extra": 9
         }
       },
       "league": {
@@ -22519,27 +22519,27 @@
           "id": 34,
           "name": "Newcastle",
           "logo": "https://media.api-sports.io/football/teams/34.png",
-          "winner": null
+          "winner": false
         },
         "away": {
           "id": 35,
           "name": "Bournemouth",
           "logo": "https://media.api-sports.io/football/teams/35.png",
-          "winner": null
+          "winner": true
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 1,
+        "away": 2
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 1
         },
         "fulltime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 2
         },
         "extratime": {
           "home": null,
@@ -22554,13 +22554,13 @@
     {
       "fixture": {
         "id": 1379294,
-        "referee": null,
+        "referee": "Tim Robinson, England",
         "timezone": "UTC",
         "date": "2026-04-18T14:00:00+00:00",
         "timestamp": 1776520800,
         "periods": {
-          "first": null,
-          "second": null
+          "first": 1776520800,
+          "second": 1776524400
         },
         "venue": {
           "id": 546,
@@ -22568,10 +22568,10 @@
           "city": "Leeds"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
-          "extra": null
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
+          "extra": 12
         }
       },
       "league": {
@@ -22589,27 +22589,27 @@
           "id": 63,
           "name": "Leeds",
           "logo": "https://media.api-sports.io/football/teams/63.png",
-          "winner": null
+          "winner": true
         },
         "away": {
           "id": 39,
           "name": "Wolves",
           "logo": "https://media.api-sports.io/football/teams/39.png",
-          "winner": null
+          "winner": false
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 3,
+        "away": 0
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 0
         },
         "fulltime": {
-          "home": null,
-          "away": null
+          "home": 3,
+          "away": 0
         },
         "extratime": {
           "home": null,
@@ -22624,13 +22624,13 @@
     {
       "fixture": {
         "id": 1379298,
-        "referee": null,
+        "referee": "Stuart Attwell, England",
         "timezone": "UTC",
         "date": "2026-04-18T16:30:00+00:00",
         "timestamp": 1776529800,
         "periods": {
-          "first": null,
-          "second": null
+          "first": 1776529800,
+          "second": 1776533400
         },
         "venue": {
           "id": 593,
@@ -22638,10 +22638,10 @@
           "city": "London"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
-          "extra": null
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
+          "extra": 8
         }
       },
       "league": {
@@ -22669,17 +22669,17 @@
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 2,
+        "away": 2
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 1
         },
         "fulltime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 2
         },
         "extratime": {
           "home": null,
@@ -22694,13 +22694,13 @@
     {
       "fixture": {
         "id": 1379291,
-        "referee": null,
+        "referee": "Michael Oliver, England",
         "timezone": "UTC",
         "date": "2026-04-18T19:00:00+00:00",
         "timestamp": 1776538800,
         "periods": {
-          "first": null,
-          "second": null
+          "first": 1776538800,
+          "second": 1776542400
         },
         "venue": {
           "id": 519,
@@ -22708,10 +22708,10 @@
           "city": "London"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
-          "extra": null
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
+          "extra": 5
         }
       },
       "league": {
@@ -22729,27 +22729,27 @@
           "id": 49,
           "name": "Chelsea",
           "logo": "https://media.api-sports.io/football/teams/49.png",
-          "winner": null
+          "winner": false
         },
         "away": {
           "id": 33,
           "name": "Manchester United",
           "logo": "https://media.api-sports.io/football/teams/33.png",
-          "winner": null
+          "winner": true
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 0,
+        "away": 1
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 1
         },
         "fulltime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 1
         },
         "extratime": {
           "home": null,
@@ -22764,13 +22764,13 @@
     {
       "fixture": {
         "id": 1379293,
-        "referee": null,
+        "referee": "Chris Kavanagh, England",
         "timezone": "UTC",
         "date": "2026-04-19T13:00:00+00:00",
         "timestamp": 1776603600,
         "periods": {
-          "first": null,
-          "second": null
+          "first": 1776603600,
+          "second": 1776607200
         },
         "venue": {
           "id": 22033,
@@ -22778,10 +22778,10 @@
           "city": "Liverpool"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
-          "extra": null
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
+          "extra": 12
         }
       },
       "league": {
@@ -22799,27 +22799,27 @@
           "id": 45,
           "name": "Everton",
           "logo": "https://media.api-sports.io/football/teams/45.png",
-          "winner": null
+          "winner": false
         },
         "away": {
           "id": 40,
           "name": "Liverpool",
           "logo": "https://media.api-sports.io/football/teams/40.png",
-          "winner": null
+          "winner": true
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 1,
+        "away": 2
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 1
         },
         "fulltime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 2
         },
         "extratime": {
           "home": null,
@@ -22834,13 +22834,13 @@
     {
       "fixture": {
         "id": 1379297,
-        "referee": null,
+        "referee": "Thomas Kirk, England",
         "timezone": "UTC",
         "date": "2026-04-19T13:00:00+00:00",
         "timestamp": 1776603600,
         "periods": {
-          "first": null,
-          "second": null
+          "first": 1776603600,
+          "second": 1776607200
         },
         "venue": {
           "id": 566,
@@ -22848,10 +22848,10 @@
           "city": "Nottingham"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
-          "extra": null
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
+          "extra": 9
         }
       },
       "league": {
@@ -22869,27 +22869,27 @@
           "id": 65,
           "name": "Nottingham Forest",
           "logo": "https://media.api-sports.io/football/teams/65.png",
-          "winner": null
+          "winner": true
         },
         "away": {
           "id": 44,
           "name": "Burnley",
           "logo": "https://media.api-sports.io/football/teams/44.png",
-          "winner": null
+          "winner": false
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 4,
+        "away": 1
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 1
         },
         "fulltime": {
-          "home": null,
-          "away": null
+          "home": 4,
+          "away": 1
         },
         "extratime": {
           "home": null,
@@ -22904,13 +22904,13 @@
     {
       "fixture": {
         "id": 1379289,
-        "referee": null,
+        "referee": "Samuel Barrott, England",
         "timezone": "UTC",
         "date": "2026-04-19T13:00:00+00:00",
         "timestamp": 1776603600,
         "periods": {
-          "first": null,
-          "second": null
+          "first": 1776603600,
+          "second": 1776607200
         },
         "venue": {
           "id": 495,
@@ -22918,10 +22918,10 @@
           "city": "Birmingham"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
-          "extra": null
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
+          "extra": 8
         }
       },
       "league": {
@@ -22939,97 +22939,27 @@
           "id": 66,
           "name": "Aston Villa",
           "logo": "https://media.api-sports.io/football/teams/66.png",
-          "winner": null
+          "winner": true
         },
         "away": {
           "id": 746,
           "name": "Sunderland",
           "logo": "https://media.api-sports.io/football/teams/746.png",
-          "winner": null
+          "winner": false
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 4,
+        "away": 3
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 1
         },
         "fulltime": {
-          "home": null,
-          "away": null
-        },
-        "extratime": {
-          "home": null,
-          "away": null
-        },
-        "penalty": {
-          "home": null,
-          "away": null
-        }
-      }
-    },
-    {
-      "fixture": {
-        "id": 1379295,
-        "referee": null,
-        "timezone": "UTC",
-        "date": "2026-04-19T15:30:00+00:00",
-        "timestamp": 1776612600,
-        "periods": {
-          "first": null,
-          "second": null
-        },
-        "venue": {
-          "id": 555,
-          "name": "Etihad Stadium",
-          "city": "Manchester"
-        },
-        "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
-          "extra": null
-        }
-      },
-      "league": {
-        "id": 39,
-        "name": "Premier League",
-        "country": "England",
-        "logo": "https://media.api-sports.io/football/leagues/39.png",
-        "flag": "https://media.api-sports.io/flags/gb-eng.svg",
-        "season": 2025,
-        "round": "Regular Season - 33",
-        "standings": true
-      },
-      "teams": {
-        "home": {
-          "id": 50,
-          "name": "Manchester City",
-          "logo": "https://media.api-sports.io/football/teams/50.png",
-          "winner": null
-        },
-        "away": {
-          "id": 42,
-          "name": "Arsenal",
-          "logo": "https://media.api-sports.io/football/teams/42.png",
-          "winner": null
-        }
-      },
-      "goals": {
-        "home": null,
-        "away": null
-      },
-      "score": {
-        "halftime": {
-          "home": null,
-          "away": null
-        },
-        "fulltime": {
-          "home": null,
-          "away": null
+          "home": 4,
+          "away": 3
         },
         "extratime": {
           "home": null,
@@ -23044,7 +22974,7 @@
     {
       "fixture": {
         "id": 1379292,
-        "referee": null,
+        "referee": "D. England",
         "timezone": "UTC",
         "date": "2026-04-20T19:00:00+00:00",
         "timestamp": 1776711600,
@@ -23114,7 +23044,7 @@
     {
       "fixture": {
         "id": 1379301,
-        "referee": null,
+        "referee": "C. Pawson",
         "timezone": "UTC",
         "date": "2026-04-21T19:00:00+00:00",
         "timestamp": 1776798000,
@@ -23184,7 +23114,7 @@
     {
       "fixture": {
         "id": 1379300,
-        "referee": null,
+        "referee": "M. Salisbury",
         "timezone": "UTC",
         "date": "2026-04-22T19:00:00+00:00",
         "timestamp": 1776884400,
@@ -23254,7 +23184,7 @@
     {
       "fixture": {
         "id": 1379302,
-        "referee": null,
+        "referee": "A. Madley",
         "timezone": "UTC",
         "date": "2026-04-22T19:00:00+00:00",
         "timestamp": 1776884400,
@@ -23883,76 +23813,6 @@
     },
     {
       "fixture": {
-        "id": 1379310,
-        "referee": null,
-        "timezone": "UTC",
-        "date": "2026-05-02T11:30:00+00:00",
-        "timestamp": 1777721400,
-        "periods": {
-          "first": null,
-          "second": null
-        },
-        "venue": {
-          "id": 495,
-          "name": "Villa Park",
-          "city": "Birmingham"
-        },
-        "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
-          "extra": null
-        }
-      },
-      "league": {
-        "id": 39,
-        "name": "Premier League",
-        "country": "England",
-        "logo": "https://media.api-sports.io/football/leagues/39.png",
-        "flag": "https://media.api-sports.io/flags/gb-eng.svg",
-        "season": 2025,
-        "round": "Regular Season - 35",
-        "standings": true
-      },
-      "teams": {
-        "home": {
-          "id": 66,
-          "name": "Aston Villa",
-          "logo": "https://media.api-sports.io/football/teams/66.png",
-          "winner": null
-        },
-        "away": {
-          "id": 47,
-          "name": "Tottenham",
-          "logo": "https://media.api-sports.io/football/teams/47.png",
-          "winner": null
-        }
-      },
-      "goals": {
-        "home": null,
-        "away": null
-      },
-      "score": {
-        "halftime": {
-          "home": null,
-          "away": null
-        },
-        "fulltime": {
-          "home": null,
-          "away": null
-        },
-        "extratime": {
-          "home": null,
-          "away": null
-        },
-        "penalty": {
-          "home": null,
-          "away": null
-        }
-      }
-    },
-    {
-      "fixture": {
         "id": 1379317,
         "referee": null,
         "timezone": "UTC",
@@ -23995,76 +23855,6 @@
           "id": 51,
           "name": "Brighton",
           "logo": "https://media.api-sports.io/football/teams/51.png",
-          "winner": null
-        }
-      },
-      "goals": {
-        "home": null,
-        "away": null
-      },
-      "score": {
-        "halftime": {
-          "home": null,
-          "away": null
-        },
-        "fulltime": {
-          "home": null,
-          "away": null
-        },
-        "extratime": {
-          "home": null,
-          "away": null
-        },
-        "penalty": {
-          "home": null,
-          "away": null
-        }
-      }
-    },
-    {
-      "fixture": {
-        "id": 1379311,
-        "referee": null,
-        "timezone": "UTC",
-        "date": "2026-05-02T14:00:00+00:00",
-        "timestamp": 1777730400,
-        "periods": {
-          "first": null,
-          "second": null
-        },
-        "venue": {
-          "id": 504,
-          "name": "Vitality Stadium",
-          "city": "Bournemouth"
-        },
-        "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
-          "extra": null
-        }
-      },
-      "league": {
-        "id": 39,
-        "name": "Premier League",
-        "country": "England",
-        "logo": "https://media.api-sports.io/football/leagues/39.png",
-        "flag": "https://media.api-sports.io/flags/gb-eng.svg",
-        "season": 2025,
-        "round": "Regular Season - 35",
-        "standings": true
-      },
-      "teams": {
-        "home": {
-          "id": 35,
-          "name": "Bournemouth",
-          "logo": "https://media.api-sports.io/football/teams/35.png",
-          "winner": null
-        },
-        "away": {
-          "id": 52,
-          "name": "Crystal Palace",
-          "logo": "https://media.api-sports.io/football/teams/52.png",
           "winner": null
         }
       },
@@ -24303,6 +24093,76 @@
     },
     {
       "fixture": {
+        "id": 1379311,
+        "referee": null,
+        "timezone": "UTC",
+        "date": "2026-05-03T13:00:00+00:00",
+        "timestamp": 1777813200,
+        "periods": {
+          "first": null,
+          "second": null
+        },
+        "venue": {
+          "id": 504,
+          "name": "Vitality Stadium",
+          "city": "Bournemouth"
+        },
+        "status": {
+          "long": "Not Started",
+          "short": "NS",
+          "elapsed": null,
+          "extra": null
+        }
+      },
+      "league": {
+        "id": 39,
+        "name": "Premier League",
+        "country": "England",
+        "logo": "https://media.api-sports.io/football/leagues/39.png",
+        "flag": "https://media.api-sports.io/flags/gb-eng.svg",
+        "season": 2025,
+        "round": "Regular Season - 35",
+        "standings": true
+      },
+      "teams": {
+        "home": {
+          "id": 35,
+          "name": "Bournemouth",
+          "logo": "https://media.api-sports.io/football/teams/35.png",
+          "winner": null
+        },
+        "away": {
+          "id": 52,
+          "name": "Crystal Palace",
+          "logo": "https://media.api-sports.io/football/teams/52.png",
+          "winner": null
+        }
+      },
+      "goals": {
+        "home": null,
+        "away": null
+      },
+      "score": {
+        "halftime": {
+          "home": null,
+          "away": null
+        },
+        "fulltime": {
+          "home": null,
+          "away": null
+        },
+        "extratime": {
+          "home": null,
+          "away": null
+        },
+        "penalty": {
+          "home": null,
+          "away": null
+        }
+      }
+    },
+    {
+      "fixture": {
         "id": 1379316,
         "referee": null,
         "timezone": "UTC",
@@ -24345,6 +24205,76 @@
           "id": 40,
           "name": "Liverpool",
           "logo": "https://media.api-sports.io/football/teams/40.png",
+          "winner": null
+        }
+      },
+      "goals": {
+        "home": null,
+        "away": null
+      },
+      "score": {
+        "halftime": {
+          "home": null,
+          "away": null
+        },
+        "fulltime": {
+          "home": null,
+          "away": null
+        },
+        "extratime": {
+          "home": null,
+          "away": null
+        },
+        "penalty": {
+          "home": null,
+          "away": null
+        }
+      }
+    },
+    {
+      "fixture": {
+        "id": 1379310,
+        "referee": null,
+        "timezone": "UTC",
+        "date": "2026-05-03T18:00:00+00:00",
+        "timestamp": 1777831200,
+        "periods": {
+          "first": null,
+          "second": null
+        },
+        "venue": {
+          "id": 495,
+          "name": "Villa Park",
+          "city": "Birmingham"
+        },
+        "status": {
+          "long": "Not Started",
+          "short": "NS",
+          "elapsed": null,
+          "extra": null
+        }
+      },
+      "league": {
+        "id": 39,
+        "name": "Premier League",
+        "country": "England",
+        "logo": "https://media.api-sports.io/football/leagues/39.png",
+        "flag": "https://media.api-sports.io/flags/gb-eng.svg",
+        "season": 2025,
+        "round": "Regular Season - 35",
+        "standings": true
+      },
+      "teams": {
+        "home": {
+          "id": 66,
+          "name": "Aston Villa",
+          "logo": "https://media.api-sports.io/football/teams/66.png",
+          "winner": null
+        },
+        "away": {
+          "id": 47,
+          "name": "Tottenham",
+          "logo": "https://media.api-sports.io/football/teams/47.png",
           "winner": null
         }
       },
@@ -24653,76 +24583,6 @@
     },
     {
       "fixture": {
-        "id": 1379320,
-        "referee": null,
-        "timezone": "UTC",
-        "date": "2026-05-09T14:00:00+00:00",
-        "timestamp": 1778335200,
-        "periods": {
-          "first": null,
-          "second": null
-        },
-        "venue": {
-          "id": 512,
-          "name": "Turf Moor",
-          "city": "Burnley"
-        },
-        "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
-          "extra": null
-        }
-      },
-      "league": {
-        "id": 39,
-        "name": "Premier League",
-        "country": "England",
-        "logo": "https://media.api-sports.io/football/leagues/39.png",
-        "flag": "https://media.api-sports.io/flags/gb-eng.svg",
-        "season": 2025,
-        "round": "Regular Season - 36",
-        "standings": true
-      },
-      "teams": {
-        "home": {
-          "id": 44,
-          "name": "Burnley",
-          "logo": "https://media.api-sports.io/football/teams/44.png",
-          "winner": null
-        },
-        "away": {
-          "id": 66,
-          "name": "Aston Villa",
-          "logo": "https://media.api-sports.io/football/teams/66.png",
-          "winner": null
-        }
-      },
-      "goals": {
-        "home": null,
-        "away": null
-      },
-      "score": {
-        "halftime": {
-          "home": null,
-          "away": null
-        },
-        "fulltime": {
-          "home": null,
-          "away": null
-        },
-        "extratime": {
-          "home": null,
-          "away": null
-        },
-        "penalty": {
-          "home": null,
-          "away": null
-        }
-      }
-    },
-    {
-      "fixture": {
         "id": 1379319,
         "referee": null,
         "timezone": "UTC",
@@ -24765,76 +24625,6 @@
           "id": 39,
           "name": "Wolves",
           "logo": "https://media.api-sports.io/football/teams/39.png",
-          "winner": null
-        }
-      },
-      "goals": {
-        "home": null,
-        "away": null
-      },
-      "score": {
-        "halftime": {
-          "home": null,
-          "away": null
-        },
-        "fulltime": {
-          "home": null,
-          "away": null
-        },
-        "extratime": {
-          "home": null,
-          "away": null
-        },
-        "penalty": {
-          "home": null,
-          "away": null
-        }
-      }
-    },
-    {
-      "fixture": {
-        "id": 1379321,
-        "referee": null,
-        "timezone": "UTC",
-        "date": "2026-05-09T14:00:00+00:00",
-        "timestamp": 1778335200,
-        "periods": {
-          "first": null,
-          "second": null
-        },
-        "venue": {
-          "id": 525,
-          "name": "Selhurst Park",
-          "city": "London"
-        },
-        "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
-          "extra": null
-        }
-      },
-      "league": {
-        "id": 39,
-        "name": "Premier League",
-        "country": "England",
-        "logo": "https://media.api-sports.io/football/leagues/39.png",
-        "flag": "https://media.api-sports.io/flags/gb-eng.svg",
-        "season": 2025,
-        "round": "Regular Season - 36",
-        "standings": true
-      },
-      "teams": {
-        "home": {
-          "id": 52,
-          "name": "Crystal Palace",
-          "logo": "https://media.api-sports.io/football/teams/52.png",
-          "winner": null
-        },
-        "away": {
-          "id": 45,
-          "name": "Everton",
-          "logo": "https://media.api-sports.io/football/teams/45.png",
           "winner": null
         }
       },
@@ -24975,6 +24765,146 @@
           "id": 55,
           "name": "Brentford",
           "logo": "https://media.api-sports.io/football/teams/55.png",
+          "winner": null
+        }
+      },
+      "goals": {
+        "home": null,
+        "away": null
+      },
+      "score": {
+        "halftime": {
+          "home": null,
+          "away": null
+        },
+        "fulltime": {
+          "home": null,
+          "away": null
+        },
+        "extratime": {
+          "home": null,
+          "away": null
+        },
+        "penalty": {
+          "home": null,
+          "away": null
+        }
+      }
+    },
+    {
+      "fixture": {
+        "id": 1379320,
+        "referee": null,
+        "timezone": "UTC",
+        "date": "2026-05-10T13:00:00+00:00",
+        "timestamp": 1778418000,
+        "periods": {
+          "first": null,
+          "second": null
+        },
+        "venue": {
+          "id": 512,
+          "name": "Turf Moor",
+          "city": "Burnley"
+        },
+        "status": {
+          "long": "Not Started",
+          "short": "NS",
+          "elapsed": null,
+          "extra": null
+        }
+      },
+      "league": {
+        "id": 39,
+        "name": "Premier League",
+        "country": "England",
+        "logo": "https://media.api-sports.io/football/leagues/39.png",
+        "flag": "https://media.api-sports.io/flags/gb-eng.svg",
+        "season": 2025,
+        "round": "Regular Season - 36",
+        "standings": true
+      },
+      "teams": {
+        "home": {
+          "id": 44,
+          "name": "Burnley",
+          "logo": "https://media.api-sports.io/football/teams/44.png",
+          "winner": null
+        },
+        "away": {
+          "id": 66,
+          "name": "Aston Villa",
+          "logo": "https://media.api-sports.io/football/teams/66.png",
+          "winner": null
+        }
+      },
+      "goals": {
+        "home": null,
+        "away": null
+      },
+      "score": {
+        "halftime": {
+          "home": null,
+          "away": null
+        },
+        "fulltime": {
+          "home": null,
+          "away": null
+        },
+        "extratime": {
+          "home": null,
+          "away": null
+        },
+        "penalty": {
+          "home": null,
+          "away": null
+        }
+      }
+    },
+    {
+      "fixture": {
+        "id": 1379321,
+        "referee": null,
+        "timezone": "UTC",
+        "date": "2026-05-10T13:00:00+00:00",
+        "timestamp": 1778418000,
+        "periods": {
+          "first": null,
+          "second": null
+        },
+        "venue": {
+          "id": 525,
+          "name": "Selhurst Park",
+          "city": "London"
+        },
+        "status": {
+          "long": "Not Started",
+          "short": "NS",
+          "elapsed": null,
+          "extra": null
+        }
+      },
+      "league": {
+        "id": 39,
+        "name": "Premier League",
+        "country": "England",
+        "logo": "https://media.api-sports.io/football/leagues/39.png",
+        "flag": "https://media.api-sports.io/flags/gb-eng.svg",
+        "season": 2025,
+        "round": "Regular Season - 36",
+        "standings": true
+      },
+      "teams": {
+        "home": {
+          "id": 52,
+          "name": "Crystal Palace",
+          "logo": "https://media.api-sports.io/football/teams/52.png",
+          "winner": null
+        },
+        "away": {
+          "id": 45,
+          "name": "Everton",
+          "logo": "https://media.api-sports.io/football/teams/45.png",
           "winner": null
         }
       },
@@ -25885,6 +25815,76 @@
           "id": 40,
           "name": "Liverpool",
           "logo": "https://media.api-sports.io/football/teams/40.png",
+          "winner": null
+        }
+      },
+      "goals": {
+        "home": null,
+        "away": null
+      },
+      "score": {
+        "halftime": {
+          "home": null,
+          "away": null
+        },
+        "fulltime": {
+          "home": null,
+          "away": null
+        },
+        "extratime": {
+          "home": null,
+          "away": null
+        },
+        "penalty": {
+          "home": null,
+          "away": null
+        }
+      }
+    },
+    {
+      "fixture": {
+        "id": 1379275,
+        "referee": null,
+        "timezone": "UTC",
+        "date": "2026-05-22T14:00:00+00:00",
+        "timestamp": 1779458400,
+        "periods": {
+          "first": null,
+          "second": null
+        },
+        "venue": {
+          "id": 555,
+          "name": "Etihad Stadium",
+          "city": "Manchester"
+        },
+        "status": {
+          "long": "Not Started",
+          "short": "NS",
+          "elapsed": null,
+          "extra": null
+        }
+      },
+      "league": {
+        "id": 39,
+        "name": "Premier League",
+        "country": "England",
+        "logo": "https://media.api-sports.io/football/leagues/39.png",
+        "flag": "https://media.api-sports.io/flags/gb-eng.svg",
+        "season": 2025,
+        "round": "Regular Season - 31",
+        "standings": true
+      },
+      "teams": {
+        "home": {
+          "id": 50,
+          "name": "Manchester City",
+          "logo": "https://media.api-sports.io/football/teams/50.png",
+          "winner": null
+        },
+        "away": {
+          "id": 52,
+          "name": "Crystal Palace",
+          "logo": "https://media.api-sports.io/football/teams/52.png",
           "winner": null
         }
       },
