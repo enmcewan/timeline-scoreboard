@@ -36,6 +36,9 @@ export function isVisibleInMode(evt, mode) {
         case "goal":
         case "red":
         case "own-goal":
+        case "var-goal-cancelled":
+        case "var-goal-disallowed-offside":
+        case "var-goal-disallowed":
             return true;
         default:
             return false;
@@ -158,7 +161,7 @@ export function createRenderEventText(esc) {
 
             if (config) {
                 // 2. Handle the Icon logic
-                const showIcon = mode === VIEW_MODES.FULL && config.isDisallowed;
+                const showIcon = config.isDisallowed;
                 const varIcon = showIcon ? `
                     <span class="evt-svg var-goal-cancelled-icon" title="Disallowed (VAR)" aria-label="Goal Disallowed (VAR)">
                         <svg width="16" height="16" viewBox="0 0 16 16"><use href="/img/misc/ball.svg"></use></svg>

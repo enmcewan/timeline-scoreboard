@@ -128,7 +128,7 @@ body {
   /* min-height: 2347px; */
 }
 
-header {
+.site-header {
   text-align: center;
   padding: 0 1rem 1rem;
 }
@@ -211,6 +211,7 @@ footer {
 .match-list {
   display: grid;
   gap: 1rem;
+  margin-top: 1rem;
 }
 
 .ht-cont,
