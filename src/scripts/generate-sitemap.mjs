@@ -56,7 +56,7 @@ async function main() {
     // table
   urls.push({
     loc: `${SITE_ORIGIN}/epl/2025-26/table/`,
-    changefreq: "hourly",
+    changefreq: "daily",
     priority: "0.8",
   });
 

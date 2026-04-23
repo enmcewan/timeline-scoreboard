@@ -1286,7 +1286,7 @@ async function main() {
         // NOTE: We'll swap this to your live domain in the SEO step.
         const canonical = `https://timelinefootball.com${pagePath}`;
 
-        const title = `EPL 2025-26 Matchweek ${round} Timelines, Stats & Ratings | Timeline Football`;
+        const title = `EPL 2025-26 Matchweek ${round} Timelines, Stats & Ratings`;
         const desc = ` English Premier League 2025-26 Matchweek ${round} event timelines, stats and performance ratings.`;
 
         let out = template;
