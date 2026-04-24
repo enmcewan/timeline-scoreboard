@@ -65,7 +65,7 @@ function isFinished(statusShort) {
 
 function shouldRefresh(fixtures, nowMs) {
   const PRE_MS = 10 * 60 * 1000;     // 10 mins before kickoff
-  const POST_MS = 180 * 60 * 1000;   // 180 mins after kickoff (105 + buffer for Github Actions delay)
+  const POST_MS = 195 * 60 * 1000;   // 195 mins after kickoff (105 + buffer for Github Actions delay)
 
   // statuses we never refresh for
   const DEAD = new Set(["PST", "CANC", "ABD", "SUSP", "INT", "WO", "TBD"]);
