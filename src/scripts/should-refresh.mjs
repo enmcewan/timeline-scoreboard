@@ -81,14 +81,14 @@ function shouldRefresh(fixtures, nowMs) {
 
     // otherwise, refresh only inside the kickoff window
     // (covers NS / delayed status weirdness, and avoids hammering all season)
-    if (!isFinished(st)) {
+    //if (!isFinished(st)) {
       const ko = getKickoffMs(fx);
       if (Number.isFinite(ko)) {
         if (nowMs >= ko - PRE_MS && nowMs <= ko + POST_MS) {
           return true;
         }
       }
-    }
+    //}
   }
 
   return false;
