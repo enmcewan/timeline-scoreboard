@@ -25,6 +25,35 @@
   --border-radius: 0.4rem;
 }
 
+/* Higlight Champions League Places */
+.league-table tbody tr:nth-child(1),
+.league-table tbody tr:nth-child(2),
+.league-table tbody tr:nth-child(3),
+.league-table tbody tr:nth-child(4),
+.league-table tbody tr:nth-child(5) {
+  background-color: rgba(82, 15, 95, 0.12);
+  border-left: 4px solid rgba(59, 10, 69, 0.5);
+}
+/* Higlight Europa League Place */
+.league-table tbody tr:nth-child(6) {
+  background-color: rgba(202, 138, 4, 0.12);
+  border-left: 4px solid rgba(202, 138, 4, 0.6);
+}
+
+/* Higlight Relegation Places */
+.league-table tbody tr:nth-child(18),
+.league-table tbody tr:nth-child(19),
+.league-table tr:nth-child(20) {
+  background: rgba(220, 38, 38, 0.14);
+  border-left: 4px solid rgba(220, 38, 38, 0.6);
+}
+/* Highlight tiers with a stronger bottom border */
+.league-table tbody tr:nth-child(5),
+.league-table tbody tr:nth-child(6),
+.league-table tbody tr:nth-child(17) {
+  border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+}
+
 /* Automatic dark mode based on OS preference */
 @media (prefers-color-scheme: dark) {
   :root {
@@ -57,6 +86,42 @@
   .tottenham {
     filter: invert();
   }
+
+  /* Higlight Champions League Places */
+  .league-table tbody tr:nth-child(1),
+  .league-table tbody tr:nth-child(2),
+  .league-table tbody tr:nth-child(3),
+  .league-table tbody tr:nth-child(4),
+  .league-table tbody tr:nth-child(5) {
+    background: linear-gradient(
+      90deg,
+      rgba(124, 58, 237, 0.18),
+      rgba(124, 58, 237, 0.08)
+    );
+    border-left-color: #a78bfa;
+  }
+  /* Higlight Europa League Place */
+  .league-table tbody tr:nth-child(6) {
+    background: linear-gradient(
+      90deg,
+      rgba(245, 158, 11, 0.18),
+      rgba(245, 158, 11, 0.07)
+    );
+    border-left-color: #fbbf24;
+  }
+
+  /* Higlight Relegation Places */
+  .league-table tbody tr:nth-child(18),
+  .league-table tbody tr:nth-child(19),
+  .league-table tr:nth-child(20) {
+    background: linear-gradient(
+      90deg,
+      rgba(239, 68, 68, 0.20),
+      rgba(239, 68, 68, 0.08)
+    );
+    border-left-color: #f87171;
+  }
+
 }
 
 html {
@@ -70,7 +135,7 @@ html {
   box-sizing: inherit;
 }
 
-body.dark-mode {
+/* body.dark-mode {
   --page-bg: #05060a;
   --card-bg: #151621;
   --card-shadow: 0 20px 45px rgba(0, 0, 0, 0.75);
@@ -79,12 +144,12 @@ body.dark-mode {
   --text-muted: #d5d6de;
   --text-subtle: #a0a2b2;
 
-  --accent-minute: #f3c548; /* warmer gold for dark */
+  --accent-minute: #f3c548;
   --accent-red: #ff4b6a;
 
   --border-subtle: rgba(255, 255, 255, 0.12);
   --score-separator: #f5f5f7;
-}
+} */
 
 /* BASE
    ----------------------------- */
@@ -192,7 +257,7 @@ footer {
 .matchday-header {
   display: flex;
   justify-content: center;
-  gap: .5rem;
+  gap: 0.5rem;
 }
 
 .matchday-container {
@@ -439,7 +504,7 @@ footer {
 .pm-team {
   padding: 0.85rem 0.9rem;
   border: 1px solid var(--border-subtle);
-  border-radius: .4rem;
+  border-radius: 0.4rem;
   background: var(--card-bg);
   color: var(--accent);
 }
@@ -497,7 +562,7 @@ footer {
   color: #4a1365;
 } */
 
-.pm-exbar{
+.pm-exbar {
   display: grid;
   grid-template-columns: 1fr 5px 1fr;
   align-items: center;
@@ -505,10 +570,10 @@ footer {
   height: 14px;
 }
 
-.pm-exbar__half{
+.pm-exbar__half {
   position: relative;
   height: 12px;
-  background: rgba(0,0,0,.08);
+  background: rgba(0, 0, 0, 0.08);
   overflow: hidden;
 }
 
@@ -520,36 +585,36 @@ footer {
   border-radius: 0 999px 999px 0;
 } */
 
-.pm-exbar__fill{
+.pm-exbar__fill {
   position: absolute;
   top: 0;
   bottom: 0;
 }
 
-.pm-exbar__fill--neg{
+.pm-exbar__fill--neg {
   right: 0;
   background: #c0392b;
   /* border-radius: 999px 0 0 999px; */
 }
 
-.pm-exbar__fill--pos{
+.pm-exbar__fill--pos {
   left: 0;
   background: #2e8b57;
   /* border-radius: 0 999px 999px 0; */
 }
 
-.pm-exbar__mid{
-  font-size: .72rem;
+.pm-exbar__mid {
+  font-size: 0.72rem;
   line-height: 1;
   text-align: center;
-  opacity: .75;
+  opacity: 0.75;
   font-weight: 700;
 }
 
 .pm-stats {
   padding: 0.85rem 0.9rem;
   border: 1px solid var(--border-subtle);
-  border-radius: .4rem;
+  border-radius: 0.4rem;
   background: var(--card-bg);
   color: var(--accent);
   display: grid;
@@ -968,8 +1033,8 @@ td {
 }
 
 thead tr {
-  background: var(--accent-soft);
-  border: solid 1px var(--accent);
+  border: var(--accent);
+  color: var(--accent-soft);
 }
 
 /* --- Shared page width --- */
@@ -1153,8 +1218,8 @@ table {
 }
 
 .team-chart-wrap-compact {
-    height: 200px;
-    margin-top: 12px;
+  height: 200px;
+  margin-top: 12px;
 }
 
 .team-season-summary {
@@ -1178,11 +1243,11 @@ table {
 }
 
 .chart-hint {
-    text-align: center;
-    font-size: 0.8rem;
-    color: #6b7280;
-    margin-top: -4px;
-    margin-bottom: 8px;
+  text-align: center;
+  font-size: 0.8rem;
+  color: #6b7280;
+  margin-top: -4px;
+  margin-bottom: 8px;
 }
 
 .form-char {
