@@ -169,7 +169,7 @@ function collectPlayerIdsFromMatchday(md) {
 async function loadPlayersMap() {
   if (!(await fileExists(PLAYERS_FILE))) return {};
   const raw = await fs.readFile(PLAYERS_FILE, "utf8");
-  const obj = JSON.parse(raw);
+  const obj = JSON.parse(raw.replace(/^\uFEFF/, ""));
   return obj && typeof obj === "object" ? obj : {};
 }
 
@@ -212,6 +212,11 @@ async function main() {
   }
 
   console.log(`Found ${allIds.size} unique player IDs in matchdays.`);
+
+  if (!allIds.size) {
+    console.log("No player IDs found. Nothing to cache.");
+    return;
+  }
 
   // 2) Load existing players map
   const players = await loadPlayersMap();
