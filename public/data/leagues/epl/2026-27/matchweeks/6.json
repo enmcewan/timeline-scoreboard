@@ -1,0 +1,326 @@
+{
+  "season": 2026,
+  "round": 6,
+  "matches": [
+    {
+      "id": "1557417",
+      "league": "Premier League",
+      "venue": "Emirates Stadium",
+      "attendance": null,
+      "kickoff": "2026-10-10T11:30:00+00:00",
+      "homeTeamId": "arsenal",
+      "awayTeamId": "leeds",
+      "score": {
+        "home": 0,
+        "away": 0
+      },
+      "status": {
+        "state": "NS",
+        "halfTimeScore": ""
+      },
+      "events": [],
+      "statistics": {
+        "home": {
+          "ycMinutes": [],
+          "rcMinutes": [],
+          "disallowedGoals": 0,
+          "ownGoalsFor": 0
+        },
+        "away": {
+          "ycMinutes": [],
+          "rcMinutes": [],
+          "disallowedGoals": 0,
+          "ownGoalsFor": 0
+        }
+      }
+    },
+    {
+      "id": "1557419",
+      "league": "Premier League",
+      "venue": "Stamford Bridge",
+      "attendance": null,
+      "kickoff": "2026-10-10T14:00:00+00:00",
+      "homeTeamId": "chelsea",
+      "awayTeamId": "bournemouth",
+      "score": {
+        "home": 0,
+        "away": 0
+      },
+      "status": {
+        "state": "NS",
+        "halfTimeScore": ""
+      },
+      "events": [],
+      "statistics": {
+        "home": {
+          "ycMinutes": [],
+          "rcMinutes": [],
+          "disallowedGoals": 0,
+          "ownGoalsFor": 0
+        },
+        "away": {
+          "ycMinutes": [],
+          "rcMinutes": [],
+          "disallowedGoals": 0,
+          "ownGoalsFor": 0
+        }
+      }
+    },
+    {
+      "id": "1557423",
+      "league": "Premier League",
+      "venue": "Portman Road",
+      "attendance": null,
+      "kickoff": "2026-10-10T14:00:00+00:00",
+      "homeTeamId": "ipswich",
+      "awayTeamId": "fulham",
+      "score": {
+        "home": 0,
+        "away": 0
+      },
+      "status": {
+        "state": "NS",
+        "halfTimeScore": ""
+      },
+      "events": [],
+      "statistics": {
+        "home": {
+          "ycMinutes": [],
+          "rcMinutes": [],
+          "disallowedGoals": 0,
+          "ownGoalsFor": 0
+        },
+        "away": {
+          "ycMinutes": [],
+          "rcMinutes": [],
+          "disallowedGoals": 0,
+          "ownGoalsFor": 0
+        }
+      }
+    },
+    {
+      "id": "1557418",
+      "league": "Premier League",
+      "venue": "Villa Park",
+      "attendance": null,
+      "kickoff": "2026-10-10T14:00:00+00:00",
+      "homeTeamId": "aston-villa",
+      "awayTeamId": "brentford",
+      "score": {
+        "home": 0,
+        "away": 0
+      },
+      "status": {
+        "state": "NS",
+        "halfTimeScore": ""
+      },
+      "events": [],
+      "statistics": {
+        "home": {
+          "ycMinutes": [],
+          "rcMinutes": [],
+          "disallowedGoals": 0,
+          "ownGoalsFor": 0
+        },
+        "away": {
+          "ycMinutes": [],
+          "rcMinutes": [],
+          "disallowedGoals": 0,
+          "ownGoalsFor": 0
+        }
+      }
+    },
+    {
+      "id": "1557426",
+      "league": "Premier League",
+      "venue": "Stadium of Light",
+      "attendance": null,
+      "kickoff": "2026-10-10T14:00:00+00:00",
+      "homeTeamId": "sunderland",
+      "awayTeamId": "brighton",
+      "score": {
+        "home": 0,
+        "away": 0
+      },
+      "status": {
+        "state": "NS",
+        "halfTimeScore": ""
+      },
+      "events": [],
+      "statistics": {
+        "home": {
+          "ycMinutes": [],
+          "rcMinutes": [],
+          "disallowedGoals": 0,
+          "ownGoalsFor": 0
+        },
+        "away": {
+          "ycMinutes": [],
+          "rcMinutes": [],
+          "disallowedGoals": 0,
+          "ownGoalsFor": 0
+        }
+      }
+    },
+    {
+      "id": "1557425",
+      "league": "Premier League",
+      "venue": "Old Trafford",
+      "attendance": null,
+      "kickoff": "2026-10-10T16:30:00+00:00",
+      "homeTeamId": "manchester-united",
+      "awayTeamId": "tottenham",
+      "score": {
+        "home": 0,
+        "away": 0
+      },
+      "status": {
+        "state": "NS",
+        "halfTimeScore": ""
+      },
+      "events": [],
+      "statistics": {
+        "home": {
+          "ycMinutes": [],
+          "rcMinutes": [],
+          "disallowedGoals": 0,
+          "ownGoalsFor": 0
+        },
+        "away": {
+          "ycMinutes": [],
+          "rcMinutes": [],
+          "disallowedGoals": 0,
+          "ownGoalsFor": 0
+        }
+      }
+    },
+    {
+      "id": "1557421",
+      "league": "Premier League",
+      "venue": "Selhurst Park",
+      "attendance": null,
+      "kickoff": "2026-10-11T13:00:00+00:00",
+      "homeTeamId": "crystal-palace",
+      "awayTeamId": "nottingham-forest",
+      "score": {
+        "home": 0,
+        "away": 0
+      },
+      "status": {
+        "state": "NS",
+        "halfTimeScore": ""
+      },
+      "events": [],
+      "statistics": {
+        "home": {
+          "ycMinutes": [],
+          "rcMinutes": [],
+          "disallowedGoals": 0,
+          "ownGoalsFor": 0
+        },
+        "away": {
+          "ycMinutes": [],
+          "rcMinutes": [],
+          "disallowedGoals": 0,
+          "ownGoalsFor": 0
+        }
+      }
+    },
+    {
+      "id": "1557422",
+      "league": "Premier League",
+      "venue": "MKM Stadium",
+      "attendance": null,
+      "kickoff": "2026-10-11T13:00:00+00:00",
+      "homeTeamId": "hull-city",
+      "awayTeamId": "everton",
+      "score": {
+        "home": 0,
+        "away": 0
+      },
+      "status": {
+        "state": "NS",
+        "halfTimeScore": ""
+      },
+      "events": [],
+      "statistics": {
+        "home": {
+          "ycMinutes": [],
+          "rcMinutes": [],
+          "disallowedGoals": 0,
+          "ownGoalsFor": 0
+        },
+        "away": {
+          "ycMinutes": [],
+          "rcMinutes": [],
+          "disallowedGoals": 0,
+          "ownGoalsFor": 0
+        }
+      }
+    },
+    {
+      "id": "1557424",
+      "league": "Premier League",
+      "venue": "Anfield",
+      "attendance": null,
+      "kickoff": "2026-10-11T15:30:00+00:00",
+      "homeTeamId": "liverpool",
+      "awayTeamId": "manchester-city",
+      "score": {
+        "home": 0,
+        "away": 0
+      },
+      "status": {
+        "state": "NS",
+        "halfTimeScore": ""
+      },
+      "events": [],
+      "statistics": {
+        "home": {
+          "ycMinutes": [],
+          "rcMinutes": [],
+          "disallowedGoals": 0,
+          "ownGoalsFor": 0
+        },
+        "away": {
+          "ycMinutes": [],
+          "rcMinutes": [],
+          "disallowedGoals": 0,
+          "ownGoalsFor": 0
+        }
+      }
+    },
+    {
+      "id": "1557420",
+      "league": "Premier League",
+      "venue": "Coventry Building Society Arena",
+      "attendance": null,
+      "kickoff": "2026-10-12T19:00:00+00:00",
+      "homeTeamId": "coventry-city",
+      "awayTeamId": "newcastle",
+      "score": {
+        "home": 0,
+        "away": 0
+      },
+      "status": {
+        "state": "NS",
+        "halfTimeScore": ""
+      },
+      "events": [],
+      "statistics": {
+        "home": {
+          "ycMinutes": [],
+          "rcMinutes": [],
+          "disallowedGoals": 0,
+          "ownGoalsFor": 0
+        },
+        "away": {
+          "ycMinutes": [],
+          "rcMinutes": [],
+          "disallowedGoals": 0,
+          "ownGoalsFor": 0
+        }
+      }
+    }
+  ]
+}

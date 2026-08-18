@@ -1,20 +1,22 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { getSeasonConfigFromEnv } from "../config/seasons.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // repo root (src/scripts -> src -> root)
 const ROOT = path.join(__dirname, "../..");
+const season = getSeasonConfigFromEnv();
 
 const MATCHDAYS_DIR = path.join(
   ROOT,
   "public",
   "data",
   "leagues",
-  "epl",
-  "2025-26",
+  season.leagueKey,
+  season.seasonPath,
   "matchweeks"
 );
 

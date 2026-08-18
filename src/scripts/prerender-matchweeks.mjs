@@ -2,8 +2,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-import teams from "../data/leagues/epl/2025/teams.json" with { type: "json" };
-
+import { getSeasonConfigFromEnv } from "../config/seasons.js";
 import { renderMatchweekHTML } from "../lib/prerender/render.js";
 
 import { computePerfExec } from "../lib/powerMeter.js";
@@ -13,6 +12,7 @@ const __dirname = path.dirname(__filename);
 
 // repo root (src/scripts -> src -> root)
 const ROOT = path.join(__dirname, "../..");
+const season = getSeasonConfigFromEnv();
 
 const DIST_INDEX = path.join(ROOT, "dist", "index.html");
 const MATCHDAYS_DIR = path.join(
@@ -20,8 +20,8 @@ const MATCHDAYS_DIR = path.join(
     "public",
     "data",
     "leagues",
-    "epl",
-    "2025-26",
+    season.leagueKey,
+    season.seasonPath,
     "matchweeks"
 );
 
@@ -30,10 +30,20 @@ const STANDINGS_PATH = path.join(
     "public",
     "data",
     "leagues",
-    "epl",
-    "2025-26",
+    season.leagueKey,
+    season.seasonPath,
     "standings.json"
 );
+
+async function readJsonIfExists(filePath, fallback) {
+    try {
+        const text = await fs.readFile(filePath, "utf8");
+        return JSON.parse(text.replace(/^\uFEFF/, ""));
+    } catch (err) {
+        if (err?.code === "ENOENT") return fallback;
+        throw err;
+    }
+}
 
 function formatISODate(iso) {
     if (!iso) return "";
@@ -61,6 +71,32 @@ function getStandingsRows(standingsJson) {
     if (Array.isArray(standingsJson.standings)) return standingsJson.standings;
     if (Array.isArray(standingsJson.response)) return standingsJson.response;
     throw new Error("Standings rows array not found in standings.json");
+}
+
+function sortStandingsRowsForDisplay(rows, teamsBySlug, apiIdToSlug) {
+    const isPreseason = rows.length > 0 && rows.every((r) => {
+        const all = r.all || {};
+        return Number(all.p ?? 0) === 0 &&
+            Number(r.points ?? 0) === 0 &&
+            Number(r.gd ?? 0) === 0;
+    });
+
+    if (!isPreseason) return rows;
+
+    return [...rows]
+        .sort((a, b) => {
+            const aSlug = apiIdToSlug.get(a.teamApiId);
+            const bSlug = apiIdToSlug.get(b.teamApiId);
+            const aName = teamsBySlug[aSlug]?.name ?? a.teamName ?? aSlug ?? "";
+            const bName = teamsBySlug[bSlug]?.name ?? b.teamName ?? bSlug ?? "";
+            return aName.localeCompare(bName);
+        })
+        .map((row, index) => ({
+            ...row,
+            rank: index + 1,
+            status: "same",
+            description: null,
+        }));
 }
 
 function buildLeagueTableHtml({ seasonPath, seasonLabel, rows, teamsBySlug, apiIdToSlug, updatedLabel }) {
@@ -589,7 +625,7 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
             <div class="team-strip" role="group" aria-label="Team table summary">
                 <div><span class="muted">Position</span>
                     <strong>
-                        <a class="tbl-link" href="/epl/2025-26/table/#${standingsRow.rank}">${standingsRow.rank} ▷</a>
+                        <a class="tbl-link" href="/epl/${seasonPath}/table/#${standingsRow.rank}">${standingsRow.rank} ▷</a>
                     </strong>
                 </div>
                 <div><span class="muted">Points</span><strong>${standingsRow.points}</strong></div>
@@ -662,6 +698,16 @@ function setTitle(html, title) {
         return html.replace(/<title>.*?<\/title>/s, `<title>${title}</title>`);
     }
     return html.replace("</head>", `  <title>${title}</title>\n</head>`);
+}
+
+function setSeasonChrome(html, { seasonPath, seasonLabel, leagueName }) {
+    return html
+        .replace(
+            /<h2 class="site-tagline">.*?<\/h2>/s,
+            `<h2 class="site-tagline">${escapeAttr(leagueName)} ${escapeAttr(seasonLabel)}</h2>`
+        )
+        .replace(/href="\/epl\/\d{4}-\d{2}\/table\/"/g, `href="/epl/${seasonPath}/table/"`)
+        .replace(/href="\/epl\/\d{4}-\d{2}\/"/g, `href="/epl/${seasonPath}/"`);
 }
 
 function setDescription(html, desc) {
@@ -1007,8 +1053,8 @@ function buildMatchweekPrevNextNav({ seasonPath, seasonLabel, round, maxRound })
     <nav class="mw-nav" aria-label="Matchweek navigation">
       <a id="mw-hub" class="mw-nav__hub" href="${hub}">EPL ${seasonLabel} Matchweeks</a>
       <div class="mw-nav__pager">
-        ${prev ? `<a id="mw-prev" class="mw-nav__prev" href="${prev}" rel="prev">Matchweek ${round - 1}</a>` : `<span class="mw-nav__prev is-disabled" aria-disabled="true">Matchweek ${round - 1}</span>`}
-        ${next ? `<a id="mw-next" class="mw-nav__next" href="${next}" rel="next">Matchweek ${round + 1} →</a>` : `<span class="mw-nav__next is-disabled" aria-disabled="true">Matchweek ${round + 1}</span>`}
+        ${prev ? `<a id="mw-prev" class="mw-nav__prev" href="${prev}" rel="prev">Matchweek ${round - 1}</a>` : `<span id="mw-prev" class="mw-nav__prev is-disabled" aria-disabled="true"></span>`}
+        ${next ? `<a id="mw-next" class="mw-nav__next" href="${next}" rel="next">Matchweek ${round + 1} →</a>` : `<span id="mw-next" class="mw-nav__next is-disabled" aria-disabled="true"></span>`}
       </div>
     </nav>
   `.trim();
@@ -1056,6 +1102,7 @@ function matchweekStats(md) {
 }
 
 async function buildMatchweekMetaMap(rounds) {
+    
     const fmt = new Intl.DateTimeFormat("en-US", { month: "short", day: "2-digit", year: "numeric" });
     const out = {};
 
@@ -1258,12 +1305,20 @@ async function main() {
 
     const template = await fs.readFile(DIST_INDEX, "utf8");
 
-    const seasonStart = 2025;        // data folder
-    const seasonPath = "2025-26";   // URL path
-    const seasonLabel = "2025–26";   // display label
-    const maxRound = 38;
+    const seasonStart = season.apiSeason;
+    const seasonPath = season.seasonPath;
+    const seasonLabel = season.displaySeasonLabel;
+    const maxRound = season.maxRound;
     const SITE_NAME = "Timeline";
     const OG_DEFAULT_IMAGE = "https://timelinefootball.com/og/og-default.png";
+    const teams = await readJsonIfExists(
+        path.join(ROOT, "src", "data", "leagues", season.leagueKey, season.sourceDataSeason, "teams.json"),
+        {}
+    );
+    const players = await readJsonIfExists(
+        path.join(ROOT, "src", "data", "leagues", season.leagueKey, season.sourceDataSeason, "players.json"),
+        {}
+    );
 
     const rounds = await listMatchdayRounds();
     if (!rounds.length) {
@@ -1278,18 +1333,24 @@ async function main() {
         const appHtml = renderMatchweekHTML({
             matches: md.matches || [],
             teams,
+            players,
+            seasonPath,
             globalMode: "compact",
         });
 
-        const pagePath = `/epl/2025-26/matchweek/${round}/`;
+        const pagePath = `/epl/${seasonPath}/matchweek/${round}/`;
 
         // NOTE: We'll swap this to your live domain in the SEO step.
         const canonical = `https://timelinefootball.com${pagePath}`;
 
-        const title = `EPL 2025-26 Matchweek ${round} Timelines, Stats & Ratings`;
-        const desc = ` English Premier League 2025-26 Matchweek ${round} event timelines, stats and performance ratings.`;
+        const title = `${season.leagueShortName} ${seasonLabel} Matchweek ${round} Timelines, Stats & Ratings`;
+        const desc = ` ${season.leagueName} ${seasonLabel} Matchweek ${round} event timelines, stats and performance ratings.`;
 
-        let out = template;
+        let out = setSeasonChrome(template, {
+            seasonPath,
+            seasonLabel,
+            leagueName: season.leagueName,
+        });
         out = setTitle(
             out,
             title
@@ -1319,8 +1380,8 @@ async function main() {
 
         // ---- JSON-LD (matchweek page) ----
         const ld = matchweekJsonLd({
-            season: 2025,
-            seasonLabel: "2025–26",
+            season: seasonStart,
+            seasonLabel,
             round,
             matches: md.matches || [],
             teamsById: teams,
@@ -1350,7 +1411,11 @@ async function main() {
     const hubPath = `/epl/${seasonPath}/`;
     const canonical = `https://timelinefootball.com${hubPath}`;
 
-    let out = template;
+    let out = setSeasonChrome(template, {
+        seasonPath,
+        seasonLabel,
+        leagueName: season.leagueName,
+    });
 
     out = setTitle(out, `EPL ${seasonLabel} Matchweeks 1–${maxRound} | Timeline Football`);
     out = setDescription(
@@ -1405,9 +1470,9 @@ async function main() {
     // Table + Team pages
     // ------------------------------
     const standingsJson = JSON.parse(await fs.readFile(STANDINGS_PATH, "utf8"));
-    const standingsRows = getStandingsRows(standingsJson);
-
+    const rawStandingsRows = getStandingsRows(standingsJson);
     const apiIdToSlug = buildApiTeamIdToSlugMap(teams);
+    const standingsRows = sortStandingsRowsForDisplay(rawStandingsRows, teams, apiIdToSlug);
 
     // standings timestamp (use whatever you store; adapt key names here)
     const updatedISO = standingsJson.updated || standingsJson.updatedAt || standingsJson.lastUpdated || null;
@@ -1435,7 +1500,11 @@ async function main() {
         const pagePath = `/epl/${seasonPath}/table/`;
         const canonical = `https://timelinefootball.com${pagePath}`;
 
-        let page = template;
+        let page = setSeasonChrome(template, {
+            seasonPath,
+            seasonLabel,
+            leagueName: season.leagueName,
+        });
 
         const title = `EPL ${seasonLabel} Table | Timeline Football`;
         const desc = `English Premier League ${seasonLabel} league table with points, goal difference, form, and links to each team’s results and timelines.`;
@@ -1496,7 +1565,11 @@ async function main() {
         const pagePath = `/epl/${seasonPath}/team/${slug}/`;
         const canonical = `https://timelinefootball.com${pagePath}`;
 
-        let page = template;
+        let page = setSeasonChrome(template, {
+            seasonPath,
+            seasonLabel,
+            leagueName: season.leagueName,
+        });
 
         const standingsRow = standingsByApiId.get(team.apiTeamId) || null;
 
@@ -1556,7 +1629,7 @@ async function main() {
         console.log(`Prerendered ${pagePath}`);
     }
 
-    console.log("Prerendered /epl/2025-26/");
+    console.log(`Prerendered /epl/${seasonPath}/`);
 
 }
 

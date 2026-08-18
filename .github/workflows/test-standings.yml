@@ -22,4 +22,4 @@ jobs:
       - name: Run standings script only
         env:
           APIFOOTBALL_KEY: ${{ secrets.APIFOOTBALL_KEY }}
-        run: node src/scripts/fetch-standings.epl2025.mjs
+        run: node src/scripts/fetch-standings.epl.mjs

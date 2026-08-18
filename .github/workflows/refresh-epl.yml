@@ -18,6 +18,8 @@ on:
 jobs:
   refresh:
     runs-on: ubuntu-latest
+    env:
+      TIMELINE_SEASON: 2026-27
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -59,7 +61,7 @@ jobs:
         run: npm run update:matchdays
 
       - name: Fetch standings
-        run: node src/scripts/fetch-standings.epl2025.mjs
+        run: node src/scripts/fetch-standings.epl.mjs
         env:
           APIFOOTBALL_KEY: ${{ secrets.APIFOOTBALL_KEY }}
 
@@ -85,8 +87,10 @@ jobs:
           test -f dist/sitemap.xml
           echo "---- matchweek dirs ----"
           ls -la dist/epl/2025-26/matchweek || true
+          ls -la dist/epl/2026-27/matchweek || true
           echo "---- sample matchweek file ----"
-          test -f dist/epl/2025-26/matchweek/1/index.html && echo "MW1 OK" || echo "MW1 missing (maybe season hasn't reached 1?)"
+          test -f dist/epl/2025-26/matchweek/38/index.html && echo "2025-26 MW38 OK" || exit 1
+          test -f dist/epl/2026-27/matchweek/1/index.html && echo "MW1 OK" || echo "MW1 missing (maybe season hasn't reached 1?)"
 
       - name: Deploy to Netlify (prod)
         if: steps.gate.outputs.should_deploy == '1'
@@ -110,14 +114,14 @@ jobs:
           ROUND: ${{ steps.current_round.outputs.round }}
         run: |
           # Build url list JSON fragments
-          urls="\"https://timelinefootball.com/epl/2025-26/matchweek/${ROUND}/\""
+          urls="\"https://timelinefootball.com/epl/2026-27/matchweek/${ROUND}/\""
 
           if [ "${ROUND}" -gt 1 ]; then
             prev=$((ROUND-1))
-            prevFile="public/data/leagues/epl/2025/matchdays/${prev}.json"
+            prevFile="public/data/leagues/epl/2026-27/matchweeks/${prev}.json"
             # If previous round file was modified during this run, include it
             if [ -f "$prevFile" ] && [ "$(stat -c %Y "$prevFile")" -ge "${START_TS}" ]; then
-              urls="${urls}, \"https://timelinefootball.com/epl/2025-26/matchweek/${prev}/\""
+              urls="${urls}, \"https://timelinefootball.com/epl/2026-27/matchweek/${prev}/\""
             fi
           fi
 

@@ -1,0 +1,326 @@
+{
+  "season": 2026,
+  "round": 21,
+  "matches": [
+    {
+      "id": "1557575",
+      "league": "Premier League",
+      "venue": "",
+      "attendance": null,
+      "kickoff": "2027-01-16T15:00:00+00:00",
+      "homeTeamId": "newcastle",
+      "awayTeamId": "fulham",
+      "score": {
+        "home": 0,
+        "away": 0
+      },
+      "status": {
+        "state": "NS",
+        "halfTimeScore": ""
+      },
+      "events": [],
+      "statistics": {
+        "home": {
+          "ycMinutes": [],
+          "rcMinutes": [],
+          "disallowedGoals": 0,
+          "ownGoalsFor": 0
+        },
+        "away": {
+          "ycMinutes": [],
+          "rcMinutes": [],
+          "disallowedGoals": 0,
+          "ownGoalsFor": 0
+        }
+      }
+    },
+    {
+      "id": "1557568",
+      "league": "Premier League",
+      "venue": "Vitality Stadium",
+      "attendance": null,
+      "kickoff": "2027-01-16T15:00:00+00:00",
+      "homeTeamId": "bournemouth",
+      "awayTeamId": "ipswich",
+      "score": {
+        "home": 0,
+        "away": 0
+      },
+      "status": {
+        "state": "NS",
+        "halfTimeScore": ""
+      },
+      "events": [],
+      "statistics": {
+        "home": {
+          "ycMinutes": [],
+          "rcMinutes": [],
+          "disallowedGoals": 0,
+          "ownGoalsFor": 0
+        },
+        "away": {
+          "ycMinutes": [],
+          "rcMinutes": [],
+          "disallowedGoals": 0,
+          "ownGoalsFor": 0
+        }
+      }
+    },
+    {
+      "id": "1557573",
+      "league": "Premier League",
+      "venue": "Anfield",
+      "attendance": null,
+      "kickoff": "2027-01-16T15:00:00+00:00",
+      "homeTeamId": "liverpool",
+      "awayTeamId": "crystal-palace",
+      "score": {
+        "home": 0,
+        "away": 0
+      },
+      "status": {
+        "state": "NS",
+        "halfTimeScore": ""
+      },
+      "events": [],
+      "statistics": {
+        "home": {
+          "ycMinutes": [],
+          "rcMinutes": [],
+          "disallowedGoals": 0,
+          "ownGoalsFor": 0
+        },
+        "away": {
+          "ycMinutes": [],
+          "rcMinutes": [],
+          "disallowedGoals": 0,
+          "ownGoalsFor": 0
+        }
+      }
+    },
+    {
+      "id": "1557576",
+      "league": "Premier League",
+      "venue": "Tottenham Hotspur Stadium",
+      "attendance": null,
+      "kickoff": "2027-01-16T15:00:00+00:00",
+      "homeTeamId": "tottenham",
+      "awayTeamId": "leeds",
+      "score": {
+        "home": 0,
+        "away": 0
+      },
+      "status": {
+        "state": "NS",
+        "halfTimeScore": ""
+      },
+      "events": [],
+      "statistics": {
+        "home": {
+          "ycMinutes": [],
+          "rcMinutes": [],
+          "disallowedGoals": 0,
+          "ownGoalsFor": 0
+        },
+        "away": {
+          "ycMinutes": [],
+          "rcMinutes": [],
+          "disallowedGoals": 0,
+          "ownGoalsFor": 0
+        }
+      }
+    },
+    {
+      "id": "1557570",
+      "league": "Premier League",
+      "venue": "Stamford Bridge",
+      "attendance": null,
+      "kickoff": "2027-01-16T15:00:00+00:00",
+      "homeTeamId": "chelsea",
+      "awayTeamId": "sunderland",
+      "score": {
+        "home": 0,
+        "away": 0
+      },
+      "status": {
+        "state": "NS",
+        "halfTimeScore": ""
+      },
+      "events": [],
+      "statistics": {
+        "home": {
+          "ycMinutes": [],
+          "rcMinutes": [],
+          "disallowedGoals": 0,
+          "ownGoalsFor": 0
+        },
+        "away": {
+          "ycMinutes": [],
+          "rcMinutes": [],
+          "disallowedGoals": 0,
+          "ownGoalsFor": 0
+        }
+      }
+    },
+    {
+      "id": "1557574",
+      "league": "Premier League",
+      "venue": "Etihad Stadium",
+      "attendance": null,
+      "kickoff": "2027-01-16T15:00:00+00:00",
+      "homeTeamId": "manchester-city",
+      "awayTeamId": "nottingham-forest",
+      "score": {
+        "home": 0,
+        "away": 0
+      },
+      "status": {
+        "state": "NS",
+        "halfTimeScore": ""
+      },
+      "events": [],
+      "statistics": {
+        "home": {
+          "ycMinutes": [],
+          "rcMinutes": [],
+          "disallowedGoals": 0,
+          "ownGoalsFor": 0
+        },
+        "away": {
+          "ycMinutes": [],
+          "rcMinutes": [],
+          "disallowedGoals": 0,
+          "ownGoalsFor": 0
+        }
+      }
+    },
+    {
+      "id": "1557569",
+      "league": "Premier League",
+      "venue": "Brentford Community Stadium",
+      "attendance": null,
+      "kickoff": "2027-01-16T15:00:00+00:00",
+      "homeTeamId": "brentford",
+      "awayTeamId": "brighton",
+      "score": {
+        "home": 0,
+        "away": 0
+      },
+      "status": {
+        "state": "NS",
+        "halfTimeScore": ""
+      },
+      "events": [],
+      "statistics": {
+        "home": {
+          "ycMinutes": [],
+          "rcMinutes": [],
+          "disallowedGoals": 0,
+          "ownGoalsFor": 0
+        },
+        "away": {
+          "ycMinutes": [],
+          "rcMinutes": [],
+          "disallowedGoals": 0,
+          "ownGoalsFor": 0
+        }
+      }
+    },
+    {
+      "id": "1557572",
+      "league": "Premier League",
+      "venue": "MKM Stadium",
+      "attendance": null,
+      "kickoff": "2027-01-16T15:00:00+00:00",
+      "homeTeamId": "hull-city",
+      "awayTeamId": "arsenal",
+      "score": {
+        "home": 0,
+        "away": 0
+      },
+      "status": {
+        "state": "NS",
+        "halfTimeScore": ""
+      },
+      "events": [],
+      "statistics": {
+        "home": {
+          "ycMinutes": [],
+          "rcMinutes": [],
+          "disallowedGoals": 0,
+          "ownGoalsFor": 0
+        },
+        "away": {
+          "ycMinutes": [],
+          "rcMinutes": [],
+          "disallowedGoals": 0,
+          "ownGoalsFor": 0
+        }
+      }
+    },
+    {
+      "id": "1557567",
+      "league": "Premier League",
+      "venue": "Villa Park",
+      "attendance": null,
+      "kickoff": "2027-01-16T15:00:00+00:00",
+      "homeTeamId": "aston-villa",
+      "awayTeamId": "manchester-united",
+      "score": {
+        "home": 0,
+        "away": 0
+      },
+      "status": {
+        "state": "NS",
+        "halfTimeScore": ""
+      },
+      "events": [],
+      "statistics": {
+        "home": {
+          "ycMinutes": [],
+          "rcMinutes": [],
+          "disallowedGoals": 0,
+          "ownGoalsFor": 0
+        },
+        "away": {
+          "ycMinutes": [],
+          "rcMinutes": [],
+          "disallowedGoals": 0,
+          "ownGoalsFor": 0
+        }
+      }
+    },
+    {
+      "id": "1557571",
+      "league": "Premier League",
+      "venue": "Coventry Building Society Arena",
+      "attendance": null,
+      "kickoff": "2027-01-16T15:00:00+00:00",
+      "homeTeamId": "coventry-city",
+      "awayTeamId": "everton",
+      "score": {
+        "home": 0,
+        "away": 0
+      },
+      "status": {
+        "state": "NS",
+        "halfTimeScore": ""
+      },
+      "events": [],
+      "statistics": {
+        "home": {
+          "ycMinutes": [],
+          "rcMinutes": [],
+          "disallowedGoals": 0,
+          "ownGoalsFor": 0
+        },
+        "away": {
+          "ycMinutes": [],
+          "rcMinutes": [],
+          "disallowedGoals": 0,
+          "ownGoalsFor": 0
+        }
+      }
+    }
+  ]
+}

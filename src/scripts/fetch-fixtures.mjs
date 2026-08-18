@@ -1,11 +1,13 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { getSeasonConfigFromEnv } from "../config/seasons.js";
 
 const API_KEY = process.env.APIFOOTBALL_KEY;
-const LEAGUE = 39;
-const SEASON = 2025;
-const DATAPATH = "/public/data/leagues/epl/2025-26/";
+const season = getSeasonConfigFromEnv();
+const LEAGUE = season.apiLeagueId;
+const SEASON = season.apiSeason;
+const DATAPATH = `/public/data/leagues/${season.leagueKey}/${season.seasonPath}/`;
 
 if (!API_KEY) {
   console.error("Missing APIFOOTBALL_KEY env var (APIFOOTBALL_KEY)");

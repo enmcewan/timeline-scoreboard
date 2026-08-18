@@ -1,17 +1,33 @@
 import "./style.css";
-import teams from "./data/leagues/epl/2025/teams.json";
+import teams2025 from "./data/leagues/epl/2025/teams.json";
+import players2025 from "./data/leagues/epl/2025/players.json";
+import teams2026 from "./data/leagues/epl/2026/teams.json";
+import players2026 from "./data/leagues/epl/2026/players.json";
+import { getSeasonConfigFromPathname, publicSeasonDataPath } from "./config/seasons.js";
 import { esc, sortedEvents } from "./lib/utils.js";
 import { VIEW_MODES, isVisibleInMode, createRenderEventText, createRenderEventRow, createRenderMatchCard } from "./lib/sharedRenderer.js";
 
+const season = getSeasonConfigFromPathname(window.location.pathname);
+const teamsBySeason = {
+  "2025-26": teams2025,
+  "2026-27": teams2026,
+};
+const playersBySeason = {
+  "2025-26": players2025,
+  "2026-27": players2026,
+};
+const teams = teamsBySeason[season.seasonPath];
+const players = playersBySeason[season.seasonPath] || {};
 
 // Runtime-loaded matchdays from /public/data (served at /data/...)
 const MATCHDAYS = {};
-const ALL_ROUNDS = Array.from({ length: 38 }, (_, i) => i + 1);
+const ALL_ROUNDS = Array.from({ length: season.maxRound }, (_, i) => i + 1);
+const SEASON_DATA_PATH = publicSeasonDataPath(season);
 
 async function loadAllMatchdays() {
   const results = await Promise.allSettled(
     ALL_ROUNDS.map(async (round) => {
-      const res = await fetch(`/data/leagues/epl/2025-26/matchweeks/${round}.json`, {
+      const res = await fetch(`/${SEASON_DATA_PATH}/matchweeks/${round}.json`, {
         cache: "no-store",
       });
       if (!res.ok) return null; // allow missing rounds early season
@@ -32,15 +48,15 @@ async function loadAllMatchdays() {
 }
 
 function getRoundFromPathname() {
-  const m = window.location.pathname.match(/\/epl\/2025-26\/matchweek\/(\d+)(?:\/|$)/); // fixe for ...matchweek/10 - no trailing slash
+  const m = window.location.pathname.match(/\/epl\/\d{4}-\d{2}\/matchweek\/(\d+|current)(?:\/|$)/); // fixed for ...matchweek/10 - no trailing slash
   if (!m) return null;
+  if (m[1] === "current") return null;
   const n = Number(m[1]);
   return Number.isFinite(n) ? n : null;
 }
 
-// const SEASON_START = 2025;
-const SEASON_PATH = "2025-26"; // for URLs and file paths, to distinguish from 2024-25 data during transition
-const SEASON_LABEL = "2025–26";
+const SEASON_PATH = season.seasonPath;
+const SEASON_LABEL = season.displaySeasonLabel;
 
 function updateHeaderNav(round) {
 
@@ -114,10 +130,10 @@ function pickCurrentRoundByCompletion(matchdays) {
 }
 
 function setPageMetaForRound(round) {
-  const title = `EPL 2025–26 Matchweek ${round} Timelines, Stats & Ratings`;
+  const title = `${season.leagueShortName} ${SEASON_LABEL} Matchweek ${round} Timelines, Stats & Ratings`;
   document.title = title;
 
-  const desc = `English Premier League 2025–26 Matchweek ${round} results with goals, cards, VAR, stats and team ratings.`;
+  const desc = `${season.leagueName} ${SEASON_LABEL} Matchweek ${round} results with goals, cards, VAR, stats and team ratings.`;
   let meta = document.querySelector('meta[name="description"]');
   if (!meta) {
     meta = document.createElement("meta");
@@ -126,7 +142,7 @@ function setPageMetaForRound(round) {
   }
   meta.setAttribute("content", desc);
 
-  const canonicalHref = `${window.location.origin}/epl/2025-26/matchweek/${round}/`;
+  const canonicalHref = `${window.location.origin}/epl/${SEASON_PATH}/matchweek/${round}/`;
   let canon = document.querySelector('link[rel="canonical"]');
   if (!canon) {
     canon = document.createElement("link");
@@ -136,11 +152,12 @@ function setPageMetaForRound(round) {
   canon.setAttribute("href", canonicalHref);
 }
 
-const renderEventText = createRenderEventText(esc);
+const renderEventText = createRenderEventText(esc, players);
 const renderEventRow = createRenderEventRow(esc, renderEventText);
 const renderMatchCard = createRenderMatchCard({
   esc,
   teamsById: teams,
+  seasonPath: SEASON_PATH,
   // playersById: players,
   sortedEvents,
   isVisibleInMode,          // the shared one you already import
@@ -156,6 +173,18 @@ let statsShown = true;
 const viewModes = new Map();
 
 const app = document.querySelector("#app");
+
+function updateSeasonChrome() {
+  const tagline = document.querySelector(".site-tagline");
+  if (tagline) {
+    tagline.textContent = `${season.leagueName} ${SEASON_LABEL}`;
+  }
+
+  document.querySelectorAll('.page-nav a[href^="/epl/"]').forEach((link) => {
+    const href = link.getAttribute("href") || "";
+    link.setAttribute("href", href.replace(/\/epl\/\d{4}-\d{2}\//, `/epl/${SEASON_PATH}/`));
+  });
+}
 
 function renderAllMatches() {
 
@@ -223,6 +252,7 @@ function applyStatsVisibility() {
   }
 }
 async function init() {
+  updateSeasonChrome();
 
   const allRounds = await loadAllMatchdays();
 
@@ -256,7 +286,7 @@ async function init() {
 
   if (window.location.pathname === "/") {
     // ... after currentRound is computed and validated
-    window.location.replace(`/epl/2025-26/matchweek/${currentRound}/`);
+    window.location.replace(`/epl/${SEASON_PATH}/matchweek/current/`);
     return;
   }
 
@@ -345,7 +375,7 @@ document.addEventListener("change", (e) => {
   globalViewMode = VIEW_MODES.FULL;
   showAllAriaPressed = "false";
 
-  history.replaceState(null, "", `/epl/2025-26/matchweek/${currentRound}/`);
+  history.replaceState(null, "", `/epl/${SEASON_PATH}/matchweek/${currentRound}/`);
   setPageMetaForRound(currentRound);
 
 

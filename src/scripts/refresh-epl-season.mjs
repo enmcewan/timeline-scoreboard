@@ -1,13 +1,15 @@
-// scripts/refresh-epl-2025.mjs
+// scripts/refresh-epl-season.mjs
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { getSeasonConfigFromEnv } from "../config/seasons.js";
 import { parseMatchweekNumber, getForcedRefreshRounds } from "../lib/utils.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 console.log("REFRESH EPL SCRIPT STARTED");
+const season = getSeasonConfigFromEnv();
 
 /* ------------ PATHS ------------- */
 
@@ -18,8 +20,8 @@ const FIXTURES_RAW_PATH = path.join(
   "public",
   "data",
   "leagues",
-  "epl",
-  "2025-26",
+  season.leagueKey,
+  season.seasonPath,
   "fixtures.raw.json"
 );
 
@@ -30,8 +32,8 @@ const EVENTS_RAW_PATH = path.join(
   "public",
   "data",
   "leagues",
-  "epl",
-  "2025-26",
+  season.leagueKey,
+  season.seasonPath,
   "events.raw.json"
 );
 
@@ -42,13 +44,24 @@ const MATCHWEEKS_DIR = path.join(
   "public",
   "data",
   "leagues",
-  "epl",
-  "2025-26",
+  season.leagueKey,
+  season.seasonPath,
   "matchweeks"
+);
+
+const TEAMS_PATH = path.join(
+  __dirname,
+  "..",
+  "data",
+  "leagues",
+  season.leagueKey,
+  season.sourceDataSeason,
+  "teams.json"
 );
 
 const BASE_URL = "https://v3.football.api-sports.io";
 const API_KEY = process.env.APIFOOTBALL_KEY;
+let apiTeamIdToSlug = new Map();
 
 if (!API_KEY) {
   console.error("Missing APIFOOTBALL_KEY env var (APIFOOTBALL_KEY)");
@@ -137,6 +150,28 @@ function slugTeamName(name) {
     .replace(/&/g, "and")
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/(^-|-$)/g, "");
+}
+
+async function loadApiTeamIdToSlugMap() {
+  const teamsJson = JSON.parse(await fs.readFile(TEAMS_PATH, "utf8"));
+  const map = new Map();
+
+  for (const [slug, team] of Object.entries(teamsJson)) {
+    if (!team.apiTeamId) continue;
+
+    const id = Number(team.apiTeamId);
+    if (map.has(id)) {
+      throw new Error(`Duplicate apiTeamId ${id} in ${TEAMS_PATH}`);
+    }
+
+    map.set(id, slug);
+  }
+
+  return map;
+}
+
+function getTeamSlug(apiTeamId, fallbackName) {
+  return apiTeamIdToSlug.get(Number(apiTeamId)) ?? slugTeamName(fallbackName);
 }
 
 function minuteLabel(time) {
@@ -307,8 +342,8 @@ function transformFixtureAndEvents(rawFixture, rawEventsForFixture) {
     venue: fx.venue?.name ?? "",
     attendance: null,
     kickoff: fx.date,
-    homeTeamId: slugTeamName(teams.home.name),
-    awayTeamId: slugTeamName(teams.away.name),
+    homeTeamId: getTeamSlug(homeApiId, teams.home.name),
+    awayTeamId: getTeamSlug(awayApiId, teams.away.name),
     score: {
       home: goals.home ?? 0,
       away: goals.away ?? 0,
@@ -405,6 +440,8 @@ function upsertMatch(roundMap, round, match) {
 /* ------------ MAIN ------------- */
 
 async function main() {
+  apiTeamIdToSlug = await loadApiTeamIdToSlugMap();
+
   console.log("Reading raw fixtures…");
   const fixturesRaw = JSON.parse(await fs.readFile(FIXTURES_RAW_PATH, "utf8"));
 
@@ -504,7 +541,7 @@ async function main() {
     matches.sort((a, b) => new Date(a.kickoff) - new Date(b.kickoff));
 
     const outObj = {
-      season: 2025,
+      season: season.apiSeason,
       round,
       matches,
     };

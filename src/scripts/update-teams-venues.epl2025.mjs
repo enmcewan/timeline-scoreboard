@@ -1,12 +1,22 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { getSeasonConfigFromEnv } from "../config/seasons.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT = path.join(__dirname, "../..");
+const season = getSeasonConfigFromEnv();
 
-const TEAMS_PATH = path.join(ROOT, "src", "data", "leagues", "epl", "2025", "teams.json");
+const TEAMS_PATH = path.join(
+  ROOT,
+  "src",
+  "data",
+  "leagues",
+  season.leagueKey,
+  season.sourceDataSeason,
+  "teams.json"
+);
 
 // Use the same base URL + headers you already use in fetch-standings
 const BASE_URL = "https://v3.football.api-sports.io";

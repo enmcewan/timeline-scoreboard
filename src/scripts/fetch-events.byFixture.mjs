@@ -1,9 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-
-import fixturesRaw from "../../public/data/leagues/epl/2025-26/fixtures.raw.json" with { type: "json" };
-
+import { getSeasonConfigFromEnv } from "../config/seasons.js";
 import { parseMatchweekNumber, getForcedRefreshRounds } from "../lib/utils.js";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -11,8 +9,16 @@ const __dirname = path.dirname(__filename);
 
 const API_KEY = process.env.APIFOOTBALL_KEY;
 const BASE_URL = "https://v3.football.api-sports.io";
+const season = getSeasonConfigFromEnv();
 
-const OUT_PATH = path.join(__dirname, "../../public/data/leagues/epl/2025-26/events.raw.json");
+const SEASON_DATA_DIR = path.join(
+  __dirname,
+  "../../public/data/leagues",
+  season.leagueKey,
+  season.seasonPath
+);
+const FIXTURES_PATH = path.join(SEASON_DATA_DIR, "fixtures.raw.json");
+const OUT_PATH = path.join(SEASON_DATA_DIR, "events.raw.json");
 
 const UPCOMING_WINDOW_HOURS = 6;
 const UPCOMING_WINDOW_MS = UPCOMING_WINDOW_HOURS * 60 * 60 * 1000;
@@ -116,6 +122,7 @@ async function main() {
     process.exit(1);
   }
 
+  const fixturesRaw = JSON.parse(await fs.readFile(FIXTURES_PATH, "utf8"));
   const fixtures = fixturesRaw.response || [];
 
   const existingEvents = await readExistingEventsFile();

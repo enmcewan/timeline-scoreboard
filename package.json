@@ -9,17 +9,20 @@
   "preview": "vite preview",
   "fetch:fixtures": "node src/scripts/fetch-fixtures.mjs",
   "fetch:events": "node src/scripts/fetch-events.byFixture.mjs",
-  "refresh:epl2025": "node src/scripts/refresh-epl-2025.mjs",
-  "refresh:epl2025table": "node src/scripts/fetch-standings.epl2025.mjs",
-  "refresh:all": "npm run fetch:fixtures && npm run fetch:events && npm run refresh:epl2025 && npm run refresh:epl2025table",
-  "gate:refresh": "node src/scripts/should-refresh.mjs --fixtures public/data/leagues/epl/2025-26/fixtures.raw.json",
+  "refresh:epl": "node src/scripts/refresh-epl-season.mjs",
+  "refresh:epl:table": "node src/scripts/fetch-standings.epl.mjs",
+  "refresh:epl2025": "node -e \"process.env.TIMELINE_SEASON='2025-26'; import('./src/scripts/refresh-epl-season.mjs')\"",
+  "refresh:epl2025table": "node -e \"process.env.TIMELINE_SEASON='2025-26'; import('./src/scripts/fetch-standings.epl.mjs')\"",
+  "refresh:all": "npm run fetch:fixtures && npm run fetch:events && npm run refresh:epl && npm run refresh:epl:table",
+  "gate:refresh": "node src/scripts/should-refresh.mjs --fixtures public/data/leagues/epl/2026-27/fixtures.raw.json",
   "refresh:smart": "npm run gate:refresh | tee /dev/stderr | node -e \"let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{if(d.includes('REFRESH=1')) process.exit(0); console.log('Gate: skip refresh'); process.exit(42);});\" && npm run refresh:all",
-  "update:matchdays": "npm run fetch:events && npm run refresh:epl2025",
+  "update:matchdays": "npm run fetch:events && npm run refresh:epl",
   "build:season-context": "node src/scripts/build-season-context.mjs",
   "prerender": "node src/scripts/prerender-matchweeks.mjs",
   "sitemap": "node src/scripts/generate-sitemap.mjs",
-  "build:prerender": "npm run build && npm run prerender && npm run sitemap",
-  "build:full": "npm run refresh:epl2025table && npm run build:season-context && npm run build:prerender"
+  "prerender:all": "node src/scripts/prerender-all-seasons.mjs",
+  "build:prerender": "npm run build && npm run prerender:all && npm run sitemap",
+  "build:full": "npm run refresh:epl:table && npm run build:season-context && npm run build:prerender"
 },
   "devDependencies": {
     "vite": "^7.2.4"

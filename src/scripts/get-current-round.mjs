@@ -1,13 +1,15 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { getSeasonConfigFromEnv } from "../config/seasons.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT = path.join(__dirname, "../..");
 
-const SEASON = "2025-26";
-const LEAGUE = "epl";
+const season = getSeasonConfigFromEnv();
+const SEASON = season.seasonPath;
+const LEAGUE = season.leagueKey;
 const MATCHWEEKS_DIR = path.join(
   ROOT,
   "public",

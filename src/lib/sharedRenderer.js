@@ -1,7 +1,4 @@
-import playerData from "../data/leagues/epl/2025/players.json" with { type: "json" };
 import { computePerfExec } from "./powerMeter.js";
-
-const players = playerData || {}; // preventing app failure from missing file
 
 export const VIEW_MODES = {
     COMPACT: "compact",
@@ -23,9 +20,9 @@ function formatPlayerName(fullName = "") {
     return `${initial}. ${lastName}`;
 }
 
-function getPlayerTitle(playerId, fallbackName) {
+function getPlayerTitle(playersById, playerId, fallbackName) {
     if (!playerId) return fallbackName || "";
-    const p = players?.[String(playerId)];
+    const p = playersById?.[String(playerId)];
     return p?.fullName || p?.name || fallbackName || "";
 }
 
@@ -45,15 +42,15 @@ export function isVisibleInMode(evt, mode) {
     }
 }
 
-export function createRenderEventText(esc) {
+export function createRenderEventText(esc, playersById = {}) {
 
     return function renderEventText(evt, mode) {
 
         const player = formatPlayerName(esc(evt.player ?? ""));
         const playerIn = formatPlayerName(esc(evt.inPlayer ?? ""));
         const playerOut = formatPlayerName(esc(evt.outPlayer ?? ""));
-        const playerTitle = getPlayerTitle(evt.playerId, evt.player);
-        const assistTitle = getPlayerTitle(evt.assistId, evt.assist);
+        const playerTitle = getPlayerTitle(playersById, evt.playerId, evt.player);
+        const assistTitle = getPlayerTitle(playersById, evt.assistId, evt.assist);
 
         const card = evt.kind === "red" || evt.kind === "yellow";
 
@@ -256,6 +253,7 @@ export function createRenderEventRow(esc, renderEventText) {
 export function createRenderMatchCard({
     esc,
     teamsById,
+    seasonPath,
     sortedEvents,
     isVisibleInMode,
     renderEventRow,       // function (evt, mode) => html
@@ -343,8 +341,8 @@ export function createRenderMatchCard({
 
         const kickoffTime = fmtKick(match.kickoff);
 
-        const homeHref = `/epl/2025-26/team/${match.homeTeamId}/`;
-        const awayHref = `/epl/2025-26/team/${match.awayTeamId}/`;
+        const homeHref = `/epl/${seasonPath}/team/${match.homeTeamId}/`;
+        const awayHref = `/epl/${seasonPath}/team/${match.awayTeamId}/`;
 
         const stat = (side, key, fallback = " - ") =>
             match.statistics?.[side]?.[key] ?? fallback;

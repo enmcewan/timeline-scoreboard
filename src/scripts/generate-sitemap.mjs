@@ -1,8 +1,8 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import teams from "../data/leagues/epl/2025/teams.json" with { type: "json" };
-import { getCurrentRound } from "./get-current-round.mjs";
+import { getSeasonConfig, PRERENDER_SEASON_PATHS, ACTIVE_SEASON_PATH } from "../config/seasons.js";
+import { pickInitialRound } from "./get-current-round.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -12,7 +12,6 @@ const DIST_DIR = path.join(ROOT, "dist");
 
 // Change later if you decide on www, but this is fine for now:
 const SITE_ORIGIN = "https://timelinefootball.com";
-const MATCH_HUB = "https://timelinefootball.com/epl/2025-26/";
 
 function xmlEscape(s) {
   return String(s)
@@ -23,8 +22,8 @@ function xmlEscape(s) {
     .replace(/'/g, "&apos;");
 }
 
-async function listMatchweekPages() {
-  const base = path.join(DIST_DIR, "epl", "2025-26", "matchweek");
+async function listMatchweekPages(season) {
+  const base = path.join(DIST_DIR, "epl", season.seasonPath, "matchweek");
   let rounds = [];
   try {
     const entries = await fs.readdir(base, { withFileTypes: true });
@@ -37,6 +36,39 @@ async function listMatchweekPages() {
     // no prerendered pages yet
   }
   return rounds;
+}
+
+async function readJsonIfExists(filePath, fallback) {
+  try {
+    const text = await fs.readFile(filePath, "utf8");
+    return JSON.parse(text.replace(/^\uFEFF/, ""));
+  } catch (err) {
+    if (err?.code === "ENOENT") return fallback;
+    throw err;
+  }
+}
+
+async function getCurrentRoundForSeason(season) {
+  const base = path.join(
+    ROOT,
+    "public",
+    "data",
+    "leagues",
+    season.leagueKey,
+    season.seasonPath,
+    "matchweeks"
+  );
+  const files = await fs.readdir(base).catch(() => []);
+  const matchdays = {};
+
+  for (const f of files) {
+    if (!f.endsWith(".json")) continue;
+    const round = Number(path.basename(f, ".json"));
+    if (!Number.isFinite(round)) continue;
+    matchdays[String(round)] = await readJsonIfExists(path.join(base, f), null);
+  }
+
+  return pickInitialRound(matchdays);
 }
 
 function getMatchweekChangefreq(round, currentRound) {
@@ -69,47 +101,59 @@ async function getPageLastmod(relativePath) {
 }
 
 async function main() {
-
-  const rounds = await listMatchweekPages();
-  const currentRound = await getCurrentRound();
-
   const urls = [];
 
-  // homepage
+  // homepage points to the active season.
   urls.push({ loc: `${SITE_ORIGIN}/`, changefreq: "hourly", priority: "1.0", lastmod: await getPageLastmod(".") });
 
-  // match hub
-  urls.push({
-    loc: MATCH_HUB,
-    changefreq: "monthly",
-    priority: "0.8",
-  });
+  for (const seasonPath of PRERENDER_SEASON_PATHS) {
+    const season = getSeasonConfig(seasonPath);
+    const teamsPath = path.join(
+      ROOT,
+      "src",
+      "data",
+      "leagues",
+      season.leagueKey,
+      season.sourceDataSeason,
+      "teams.json"
+    );
+    const teams = await readJsonIfExists(teamsPath, {});
+    const rounds = await listMatchweekPages(season);
+    const currentRound = await getCurrentRoundForSeason(season);
+    const isActive = season.seasonPath === ACTIVE_SEASON_PATH;
+    const liveChangefreq = isActive ? "daily" : "never";
 
-  // table
-  urls.push({
-    loc: `${SITE_ORIGIN}/epl/2025-26/table/`,
-    changefreq: "daily",
-    priority: "0.8",
-    lastmod: await getPageLastmod("epl/2025-26/table"),
-  });
+    urls.push({
+      loc: `${SITE_ORIGIN}/epl/${season.seasonPath}/`,
+      changefreq: isActive ? "monthly" : "never",
+      priority: isActive ? "0.8" : "0.4",
+      lastmod: await getPageLastmod(`epl/${season.seasonPath}`),
+    });
 
-  // teams
-  for (const slug of Object.keys(teams)) {
     urls.push({
-      loc: `${SITE_ORIGIN}/epl/2025-26/team/${slug}/`,
-      changefreq: "daily",
-      priority: "0.7",
-      lastmod: await getPageLastmod(`epl/2025-26/team/${slug}`),
+      loc: `${SITE_ORIGIN}/epl/${season.seasonPath}/table/`,
+      changefreq: liveChangefreq,
+      priority: isActive ? "0.8" : "0.4",
+      lastmod: await getPageLastmod(`epl/${season.seasonPath}/table`),
     });
-  }
-  // matchweeks
-  for (const r of rounds) {
-    urls.push({
-      loc: `${SITE_ORIGIN}/epl/2025-26/matchweek/${r}/`,
-      changefreq: getMatchweekChangefreq(r, currentRound),
-      priority: r === currentRound ? "0.9" : "0.7",
-      lastmod: await getPageLastmod(`epl/2025-26/matchweek/${r}`),
-    });
+
+    for (const slug of Object.keys(teams)) {
+      urls.push({
+        loc: `${SITE_ORIGIN}/epl/${season.seasonPath}/team/${slug}/`,
+        changefreq: liveChangefreq,
+        priority: isActive ? "0.7" : "0.4",
+        lastmod: await getPageLastmod(`epl/${season.seasonPath}/team/${slug}`),
+      });
+    }
+
+    for (const r of rounds) {
+      urls.push({
+        loc: `${SITE_ORIGIN}/epl/${season.seasonPath}/matchweek/${r}/`,
+        changefreq: isActive ? getMatchweekChangefreq(r, currentRound) : "never",
+        priority: isActive && r === currentRound ? "0.9" : isActive ? "0.7" : "0.4",
+        lastmod: await getPageLastmod(`epl/${season.seasonPath}/matchweek/${r}`),
+      });
+    }
   }
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>

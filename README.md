@@ -2,7 +2,7 @@
 
 **Timeline Football** is a high-performance, SEO-first web application that presents football (soccer) matches as **event-by-event timelines** rather than traditional box scores.
 
-The project currently covers the **English Premier League 2025–26 season**, with a foundation designed to scale across leagues, seasons, and competitions.
+The project currently supports the **English Premier League 2025–26 and 2026–27 seasons**, with a foundation designed to scale across leagues, seasons, and competitions.
 
 Live site: https://timelinefootball.com
 
@@ -118,7 +118,8 @@ No React, Vue, or heavy frameworks were used intentionally to reduce complexity 
 
 ## Project Status
 
-- EPL 2025–26: **Live**
+- EPL 2025–26: **Archived**
+- EPL 2026–27: **Active**
 - Core architecture: **Complete**
 - Branding & SEO: **Complete**
 - Additional leagues: **Planned**

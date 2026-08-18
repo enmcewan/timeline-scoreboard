@@ -1,0 +1,371 @@
+{
+  "league": {
+    "id": 39,
+    "name": "Premier League",
+    "country": "England",
+    "season": 2026,
+    "updated": "2026-08-14T00:00:00+00:00"
+  },
+  "table": [
+    {
+      "rank": 1,
+      "teamApiId": 42,
+      "teamName": "Arsenal",
+      "points": 0,
+      "gd": 0,
+      "form": "",
+      "status": "same",
+      "description": "Promotion - Champions League (League phase)",
+      "all": {
+        "p": 0,
+        "w": 0,
+        "d": 0,
+        "l": 0,
+        "gf": 0,
+        "ga": 0
+      }
+    },
+    {
+      "rank": 2,
+      "teamApiId": 66,
+      "teamName": "Aston Villa",
+      "points": 0,
+      "gd": 0,
+      "form": "",
+      "status": "same",
+      "description": "Promotion - Champions League (League phase)",
+      "all": {
+        "p": 0,
+        "w": 0,
+        "d": 0,
+        "l": 0,
+        "gf": 0,
+        "ga": 0
+      }
+    },
+    {
+      "rank": 3,
+      "teamApiId": 49,
+      "teamName": "Chelsea",
+      "points": 0,
+      "gd": 0,
+      "form": "",
+      "status": "same",
+      "description": "Promotion - Champions League (League phase)",
+      "all": {
+        "p": 0,
+        "w": 0,
+        "d": 0,
+        "l": 0,
+        "gf": 0,
+        "ga": 0
+      }
+    },
+    {
+      "rank": 4,
+      "teamApiId": 45,
+      "teamName": "Everton",
+      "points": 0,
+      "gd": 0,
+      "form": "",
+      "status": "same",
+      "description": "Promotion - Champions League (League phase)",
+      "all": {
+        "p": 0,
+        "w": 0,
+        "d": 0,
+        "l": 0,
+        "gf": 0,
+        "ga": 0
+      }
+    },
+    {
+      "rank": 5,
+      "teamApiId": 36,
+      "teamName": "Fulham",
+      "points": 0,
+      "gd": 0,
+      "form": "",
+      "status": "same",
+      "description": "Promotion - Europa League (League phase)",
+      "all": {
+        "p": 0,
+        "w": 0,
+        "d": 0,
+        "l": 0,
+        "gf": 0,
+        "ga": 0
+      }
+    },
+    {
+      "rank": 6,
+      "teamApiId": 40,
+      "teamName": "Liverpool",
+      "points": 0,
+      "gd": 0,
+      "form": "",
+      "status": "same",
+      "description": null,
+      "all": {
+        "p": 0,
+        "w": 0,
+        "d": 0,
+        "l": 0,
+        "gf": 0,
+        "ga": 0
+      }
+    },
+    {
+      "rank": 7,
+      "teamApiId": 50,
+      "teamName": "Manchester City",
+      "points": 0,
+      "gd": 0,
+      "form": "",
+      "status": "same",
+      "description": null,
+      "all": {
+        "p": 0,
+        "w": 0,
+        "d": 0,
+        "l": 0,
+        "gf": 0,
+        "ga": 0
+      }
+    },
+    {
+      "rank": 8,
+      "teamApiId": 33,
+      "teamName": "Manchester United",
+      "points": 0,
+      "gd": 0,
+      "form": "",
+      "status": "same",
+      "description": null,
+      "all": {
+        "p": 0,
+        "w": 0,
+        "d": 0,
+        "l": 0,
+        "gf": 0,
+        "ga": 0
+      }
+    },
+    {
+      "rank": 9,
+      "teamApiId": 34,
+      "teamName": "Newcastle",
+      "points": 0,
+      "gd": 0,
+      "form": "",
+      "status": "same",
+      "description": null,
+      "all": {
+        "p": 0,
+        "w": 0,
+        "d": 0,
+        "l": 0,
+        "gf": 0,
+        "ga": 0
+      }
+    },
+    {
+      "rank": 10,
+      "teamApiId": 746,
+      "teamName": "Sunderland",
+      "points": 0,
+      "gd": 0,
+      "form": "",
+      "status": "same",
+      "description": null,
+      "all": {
+        "p": 0,
+        "w": 0,
+        "d": 0,
+        "l": 0,
+        "gf": 0,
+        "ga": 0
+      }
+    },
+    {
+      "rank": 11,
+      "teamApiId": 47,
+      "teamName": "Tottenham",
+      "points": 0,
+      "gd": 0,
+      "form": "",
+      "status": "same",
+      "description": null,
+      "all": {
+        "p": 0,
+        "w": 0,
+        "d": 0,
+        "l": 0,
+        "gf": 0,
+        "ga": 0
+      }
+    },
+    {
+      "rank": 12,
+      "teamApiId": 1346,
+      "teamName": "Coventry",
+      "points": 0,
+      "gd": 0,
+      "form": "",
+      "status": "same",
+      "description": null,
+      "all": {
+        "p": 0,
+        "w": 0,
+        "d": 0,
+        "l": 0,
+        "gf": 0,
+        "ga": 0
+      }
+    },
+    {
+      "rank": 13,
+      "teamApiId": 52,
+      "teamName": "Crystal Palace",
+      "points": 0,
+      "gd": 0,
+      "form": "",
+      "status": "same",
+      "description": null,
+      "all": {
+        "p": 0,
+        "w": 0,
+        "d": 0,
+        "l": 0,
+        "gf": 0,
+        "ga": 0
+      }
+    },
+    {
+      "rank": 14,
+      "teamApiId": 64,
+      "teamName": "Hull City",
+      "points": 0,
+      "gd": 0,
+      "form": "",
+      "status": "same",
+      "description": null,
+      "all": {
+        "p": 0,
+        "w": 0,
+        "d": 0,
+        "l": 0,
+        "gf": 0,
+        "ga": 0
+      }
+    },
+    {
+      "rank": 15,
+      "teamApiId": 57,
+      "teamName": "Ipswich",
+      "points": 0,
+      "gd": 0,
+      "form": "",
+      "status": "same",
+      "description": null,
+      "all": {
+        "p": 0,
+        "w": 0,
+        "d": 0,
+        "l": 0,
+        "gf": 0,
+        "ga": 0
+      }
+    },
+    {
+      "rank": 16,
+      "teamApiId": 35,
+      "teamName": "Bournemouth",
+      "points": 0,
+      "gd": 0,
+      "form": "",
+      "status": "same",
+      "description": null,
+      "all": {
+        "p": 0,
+        "w": 0,
+        "d": 0,
+        "l": 0,
+        "gf": 0,
+        "ga": 0
+      }
+    },
+    {
+      "rank": 17,
+      "teamApiId": 51,
+      "teamName": "Brighton",
+      "points": 0,
+      "gd": 0,
+      "form": "",
+      "status": "same",
+      "description": null,
+      "all": {
+        "p": 0,
+        "w": 0,
+        "d": 0,
+        "l": 0,
+        "gf": 0,
+        "ga": 0
+      }
+    },
+    {
+      "rank": 18,
+      "teamApiId": 63,
+      "teamName": "Leeds",
+      "points": 0,
+      "gd": 0,
+      "form": "",
+      "status": "same",
+      "description": "Relegation - Championship",
+      "all": {
+        "p": 0,
+        "w": 0,
+        "d": 0,
+        "l": 0,
+        "gf": 0,
+        "ga": 0
+      }
+    },
+    {
+      "rank": 19,
+      "teamApiId": 65,
+      "teamName": "Nottingham Forest",
+      "points": 0,
+      "gd": 0,
+      "form": "",
+      "status": "same",
+      "description": "Relegation - Championship",
+      "all": {
+        "p": 0,
+        "w": 0,
+        "d": 0,
+        "l": 0,
+        "gf": 0,
+        "ga": 0
+      }
+    },
+    {
+      "rank": 20,
+      "teamApiId": 55,
+      "teamName": "Brentford",
+      "points": 0,
+      "gd": 0,
+      "form": "",
+      "status": "same",
+      "description": "Relegation - Championship",
+      "all": {
+        "p": 0,
+        "w": 0,
+        "d": 0,
+        "l": 0,
+        "gf": 0,
+        "ga": 0
+      }
+    }
+  ]
+}
