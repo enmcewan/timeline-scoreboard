@@ -239,9 +239,11 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
     const rowsHtml = (matches || []).map((m) => {
         const date = m.kickoff ? formatISODate(m.kickoff) : "";
         const vsAt = m.isHome ? "H &nbsp;" : "A &nbsp;";
-        let score = (m.scoreFor != null && m.scoreAgainst != null) ? `${m.scoreFor}–${m.scoreAgainst}` : "–";
+        const state = String(m.state || "").toUpperCase();
+        const hasStarted = !["NS", "TBD", "PST", "CANC", "ABD", "SUSP", "INT"].includes(state);
+        let score = hasStarted && m.scoreFor != null && m.scoreAgainst != null ? `${m.scoreFor}–${m.scoreAgainst}` : "–";
 
-        if (!m.isHome) score = `${m.scoreAgainst}–${m.scoreFor}`; // reverse for away matches
+        if (hasStarted && !m.isHome) score = `${m.scoreAgainst}–${m.scoreFor}`; // reverse for away matches
 
         return `
                 <tr>
