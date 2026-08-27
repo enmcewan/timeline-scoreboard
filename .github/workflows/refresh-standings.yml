@@ -24,6 +24,8 @@ jobs:
     env:
       TIMELINE_SEASON: 2026-27
       STANDINGS_PATH: public/data/leagues/epl/2026-27/standings.json
+      SEASON_DATA_DIR: public/data/leagues/epl/2026-27
+      LIVE_SEASON_DATA_URL: https://timelinefootball.com/data/leagues/epl/2026-27
       LIVE_STANDINGS_URL: https://timelinefootball.com/data/leagues/epl/2026-27/standings.json
     steps:
       - name: Checkout
@@ -45,6 +47,26 @@ jobs:
           else
             echo "Live standings unavailable; will deploy after fetch."
           fi
+
+      - name: Hydrate live match data
+        run: |
+          mkdir -p "$SEASON_DATA_DIR/matchweeks"
+
+          for file in fixtures.raw.json events.raw.json; do
+            if curl -fsSL "$LIVE_SEASON_DATA_URL/$file" -o "$SEASON_DATA_DIR/$file"; then
+              echo "Hydrated $file from live site."
+            else
+              echo "Live $file unavailable; keeping repository copy."
+            fi
+          done
+
+          for round in $(seq 1 38); do
+            if curl -fsSL "$LIVE_SEASON_DATA_URL/matchweeks/$round.json" -o "$SEASON_DATA_DIR/matchweeks/$round.json"; then
+              echo "Hydrated matchweek $round."
+            else
+              echo "Live matchweek $round unavailable; keeping repository copy."
+            fi
+          done
 
       - name: Fetch standings
         env:
