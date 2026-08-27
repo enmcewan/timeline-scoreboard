@@ -97,7 +97,7 @@ jobs:
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-        run: npx netlify deploy --dir dist --prod --site "$NETLIFY_SITE_ID" --no-build
+        run: npx --yes --package netlify-cli@27.0.1 netlify deploy --dir dist --prod --site "$NETLIFY_SITE_ID" --no-build
 
       - name: Determine current round
         if: steps.gate.outputs.should_deploy == '1'
