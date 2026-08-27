@@ -1,0 +1,128 @@
+name: Refresh EPL Standings
+
+permissions:
+  contents: read
+
+on:
+  schedule:
+    # Standings can lag the final whistle, so check a few broad windows daily.
+    - cron: "30 0 * * *"
+    - cron: "30 6 * * *"
+    - cron: "30 12 * * *"
+    - cron: "30 18 * * *"
+  workflow_dispatch:
+    inputs:
+      force_deploy:
+        description: "Deploy even if standings match the live site"
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  refresh-standings:
+    runs-on: ubuntu-latest
+    env:
+      TIMELINE_SEASON: 2026-27
+      STANDINGS_PATH: public/data/leagues/epl/2026-27/standings.json
+      LIVE_STANDINGS_URL: https://timelinefootball.com/data/leagues/epl/2026-27/standings.json
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Install
+        run: npm ci
+
+      - name: Capture live standings
+        run: |
+          mkdir -p .tmp
+          if curl -fsSL "$LIVE_STANDINGS_URL" -o .tmp/live-standings.json; then
+            echo "Live standings downloaded."
+          else
+            echo "Live standings unavailable; will deploy after fetch."
+          fi
+
+      - name: Fetch standings
+        env:
+          APIFOOTBALL_KEY: ${{ secrets.APIFOOTBALL_KEY }}
+        run: npm run refresh:epl:table
+
+      - name: Check for standings changes
+        id: changes
+        env:
+          FORCE_DEPLOY: ${{ github.event.inputs.force_deploy }}
+        run: |
+          if [ "$FORCE_DEPLOY" = "true" ]; then
+            echo "should_deploy=1" >> "$GITHUB_OUTPUT"
+            echo "Reason: force_deploy set"
+            exit 0
+          fi
+
+          if [ ! -f .tmp/live-standings.json ]; then
+            echo "should_deploy=1" >> "$GITHUB_OUTPUT"
+            echo "Reason: no live standings baseline"
+            exit 0
+          fi
+
+          if cmp -s .tmp/live-standings.json "$STANDINGS_PATH"; then
+            echo "should_deploy=0" >> "$GITHUB_OUTPUT"
+            echo "Standings unchanged; skipping build/deploy."
+          else
+            echo "should_deploy=1" >> "$GITHUB_OUTPUT"
+            echo "Standings changed; building and deploying."
+          fi
+
+      - name: Build season context
+        if: steps.changes.outputs.should_deploy == '1'
+        run: npm run build:season-context
+
+      - name: Build
+        if: steps.changes.outputs.should_deploy == '1'
+        run: npm run build:prerender
+
+      - name: Verify prerender output exists
+        if: steps.changes.outputs.should_deploy == '1'
+        run: |
+          test -f dist/index.html
+          test -f dist/sitemap.xml
+          test -f dist/epl/2025-26/matchweek/38/index.html
+          test -f dist/epl/2026-27/table/index.html
+          test -f dist/epl/2026-27/matchweek/1/index.html
+
+      - name: Deploy to Netlify (prod)
+        if: steps.changes.outputs.should_deploy == '1'
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        run: npx netlify deploy --dir dist --prod --site "$NETLIFY_SITE_ID" --no-build
+
+      - name: Submit IndexNow for standings pages
+        if: steps.changes.outputs.should_deploy == '1'
+        env:
+          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+        run: |
+          cat > indexnow-standings.json << EOF
+          {
+            "host": "timelinefootball.com",
+            "key": "${INDEXNOW_KEY}",
+            "keyLocation": "https://timelinefootball.com/${INDEXNOW_KEY}.txt",
+            "urlList": [
+              "https://timelinefootball.com/epl/2026-27/table/",
+              "https://timelinefootball.com/epl/2026-27/"
+            ]
+          }
+          EOF
+
+          cat indexnow-standings.json
+
+          code=$(curl -s -o /dev/null -w "%{http_code}" \
+            -H "Content-Type: application/json" \
+            -d @indexnow-standings.json \
+            https://api.indexnow.org/indexnow)
+
+          echo "IndexNow HTTP status: $code"
+          test "$code" = "200" -o "$code" = "202"
