@@ -398,7 +398,7 @@ export function createRenderMatchCard({
                 <header class="match-header">
                     <div class="ht-cont">
                         <a href="${esc(homeHref)}" class="team-link">
-                        <div class="team-badge-cont title="${esc(home.nicknames[0] || "")}">
+                        <div class="team-badge-cont" title="${esc(home.nicknames[0] || "")}">
                             <img class="team-badge ${match.homeTeamId}" src="${esc(home.badge)}" alt="${esc(home.name)} badge" />
                         </div>
                         <div class="team home" title="Team Page">${esc(home.display || home.name)}</div>
@@ -418,7 +418,7 @@ export function createRenderMatchCard({
 
                     <div class="at-cont">
                         <a href="${esc(awayHref)}" class="team-link">
-                        <div class="team-badge-cont title="${esc(away.nicknames[0] || "")}">
+                        <div class="team-badge-cont" title="${esc(away.nicknames[0] || "")}">
                             <img class="team-badge ${match.awayTeamId}" src="${esc(away.badge)}" alt="${esc(away.name)} badge" />
                         </div>
                         <div class="team away" title="Team Page">${esc(away.display || away.name)}</div>
