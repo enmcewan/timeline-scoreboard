@@ -98,6 +98,21 @@ jobs:
             echo "Standings changed; building and deploying."
           fi
 
+      - name: Refresh fixtures, events, and matchdays
+        if: steps.changes.outputs.should_deploy == '1'
+        env:
+          APIFOOTBALL_KEY: ${{ secrets.APIFOOTBALL_KEY }}
+        run: |
+          npm run fetch:fixtures
+          npm run fetch:events
+          npm run refresh:epl
+
+      - name: Build players cache
+        if: steps.changes.outputs.should_deploy == '1'
+        env:
+          APIFOOTBALL_KEY: ${{ secrets.APIFOOTBALL_KEY }}
+        run: node src/scripts/build-players-cache.mjs
+
       - name: Build season context
         if: steps.changes.outputs.should_deploy == '1'
         run: npm run build:season-context
