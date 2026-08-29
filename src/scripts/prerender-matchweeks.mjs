@@ -35,6 +35,16 @@ const STANDINGS_PATH = path.join(
     "standings.json"
 );
 
+const ODDS_PATH = path.join(
+    ROOT,
+    "public",
+    "data",
+    "leagues",
+    season.leagueKey,
+    season.seasonPath,
+    "odds.json"
+);
+
 async function readJsonIfExists(filePath, fallback) {
     try {
         const text = await fs.readFile(filePath, "utf8");
@@ -43,6 +53,13 @@ async function readJsonIfExists(filePath, fallback) {
         if (err?.code === "ENOENT") return fallback;
         throw err;
     }
+}
+
+function attachOdds(matches, oddsByFixture) {
+    return (matches || []).map((match) => {
+        const odds = oddsByFixture?.[String(match.id)];
+        return odds ? { ...match, odds } : match;
+    });
 }
 
 function formatISODate(iso) {
@@ -1321,6 +1338,8 @@ async function main() {
         path.join(ROOT, "src", "data", "leagues", season.leagueKey, season.sourceDataSeason, "players.json"),
         {}
     );
+    const oddsJson = await readJsonIfExists(ODDS_PATH, { fixtures: {} });
+    const oddsByFixture = oddsJson?.fixtures ?? {};
 
     const rounds = await listMatchdayRounds();
     if (!rounds.length) {
@@ -1333,7 +1352,7 @@ async function main() {
         const md = JSON.parse(await fs.readFile(mdPath, "utf8"));
 
         const appHtml = renderMatchweekHTML({
-            matches: md.matches || [],
+            matches: attachOdds(md.matches || [], oddsByFixture),
             teams,
             players,
             seasonPath,
@@ -1346,7 +1365,7 @@ async function main() {
         const canonical = `https://timelinefootball.com${pagePath}`;
 
         const title = `${season.leagueShortName} ${seasonLabel} Matchweek ${round} Timelines, Stats & Ratings`;
-        const desc = ` ${season.leagueName} ${seasonLabel} Matchweek ${round} event timelines, stats and performance ratings.`;
+        const desc = ` ${season.leagueName} ${seasonLabel} Matchweek ${round} event timelines, odds, stats and performance ratings.`;
 
         let out = setSeasonChrome(template, {
             seasonPath,

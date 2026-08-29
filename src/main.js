@@ -21,6 +21,7 @@ const players = playersBySeason[season.seasonPath] || {};
 
 // Runtime-loaded matchdays from /public/data (served at /data/...)
 const MATCHDAYS = {};
+let ODDS_BY_FIXTURE = {};
 const ALL_ROUNDS = Array.from({ length: season.maxRound }, (_, i) => i + 1);
 const SEASON_DATA_PATH = publicSeasonDataPath(season);
 
@@ -45,6 +46,28 @@ async function loadAllMatchdays() {
   return Object.keys(MATCHDAYS)
     .map(Number)
     .sort((a, b) => a - b);
+}
+
+async function loadOdds() {
+  try {
+    const res = await fetch(`/${SEASON_DATA_PATH}/odds.json`, {
+      cache: "no-store",
+    });
+    if (!res.ok) return;
+
+    const oddsJson = await res.json();
+    ODDS_BY_FIXTURE = oddsJson?.fixtures ?? {};
+  } catch (err) {
+    console.warn("Odds data unavailable:", err);
+    ODDS_BY_FIXTURE = {};
+  }
+}
+
+function attachOdds(matches) {
+  return matches.map((match) => {
+    const odds = ODDS_BY_FIXTURE[String(match.id)];
+    return odds ? { ...match, odds } : match;
+  });
 }
 
 function getRoundFromPathname() {
@@ -133,7 +156,7 @@ function setPageMetaForRound(round) {
   const title = `${season.leagueShortName} ${SEASON_LABEL} Matchweek ${round} Timelines, Stats & Ratings`;
   document.title = title;
 
-  const desc = `${season.leagueName} ${SEASON_LABEL} Matchweek ${round} results with goals, cards, VAR, stats and team ratings.`;
+  const desc = `${season.leagueName} ${SEASON_LABEL} Matchweek ${round} results with goals, cards, VAR, odds, stats and team ratings.`;
   let meta = document.querySelector('meta[name="description"]');
   if (!meta) {
     meta = document.createElement("meta");
@@ -255,6 +278,7 @@ async function init() {
   updateSeasonChrome();
 
   const allRounds = await loadAllMatchdays();
+  await loadOdds();
 
   if (!allRounds.length) {
     app.innerHTML = `<div class="match-list"><p>No matchday data found.</p></div>`;
@@ -295,7 +319,7 @@ async function init() {
     throw new Error(`Invalid currentRound: ${currentRound}`);
   }
 
-  currentMatches = MATCHDAYS[currentRound].matches;
+  currentMatches = attachOdds(MATCHDAYS[currentRound].matches);
 
   // initialize per-card modes to match the global mode
   viewModes.clear();
@@ -367,7 +391,7 @@ document.addEventListener("change", (e) => {
   if (!MATCHDAYS[nextRound]) return;
 
   currentRound = nextRound;
-  currentMatches = MATCHDAYS[currentRound].matches;
+  currentMatches = attachOdds(MATCHDAYS[currentRound].matches);
 
   updateHeaderNav(currentRound);
 

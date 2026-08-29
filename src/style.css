@@ -332,6 +332,45 @@ footer {
   font-variant-numeric: tabular-nums;
 }
 
+.match-odds {
+  border: 1px solid var(--border-subtle);
+  border-radius: 0.45rem;
+  margin: 0.85rem auto 0;
+  padding: 0.3rem 0.8rem 0.45rem;
+  width: min(720px, 100%);
+  color: var(--accent);
+}
+
+.match-odds legend {
+  padding: 0 0.35rem;
+  color: color-mix(in srgb, var(--text-subtle) 72%, white);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.match-odds__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(6.5rem, 18%, 8rem) minmax(0, 1fr);
+  align-items: center;
+  gap: 0.65rem;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.match-odds__cell {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.match-odds__cell strong {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--accent);
+}
+
 /* --- Power Meter --- */
 
 /* --- Power Meter layout (Perf/Exec + Rating) --- */
@@ -1308,6 +1347,10 @@ table {
 
   .match-header {
     margin-bottom: 0;
+  }
+
+  .match-odds__grid {
+    grid-template-columns: minmax(0, 1fr) 5.5rem minmax(0, 1fr);
   }
 
   .match-status,

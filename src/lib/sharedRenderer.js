@@ -276,6 +276,40 @@ export function createRenderMatchCard({
         return Number.isFinite(minute) && minute >= 45;
     }
 
+    function renderPreMatchOdds(match, home, away) {
+        const consensus = match.odds?.consensus;
+        if (!consensus) return "";
+
+        const homePct = Number(consensus.home);
+        const drawPct = Number(consensus.draw);
+        const awayPct = Number(consensus.away);
+
+        if (![homePct, drawPct, awayPct].every(Number.isFinite)) return "";
+
+        const sourceCount = Number(match.odds?.sourceCount ?? 0);
+        const sourceLabel = sourceCount > 0
+            ? ` from ${sourceCount} bookmaker${sourceCount === 1 ? "" : "s"}`
+            : "";
+        const title = `Pre-match consensus expectation${sourceLabel}`;
+
+        return `
+                <fieldset class="match-odds" title="${esc(title)}" aria-label="${esc(title)}">
+                    <legend>Pre-match odds</legend>
+                    <div class="match-odds__grid">
+                        <div class="match-odds__cell match-odds__cell--home" aria-label="${esc(home.display || home.name)} ${homePct}%">
+                            <strong>${homePct}%</strong>
+                        </div>
+                        <div class="match-odds__cell match-odds__cell--draw" aria-label="Draw ${drawPct}%">
+                            <strong>${drawPct}%</strong>
+                        </div>
+                        <div class="match-odds__cell match-odds__cell--away" aria-label="${esc(away.display || away.name)} ${awayPct}%">
+                            <strong>${awayPct}%</strong>
+                        </div>
+                    </div>
+                </fieldset>
+        `;
+    }
+
     return function renderMatchCard(match) {
 
         const home = teamsById[match.homeTeamId];
@@ -425,6 +459,8 @@ export function createRenderMatchCard({
                         </a>
                     </div>
                 </header>
+
+                ${renderPreMatchOdds(match, home, away)}
 
                 <section id="stats" class="power-meter" aria-label="Match power meter">
                     <!-- HOME -->

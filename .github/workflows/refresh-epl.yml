@@ -20,6 +20,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       TIMELINE_SEASON: 2026-27
+      SEASON_DATA_DIR: public/data/leagues/epl/2026-27
+      LIVE_SEASON_DATA_URL: https://timelinefootball.com/data/leagues/epl/2026-27
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -31,6 +33,15 @@ jobs:
 
       - name: Install
         run: npm ci
+
+      - name: Hydrate live odds cache
+        run: |
+          mkdir -p "$SEASON_DATA_DIR"
+          if curl -fsSL "$LIVE_SEASON_DATA_URL/odds.json" -o "$SEASON_DATA_DIR/odds.json"; then
+            echo "Hydrated odds.json from live site."
+          else
+            echo "Live odds.json unavailable; keeping repository copy."
+          fi
 
       - name: Fetch fixtures (always)
         env:
@@ -59,6 +70,12 @@ jobs:
         env:
           APIFOOTBALL_KEY: ${{ secrets.APIFOOTBALL_KEY }}
         run: npm run update:matchdays
+
+      - name: Fetch odds
+        if: steps.gate.outputs.should_deploy == '1'
+        env:
+          APIFOOTBALL_KEY: ${{ secrets.APIFOOTBALL_KEY }}
+        run: npm run fetch:odds
 
       - name: Fetch standings
         run: node src/scripts/fetch-standings.epl.mjs

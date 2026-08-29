@@ -1,32 +1,33 @@
-name: Refresh EPL Standings
+name: Refresh EPL Odds
 
 permissions:
   contents: read
 
 on:
   schedule:
-    # Standings can lag the final whistle, so check a few broad windows daily.
-    - cron: "30 0 * * *"
-    - cron: "30 6 * * *"
-    - cron: "30 12 * * *"
-    - cron: "30 18 * * *"
+    # Pre-match odds can move on matchday, so refresh a few broad windows daily.
+    - cron: "15 1 * * *"
+    - cron: "15 7 * * *"
+    - cron: "15 13 * * *"
+    - cron: "15 19 * * *"
   workflow_dispatch:
     inputs:
       force_deploy:
-        description: "Deploy even if standings match the live site"
+        description: "Deploy even if odds match the live site"
         required: false
         default: false
         type: boolean
 
 jobs:
-  refresh-standings:
+  refresh-odds:
     runs-on: ubuntu-latest
     env:
       TIMELINE_SEASON: 2026-27
-      STANDINGS_PATH: public/data/leagues/epl/2026-27/standings.json
+      ODDS_LOOKAHEAD_DAYS: 11
+      ODDS_PATH: public/data/leagues/epl/2026-27/odds.json
       SEASON_DATA_DIR: public/data/leagues/epl/2026-27
       LIVE_SEASON_DATA_URL: https://timelinefootball.com/data/leagues/epl/2026-27
-      LIVE_STANDINGS_URL: https://timelinefootball.com/data/leagues/epl/2026-27/standings.json
+      LIVE_ODDS_URL: https://timelinefootball.com/data/leagues/epl/2026-27/odds.json
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -39,20 +40,20 @@ jobs:
       - name: Install
         run: npm ci
 
-      - name: Capture live standings
+      - name: Capture live odds
         run: |
           mkdir -p .tmp
-          if curl -fsSL "$LIVE_STANDINGS_URL" -o .tmp/live-standings.json; then
-            echo "Live standings downloaded."
+          if curl -fsSL "$LIVE_ODDS_URL" -o .tmp/live-odds.json; then
+            echo "Live odds downloaded."
           else
-            echo "Live standings unavailable; will deploy after fetch."
+            echo "Live odds unavailable; will deploy after fetch if odds are available."
           fi
 
-      - name: Hydrate live match data
+      - name: Hydrate live season data
         run: |
           mkdir -p "$SEASON_DATA_DIR/matchweeks"
 
-          for file in fixtures.raw.json events.raw.json odds.json; do
+          for file in fixtures.raw.json events.raw.json standings.json odds.json; do
             if curl -fsSL "$LIVE_SEASON_DATA_URL/$file" -o "$SEASON_DATA_DIR/$file"; then
               echo "Hydrated $file from live site."
             else
@@ -68,12 +69,17 @@ jobs:
             fi
           done
 
-      - name: Fetch standings
+      - name: Fetch fixtures
         env:
           APIFOOTBALL_KEY: ${{ secrets.APIFOOTBALL_KEY }}
-        run: npm run refresh:epl:table
+        run: npm run fetch:fixtures
 
-      - name: Check for standings changes
+      - name: Fetch odds
+        env:
+          APIFOOTBALL_KEY: ${{ secrets.APIFOOTBALL_KEY }}
+        run: npm run fetch:odds
+
+      - name: Check for odds changes
         id: changes
         env:
           FORCE_DEPLOY: ${{ github.event.inputs.force_deploy }}
@@ -84,35 +90,25 @@ jobs:
             exit 0
           fi
 
-          if [ ! -f .tmp/live-standings.json ]; then
-            echo "should_deploy=1" >> "$GITHUB_OUTPUT"
-            echo "Reason: no live standings baseline"
+          if [ ! -f "$ODDS_PATH" ]; then
+            echo "should_deploy=0" >> "$GITHUB_OUTPUT"
+            echo "No odds file produced; skipping build/deploy."
             exit 0
           fi
 
-          if cmp -s .tmp/live-standings.json "$STANDINGS_PATH"; then
-            echo "should_deploy=0" >> "$GITHUB_OUTPUT"
-            echo "Standings unchanged; skipping build/deploy."
-          else
+          if [ ! -f .tmp/live-odds.json ]; then
             echo "should_deploy=1" >> "$GITHUB_OUTPUT"
-            echo "Standings changed; building and deploying."
+            echo "Reason: no live odds baseline"
+            exit 0
           fi
 
-      - name: Refresh fixtures, events, and matchdays
-        if: steps.changes.outputs.should_deploy == '1'
-        env:
-          APIFOOTBALL_KEY: ${{ secrets.APIFOOTBALL_KEY }}
-        run: |
-          npm run fetch:fixtures
-          npm run fetch:events
-          npm run fetch:odds
-          npm run refresh:epl
-
-      - name: Build players cache
-        if: steps.changes.outputs.should_deploy == '1'
-        env:
-          APIFOOTBALL_KEY: ${{ secrets.APIFOOTBALL_KEY }}
-        run: node src/scripts/build-players-cache.mjs
+          if cmp -s .tmp/live-odds.json "$ODDS_PATH"; then
+            echo "should_deploy=0" >> "$GITHUB_OUTPUT"
+            echo "Odds unchanged; skipping build/deploy."
+          else
+            echo "should_deploy=1" >> "$GITHUB_OUTPUT"
+            echo "Odds changed; building and deploying."
+          fi
 
       - name: Build season context
         if: steps.changes.outputs.should_deploy == '1'
@@ -127,8 +123,7 @@ jobs:
         run: |
           test -f dist/index.html
           test -f dist/sitemap.xml
-          test -f dist/epl/2025-26/matchweek/38/index.html
-          test -f dist/epl/2026-27/table/index.html
+          test -f dist/data/leagues/epl/2026-27/odds.json
           test -f dist/epl/2026-27/matchweek/1/index.html
 
       - name: Deploy to Netlify (prod)
@@ -138,28 +133,37 @@ jobs:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         run: npx --yes --package netlify-cli@27.0.1 netlify deploy --dir dist --prod --site "$NETLIFY_SITE_ID" --no-build
 
-      - name: Submit IndexNow for standings pages
+      - name: Determine current round
+        if: steps.changes.outputs.should_deploy == '1'
+        id: current_round
+        run: |
+          out=$(node src/scripts/get-current-round.mjs)
+          echo "$out"
+          echo "$out" >> "$GITHUB_OUTPUT"
+
+      - name: Submit IndexNow for current odds display
         if: steps.changes.outputs.should_deploy == '1'
         env:
           INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+          ROUND: ${{ steps.current_round.outputs.round }}
         run: |
-          cat > indexnow-standings.json << EOF
+          cat > indexnow-odds.json << EOF
           {
             "host": "timelinefootball.com",
             "key": "${INDEXNOW_KEY}",
             "keyLocation": "https://timelinefootball.com/${INDEXNOW_KEY}.txt",
             "urlList": [
-              "https://timelinefootball.com/epl/2026-27/table/",
-              "https://timelinefootball.com/epl/2026-27/"
+              "https://timelinefootball.com/epl/2026-27/",
+              "https://timelinefootball.com/epl/2026-27/matchweek/${ROUND}/"
             ]
           }
           EOF
 
-          cat indexnow-standings.json
+          cat indexnow-odds.json
 
           code=$(curl -s -o /dev/null -w "%{http_code}" \
             -H "Content-Type: application/json" \
-            -d @indexnow-standings.json \
+            -d @indexnow-odds.json \
             https://api.indexnow.org/indexnow)
 
           echo "IndexNow HTTP status: $code"
