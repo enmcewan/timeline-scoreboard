@@ -63,10 +63,14 @@ async function loadOdds() {
   }
 }
 
-function attachOdds(matches) {
+function attachMatchData(matches, round) {
   return matches.map((match) => {
     const odds = ODDS_BY_FIXTURE[String(match.id)];
-    return odds ? { ...match, odds } : match;
+    return {
+      ...match,
+      round,
+      ...(odds ? { odds } : {}),
+    };
   });
 }
 
@@ -319,7 +323,7 @@ async function init() {
     throw new Error(`Invalid currentRound: ${currentRound}`);
   }
 
-  currentMatches = attachOdds(MATCHDAYS[currentRound].matches);
+  currentMatches = attachMatchData(MATCHDAYS[currentRound].matches, currentRound);
 
   // initialize per-card modes to match the global mode
   viewModes.clear();
@@ -391,7 +395,7 @@ document.addEventListener("change", (e) => {
   if (!MATCHDAYS[nextRound]) return;
 
   currentRound = nextRound;
-  currentMatches = attachOdds(MATCHDAYS[currentRound].matches);
+  currentMatches = attachMatchData(MATCHDAYS[currentRound].matches, currentRound);
 
   updateHeaderNav(currentRound);
 

@@ -192,6 +192,203 @@ footer {
   height: 100%;
 }
 
+.match-page {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  max-width: 760px;
+  width: 100%;
+}
+
+.match-page-hero {
+  margin-bottom: 1rem;
+  text-align: center;
+  width: 100%;
+}
+
+.match-page-kicker {
+  color: var(--text-subtle);
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin: 0 0 0.35rem;
+}
+
+.match-page h1 {
+  font-size: clamp(1.8rem, 3vw, 2.45rem);
+  line-height: 1.08;
+  margin: 0;
+}
+
+.match-page-summary {
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.45;
+  margin: 0.7rem auto 0;
+  max-width: 42rem;
+}
+
+.match-page-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.85rem;
+  justify-content: center;
+  margin-top: 0.85rem;
+}
+
+.match-page-share {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  justify-content: center;
+  margin: 0.85rem auto 0;
+}
+
+.match-page-share__title {
+  color: var(--text-subtle);
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.match-page-share a,
+.match-page-share button {
+  align-items: center;
+  background: var(--card-bg);
+  border: 1px solid var(--border-subtle);
+  border-radius: 50%;
+  color: var(--accent);
+  cursor: pointer;
+  display: inline-flex;
+  height: 2rem;
+  justify-content: center;
+  padding: 0;
+  text-decoration: none;
+  width: 2rem;
+}
+
+.match-page-share__icon {
+  fill: currentColor;
+  height: 1rem;
+  width: 1rem;
+}
+
+.match-page-share__status {
+  color: var(--text-subtle);
+  flex-basis: 100%;
+  font-size: 0.78rem;
+  font-weight: 700;
+  min-height: 1rem;
+  text-align: center;
+}
+
+.match-page-share a:hover,
+.match-page-share a:focus,
+.match-page-share button:hover,
+.match-page-share button:focus,
+.match-page-share button.is-copied {
+  background: var(--accent-soft);
+}
+
+.sr-only {
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.match-page-links a,
+.match-page-section a,
+.match-page-link {
+  color: var(--accent);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.match-page-card {
+  width: min(640px, 100%);
+}
+
+.match-page-card .match-list {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.match-page-card .match-card {
+  max-width: 640px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.match-page-card .match-page-link {
+  display: none;
+}
+
+.match-page-section {
+  margin: 1rem auto 0;
+  width: min(640px, 100%);
+}
+
+.match-page-section h2 {
+  font-size: 1.1rem;
+  margin: 0 0 0.5rem;
+  text-align: center;
+}
+
+.match-page-facts dl {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--border-radius);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0;
+  overflow: hidden;
+}
+
+.match-page-facts div {
+  padding: 0.75rem;
+  text-align: center;
+}
+
+.match-page-facts dt {
+  color: var(--text-subtle);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.match-page-facts dd {
+  font-weight: 700;
+  margin: 0.2rem 0 0;
+}
+
+.match-moments {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--border-radius);
+  list-style: none;
+  margin: 0;
+  padding: 0.35rem 0;
+}
+
+.match-moments li {
+  display: flex;
+  gap: 0.65rem;
+  padding: 0.35rem 0.75rem;
+}
+
+.match-moment__minute {
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  min-width: 3rem;
+  text-align: right;
+}
+
 .match-date {
   text-align: center;
   font-weight: 400;
@@ -582,6 +779,10 @@ footer {
   align-items: baseline;
 }
 
+.match-card.is-result-only .match-body .row[data-result-event="false"] {
+  display: none;
+}
+
 .event.home {
   text-align: right;
 }
@@ -707,6 +908,7 @@ footer {
   display: flex;
   justify-content: center;
   align-items: baseline;
+  gap: 0.45rem;
   font-size: 0.9rem;
   font-weight: 300;
 }
@@ -1351,6 +1553,10 @@ table {
 
   .match-odds__grid {
     grid-template-columns: minmax(0, 1fr) 5.5rem minmax(0, 1fr);
+  }
+
+  .match-page-facts dl {
+    grid-template-columns: 1fr;
   }
 
   .match-status,

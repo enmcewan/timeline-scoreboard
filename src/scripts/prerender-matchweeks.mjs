@@ -4,6 +4,8 @@ import { fileURLToPath } from "node:url";
 
 import { getSeasonConfigFromEnv } from "../config/seasons.js";
 import { renderMatchweekHTML } from "../lib/prerender/render.js";
+import { getMatchPagePath } from "../lib/matchUrls.js";
+import { sortedEvents } from "../lib/utils.js";
 
 import { computePerfExec } from "../lib/powerMeter.js";
 
@@ -55,10 +57,22 @@ async function readJsonIfExists(filePath, fallback) {
     }
 }
 
-function attachOdds(matches, oddsByFixture) {
+function attachMatchData(matches, oddsByFixture, round, seasonPath) {
     return (matches || []).map((match) => {
         const odds = oddsByFixture?.[String(match.id)];
-        return odds ? { ...match, odds } : match;
+        const matchPagePath = getMatchPagePath({
+            seasonPath,
+            round,
+            homeTeamId: match.homeTeamId,
+            awayTeamId: match.awayTeamId,
+        });
+
+        return {
+            ...match,
+            round,
+            ...(matchPagePath ? { matchPagePath } : {}),
+            ...(odds ? { odds } : {}),
+        };
     });
 }
 
@@ -194,7 +208,12 @@ function buildTeamMatchesIndex({ roundsData, teamsBySlug, seasonPath }) {
             const fixtureId = m.id;
             const kickoff = m.kickoff;
             const state = m.status?.state ?? "";
-            const href = `/epl/${seasonPath}/matchweek/${round}/#fixture-${fixtureId}`;
+            const href = getMatchPagePath({
+                seasonPath,
+                round,
+                homeTeamId: home,
+                awayTeamId: away,
+            }) ?? `/epl/${seasonPath}/matchweek/${round}/#fixture-${fixtureId}`;
 
             // home entry
             out[home].push({
@@ -426,7 +445,7 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
                 return;
             }
 
-            const url = "/epl/" + seasonPath + "/matchweek/" + match.mw + "/#fixture-" + match.fixtureId;
+            const url = match.href || ("/epl/" + seasonPath + "/matchweek/" + match.mw + "/#fixture-" + match.fixtureId);
             window.location.assign(url);
         }
 
@@ -849,14 +868,8 @@ function teamToJsonLd(team) {
 function statusToEventStatus(state) {
 
     const st = String(state || "").toUpperCase();
-    // if (st === "FT") return "https://schema.org/EventCompleted";
-    // if (st === "NS") return "https://schema.org/EventScheduled";
-    // if (st === "HT") return "https://schema.org/EventInProgress";
-    // if (st.includes("'")) return "https://schema.org/EventInProgress";
-    // return undefined; // omit for weird/unknown states
-
-    // Fix for valid schema.org EventStatus values based on match status
-
+    if (st === "FT" || st === "AET" || st === "PEN") return "https://schema.org/EventCompleted";
+    if (st === "HT" || st.includes("'")) return "https://schema.org/EventInProgress";
     if (st === "PST") return "https://schema.org/EventPostponed";
 
     return "https://schema.org/EventScheduled";
@@ -917,6 +930,262 @@ function matchweekJsonLd({ seasonLabel, round, matches, teamsById, pageUrl }) {
             item: matchToSportsEventLd(m, teamsById, pageUrl)
         }))
     };
+}
+
+function formatScoreForTitle(match) {
+    const state = String(match.status?.state || "").toUpperCase();
+    if (state === "NS" || state === "TBD" || state === "PST") return "vs";
+    const home = match.score?.home ?? "-";
+    const away = match.score?.away ?? "-";
+    return `${home}-${away}`;
+}
+
+function formatOddsSummary(match, home, away) {
+    const c = match.odds?.consensus;
+    if (!c) return "";
+
+    const homePct = Number(c.home);
+    const drawPct = Number(c.draw);
+    const awayPct = Number(c.away);
+
+    if (![homePct, drawPct, awayPct].every(Number.isFinite)) return "";
+
+    return `${home.display || home.name} ${homePct}%, draw ${drawPct}%, ${away.display || away.name} ${awayPct}%`;
+}
+
+function buildMatchStory({ match, home, away, seasonLabel, round }) {
+    const state = String(match.status?.state || "").toUpperCase();
+    const venue = match.venue ? ` at ${match.venue}` : "";
+    const oddsSummary = formatOddsSummary(match, home, away);
+
+    if (state === "FT") {
+        const homeGoals = Number(match.score?.home ?? 0);
+        const awayGoals = Number(match.score?.away ?? 0);
+        let resultText = `${home.name} drew ${away.name} ${homeGoals}-${awayGoals}`;
+
+        if (homeGoals > awayGoals) {
+            resultText = `${home.name} beat ${away.name} ${homeGoals}-${awayGoals}`;
+        } else if (awayGoals > homeGoals) {
+            resultText = `${away.name} beat ${home.name} ${awayGoals}-${homeGoals}`;
+        }
+
+        return `${resultText}${venue} in EPL ${seasonLabel} Matchweek ${round}.${oddsSummary ? ` Pre-match odds: ${oddsSummary}.` : ""}`;
+    }
+
+    return `${home.name} face ${away.name}${venue} in EPL ${seasonLabel} Matchweek ${round}.${oddsSummary ? ` Pre-match odds: ${oddsSummary}.` : ""}`;
+}
+
+function buildKeyMomentsHtml(match) {
+    const events = sortedEvents(match.events || []).filter((evt) => {
+        return [
+            "goal",
+            "own-goal",
+            "penalty-miss",
+            "red",
+            "var-goal-cancelled",
+            "var-goal-disallowed-offside",
+            "var-goal-disallowed",
+            "var-pen-cancelled",
+            "var-pen-confirmed",
+        ].includes(evt.kind);
+    });
+
+    if (!events.length) return "";
+
+    const rows = events.slice(0, 8).map((evt) => {
+        const minute = evt.minute || (evt.elapsed ? `${evt.elapsed}'` : "");
+        const label = evt.kind
+            .replace(/^var-/, "VAR ")
+            .replace(/-/g, " ");
+        const player = evt.player ? ` - ${evt.player}` : "";
+        return `<li><span class="match-moment__minute">${escapeAttr(minute)}</span><span>${escapeAttr(label)}${escapeAttr(player)}</span></li>`;
+    }).join("");
+
+    return `
+        <section class="match-page-section">
+            <h2>Key moments</h2>
+            <ol class="match-moments">${rows}</ol>
+        </section>
+    `;
+}
+
+function matchPageJsonLd({ match, home, away, pageUrl }) {
+    const event = matchToSportsEventLd(match, {
+        [match.homeTeamId]: home,
+        [match.awayTeamId]: away,
+    }, pageUrl);
+    event.url = pageUrl;
+
+    return {
+        "@context": "https://schema.org",
+        ...event,
+    };
+}
+
+function shareIcon(name) {
+    const paths = {
+        x: `<path d="M18.9 2h3.4l-7.5 8.6 8.8 11.4h-6.9l-5.4-7-6.2 7H1.7l8-9.1L1.2 2h7.1l4.9 6.4L18.9 2Zm-1.2 18h1.9L7.3 3.9h-2L17.7 20Z"/>`,
+        facebook: `<path d="M14 8.6h3V5h-3c-3.2 0-5.2 2-5.2 5.1V13H6v3.7h2.8V22h4.1v-5.3h3.3l.6-3.7h-3.9v-2.5c0-1.1.4-1.9 1.1-1.9Z"/>`,
+        whatsapp: `<path d="M20.5 3.5A11.2 11.2 0 0 0 2.9 17l-1 5.1 5.2-1a11.2 11.2 0 0 0 13.4-17.6Zm-8.4 16a9 9 0 0 1-4.5-1.2l-.3-.2-3.1.6.6-3-.2-.4a9 9 0 1 1 7.5 4.2Zm5-6.7c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.7.2l-.9 1c-.2.2-.3.2-.6.1a7.4 7.4 0 0 1-3.7-3.2c-.2-.3 0-.5.1-.6l.5-.6c.2-.2.2-.3.3-.5.1-.2.1-.4 0-.6l-1-2c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.4-1.2 1.2-1.2 2.8s1.2 3.2 1.4 3.4c.2.2 2.4 3.7 5.8 5.1.8.4 1.5.6 2 .7.8.3 1.6.2 2.2.1.7-.1 1.8-.8 2.1-1.5.3-.7.3-1.3.2-1.5-.1-.1-.3-.2-.6-.3Z"/>`,
+        instagram: `<path d="M7.8 2h8.4A5.8 5.8 0 0 1 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8A5.8 5.8 0 0 1 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2Zm-.2 2A3.6 3.6 0 0 0 4 7.6v8.8A3.6 3.6 0 0 0 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6A3.6 3.6 0 0 0 16.4 4H7.6Zm9.7 1.5a1.3 1.3 0 1 1 0 2.6 1.3 1.3 0 0 1 0-2.6ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"/>`,
+        tiktok: `<path d="M16.6 2c.4 3 2.1 4.8 5 5v3.4a8.6 8.6 0 0 1-5-1.6v6.6c0 4.2-2.5 6.6-6.2 6.6A6.1 6.1 0 0 1 4 15.9c0-3.7 2.8-6.3 6.6-6.3.5 0 .9 0 1.3.1v3.5c-.4-.1-.8-.2-1.3-.2-1.8 0-3 1.1-3 2.8 0 1.6 1.1 2.7 2.6 2.7 1.7 0 2.7-1 2.7-3.2V2h3.7Z"/>`,
+        email: `<path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm1.8 2 7.2 5.4L19.2 7H4.8Zm15.2 2.2-7.4 5.5a1 1 0 0 1-1.2 0L4 9.2V17h16V9.2Z"/>`,
+    };
+
+    return `<svg class="match-page-share__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">${paths[name] || ""}</svg>`;
+}
+
+function buildShareLinks({ title, pageUrl, story }) {
+    const encodedUrl = encodeURIComponent(pageUrl);
+    const encodedTitle = encodeURIComponent(title);
+    const encodedText = encodeURIComponent(`${title} - ${story}`);
+    const encodedEmailBody = encodeURIComponent(`${title}\n${story}\n\n${pageUrl}`);
+    const encodedCopyText = encodeURIComponent(`${title}\n${story}\n\n${pageUrl}`);
+    const encodedStory = encodeURIComponent(story);
+
+    return `
+                <nav class="match-page-share" aria-label="Share this match">
+                    <span class="match-page-share__title">Share</span>
+                    <a href="https://twitter.com/intent/tweet?text=${encodedText}&url=${encodedUrl}" rel="noopener noreferrer" target="_blank" aria-label="Share on X" title="Share on X">${shareIcon("x")}<span class="sr-only">X</span></a>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}" rel="noopener noreferrer" target="_blank" aria-label="Share on Facebook" title="Share on Facebook">${shareIcon("facebook")}<span class="sr-only">Facebook</span></a>
+                    <a href="https://api.whatsapp.com/send?text=${encodedText}%20${encodedUrl}" rel="noopener noreferrer" target="_blank" aria-label="Share on WhatsApp" title="Share on WhatsApp">${shareIcon("whatsapp")}<span class="sr-only">WhatsApp</span></a>
+                    <button type="button" data-share-native data-share-platform="Instagram" data-share-title="${encodedTitle}" data-share-story="${encodedStory}" data-share-url="${encodedUrl}" data-share-text="${encodedCopyText}" aria-label="Share or copy for Instagram" title="Share or copy for Instagram">${shareIcon("instagram")}<span class="sr-only">Instagram</span></button>
+                    <button type="button" data-share-native data-share-platform="TikTok" data-share-title="${encodedTitle}" data-share-story="${encodedStory}" data-share-url="${encodedUrl}" data-share-text="${encodedCopyText}" aria-label="Share or copy for TikTok" title="Share or copy for TikTok">${shareIcon("tiktok")}<span class="sr-only">TikTok</span></button>
+                    <a href="mailto:?subject=${encodedTitle}&body=${encodedEmailBody}" aria-label="Share by email" title="Share by email">${shareIcon("email")}<span class="sr-only">Email</span></a>
+                    <span class="match-page-share__status" aria-live="polite"></span>
+                </nav>
+    `;
+}
+
+function matchPageToggleScript() {
+    return `
+        <script>
+            document.addEventListener("click", function (event) {
+                var button = event.target.closest(".match-page .timeline-toggle");
+                if (!button) return;
+
+                var card = button.closest(".match-card");
+                if (!card) return;
+
+                var resultOnly = !card.classList.contains("is-result-only");
+                card.classList.toggle("is-result-only", resultOnly);
+                button.setAttribute("aria-expanded", resultOnly ? "false" : "true");
+                button.textContent = resultOnly ? "Show Timeline" : "Show Result";
+            });
+
+            document.addEventListener("click", function (event) {
+                var button = event.target.closest("[data-share-native], [data-share-copy]");
+                if (!button) return;
+
+                var platform = button.getAttribute("data-share-platform") || "share";
+                var title = decodeURIComponent(button.getAttribute("data-share-title") || "");
+                var story = decodeURIComponent(button.getAttribute("data-share-story") || "");
+                var url = decodeURIComponent(button.getAttribute("data-share-url") || "") || window.location.href;
+                var text = decodeURIComponent(button.getAttribute("data-share-text") || "") || window.location.href;
+                var originalLabel = button.getAttribute("aria-label") || "Copy match link";
+                var status = button.parentElement ? button.parentElement.querySelector(".match-page-share__status") : null;
+
+                function setCopied() {
+                    button.setAttribute("aria-label", "Copied for " + platform);
+                    button.classList.add("is-copied");
+                    if (status) status.textContent = "Copied for " + platform;
+                    window.setTimeout(function () {
+                        button.setAttribute("aria-label", originalLabel);
+                        button.classList.remove("is-copied");
+                        if (status) status.textContent = "";
+                    }, 1400);
+                }
+
+                function copyShareText() {
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        navigator.clipboard.writeText(text).then(setCopied).catch(function () {});
+                        return;
+                    }
+
+                    var field = document.createElement("textarea");
+                    field.value = text;
+                    field.setAttribute("readonly", "");
+                    field.style.position = "fixed";
+                    field.style.left = "-9999px";
+                    document.body.appendChild(field);
+                    field.select();
+                    try {
+                        document.execCommand("copy");
+                        setCopied();
+                    } catch (err) {
+                        if (status) status.textContent = "Copy unavailable";
+                    }
+                    document.body.removeChild(field);
+                }
+
+                if (button.hasAttribute("data-share-native") && navigator.share) {
+                    navigator.share({ title: title, text: story, url: url }).catch(copyShareText);
+                    return;
+                }
+
+                copyShareText();
+            });
+        </script>
+    `;
+}
+
+function buildMatchPageHtml({ match, home, away, players, seasonPath, seasonLabel, round }) {
+    const story = buildMatchStory({ match, home, away, seasonLabel, round });
+    const matchweekHref = `/epl/${seasonPath}/matchweek/${round}/`;
+    const tableHref = `/epl/${seasonPath}/table/`;
+    const homeHref = `/epl/${seasonPath}/team/${match.homeTeamId}/`;
+    const awayHref = `/epl/${seasonPath}/team/${match.awayTeamId}/`;
+    const status = escapeAttr(match.status?.state || "");
+    const score = formatScoreForTitle(match);
+    const title = `${home.name} ${score} ${away.name}`;
+    const pageUrl = `https://timelinefootball.com${getMatchPagePath({
+        seasonPath,
+        round,
+        homeTeamId: match.homeTeamId,
+        awayTeamId: match.awayTeamId,
+    })}`;
+
+    return `
+        <section class="match-page">
+            <header class="match-page-hero">
+                <p class="match-page-kicker">EPL ${seasonLabel} Matchweek ${round}</p>
+                <h1>${escapeAttr(title)}</h1>
+                <p class="match-page-summary">${escapeAttr(story)}</p>
+                <nav class="match-page-links" aria-label="Match links">
+                    <a href="${homeHref}">${escapeAttr(home.display || home.name)} &#9655;</a>
+                    <a href="${awayHref}">${escapeAttr(away.display || away.name)} &#9655;</a>
+                    <a href="${matchweekHref}">Matchweek ${round} &#9655;</a>
+                    <a href="${tableHref}">EPL table &#9655;</a>
+                </nav>
+                ${buildShareLinks({ title, pageUrl, story })}
+            </header>
+
+            <div class="match-page-card">
+                ${renderMatchweekHTML({
+                    matches: [match],
+                    teams: {
+                        [match.homeTeamId]: home,
+                        [match.awayTeamId]: away,
+                    },
+                    players,
+                    seasonPath,
+                    globalMode: "compact",
+                })}
+            </div>
+
+            <section class="match-page-section match-page-facts">
+                <h2>Match context</h2>
+                <dl>
+                    <div><dt>Status</dt><dd>${status}</dd></div>
+                    <div><dt>Venue</dt><dd>${escapeAttr(match.venue || "TBD")}</dd></div>
+                    <div><dt>Matchweek</dt><dd><a href="${matchweekHref}">${round}</a></dd></div>
+                </dl>
+            </section>
+
+            ${buildKeyMomentsHtml(match)}
+        </section>
+        ${matchPageToggleScript()}
+    `;
 }
 
 function getMatchweekStartKickoffISO(md) {
@@ -1229,6 +1498,12 @@ function buildTeamSeason({ roundsData, teamsBySlug }) {
             out[homeSlug].matches.push({
                 mw,
                 fixtureId: match.id, 
+                href: getMatchPagePath({
+                    seasonPath: season.seasonPath,
+                    round: mw,
+                    homeTeamId: homeSlug,
+                    awayTeamId: awaySlug,
+                }),
                 kickoff: match.kickoff,
                 opponent: awaySlug,
                 opponentName: teamsBySlug[awaySlug]?.name ?? awaySlug,
@@ -1243,6 +1518,12 @@ function buildTeamSeason({ roundsData, teamsBySlug }) {
             out[awaySlug].matches.push({
                 mw,
                 fixtureId: match.id, 
+                href: getMatchPagePath({
+                    seasonPath: season.seasonPath,
+                    round: mw,
+                    homeTeamId: homeSlug,
+                    awayTeamId: awaySlug,
+                }),
                 kickoff: match.kickoff,
                 opponent: homeSlug,
                 opponentName: teamsBySlug[homeSlug]?.name ?? homeSlug,
@@ -1350,9 +1631,10 @@ async function main() {
     for (const round of rounds) {
         const mdPath = path.join(MATCHDAYS_DIR, `${round}.json`);
         const md = JSON.parse(await fs.readFile(mdPath, "utf8"));
+        const matches = attachMatchData(md.matches || [], oddsByFixture, round, seasonPath);
 
         const appHtml = renderMatchweekHTML({
-            matches: attachOdds(md.matches || [], oddsByFixture),
+            matches,
             teams,
             players,
             seasonPath,
@@ -1404,7 +1686,7 @@ async function main() {
             season: seasonStart,
             seasonLabel,
             round,
-            matches: md.matches || [],
+            matches,
             teamsById: teams,
             pageUrl: canonical
         });
@@ -1427,6 +1709,69 @@ async function main() {
         await fs.writeFile(path.join(outDir, "index.html"), out, "utf8");
 
         console.log(`Prerendered ${pagePath}`);
+
+        for (const match of matches) {
+            const home = teams[match.homeTeamId];
+            const away = teams[match.awayTeamId];
+            const matchPath = match.matchPagePath;
+
+            if (!home || !away || !matchPath) continue;
+
+            const matchCanonical = `https://timelinefootball.com${matchPath}`;
+            const scoreTitle = formatScoreForTitle(match);
+            const title = `${home.name} ${scoreTitle} ${away.name} | EPL ${seasonLabel} Matchweek ${round}`;
+            const desc = buildMatchStory({ match, home, away, seasonLabel, round });
+
+            let matchPage = setSeasonChrome(template, {
+                seasonPath,
+                seasonLabel,
+                leagueName: season.leagueName,
+            });
+
+            matchPage = setTitle(matchPage, title);
+            matchPage = setDescription(matchPage, desc);
+            matchPage = setCanonical(matchPage, matchCanonical);
+            matchPage = setOpenGraph(matchPage, {
+                title,
+                description: desc,
+                url: matchCanonical,
+                image: OG_DEFAULT_IMAGE,
+                siteName: SITE_NAME,
+            });
+            matchPage = setTwitterCard(matchPage, {
+                title,
+                description: desc,
+                image: OG_DEFAULT_IMAGE,
+            });
+
+            const navHtml = `<nav class="mw-nav" aria-label="EPL navigation">
+                <a class="mw-nav__hub" href="/epl/${seasonPath}/">EPL ${seasonLabel} matchweeks &#9655;</a>
+                <div class="mw-nav__pager">
+                    <a class="mw-nav__prev" href="/epl/${seasonPath}/matchweek/${round}/">Matchweek ${round} &#9655;</a>
+                    <a class="mw-nav__next" href="/epl/${seasonPath}/table/">League table &#9655;</a>
+                </div>
+            </nav>`;
+
+            matchPage = injectBeforeApp(matchPage, navHtml);
+            matchPage = injectApp(matchPage, buildMatchPageHtml({
+                match,
+                home,
+                away,
+                players,
+                seasonPath,
+                seasonLabel,
+                round,
+            }));
+            matchPage = setJsonLd(matchPage, matchPageJsonLd({ match, home, away, pageUrl: matchCanonical }));
+            matchPage = stripAppScripts(matchPage);
+            matchPage = stripMatchdayShell(matchPage);
+
+            const matchOutDir = path.join(ROOT, "dist", matchPath.replace(/^\/+|\/+$/g, ""));
+            await fs.mkdir(matchOutDir, { recursive: true });
+            await fs.writeFile(path.join(matchOutDir, "index.html"), matchPage, "utf8");
+
+            console.log(`Prerendered ${matchPath}`);
+        }
     }
 
     const hubPath = `/epl/${seasonPath}/`;

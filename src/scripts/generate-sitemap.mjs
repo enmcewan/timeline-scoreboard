@@ -2,6 +2,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { getSeasonConfig, PRERENDER_SEASON_PATHS, ACTIVE_SEASON_PATH } from "../config/seasons.js";
+import { getMatchPagePath } from "../lib/matchUrls.js";
 import { pickInitialRound } from "./get-current-round.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -69,6 +70,30 @@ async function getCurrentRoundForSeason(season) {
   }
 
   return pickInitialRound(matchdays);
+}
+
+async function getMatchPagePathsForRound(season, round) {
+  const matchweekPath = path.join(
+    ROOT,
+    "public",
+    "data",
+    "leagues",
+    season.leagueKey,
+    season.seasonPath,
+    "matchweeks",
+    `${round}.json`
+  );
+  const md = await readJsonIfExists(matchweekPath, null);
+  const matches = md?.matches ?? [];
+
+  return matches
+    .map((match) => getMatchPagePath({
+      seasonPath: season.seasonPath,
+      round,
+      homeTeamId: match.homeTeamId,
+      awayTeamId: match.awayTeamId,
+    }))
+    .filter(Boolean);
 }
 
 function getMatchweekChangefreq(round, currentRound) {
@@ -153,6 +178,16 @@ async function main() {
         priority: isActive && r === currentRound ? "0.9" : isActive ? "0.7" : "0.4",
         lastmod: await getPageLastmod(`epl/${season.seasonPath}/matchweek/${r}`),
       });
+
+      const matchPagePaths = await getMatchPagePathsForRound(season, r);
+      for (const matchPath of matchPagePaths) {
+        urls.push({
+          loc: `${SITE_ORIGIN}${matchPath}`,
+          changefreq: isActive ? getMatchweekChangefreq(r, currentRound) : "never",
+          priority: isActive && r === currentRound ? "0.8" : isActive ? "0.6" : "0.3",
+          lastmod: await getPageLastmod(matchPath.replace(/^\/+|\/+$/g, "")),
+        });
+      }
     }
   }
 

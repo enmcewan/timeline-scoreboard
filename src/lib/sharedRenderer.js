@@ -1,4 +1,5 @@
 import { computePerfExec } from "./powerMeter.js";
+import { getMatchPagePath } from "./matchUrls.js";
 
 export const VIEW_MODES = {
     COMPACT: "compact",
@@ -232,6 +233,7 @@ export function createRenderEventRow(esc, renderEventText) {
 
     return function renderEventRow(evt, mode) {
         const minute = esc(evt.minute);
+        const isResultEvent = isVisibleInMode(evt, VIEW_MODES.COMPACT);
 
         const homeCell = evt.team === "home" ? renderEventText(evt, mode) : "";
         const awayCell = evt.team === "away" ? renderEventText(evt, mode) : "";
@@ -239,7 +241,7 @@ export function createRenderEventRow(esc, renderEventText) {
         if (evt.kind !== "var" && evt.detail !== "penalty confirmed") {
 
             return `
-                <div class="row">
+                <div class="row" data-result-event="${isResultEvent ? "true" : "false"}">
                 <div class="event home">${homeCell}</div>
                 <div class="minute">${minute}</div>
                 <div class="event away">${awayCell}</div>
@@ -377,6 +379,12 @@ export function createRenderMatchCard({
 
         const homeHref = `/epl/${seasonPath}/team/${match.homeTeamId}/`;
         const awayHref = `/epl/${seasonPath}/team/${match.awayTeamId}/`;
+        const matchHref = match.matchPagePath ?? getMatchPagePath({
+            seasonPath,
+            round: match.round,
+            homeTeamId: match.homeTeamId,
+            awayTeamId: match.awayTeamId,
+        });
 
         const stat = (side, key, fallback = " - ") =>
             match.statistics?.[side]?.[key] ?? fallback;
@@ -565,6 +573,7 @@ export function createRenderMatchCard({
                 <footer class="match-footer">
                     <span class="footer-label">Venue:</span>
                     <span class="footer-data">${esc(match.venue)}</span>
+                    ${matchHref ? `<a class="match-page-link" href="${esc(matchHref)}">Match page &#9655;</a>` : ""}
                     <button class="timeline-toggle" aria-expanded="false">
                         ${mode === "full" ? "Show Result" : "Show Timeline"}
                     </button>
