@@ -65,17 +65,17 @@ jobs:
         if: steps.gate.outputs.should_deploy == '1'
         run: echo "START_TS=$(date +%s)" >> $GITHUB_ENV
 
-      - name: Refresh events + matchdays
-        if: steps.gate.outputs.should_deploy == '1'
-        env:
-          APIFOOTBALL_KEY: ${{ secrets.APIFOOTBALL_KEY }}
-        run: npm run update:matchdays
-
       - name: Fetch odds
         if: steps.gate.outputs.should_deploy == '1'
         env:
           APIFOOTBALL_KEY: ${{ secrets.APIFOOTBALL_KEY }}
         run: npm run fetch:odds
+
+      - name: Refresh events + matchdays
+        if: steps.gate.outputs.should_deploy == '1'
+        env:
+          APIFOOTBALL_KEY: ${{ secrets.APIFOOTBALL_KEY }}
+        run: npm run update:matchdays
 
       - name: Fetch standings
         run: node src/scripts/fetch-standings.epl.mjs

@@ -49,6 +49,18 @@ const MATCHWEEKS_DIR = path.join(
   "matchweeks"
 );
 
+const ODDS_PATH = path.join(
+  __dirname,
+  "..",
+  "..",
+  "public",
+  "data",
+  "leagues",
+  season.leagueKey,
+  season.seasonPath,
+  "odds.json"
+);
+
 const TEAMS_PATH = path.join(
   __dirname,
   "..",
@@ -168,6 +180,21 @@ async function loadApiTeamIdToSlugMap() {
   }
 
   return map;
+}
+
+async function readJsonIfExists(filePath, fallback) {
+  try {
+    const text = await fs.readFile(filePath, "utf8");
+    return JSON.parse(text.replace(/^\uFEFF/, ""));
+  } catch (err) {
+    if (err?.code === "ENOENT") return fallback;
+    throw err;
+  }
+}
+
+function attachCachedOdds(match, oddsByFixture) {
+  const odds = oddsByFixture?.[String(match?.id)];
+  return odds ? { ...match, odds } : match;
 }
 
 function getTeamSlug(apiTeamId, fallbackName) {
@@ -447,12 +474,15 @@ async function main() {
 
   console.log("Reading raw events…");
   const eventsRaw = JSON.parse(await fs.readFile(EVENTS_RAW_PATH, "utf8"));
+  const oddsJson = await readJsonIfExists(ODDS_PATH, { fixtures: {} });
+  const oddsByFixture = oddsJson?.fixtures ?? {};
 
   const fixtures = fixturesRaw.response ?? [];
   const eventsArr = eventsRaw.response ?? [];
 
   console.log(`Fixtures: ${fixtures.length}`);
   console.log(`Events:   ${eventsArr.length}`);
+  console.log(`Odds:     ${Object.keys(oddsByFixture).length}`);
 
   const eventsByFixture = groupEventsByFixture(eventsArr);
 
@@ -505,7 +535,7 @@ async function main() {
           };
         } else if (existingMatch?.statistics?.home?.xg != null && existingMatch?.statistics?.away?.xg != null) {
           console.warn(`No fresh stats for fixture ${fixtureId}; keeping existing match.`);
-          upsertMatch(matchweeks, round, existingMatch);
+          upsertMatch(matchweeks, round, attachCachedOdds(existingMatch, oddsByFixture));
           touchedRounds.add(round);
           continue;
         } else {
@@ -517,7 +547,7 @@ async function main() {
     } catch (e) {
       if (existingMatch?.statistics?.home?.xg != null && existingMatch?.statistics?.away?.xg != null) {
         console.warn(`Stats fetch failed for fixture ${fixtureId}; keeping existing match. ${e.message}`);
-        upsertMatch(matchweeks, round, existingMatch);
+        upsertMatch(matchweeks, round, attachCachedOdds(existingMatch, oddsByFixture));
         touchedRounds.add(round);
         continue;
       }
@@ -525,7 +555,7 @@ async function main() {
       console.warn(`Stats fetch failed for fixture ${fixtureId}: ${e.message}`);
     }
 
-    upsertMatch(matchweeks, round, rebuiltMatch);
+    upsertMatch(matchweeks, round, attachCachedOdds(rebuiltMatch, oddsByFixture));
     touchedRounds.add(round);
   }
 
