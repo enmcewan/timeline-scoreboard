@@ -1,0 +1,2289 @@
+{
+  "league": {
+    "id": 39,
+    "name": "English Premier League",
+    "season": 2026
+  },
+  "updated": "2026-08-29T20:41:39.077Z",
+  "fixtures": {
+    "1557377": {
+      "fixtureId": 1557377,
+      "fixtureDate": "2026-08-31T19:00:00+00:00",
+      "market": "Match Winner",
+      "betId": 1,
+      "capturedAt": "2026-08-29T20:41:36.130Z",
+      "apiUpdatedAt": "2026-08-29T17:54:16+00:00",
+      "sourceCount": 12,
+      "locked": false,
+      "consensus": {
+        "draw": 23,
+        "home": 15,
+        "away": 62
+      },
+      "bookmakers": [
+        {
+          "id": 7,
+          "name": "William Hill",
+          "decimal": {
+            "home": 6,
+            "draw": 4,
+            "away": 1.53
+          },
+          "implied": {
+            "home": 15.57,
+            "draw": 23.36,
+            "away": 61.07
+          }
+        },
+        {
+          "id": 8,
+          "name": "Bet365",
+          "decimal": {
+            "home": 6.25,
+            "draw": 4.1,
+            "away": 1.5
+          },
+          "implied": {
+            "home": 14.95,
+            "draw": 22.78,
+            "away": 62.27
+          }
+        },
+        {
+          "id": 2,
+          "name": "Marathonbet",
+          "decimal": {
+            "home": 6.4,
+            "draw": 4.33,
+            "away": 1.55
+          },
+          "implied": {
+            "home": 15.14,
+            "draw": 22.37,
+            "away": 62.49
+          }
+        },
+        {
+          "id": 16,
+          "name": "Unibet",
+          "decimal": {
+            "home": 6.75,
+            "draw": 4.25,
+            "away": 1.5
+          },
+          "implied": {
+            "home": 14.11,
+            "draw": 22.41,
+            "away": 63.49
+          }
+        },
+        {
+          "id": 3,
+          "name": "Betfair",
+          "decimal": {
+            "home": 6.5,
+            "draw": 4.33,
+            "away": 1.5
+          },
+          "implied": {
+            "home": 14.63,
+            "draw": 21.96,
+            "away": 63.4
+          }
+        },
+        {
+          "id": 36,
+          "name": "BetVictor",
+          "decimal": {
+            "home": 6,
+            "draw": 4.1,
+            "away": 1.5
+          },
+          "implied": {
+            "home": 15.47,
+            "draw": 22.64,
+            "away": 61.89
+          }
+        },
+        {
+          "id": 4,
+          "name": "Pinnacle",
+          "decimal": {
+            "home": 6.5,
+            "draw": 4.36,
+            "away": 1.53
+          },
+          "implied": {
+            "home": 14.84,
+            "draw": 22.12,
+            "away": 63.04
+          }
+        },
+        {
+          "id": 5,
+          "name": "SBO",
+          "decimal": {
+            "home": 5.32,
+            "draw": 3.79,
+            "away": 1.48
+          },
+          "implied": {
+            "home": 16.67,
+            "draw": 23.4,
+            "away": 59.93
+          }
+        },
+        {
+          "id": 11,
+          "name": "1xBet",
+          "decimal": {
+            "home": 6.5,
+            "draw": 4.4,
+            "away": 1.58
+          },
+          "implied": {
+            "home": 15.17,
+            "draw": 22.41,
+            "away": 62.42
+          }
+        },
+        {
+          "id": 32,
+          "name": "Betano",
+          "decimal": {
+            "home": 6.4,
+            "draw": 4.1,
+            "away": 1.55
+          },
+          "implied": {
+            "home": 14.95,
+            "draw": 23.33,
+            "away": 61.72
+          }
+        },
+        {
+          "id": 34,
+          "name": "Superbet",
+          "decimal": {
+            "home": 6.1,
+            "draw": 4.3,
+            "away": 1.55
+          },
+          "implied": {
+            "home": 15.74,
+            "draw": 22.33,
+            "away": 61.94
+          }
+        },
+        {
+          "id": 9,
+          "name": "Dafabet",
+          "decimal": {
+            "home": 6,
+            "draw": 4.4,
+            "away": 1.55
+          },
+          "implied": {
+            "home": 16.04,
+            "draw": 21.87,
+            "away": 62.09
+          }
+        }
+      ]
+    },
+    "1557379": {
+      "fixtureId": 1557379,
+      "fixtureDate": "2026-08-30T13:00:00+00:00",
+      "market": "Match Winner",
+      "betId": 1,
+      "capturedAt": "2026-08-29T20:41:34.741Z",
+      "apiUpdatedAt": "2026-08-29T17:54:16+00:00",
+      "sourceCount": 12,
+      "locked": false,
+      "consensus": {
+        "draw": 25,
+        "away": 23,
+        "home": 52
+      },
+      "bookmakers": [
+        {
+          "id": 7,
+          "name": "William Hill",
+          "decimal": {
+            "home": 1.83,
+            "draw": 3.8,
+            "away": 3.9
+          },
+          "implied": {
+            "home": 51.26,
+            "draw": 24.69,
+            "away": 24.05
+          }
+        },
+        {
+          "id": 8,
+          "name": "Bet365",
+          "decimal": {
+            "home": 1.8,
+            "draw": 4,
+            "away": 4.2
+          },
+          "implied": {
+            "home": 53.23,
+            "draw": 23.95,
+            "away": 22.81
+          }
+        },
+        {
+          "id": 2,
+          "name": "Marathonbet",
+          "decimal": {
+            "home": 1.86,
+            "draw": 4,
+            "away": 4.1
+          },
+          "implied": {
+            "home": 52.12,
+            "draw": 24.24,
+            "away": 23.64
+          }
+        },
+        {
+          "id": 16,
+          "name": "Unibet",
+          "decimal": {
+            "home": 1.81,
+            "draw": 3.8,
+            "away": 4.25
+          },
+          "implied": {
+            "home": 52.57,
+            "draw": 25.04,
+            "away": 22.39
+          }
+        },
+        {
+          "id": 3,
+          "name": "Betfair",
+          "decimal": {
+            "home": 1.83,
+            "draw": 3.9,
+            "away": 4.1
+          },
+          "implied": {
+            "home": 52.2,
+            "draw": 24.5,
+            "away": 23.3
+          }
+        },
+        {
+          "id": 36,
+          "name": "BetVictor",
+          "decimal": {
+            "home": 1.8,
+            "draw": 3.9,
+            "away": 4.1
+          },
+          "implied": {
+            "home": 52.62,
+            "draw": 24.28,
+            "away": 23.1
+          }
+        },
+        {
+          "id": 4,
+          "name": "Pinnacle",
+          "decimal": {
+            "home": 1.85,
+            "draw": 3.97,
+            "away": 4.09
+          },
+          "implied": {
+            "home": 52.13,
+            "draw": 24.29,
+            "away": 23.58
+          }
+        },
+        {
+          "id": 5,
+          "name": "SBO",
+          "decimal": {
+            "home": 1.8,
+            "draw": 3.37,
+            "away": 3.62
+          },
+          "implied": {
+            "home": 49.23,
+            "draw": 26.29,
+            "away": 24.48
+          }
+        },
+        {
+          "id": 11,
+          "name": "1xBet",
+          "decimal": {
+            "home": 1.89,
+            "draw": 4.06,
+            "away": 4.16
+          },
+          "implied": {
+            "home": 52.09,
+            "draw": 24.25,
+            "away": 23.66
+          }
+        },
+        {
+          "id": 32,
+          "name": "Betano",
+          "decimal": {
+            "home": 1.85,
+            "draw": 4.1,
+            "away": 4.2
+          },
+          "implied": {
+            "home": 52.86,
+            "draw": 23.85,
+            "away": 23.28
+          }
+        },
+        {
+          "id": 34,
+          "name": "Superbet",
+          "decimal": {
+            "home": 1.87,
+            "draw": 3.9,
+            "away": 4
+          },
+          "implied": {
+            "home": 51.36,
+            "draw": 24.63,
+            "away": 24.01
+          }
+        },
+        {
+          "id": 9,
+          "name": "Dafabet",
+          "decimal": {
+            "home": 1.84,
+            "draw": 4,
+            "away": 4.1
+          },
+          "implied": {
+            "home": 52.39,
+            "draw": 24.1,
+            "away": 23.51
+          }
+        }
+      ]
+    },
+    "1557382": {
+      "fixtureId": 1557382,
+      "fixtureDate": "2026-08-30T13:00:00+00:00",
+      "market": "Match Winner",
+      "betId": 1,
+      "capturedAt": "2026-08-29T20:41:35.093Z",
+      "apiUpdatedAt": "2026-08-29T17:54:16+00:00",
+      "sourceCount": 12,
+      "locked": false,
+      "consensus": {
+        "away": 35,
+        "home": 37,
+        "draw": 28
+      },
+      "bookmakers": [
+        {
+          "id": 7,
+          "name": "William Hill",
+          "decimal": {
+            "home": 2.5,
+            "draw": 3.25,
+            "away": 2.7
+          },
+          "implied": {
+            "home": 37.1,
+            "draw": 28.54,
+            "away": 34.36
+          }
+        },
+        {
+          "id": 8,
+          "name": "Bet365",
+          "decimal": {
+            "home": 2.6,
+            "draw": 3.3,
+            "away": 2.7
+          },
+          "implied": {
+            "home": 36.35,
+            "draw": 28.64,
+            "away": 35.01
+          }
+        },
+        {
+          "id": 2,
+          "name": "Marathonbet",
+          "decimal": {
+            "home": 2.64,
+            "draw": 3.4,
+            "away": 2.79
+          },
+          "implied": {
+            "home": 36.73,
+            "draw": 28.52,
+            "away": 34.75
+          }
+        },
+        {
+          "id": 16,
+          "name": "Unibet",
+          "decimal": {
+            "home": 2.6,
+            "draw": 3.45,
+            "away": 2.7
+          },
+          "implied": {
+            "home": 36.81,
+            "draw": 27.74,
+            "away": 35.45
+          }
+        },
+        {
+          "id": 3,
+          "name": "Betfair",
+          "decimal": {
+            "home": 2.63,
+            "draw": 3.4,
+            "away": 2.7
+          },
+          "implied": {
+            "home": 36.4,
+            "draw": 28.15,
+            "away": 35.45
+          }
+        },
+        {
+          "id": 36,
+          "name": "BetVictor",
+          "decimal": {
+            "home": 2.55,
+            "draw": 3.4,
+            "away": 2.7
+          },
+          "implied": {
+            "home": 37.11,
+            "draw": 27.84,
+            "away": 35.05
+          }
+        },
+        {
+          "id": 4,
+          "name": "Pinnacle",
+          "decimal": {
+            "home": 2.64,
+            "draw": 3.37,
+            "away": 2.8
+          },
+          "implied": {
+            "home": 36.68,
+            "draw": 28.73,
+            "away": 34.58
+          }
+        },
+        {
+          "id": 5,
+          "name": "SBO",
+          "decimal": {
+            "home": 2.41,
+            "draw": 3.08,
+            "away": 2.56
+          },
+          "implied": {
+            "home": 36.71,
+            "draw": 28.73,
+            "away": 34.56
+          }
+        },
+        {
+          "id": 11,
+          "name": "1xBet",
+          "decimal": {
+            "home": 2.68,
+            "draw": 3.45,
+            "away": 2.83
+          },
+          "implied": {
+            "home": 36.71,
+            "draw": 28.52,
+            "away": 34.77
+          }
+        },
+        {
+          "id": 32,
+          "name": "Betano",
+          "decimal": {
+            "home": 2.57,
+            "draw": 3.35,
+            "away": 2.75
+          },
+          "implied": {
+            "home": 37.01,
+            "draw": 28.4,
+            "away": 34.59
+          }
+        },
+        {
+          "id": 34,
+          "name": "Superbet",
+          "decimal": {
+            "home": 2.62,
+            "draw": 3.35,
+            "away": 2.75
+          },
+          "implied": {
+            "home": 36.57,
+            "draw": 28.6,
+            "away": 34.84
+          }
+        },
+        {
+          "id": 9,
+          "name": "Dafabet",
+          "decimal": {
+            "home": 2.6,
+            "draw": 3.4,
+            "away": 2.75
+          },
+          "implied": {
+            "home": 36.9,
+            "draw": 28.22,
+            "away": 34.89
+          }
+        }
+      ]
+    },
+    "1557384": {
+      "fixtureId": 1557384,
+      "fixtureDate": "2026-08-30T15:30:00+00:00",
+      "market": "Match Winner",
+      "betId": 1,
+      "capturedAt": "2026-08-29T20:41:35.785Z",
+      "apiUpdatedAt": "2026-08-29T17:54:16+00:00",
+      "sourceCount": 12,
+      "locked": false,
+      "consensus": {
+        "home": 68,
+        "draw": 19,
+        "away": 13
+      },
+      "bookmakers": [
+        {
+          "id": 7,
+          "name": "William Hill",
+          "decimal": {
+            "home": 1.4,
+            "draw": 4.6,
+            "away": 7
+          },
+          "implied": {
+            "home": 66.47,
+            "draw": 20.23,
+            "away": 13.29
+          }
+        },
+        {
+          "id": 8,
+          "name": "Bet365",
+          "decimal": {
+            "home": 1.4,
+            "draw": 5,
+            "away": 7.5
+          },
+          "implied": {
+            "home": 68.18,
+            "draw": 19.09,
+            "away": 12.73
+          }
+        },
+        {
+          "id": 2,
+          "name": "Marathonbet",
+          "decimal": {
+            "home": 1.42,
+            "draw": 5.05,
+            "away": 7.7
+          },
+          "implied": {
+            "home": 68.23,
+            "draw": 19.19,
+            "away": 12.58
+          }
+        },
+        {
+          "id": 16,
+          "name": "Unibet",
+          "decimal": {
+            "home": 1.38,
+            "draw": 5,
+            "away": 8
+          },
+          "implied": {
+            "home": 69.04,
+            "draw": 19.05,
+            "away": 11.91
+          }
+        },
+        {
+          "id": 3,
+          "name": "Betfair",
+          "decimal": {
+            "home": 1.4,
+            "draw": 5,
+            "away": 7.5
+          },
+          "implied": {
+            "home": 68.18,
+            "draw": 19.09,
+            "away": 12.73
+          }
+        },
+        {
+          "id": 36,
+          "name": "BetVictor",
+          "decimal": {
+            "home": 1.4,
+            "draw": 5,
+            "away": 7.5
+          },
+          "implied": {
+            "home": 68.18,
+            "draw": 19.09,
+            "away": 12.73
+          }
+        },
+        {
+          "id": 4,
+          "name": "Pinnacle",
+          "decimal": {
+            "home": 1.42,
+            "draw": 5.13,
+            "away": 7.27
+          },
+          "implied": {
+            "home": 67.93,
+            "draw": 18.8,
+            "away": 13.27
+          }
+        },
+        {
+          "id": 5,
+          "name": "SBO",
+          "decimal": {
+            "home": 1.36,
+            "draw": 4.37,
+            "away": 6.47
+          },
+          "implied": {
+            "home": 65.73,
+            "draw": 20.46,
+            "away": 13.82
+          }
+        },
+        {
+          "id": 11,
+          "name": "1xBet",
+          "decimal": {
+            "home": 1.44,
+            "draw": 5.13,
+            "away": 7.8
+          },
+          "implied": {
+            "home": 68.24,
+            "draw": 19.16,
+            "away": 12.6
+          }
+        },
+        {
+          "id": 32,
+          "name": "Betano",
+          "decimal": {
+            "home": 1.45,
+            "draw": 5,
+            "away": 7.6
+          },
+          "implied": {
+            "home": 67.53,
+            "draw": 19.58,
+            "away": 12.88
+          }
+        },
+        {
+          "id": 34,
+          "name": "Superbet",
+          "decimal": {
+            "home": 1.42,
+            "draw": 5.1,
+            "away": 6.9
+          },
+          "implied": {
+            "home": 67.38,
+            "draw": 18.76,
+            "away": 13.87
+          }
+        },
+        {
+          "id": 9,
+          "name": "Dafabet",
+          "decimal": {
+            "home": 1.42,
+            "draw": 5,
+            "away": 7
+          },
+          "implied": {
+            "home": 67.26,
+            "draw": 19.1,
+            "away": 13.64
+          }
+        }
+      ]
+    },
+    "1557385": {
+      "fixtureId": 1557385,
+      "fixtureDate": "2026-08-30T13:00:00+00:00",
+      "market": "Match Winner",
+      "betId": 1,
+      "capturedAt": "2026-08-29T20:41:35.441Z",
+      "apiUpdatedAt": "2026-08-29T17:54:16+00:00",
+      "sourceCount": 12,
+      "locked": false,
+      "consensus": {
+        "away": 32,
+        "draw": 29,
+        "home": 39
+      },
+      "bookmakers": [
+        {
+          "id": 7,
+          "name": "William Hill",
+          "decimal": {
+            "home": 2.4,
+            "draw": 3.2,
+            "away": 2.9
+          },
+          "implied": {
+            "home": 38.8,
+            "draw": 29.1,
+            "away": 32.11
+          }
+        },
+        {
+          "id": 8,
+          "name": "Bet365",
+          "decimal": {
+            "home": 2.4,
+            "draw": 3.2,
+            "away": 3.1
+          },
+          "implied": {
+            "home": 39.62,
+            "draw": 29.71,
+            "away": 30.67
+          }
+        },
+        {
+          "id": 2,
+          "name": "Marathonbet",
+          "decimal": {
+            "home": 2.47,
+            "draw": 3.34,
+            "away": 3.06
+          },
+          "implied": {
+            "home": 39.27,
+            "draw": 29.04,
+            "away": 31.7
+          }
+        },
+        {
+          "id": 16,
+          "name": "Unibet",
+          "decimal": {
+            "home": 2.45,
+            "draw": 3.3,
+            "away": 2.9
+          },
+          "implied": {
+            "home": 38.65,
+            "draw": 28.7,
+            "away": 32.65
+          }
+        },
+        {
+          "id": 3,
+          "name": "Betfair",
+          "decimal": {
+            "home": 2.45,
+            "draw": 3.3,
+            "away": 3
+          },
+          "implied": {
+            "home": 39.08,
+            "draw": 29.01,
+            "away": 31.91
+          }
+        },
+        {
+          "id": 36,
+          "name": "BetVictor",
+          "decimal": {
+            "home": 2.4,
+            "draw": 3.3,
+            "away": 3
+          },
+          "implied": {
+            "home": 39.57,
+            "draw": 28.78,
+            "away": 31.65
+          }
+        },
+        {
+          "id": 4,
+          "name": "Pinnacle",
+          "decimal": {
+            "home": 2.46,
+            "draw": 3.33,
+            "away": 3.06
+          },
+          "implied": {
+            "home": 39.33,
+            "draw": 29.05,
+            "away": 31.62
+          }
+        },
+        {
+          "id": 5,
+          "name": "SBO",
+          "decimal": {
+            "home": 2.36,
+            "draw": 2.99,
+            "away": 2.68
+          },
+          "implied": {
+            "home": 37.45,
+            "draw": 29.56,
+            "away": 32.98
+          }
+        },
+        {
+          "id": 11,
+          "name": "1xBet",
+          "decimal": {
+            "home": 2.5,
+            "draw": 3.38,
+            "away": 3.13
+          },
+          "implied": {
+            "home": 39.4,
+            "draw": 29.14,
+            "away": 31.47
+          }
+        },
+        {
+          "id": 32,
+          "name": "Betano",
+          "decimal": {
+            "home": 2.42,
+            "draw": 3.2,
+            "away": 3.05
+          },
+          "implied": {
+            "home": 39.22,
+            "draw": 29.66,
+            "away": 31.12
+          }
+        },
+        {
+          "id": 34,
+          "name": "Superbet",
+          "decimal": {
+            "home": 2.45,
+            "draw": 3.3,
+            "away": 3.05
+          },
+          "implied": {
+            "home": 39.28,
+            "draw": 29.16,
+            "away": 31.55
+          }
+        },
+        {
+          "id": 9,
+          "name": "Dafabet",
+          "decimal": {
+            "home": 2.47,
+            "draw": 3.25,
+            "away": 3.05
+          },
+          "implied": {
+            "home": 38.91,
+            "draw": 29.57,
+            "away": 31.51
+          }
+        }
+      ]
+    },
+    "1557388": {
+      "fixtureId": 1557388,
+      "fixtureDate": "2026-09-05T14:00:00+00:00",
+      "market": "Match Winner",
+      "betId": 1,
+      "capturedAt": "2026-08-29T20:41:38.169Z",
+      "apiUpdatedAt": "2026-08-29T17:54:16+00:00",
+      "sourceCount": 11,
+      "locked": false,
+      "consensus": {
+        "away": 19,
+        "home": 57,
+        "draw": 24
+      },
+      "bookmakers": [
+        {
+          "id": 7,
+          "name": "William Hill",
+          "decimal": {
+            "home": 1.67,
+            "draw": 3.75,
+            "away": 4.8
+          },
+          "implied": {
+            "home": 55.76,
+            "draw": 24.83,
+            "away": 19.4
+          }
+        },
+        {
+          "id": 8,
+          "name": "Bet365",
+          "decimal": {
+            "home": 1.62,
+            "draw": 3.9,
+            "away": 4.75
+          },
+          "implied": {
+            "home": 56.93,
+            "draw": 23.65,
+            "away": 19.42
+          }
+        },
+        {
+          "id": 2,
+          "name": "Marathonbet",
+          "decimal": {
+            "home": 1.71,
+            "draw": 3.94,
+            "away": 5.2
+          },
+          "implied": {
+            "home": 56.73,
+            "draw": 24.62,
+            "away": 18.65
+          }
+        },
+        {
+          "id": 16,
+          "name": "Unibet",
+          "decimal": {
+            "home": 1.63,
+            "draw": 3.85,
+            "away": 5.25
+          },
+          "implied": {
+            "home": 57.68,
+            "draw": 24.42,
+            "away": 17.91
+          }
+        },
+        {
+          "id": 3,
+          "name": "Betfair",
+          "decimal": {
+            "home": 1.62,
+            "draw": 3.9,
+            "away": 5
+          },
+          "implied": {
+            "home": 57.49,
+            "draw": 23.88,
+            "away": 18.63
+          }
+        },
+        {
+          "id": 36,
+          "name": "BetVictor",
+          "decimal": {
+            "home": 1.65,
+            "draw": 3.75,
+            "away": 5
+          },
+          "implied": {
+            "home": 56.5,
+            "draw": 24.86,
+            "away": 18.64
+          }
+        },
+        {
+          "id": 4,
+          "name": "Pinnacle",
+          "decimal": {
+            "home": 1.68,
+            "draw": 3.84,
+            "away": 5.03
+          },
+          "implied": {
+            "home": 56.45,
+            "draw": 24.7,
+            "away": 18.85
+          }
+        },
+        {
+          "id": 5,
+          "name": "SBO",
+          "decimal": {
+            "home": 1.6,
+            "draw": 3.52,
+            "away": 4.68
+          },
+          "implied": {
+            "home": 55.67,
+            "draw": 25.3,
+            "away": 19.03
+          }
+        },
+        {
+          "id": 11,
+          "name": "1xBet",
+          "decimal": {
+            "home": 1.74,
+            "draw": 4,
+            "away": 5.28
+          },
+          "implied": {
+            "home": 56.67,
+            "draw": 24.65,
+            "away": 18.68
+          }
+        },
+        {
+          "id": 32,
+          "name": "Betano",
+          "decimal": {
+            "home": 1.7,
+            "draw": 3.85,
+            "away": 5
+          },
+          "implied": {
+            "home": 56.13,
+            "draw": 24.78,
+            "away": 19.08
+          }
+        },
+        {
+          "id": 9,
+          "name": "Dafabet",
+          "decimal": {
+            "home": 1.66,
+            "draw": 3.95,
+            "away": 5.2
+          },
+          "implied": {
+            "home": 57.49,
+            "draw": 24.16,
+            "away": 18.35
+          }
+        }
+      ]
+    },
+    "1557389": {
+      "fixtureId": 1557389,
+      "fixtureDate": "2026-09-05T14:00:00+00:00",
+      "market": "Match Winner",
+      "betId": 1,
+      "capturedAt": "2026-08-29T20:41:37.837Z",
+      "apiUpdatedAt": "2026-08-29T17:54:16+00:00",
+      "sourceCount": 11,
+      "locked": false,
+      "consensus": {
+        "draw": 26,
+        "away": 22,
+        "home": 52
+      },
+      "bookmakers": [
+        {
+          "id": 7,
+          "name": "William Hill",
+          "decimal": {
+            "home": 1.83,
+            "draw": 3.5,
+            "away": 4.2
+          },
+          "implied": {
+            "home": 51.06,
+            "draw": 26.7,
+            "away": 22.25
+          }
+        },
+        {
+          "id": 8,
+          "name": "Bet365",
+          "decimal": {
+            "home": 1.8,
+            "draw": 3.5,
+            "away": 4.33
+          },
+          "implied": {
+            "home": 51.81,
+            "draw": 26.65,
+            "away": 21.54
+          }
+        },
+        {
+          "id": 2,
+          "name": "Marathonbet",
+          "decimal": {
+            "home": 1.86,
+            "draw": 3.74,
+            "away": 4.4
+          },
+          "implied": {
+            "home": 52.08,
+            "draw": 25.9,
+            "away": 22.02
+          }
+        },
+        {
+          "id": 16,
+          "name": "Unibet",
+          "decimal": {
+            "home": 1.7,
+            "draw": 3.8,
+            "away": 4.7
+          },
+          "implied": {
+            "home": 55.28,
+            "draw": 24.73,
+            "away": 19.99
+          }
+        },
+        {
+          "id": 3,
+          "name": "Betfair",
+          "decimal": {
+            "home": 1.75,
+            "draw": 3.75,
+            "away": 4.4
+          },
+          "implied": {
+            "home": 53.64,
+            "draw": 25.03,
+            "away": 21.33
+          }
+        },
+        {
+          "id": 36,
+          "name": "BetVictor",
+          "decimal": {
+            "home": 1.8,
+            "draw": 3.6,
+            "away": 4.1
+          },
+          "implied": {
+            "home": 51.57,
+            "draw": 25.79,
+            "away": 22.64
+          }
+        },
+        {
+          "id": 4,
+          "name": "Pinnacle",
+          "decimal": {
+            "home": 1.83,
+            "draw": 3.73,
+            "away": 4.18
+          },
+          "implied": {
+            "home": 51.86,
+            "draw": 25.44,
+            "away": 22.7
+          }
+        },
+        {
+          "id": 5,
+          "name": "SBO",
+          "decimal": {
+            "home": 1.75,
+            "draw": 3.34,
+            "away": 3.87
+          },
+          "implied": {
+            "home": 50.6,
+            "draw": 26.51,
+            "away": 22.88
+          }
+        },
+        {
+          "id": 11,
+          "name": "1xBet",
+          "decimal": {
+            "home": 1.89,
+            "draw": 3.8,
+            "away": 4.47
+          },
+          "implied": {
+            "home": 52.08,
+            "draw": 25.9,
+            "away": 22.02
+          }
+        },
+        {
+          "id": 32,
+          "name": "Betano",
+          "decimal": {
+            "home": 1.85,
+            "draw": 3.55,
+            "away": 4.4
+          },
+          "implied": {
+            "home": 51.5,
+            "draw": 26.84,
+            "away": 21.66
+          }
+        },
+        {
+          "id": 9,
+          "name": "Dafabet",
+          "decimal": {
+            "home": 1.83,
+            "draw": 3.65,
+            "away": 4.3
+          },
+          "implied": {
+            "home": 51.9,
+            "draw": 26.02,
+            "away": 22.09
+          }
+        }
+      ]
+    },
+    "1557391": {
+      "fixtureId": 1557391,
+      "fixtureDate": "2026-09-05T14:00:00+00:00",
+      "market": "Match Winner",
+      "betId": 1,
+      "capturedAt": "2026-08-29T20:41:37.157Z",
+      "apiUpdatedAt": "2026-08-29T17:54:16+00:00",
+      "sourceCount": 10,
+      "locked": false,
+      "consensus": {
+        "draw": 28,
+        "away": 31,
+        "home": 41
+      },
+      "bookmakers": [
+        {
+          "id": 7,
+          "name": "William Hill",
+          "decimal": {
+            "home": 2.25,
+            "draw": 3.3,
+            "away": 3
+          },
+          "implied": {
+            "home": 41.12,
+            "draw": 28.04,
+            "away": 30.84
+          }
+        },
+        {
+          "id": 8,
+          "name": "Bet365",
+          "decimal": {
+            "home": 2.25,
+            "draw": 3.3,
+            "away": 3.1
+          },
+          "implied": {
+            "home": 41.53,
+            "draw": 28.32,
+            "away": 30.15
+          }
+        },
+        {
+          "id": 2,
+          "name": "Marathonbet",
+          "decimal": {
+            "home": 2.32,
+            "draw": 3.48,
+            "away": 3.2
+          },
+          "implied": {
+            "home": 41.81,
+            "draw": 27.87,
+            "away": 30.31
+          }
+        },
+        {
+          "id": 16,
+          "name": "Unibet",
+          "decimal": {
+            "home": 2.33,
+            "draw": 3.35,
+            "away": 2.95
+          },
+          "implied": {
+            "home": 40.24,
+            "draw": 27.98,
+            "away": 31.78
+          }
+        },
+        {
+          "id": 3,
+          "name": "Betfair",
+          "decimal": {
+            "home": 2.2,
+            "draw": 3.5,
+            "away": 3
+          },
+          "implied": {
+            "home": 42.34,
+            "draw": 26.61,
+            "away": 31.05
+          }
+        },
+        {
+          "id": 4,
+          "name": "Pinnacle",
+          "decimal": {
+            "home": 2.28,
+            "draw": 3.41,
+            "away": 3.15
+          },
+          "implied": {
+            "home": 41.8,
+            "draw": 27.95,
+            "away": 30.25
+          }
+        },
+        {
+          "id": 5,
+          "name": "SBO",
+          "decimal": {
+            "home": 2.14,
+            "draw": 3.12,
+            "away": 2.91
+          },
+          "implied": {
+            "home": 41.3,
+            "draw": 28.33,
+            "away": 30.37
+          }
+        },
+        {
+          "id": 11,
+          "name": "1xBet",
+          "decimal": {
+            "home": 2.36,
+            "draw": 3.53,
+            "away": 3.24
+          },
+          "implied": {
+            "home": 41.72,
+            "draw": 27.89,
+            "away": 30.39
+          }
+        },
+        {
+          "id": 32,
+          "name": "Betano",
+          "decimal": {
+            "home": 2.3,
+            "draw": 3.35,
+            "away": 3.15
+          },
+          "implied": {
+            "home": 41.38,
+            "draw": 28.41,
+            "away": 30.21
+          }
+        },
+        {
+          "id": 9,
+          "name": "Dafabet",
+          "decimal": {
+            "home": 2.3,
+            "draw": 3.35,
+            "away": 3.15
+          },
+          "implied": {
+            "home": 41.38,
+            "draw": 28.41,
+            "away": 30.21
+          }
+        }
+      ]
+    },
+    "1557392": {
+      "fixtureId": 1557392,
+      "fixtureDate": "2026-09-05T16:30:00+00:00",
+      "market": "Match Winner",
+      "betId": 1,
+      "capturedAt": "2026-08-29T20:41:38.853Z",
+      "apiUpdatedAt": "2026-08-29T17:54:16+00:00",
+      "sourceCount": 11,
+      "locked": false,
+      "consensus": {
+        "draw": 26,
+        "home": 24,
+        "away": 50
+      },
+      "bookmakers": [
+        {
+          "id": 7,
+          "name": "William Hill",
+          "decimal": {
+            "home": 3.9,
+            "draw": 3.5,
+            "away": 1.85
+          },
+          "implied": {
+            "home": 23.68,
+            "draw": 26.39,
+            "away": 49.93
+          }
+        },
+        {
+          "id": 8,
+          "name": "Bet365",
+          "decimal": {
+            "home": 4,
+            "draw": 3.7,
+            "away": 1.83
+          },
+          "implied": {
+            "home": 23.44,
+            "draw": 25.34,
+            "away": 51.23
+          }
+        },
+        {
+          "id": 2,
+          "name": "Marathonbet",
+          "decimal": {
+            "home": 4.1,
+            "draw": 3.74,
+            "away": 1.92
+          },
+          "implied": {
+            "home": 23.63,
+            "draw": 25.91,
+            "away": 50.46
+          }
+        },
+        {
+          "id": 16,
+          "name": "Unibet",
+          "decimal": {
+            "home": 4.35,
+            "draw": 3.7,
+            "away": 1.77
+          },
+          "implied": {
+            "home": 21.58,
+            "draw": 25.37,
+            "away": 53.04
+          }
+        },
+        {
+          "id": 3,
+          "name": "Betfair",
+          "decimal": {
+            "home": 3.9,
+            "draw": 3.75,
+            "away": 1.85
+          },
+          "implied": {
+            "home": 24.11,
+            "draw": 25.07,
+            "away": 50.82
+          }
+        },
+        {
+          "id": 36,
+          "name": "BetVictor",
+          "decimal": {
+            "home": 3.9,
+            "draw": 3.6,
+            "away": 1.87
+          },
+          "implied": {
+            "home": 23.99,
+            "draw": 25.99,
+            "away": 50.03
+          }
+        },
+        {
+          "id": 4,
+          "name": "Pinnacle",
+          "decimal": {
+            "home": 3.97,
+            "draw": 3.64,
+            "away": 1.9
+          },
+          "implied": {
+            "home": 23.92,
+            "draw": 26.09,
+            "away": 49.99
+          }
+        },
+        {
+          "id": 5,
+          "name": "SBO",
+          "decimal": {
+            "home": 3.5,
+            "draw": 3.22,
+            "away": 1.88
+          },
+          "implied": {
+            "home": 25.33,
+            "draw": 27.53,
+            "away": 47.15
+          }
+        },
+        {
+          "id": 11,
+          "name": "1xBet",
+          "decimal": {
+            "home": 4.16,
+            "draw": 3.8,
+            "away": 1.95
+          },
+          "implied": {
+            "home": 23.65,
+            "draw": 25.89,
+            "away": 50.46
+          }
+        },
+        {
+          "id": 32,
+          "name": "Betano",
+          "decimal": {
+            "home": 4.1,
+            "draw": 3.65,
+            "away": 1.88
+          },
+          "implied": {
+            "home": 23.23,
+            "draw": 26.1,
+            "away": 50.67
+          }
+        },
+        {
+          "id": 9,
+          "name": "Dafabet",
+          "decimal": {
+            "home": 4,
+            "draw": 3.65,
+            "away": 1.9
+          },
+          "implied": {
+            "home": 23.8,
+            "draw": 26.09,
+            "away": 50.11
+          }
+        }
+      ]
+    },
+    "1557393": {
+      "fixtureId": 1557393,
+      "fixtureDate": "2026-09-04T19:00:00+00:00",
+      "market": "Match Winner",
+      "betId": 1,
+      "capturedAt": "2026-08-29T20:41:36.464Z",
+      "apiUpdatedAt": "2026-08-29T17:54:16+00:00",
+      "sourceCount": 11,
+      "locked": false,
+      "consensus": {
+        "draw": 23,
+        "home": 19,
+        "away": 58
+      },
+      "bookmakers": [
+        {
+          "id": 7,
+          "name": "William Hill",
+          "decimal": {
+            "home": 4.6,
+            "draw": 4.2,
+            "away": 1.62
+          },
+          "implied": {
+            "home": 20.26,
+            "draw": 22.19,
+            "away": 57.54
+          }
+        },
+        {
+          "id": 8,
+          "name": "Bet365",
+          "decimal": {
+            "home": 5.25,
+            "draw": 4,
+            "away": 1.6
+          },
+          "implied": {
+            "home": 17.88,
+            "draw": 23.46,
+            "away": 58.66
+          }
+        },
+        {
+          "id": 2,
+          "name": "Marathonbet",
+          "decimal": {
+            "home": 5,
+            "draw": 4.45,
+            "away": 1.65
+          },
+          "implied": {
+            "home": 19.4,
+            "draw": 21.8,
+            "away": 58.8
+          }
+        },
+        {
+          "id": 16,
+          "name": "Unibet",
+          "decimal": {
+            "home": 5.2,
+            "draw": 4,
+            "away": 1.61
+          },
+          "implied": {
+            "home": 18.08,
+            "draw": 23.51,
+            "away": 58.41
+          }
+        },
+        {
+          "id": 3,
+          "name": "Betfair",
+          "decimal": {
+            "home": 5,
+            "draw": 4.2,
+            "away": 1.57
+          },
+          "implied": {
+            "home": 18.6,
+            "draw": 22.15,
+            "away": 59.25
+          }
+        },
+        {
+          "id": 36,
+          "name": "BetVictor",
+          "decimal": {
+            "home": 4.8,
+            "draw": 4.1,
+            "away": 1.6
+          },
+          "implied": {
+            "home": 19.34,
+            "draw": 22.64,
+            "away": 58.02
+          }
+        },
+        {
+          "id": 4,
+          "name": "Pinnacle",
+          "decimal": {
+            "home": 4.6,
+            "draw": 4.45,
+            "away": 1.63
+          },
+          "implied": {
+            "home": 20.59,
+            "draw": 21.29,
+            "away": 58.12
+          }
+        },
+        {
+          "id": 5,
+          "name": "SBO",
+          "decimal": {
+            "home": 4.47,
+            "draw": 3.86,
+            "away": 1.55
+          },
+          "implied": {
+            "home": 19.83,
+            "draw": 22.97,
+            "away": 57.2
+          }
+        },
+        {
+          "id": 11,
+          "name": "1xBet",
+          "decimal": {
+            "home": 5.07,
+            "draw": 4.51,
+            "away": 1.68
+          },
+          "implied": {
+            "home": 19.45,
+            "draw": 21.86,
+            "away": 58.69
+          }
+        },
+        {
+          "id": 32,
+          "name": "Betano",
+          "decimal": {
+            "home": 4.8,
+            "draw": 4.25,
+            "away": 1.65
+          },
+          "implied": {
+            "home": 19.85,
+            "draw": 22.42,
+            "away": 57.74
+          }
+        },
+        {
+          "id": 9,
+          "name": "Dafabet",
+          "decimal": {
+            "home": 5,
+            "draw": 4.3,
+            "away": 1.63
+          },
+          "implied": {
+            "home": 19.12,
+            "draw": 22.23,
+            "away": 58.65
+          }
+        }
+      ]
+    },
+    "1557394": {
+      "fixtureId": 1557394,
+      "fixtureDate": "2026-09-05T14:00:00+00:00",
+      "market": "Match Winner",
+      "betId": 1,
+      "capturedAt": "2026-08-29T20:41:37.499Z",
+      "apiUpdatedAt": "2026-08-29T17:54:16+00:00",
+      "sourceCount": 11,
+      "locked": false,
+      "consensus": {
+        "draw": 14,
+        "away": 8,
+        "home": 78
+      },
+      "bookmakers": [
+        {
+          "id": 7,
+          "name": "William Hill",
+          "decimal": {
+            "home": 1.22,
+            "draw": 6.5,
+            "away": 11
+          },
+          "implied": {
+            "home": 77.01,
+            "draw": 14.45,
+            "away": 8.54
+          }
+        },
+        {
+          "id": 8,
+          "name": "Bet365",
+          "decimal": {
+            "home": 1.22,
+            "draw": 7.5,
+            "away": 10
+          },
+          "implied": {
+            "home": 77.84,
+            "draw": 12.66,
+            "away": 9.5
+          }
+        },
+        {
+          "id": 2,
+          "name": "Marathonbet",
+          "decimal": {
+            "home": 1.22,
+            "draw": 7.4,
+            "away": 13
+          },
+          "implied": {
+            "home": 79.45,
+            "draw": 13.1,
+            "away": 7.46
+          }
+        },
+        {
+          "id": 16,
+          "name": "Unibet",
+          "decimal": {
+            "home": 1.19,
+            "draw": 7,
+            "away": 13
+          },
+          "implied": {
+            "home": 79.27,
+            "draw": 13.48,
+            "away": 7.26
+          }
+        },
+        {
+          "id": 3,
+          "name": "Betfair",
+          "decimal": {
+            "home": 1.17,
+            "draw": 7,
+            "away": 13
+          },
+          "implied": {
+            "home": 79.55,
+            "draw": 13.3,
+            "away": 7.16
+          }
+        },
+        {
+          "id": 36,
+          "name": "BetVictor",
+          "decimal": {
+            "home": 1.18,
+            "draw": 7,
+            "away": 12
+          },
+          "implied": {
+            "home": 78.93,
+            "draw": 13.31,
+            "away": 7.76
+          }
+        },
+        {
+          "id": 4,
+          "name": "Pinnacle",
+          "decimal": {
+            "home": 1.2,
+            "draw": 7.35,
+            "away": 10.94
+          },
+          "implied": {
+            "home": 78.56,
+            "draw": 12.83,
+            "away": 8.62
+          }
+        },
+        {
+          "id": 5,
+          "name": "SBO",
+          "decimal": {
+            "home": 1.2,
+            "draw": 5.9,
+            "away": 8.68
+          },
+          "implied": {
+            "home": 74.54,
+            "draw": 15.16,
+            "away": 10.3
+          }
+        },
+        {
+          "id": 11,
+          "name": "1xBet",
+          "decimal": {
+            "home": 1.24,
+            "draw": 7.5,
+            "away": 13.2
+          },
+          "implied": {
+            "home": 79.41,
+            "draw": 13.13,
+            "away": 7.46
+          }
+        },
+        {
+          "id": 32,
+          "name": "Betano",
+          "decimal": {
+            "home": 1.23,
+            "draw": 6.7,
+            "away": 11
+          },
+          "implied": {
+            "home": 77.2,
+            "draw": 14.17,
+            "away": 8.63
+          }
+        },
+        {
+          "id": 9,
+          "name": "Dafabet",
+          "decimal": {
+            "home": 1.23,
+            "draw": 7,
+            "away": 11
+          },
+          "implied": {
+            "home": 77.67,
+            "draw": 13.65,
+            "away": 8.68
+          }
+        }
+      ]
+    },
+    "1557395": {
+      "fixtureId": 1557395,
+      "fixtureDate": "2026-09-05T11:30:00+00:00",
+      "market": "Match Winner",
+      "betId": 1,
+      "capturedAt": "2026-08-29T20:41:36.809Z",
+      "apiUpdatedAt": "2026-08-29T17:54:16+00:00",
+      "sourceCount": 11,
+      "locked": false,
+      "consensus": {
+        "away": 33,
+        "home": 41,
+        "draw": 26
+      },
+      "bookmakers": [
+        {
+          "id": 7,
+          "name": "William Hill",
+          "decimal": {
+            "home": 2.3,
+            "draw": 3.5,
+            "away": 2.8
+          },
+          "implied": {
+            "home": 40.35,
+            "draw": 26.51,
+            "away": 33.14
+          }
+        },
+        {
+          "id": 8,
+          "name": "Bet365",
+          "decimal": {
+            "home": 2.25,
+            "draw": 3.5,
+            "away": 2.88
+          },
+          "implied": {
+            "home": 41.25,
+            "draw": 26.52,
+            "away": 32.23
+          }
+        },
+        {
+          "id": 2,
+          "name": "Marathonbet",
+          "decimal": {
+            "home": 2.38,
+            "draw": 3.74,
+            "away": 2.91
+          },
+          "implied": {
+            "home": 40.75,
+            "draw": 25.93,
+            "away": 33.32
+          }
+        },
+        {
+          "id": 16,
+          "name": "Unibet",
+          "decimal": {
+            "home": 2.3,
+            "draw": 3.6,
+            "away": 2.85
+          },
+          "implied": {
+            "home": 40.88,
+            "draw": 26.12,
+            "away": 32.99
+          }
+        },
+        {
+          "id": 3,
+          "name": "Betfair",
+          "decimal": {
+            "home": 2.3,
+            "draw": 3.75,
+            "away": 2.75
+          },
+          "implied": {
+            "home": 40.82,
+            "draw": 25.04,
+            "away": 34.14
+          }
+        },
+        {
+          "id": 36,
+          "name": "BetVictor",
+          "decimal": {
+            "home": 2.25,
+            "draw": 3.7,
+            "away": 2.8
+          },
+          "implied": {
+            "home": 41.46,
+            "draw": 25.22,
+            "away": 33.32
+          }
+        },
+        {
+          "id": 4,
+          "name": "Pinnacle",
+          "decimal": {
+            "home": 2.33,
+            "draw": 3.67,
+            "away": 2.86
+          },
+          "implied": {
+            "home": 40.82,
+            "draw": 25.92,
+            "away": 33.26
+          }
+        },
+        {
+          "id": 5,
+          "name": "SBO",
+          "decimal": {
+            "home": 2.1,
+            "draw": 3.35,
+            "away": 2.8
+          },
+          "implied": {
+            "home": 42.07,
+            "draw": 26.37,
+            "away": 31.55
+          }
+        },
+        {
+          "id": 11,
+          "name": "1xBet",
+          "decimal": {
+            "home": 2.41,
+            "draw": 3.8,
+            "away": 2.96
+          },
+          "implied": {
+            "home": 40.84,
+            "draw": 25.9,
+            "away": 33.25
+          }
+        },
+        {
+          "id": 32,
+          "name": "Betano",
+          "decimal": {
+            "home": 2.35,
+            "draw": 3.6,
+            "away": 2.9
+          },
+          "implied": {
+            "home": 40.6,
+            "draw": 26.5,
+            "away": 32.9
+          }
+        },
+        {
+          "id": 9,
+          "name": "Dafabet",
+          "decimal": {
+            "home": 2.3,
+            "draw": 3.65,
+            "away": 2.95
+          },
+          "implied": {
+            "home": 41.5,
+            "draw": 26.15,
+            "away": 32.35
+          }
+        }
+      ]
+    },
+    "1557396": {
+      "fixtureId": 1557396,
+      "fixtureDate": "2026-09-05T14:00:00+00:00",
+      "market": "Match Winner",
+      "betId": 1,
+      "capturedAt": "2026-08-29T20:41:38.501Z",
+      "apiUpdatedAt": "2026-08-29T17:54:16+00:00",
+      "sourceCount": 11,
+      "locked": false,
+      "consensus": {
+        "away": 37,
+        "home": 35,
+        "draw": 28
+      },
+      "bookmakers": [
+        {
+          "id": 7,
+          "name": "William Hill",
+          "decimal": {
+            "home": 2.75,
+            "draw": 3.25,
+            "away": 2.5
+          },
+          "implied": {
+            "home": 33.94,
+            "draw": 28.72,
+            "away": 37.34
+          }
+        },
+        {
+          "id": 8,
+          "name": "Bet365",
+          "decimal": {
+            "home": 2.62,
+            "draw": 3.25,
+            "away": 2.55
+          },
+          "implied": {
+            "home": 35.29,
+            "draw": 28.45,
+            "away": 36.26
+          }
+        },
+        {
+          "id": 2,
+          "name": "Marathonbet",
+          "decimal": {
+            "home": 2.8,
+            "draw": 3.44,
+            "away": 2.61
+          },
+          "implied": {
+            "home": 34.64,
+            "draw": 28.2,
+            "away": 37.16
+          }
+        },
+        {
+          "id": 16,
+          "name": "Unibet",
+          "decimal": {
+            "home": 2.85,
+            "draw": 3.15,
+            "away": 2.5
+          },
+          "implied": {
+            "home": 32.84,
+            "draw": 29.72,
+            "away": 37.44
+          }
+        },
+        {
+          "id": 3,
+          "name": "Betfair",
+          "decimal": {
+            "home": 2.7,
+            "draw": 3.4,
+            "away": 2.45
+          },
+          "implied": {
+            "home": 34.53,
+            "draw": 27.42,
+            "away": 38.05
+          }
+        },
+        {
+          "id": 36,
+          "name": "BetVictor",
+          "decimal": {
+            "home": 2.7,
+            "draw": 3.25,
+            "away": 2.55
+          },
+          "implied": {
+            "home": 34.61,
+            "draw": 28.75,
+            "away": 36.64
+          }
+        },
+        {
+          "id": 4,
+          "name": "Pinnacle",
+          "decimal": {
+            "home": 2.7,
+            "draw": 3.45,
+            "away": 2.57
+          },
+          "implied": {
+            "home": 35.3,
+            "draw": 27.62,
+            "away": 37.08
+          }
+        },
+        {
+          "id": 5,
+          "name": "SBO",
+          "decimal": {
+            "home": 2.49,
+            "draw": 3.05,
+            "away": 2.49
+          },
+          "implied": {
+            "home": 35.51,
+            "draw": 28.99,
+            "away": 35.51
+          }
+        },
+        {
+          "id": 11,
+          "name": "1xBet",
+          "decimal": {
+            "home": 2.84,
+            "draw": 3.49,
+            "away": 2.65
+          },
+          "implied": {
+            "home": 34.66,
+            "draw": 28.2,
+            "away": 37.14
+          }
+        },
+        {
+          "id": 32,
+          "name": "Betano",
+          "decimal": {
+            "home": 2.7,
+            "draw": 3.35,
+            "away": 2.62
+          },
+          "implied": {
+            "home": 35.25,
+            "draw": 28.41,
+            "away": 36.33
+          }
+        },
+        {
+          "id": 9,
+          "name": "Dafabet",
+          "decimal": {
+            "home": 2.7,
+            "draw": 3.35,
+            "away": 2.6
+          },
+          "implied": {
+            "home": 35.16,
+            "draw": 28.34,
+            "away": 36.51
+          }
+        }
+      ]
+    }
+  }
+}

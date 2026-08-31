@@ -57,6 +57,63 @@ async function readJsonIfExists(filePath, fallback) {
     }
 }
 
+function countOddsFixtures(oddsJson) {
+    return Object.keys(oddsJson?.fixtures ?? {}).length;
+}
+
+async function fetchLiveOddsJson() {
+    if (season.isArchived) return null;
+
+    const url = `https://timelinefootball.com/data/leagues/${season.leagueKey}/${season.seasonPath}/odds.json`;
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 8000);
+
+    try {
+        const res = await fetch(url, { signal: controller.signal });
+        if (!res.ok) {
+            console.warn(`Live odds hydration skipped: ${res.status} ${res.statusText}`);
+            return null;
+        }
+
+        const oddsJson = await res.json();
+        return countOddsFixtures(oddsJson) ? oddsJson : null;
+    } catch (err) {
+        console.warn(`Live odds hydration skipped: ${err?.message ?? err}`);
+        return null;
+    } finally {
+        clearTimeout(timeout);
+    }
+}
+
+async function loadOddsForPrerender() {
+    const localOdds = await readJsonIfExists(ODDS_PATH, null);
+    if (countOddsFixtures(localOdds)) return localOdds;
+
+    const liveOdds = await fetchLiveOddsJson();
+    if (liveOdds) {
+        console.log(`Hydrated odds from live site: ${countOddsFixtures(liveOdds)} fixtures`);
+        return liveOdds;
+    }
+
+    return { fixtures: {} };
+}
+
+async function writeDistOdds(oddsJson) {
+    if (!countOddsFixtures(oddsJson)) return;
+
+    const distOddsPath = path.join(
+        ROOT,
+        "dist",
+        "data",
+        "leagues",
+        season.leagueKey,
+        season.seasonPath,
+        "odds.json"
+    );
+    await fs.mkdir(path.dirname(distOddsPath), { recursive: true });
+    await fs.writeFile(distOddsPath, JSON.stringify(oddsJson, null, 2), "utf8");
+}
+
 function attachMatchData(matches, oddsByFixture, round, seasonPath) {
     return (matches || []).map((match) => {
         const odds = oddsByFixture?.[String(match.id)];
@@ -1818,8 +1875,9 @@ async function main() {
         path.join(ROOT, "src", "data", "leagues", season.leagueKey, season.sourceDataSeason, "players.json"),
         {}
     );
-    const oddsJson = await readJsonIfExists(ODDS_PATH, { fixtures: {} });
+    const oddsJson = await loadOddsForPrerender();
     const oddsByFixture = oddsJson?.fixtures ?? {};
+    await writeDistOdds(oddsJson);
 
     const rounds = await listMatchdayRounds();
     if (!rounds.length) {
