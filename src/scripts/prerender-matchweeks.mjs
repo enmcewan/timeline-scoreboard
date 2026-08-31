@@ -265,12 +265,189 @@ function renderFormSequence(formStr = "") {
     }).join("");
 }
 
-function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, matches, teamSeason, updatedLabel }) {
+function ordinal(n) {
+    const num = Number(n);
+    if (!Number.isFinite(num)) return "-";
+    const mod100 = num % 100;
+    if (mod100 >= 11 && mod100 <= 13) return `${num}th`;
+    switch (num % 10) {
+        case 1: return `${num}st`;
+        case 2: return `${num}nd`;
+        case 3: return `${num}rd`;
+        default: return `${num}th`;
+    }
+}
+
+function parsePossession(value) {
+    if (value == null) return null;
+    const n = Number(String(value).replace("%", ""));
+    return Number.isFinite(n) ? n : null;
+}
+
+function isCountedVarEvent(evt) {
+    const kind = String(evt?.kind || "").toLowerCase();
+    return kind.startsWith("var-") && kind !== "var-goal-confirmed" && kind !== "var-pen-confirmed";
+}
+
+function rankMetric(rows, key, direction = "desc") {
+    const sorted = rows
+        .filter((row) => Number.isFinite(row[key]))
+        .sort((a, b) => {
+            const diff = direction === "asc" ? a[key] - b[key] : b[key] - a[key];
+            return diff || a.name.localeCompare(b.name);
+        });
+
+    const ranks = new Map();
+    let previousValue = null;
+    let previousRank = 0;
+
+    sorted.forEach((row, index) => {
+        const value = row[key];
+        const rank = previousValue === value ? previousRank : index + 1;
+        ranks.set(row.slug, rank);
+        previousValue = value;
+        previousRank = rank;
+    });
+
+    return ranks;
+}
+
+function buildLeaguePerformance({ roundsData, teamsBySlug }) {
+    const rows = Object.entries(teamsBySlug).map(([slug, team]) => ({
+        slug,
+        name: team.name || slug,
+        played: 0,
+        goalsFor: 0,
+        goalsAgainst: 0,
+        xg: 0,
+        shots: 0,
+        possTotal: 0,
+        possCount: 0,
+        yellowCards: 0,
+        redCards: 0,
+        varEvents: 0,
+    }));
+    const bySlug = new Map(rows.map((row) => [row.slug, row]));
+
+    function addSide(match, side, slug, goalsFor, goalsAgainst) {
+        const row = bySlug.get(slug);
+        if (!row) return;
+
+        const stats = match.statistics?.[side] || {};
+        const poss = parsePossession(stats.poss);
+
+        row.played += 1;
+        row.goalsFor += Number(goalsFor) || 0;
+        row.goalsAgainst += Number(goalsAgainst) || 0;
+        row.xg += Number(stats.xg) || 0;
+        row.shots += Number(stats.shots) || 0;
+        row.yellowCards += Number(stats.yc) || 0;
+        row.redCards += Number(stats.rc) || 0;
+
+        if (poss != null) {
+            row.possTotal += poss;
+            row.possCount += 1;
+        }
+    }
+
+    for (const md of roundsData || []) {
+        for (const match of md.matches || []) {
+            const state = String(match.status?.state || "").toUpperCase();
+            if (!isCompletedState(state)) continue;
+
+            const homeSlug = match.homeTeamId;
+            const awaySlug = match.awayTeamId;
+            const homeGoals = Number(match?.score?.home ?? 0);
+            const awayGoals = Number(match?.score?.away ?? 0);
+
+            addSide(match, "home", homeSlug, homeGoals, awayGoals);
+            addSide(match, "away", awaySlug, awayGoals, homeGoals);
+
+            for (const evt of match.events || []) {
+                if (!isCountedVarEvent(evt)) continue;
+                const side = String(evt.team || "").toLowerCase();
+                const slugForEvent = side === "home" ? homeSlug : side === "away" ? awaySlug : null;
+                const row = slugForEvent ? bySlug.get(slugForEvent) : null;
+                if (row) row.varEvents += 1;
+            }
+        }
+    }
+
+    for (const row of rows) {
+        row.possession = row.possCount ? row.possTotal / row.possCount : null;
+    }
+
+    const rowsWithPossession = rows.filter((row) => row.possession != null);
+    const ranks = {
+        goalsFor: rankMetric(rows, "goalsFor", "desc"),
+        goalsAgainst: rankMetric(rows, "goalsAgainst", "asc"),
+        xg: rankMetric(rows, "xg", "desc"),
+        shots: rankMetric(rows, "shots", "desc"),
+        possession: rankMetric(rowsWithPossession, "possession", "desc"),
+        yellowCards: rankMetric(rows, "yellowCards", "asc"),
+        redCards: rankMetric(rows, "redCards", "asc"),
+        varEvents: rankMetric(rows, "varEvents", "desc"),
+    };
+
+    const out = {};
+    for (const row of rows) {
+        out[row.slug] = {
+            rows: [
+                { label: "Goals scored", value: row.goalsFor, rank: ranks.goalsFor.get(row.slug) },
+                { label: "Goals conceded", value: row.goalsAgainst, rank: ranks.goalsAgainst.get(row.slug) },
+                { label: "xG", value: row.played ? row.xg.toFixed(1) : "-", rank: ranks.xg.get(row.slug) },
+                { label: "Shots", value: row.shots, rank: ranks.shots.get(row.slug) },
+                { label: "Possession", value: row.possession == null ? "-" : `${Math.round(row.possession)}%`, rank: ranks.possession.get(row.slug) },
+                { label: "Yellow cards", value: row.yellowCards, rank: ranks.yellowCards.get(row.slug) },
+                { label: "Red cards", value: row.redCards, rank: ranks.redCards.get(row.slug) },
+                { label: "VAR interventions", value: row.varEvents, rank: ranks.varEvents.get(row.slug), note: "Excludes goals and penalties confirmed" },
+            ],
+        };
+    }
+
+    return out;
+}
+
+function buildLeaguePerformanceHtml(team, leaguePerformance) {
+    const rows = leaguePerformance?.rows || [];
+    if (!rows.length) return "";
+
+    return `
+        <section class="league-performance" aria-label="${escapeAttr(team.name)} league performance rankings">
+            <h2 class="text-center">League Statistics</h2>
+            <div class="table-scroll" role="region" aria-label="${escapeAttr(team.name)} league performance table" tabindex="0">
+                <table class="league-performance-table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Metric</th>
+                        <th scope="col" class="text-center">${escapeAttr(team.name)}</th>
+                        <th scope="col" class="text-center">EPL Rank</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    ${rows.map((row) => `
+                        <tr${row.note ? ` title="${escapeAttr(row.note)}"` : ""}>
+                            <td>${escapeAttr(row.label)}</td>
+                            <td class="text-center"><strong>${escapeAttr(row.value)}</strong></td>
+                            <td class="text-center"><strong>${ordinal(row.rank)}</strong></td>
+                        </tr>
+                    `.trim()).join("\n")}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    `.trim();
+}
+
+function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, matches, teamSeason, leaguePerformance, updatedLabel }) {
     const all = standingsRow?.all || null;
 
     const summary = standingsRow && all
         ? `${team.name} are ${standingsRow.rank}th in the EPL ${seasonLabel} table with ${standingsRow.points} points from ${all.p} matches (${all.w}W-${all.d}D-${all.l}L) and a goal difference of ${standingsRow.gd >= 0 ? "+" : ""}${standingsRow.gd}.`
         : `${team.name} EPL ${seasonLabel} season page with results and match timelines by matchweek.`;
+    const ratingByFixtureId = new Map(
+        (teamSeason?.matches || []).map((m) => [String(m.fixtureId), m.rating])
+    );
 
     const rowsHtml = (matches || []).map((m) => {
         const date = m.kickoff ? formatISODate(m.kickoff) : "";
@@ -278,6 +455,8 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
         const state = String(m.state || "").toUpperCase();
         const hasStarted = !["NS", "TBD", "PST", "CANC", "ABD", "SUSP", "INT"].includes(state);
         let score = hasStarted && m.scoreFor != null && m.scoreAgainst != null ? `${m.scoreFor}–${m.scoreAgainst}` : "–";
+        const rating = ratingByFixtureId.get(String(m.fixtureId));
+        const ratingText = typeof rating === "number" ? Math.round(rating) : "–";
 
         if (hasStarted && !m.isHome) score = `${m.scoreAgainst}–${m.scoreFor}`; // reverse for away matches
 
@@ -286,6 +465,7 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
                     <td class="text-center">${date}</td>
                     <td>${vsAt} <strong><a class="tbl-link" href="/epl/${seasonPath}/team/${m.opponentSlug}/">${m.opponentName} &#9655;</a></strong></td>
                     <td class="text-center"><strong>${score}</strong></td>
+                    <td class="text-center"><strong>${ratingText}</strong></td>
                     <td class="text-center">${escapeAttr(m.state)}</td>
                     <td class="text-center"><a class="tbl-link" href="${m.href}">Timeline &#9655;</a></td>
                 </tr>
@@ -309,12 +489,16 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
     ` : "";
 
     const seasonSummaryHtml = teamSeason ? `
-        <section class="team-season-summary">
+        <section class="team-season-performance">
+            <h2 class="text-center">League Performance</h2>
+            <div class="team-season-summary">
             <div title="Average Rating"><span class="muted">Avg Rating: </span><strong>${teamSeason.summary.avgRating ?? "-"}</strong></div>
             <div title="Average Match Control Index"><span class="muted">Avg mX: </span><strong>${teamSeason.summary.avgMx ?? "-"}</strong></div>
             <div title="Average Execution Index"><span class="muted">Avg eX: </span><strong>${teamSeason.summary.avgEx ?? "-"}</strong></div>
+            </div>
         </section>
     ` : "";
+    const leaguePerformanceHtml = buildLeaguePerformanceHtml(team, leaguePerformance);
 
     const chartId = `team-trend-chart-${slug}`;
 
@@ -660,6 +844,7 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
         ${venueHtml}
 
         ${standingsRow && all ? `
+            <h2 class="text-center">League Summary</h2>
             <div class="team-strip" role="group" aria-label="Team table summary">
                 <div><span class="muted">Position</span>
                     <strong>
@@ -674,6 +859,7 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
             </div>
         ` : ""}
 
+        ${leaguePerformanceHtml}
         ${seasonSummaryHtml}
         ${teamChartHtml}
 
@@ -685,6 +871,7 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
                     <th scope="col">Date</th>
                     <th scope="col">Opponent</th>
                     <th scope="col">Score</th>
+                    <th scope="col">Rating</th>
                     <th scope="col">Status</th>
                     <th scope="col">Match</th>
                 </tr>
@@ -1857,6 +2044,10 @@ async function main() {
         roundsData,
         teamsBySlug: teams
     });
+    const leaguePerformanceBySlug = buildLeaguePerformance({
+        roundsData,
+        teamsBySlug: teams
+    });
 
     // standings lookup
     const standingsByApiId = new Map(standingsRows.map(r => [r.teamApiId, r]));
@@ -1978,6 +2169,7 @@ async function main() {
             standingsRow,
             matches: matchesByTeam[slug] || [],
             teamSeason: teamSeasonBySlug[slug] || null,
+            leaguePerformance: leaguePerformanceBySlug[slug] || null,
             updatedLabel
         });
 
