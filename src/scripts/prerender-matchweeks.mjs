@@ -565,6 +565,8 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
 
         function rollingAvg(arr, windowSize = 5) {
             return arr.map((_, i) => {
+                if (typeof arr[i] !== "number" || !Number.isFinite(arr[i])) return null;
+
                 const start = Math.max(0, i - windowSize + 1);
                 const slice = arr
                     .slice(start, i + 1)
@@ -580,7 +582,8 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
         const resultColors = chartData.map(m => {
             if (m.result === "W") return "#16a34a";
             if (m.result === "D") return "#ca8a04";
-            return "#dc2626";
+            if (m.result === "L") return "#dc2626";
+            return "rgba(107, 114, 128, 0.35)";
         });
 
         const exBarColors = exDeltaVals.map(v => {
@@ -602,8 +605,13 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
                     const m = chartData[i];
                     const lines = [
                         (m.homeAway === "H" ? "vs " : "@ ") + (m.opponentName || m.opponent),
-                        "Score: " + m.score + " (" + m.result + ")"
                     ];
+
+                    if (m.result) {
+                        lines.push("Score: " + m.score + " (" + m.result + ")");
+                    } else {
+                        lines.push("Status: " + (m.state || "NS"));
+                    }
 
                     if (typeof m.rating === "number") lines.push("Rating: " + Math.round(m.rating));
                     if (typeof m.mx === "number") lines.push("mX: " + Math.round(m.mx));
@@ -1639,26 +1647,26 @@ function buildTeamSeason({ roundsData, teamsBySlug }) {
 
             const state = String(match.status?.state || "").toUpperCase();
 
-            // ONLY completed matches count for team season stats/chart data
-            if (!isCompletedState(state)) continue;
-
             const homeSlug = match.homeTeamId;
             const awaySlug = match.awayTeamId;
 
             if (!out[homeSlug] || !out[awaySlug]) continue;
 
+            const isCompleted = isCompletedState(state);
             const homeGoals = Number(match?.score?.home ?? 0);
             const awayGoals = Number(match?.score?.away ?? 0);
 
             const homeResult =
+                !isCompleted ? null :
                 homeGoals > awayGoals ? "W" :
                     homeGoals < awayGoals ? "L" : "D";
 
             const awayResult =
+                !isCompleted ? null :
                 awayGoals > homeGoals ? "W" :
                     awayGoals < homeGoals ? "L" : "D";
 
-            const hasStats = !!(match.statistics?.home && match.statistics?.away);
+            const hasStats = isCompleted && !!(match.statistics?.home && match.statistics?.away);
 
             const statsH = match.statistics?.home ?? {};
             const statsA = match.statistics?.away ?? {};
@@ -1695,7 +1703,8 @@ function buildTeamSeason({ roundsData, teamsBySlug }) {
                 opponent: awaySlug,
                 opponentName: teamsBySlug[awaySlug]?.name ?? awaySlug,
                 homeAway: "H",
-                score: `${homeGoals}–${awayGoals}`,
+                score: isCompleted ? `${homeGoals}–${awayGoals}` : "–",
+                state,
                 result: homeResult,
                 mx: pe ? pe.homePerf : null,
                 ex: pe ? pe.homeExec : null,
@@ -1715,7 +1724,8 @@ function buildTeamSeason({ roundsData, teamsBySlug }) {
                 opponent: homeSlug,
                 opponentName: teamsBySlug[homeSlug]?.name ?? homeSlug,
                 homeAway: "A",
-                score: `${awayGoals}–${homeGoals}`,
+                score: isCompleted ? `${awayGoals}–${homeGoals}` : "–",
+                state,
                 result: awayResult,
                 mx: pe ? pe.awayPerf : null,
                 ex: pe ? pe.awayExec : null,
@@ -1747,7 +1757,9 @@ function buildTeamSeason({ roundsData, teamsBySlug }) {
         const exVals = [];
         const ratingVals = [];
 
-        for (const m of matches) {
+        const completedMatches = matches.filter((m) => m.result === "W" || m.result === "D" || m.result === "L");
+
+        for (const m of completedMatches) {
             if (m.result === "W") wins += 1;
             else if (m.result === "D") draws += 1;
             else if (m.result === "L") losses += 1;
@@ -1765,7 +1777,7 @@ function buildTeamSeason({ roundsData, teamsBySlug }) {
         }
 
         out[slug].summary = {
-            played: matches.length,
+            played: completedMatches.length,
             wins,
             draws,
             losses,
@@ -1776,7 +1788,7 @@ function buildTeamSeason({ roundsData, teamsBySlug }) {
             avgMx: averageOrNull(mxVals),
             avgEx: averageOrNull(exVals),
             avgRating: averageOrNull(ratingVals),
-            last5: matches.slice(-5).map((m) => m.result),
+            last5: completedMatches.slice(-5).map((m) => m.result),
 
             // TEMP DEBUG
             mxVals,
