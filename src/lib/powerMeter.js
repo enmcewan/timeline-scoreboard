@@ -217,7 +217,10 @@ export function computePerfExec(match, ctx) {
     // --- Performance / Match Control (mX) ---
     // Relative share + Absolute production hybrid
 
-    const hxg = safeNum(h.xg, 0), axg = safeNum(a.xg, 0);
+    const hxg = h.xg == null ? NaN : Number(h.xg);
+    const axg = a.xg == null ? NaN : Number(a.xg);
+    if (!Number.isFinite(hxg) || !Number.isFinite(axg)) return null;
+
     const hsotRaw = safeNum(h.sot, 0);
     const asotRaw = safeNum(a.sot, 0);
 

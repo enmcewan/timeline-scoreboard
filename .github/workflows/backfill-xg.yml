@@ -1,0 +1,114 @@
+name: Backfill EPL xG
+
+permissions:
+  contents: read
+
+on:
+  schedule:
+    # API-Sports can lag xG after matches; retry narrowly after weekend match windows.
+    - cron: "45 22 * * 0,1"
+    - cron: "45 6 * * 1,2"
+  workflow_dispatch:
+    inputs:
+      force_deploy:
+        description: "Deploy even if no xG values changed"
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  backfill-xg:
+    runs-on: ubuntu-latest
+    env:
+      TIMELINE_SEASON: 2026-27
+      SEASON_DATA_DIR: public/data/leagues/epl/2026-27
+      LIVE_SEASON_DATA_URL: https://timelinefootball.com/data/leagues/epl/2026-27
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Install
+        run: npm ci
+
+      - name: Hydrate live season data
+        run: |
+          mkdir -p "$SEASON_DATA_DIR/matchweeks"
+
+          for file in fixtures.raw.json events.raw.json standings.json odds.json; do
+            if curl -fsSL "$LIVE_SEASON_DATA_URL/$file" -o "$SEASON_DATA_DIR/$file"; then
+              echo "Hydrated $file from live site."
+            else
+              echo "Live $file unavailable; keeping repository copy."
+            fi
+          done
+
+          for round in $(seq 1 38); do
+            if curl -fsSL "$LIVE_SEASON_DATA_URL/matchweeks/$round.json" -o "$SEASON_DATA_DIR/matchweeks/$round.json"; then
+              echo "Hydrated matchweek $round."
+            else
+              echo "Live matchweek $round unavailable; keeping repository copy."
+            fi
+          done
+
+      - name: Capture matchweek baseline
+        run: |
+          mkdir -p .tmp
+          cp -R "$SEASON_DATA_DIR/matchweeks" .tmp/matchweeks-before
+
+      - name: Backfill missing xG
+        env:
+          APIFOOTBALL_KEY: ${{ secrets.APIFOOTBALL_KEY }}
+        run: npm run backfill:xg
+
+      - name: Check for xG changes
+        id: changes
+        env:
+          FORCE_DEPLOY: ${{ github.event.inputs.force_deploy }}
+        run: |
+          if [ "$FORCE_DEPLOY" = "true" ]; then
+            echo "should_deploy=1" >> "$GITHUB_OUTPUT"
+            echo "Reason: force_deploy set"
+            exit 0
+          fi
+
+          if diff -qr .tmp/matchweeks-before "$SEASON_DATA_DIR/matchweeks" >/dev/null; then
+            echo "should_deploy=0" >> "$GITHUB_OUTPUT"
+            echo "No xG changes; skipping build/deploy."
+          else
+            echo "should_deploy=1" >> "$GITHUB_OUTPUT"
+            echo "xG changed; building and deploying."
+          fi
+
+      - name: Build players cache
+        if: steps.changes.outputs.should_deploy == '1'
+        env:
+          APIFOOTBALL_KEY: ${{ secrets.APIFOOTBALL_KEY }}
+        run: node src/scripts/build-players-cache.mjs
+
+      - name: Build season context
+        if: steps.changes.outputs.should_deploy == '1'
+        run: npm run build:season-context
+
+      - name: Build
+        if: steps.changes.outputs.should_deploy == '1'
+        run: npm run build:prerender
+
+      - name: Verify prerender output exists
+        if: steps.changes.outputs.should_deploy == '1'
+        run: |
+          test -f dist/index.html
+          test -f dist/sitemap.xml
+          test -f dist/epl/2026-27/matchweek/1/index.html
+          test -f dist/epl/2026-27/table/index.html
+
+      - name: Deploy to Netlify (prod)
+        if: steps.changes.outputs.should_deploy == '1'
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        run: npx --yes --package netlify-cli@27.0.1 netlify deploy --dir dist --prod --site "$NETLIFY_SITE_ID" --no-build

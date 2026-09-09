@@ -377,6 +377,7 @@ function buildLeaguePerformance({ roundsData, teamsBySlug }) {
         goalsFor: 0,
         goalsAgainst: 0,
         xg: 0,
+        xgCount: 0,
         shots: 0,
         possTotal: 0,
         possCount: 0,
@@ -396,7 +397,10 @@ function buildLeaguePerformance({ roundsData, teamsBySlug }) {
         row.played += 1;
         row.goalsFor += Number(goalsFor) || 0;
         row.goalsAgainst += Number(goalsAgainst) || 0;
-        row.xg += Number(stats.xg) || 0;
+        if (Number.isFinite(Number(stats.xg))) {
+            row.xg += Number(stats.xg);
+            row.xgCount += 1;
+        }
         row.shots += Number(stats.shots) || 0;
         row.yellowCards += Number(stats.yc) || 0;
         row.redCards += Number(stats.rc) || 0;
@@ -435,10 +439,11 @@ function buildLeaguePerformance({ roundsData, teamsBySlug }) {
     }
 
     const rowsWithPossession = rows.filter((row) => row.possession != null);
+    const rowsWithXg = rows.filter((row) => row.xgCount > 0);
     const ranks = {
         goalsFor: rankMetric(rows, "goalsFor", "desc"),
         goalsAgainst: rankMetric(rows, "goalsAgainst", "asc"),
-        xg: rankMetric(rows, "xg", "desc"),
+        xg: rankMetric(rowsWithXg, "xg", "desc"),
         shots: rankMetric(rows, "shots", "desc"),
         possession: rankMetric(rowsWithPossession, "possession", "desc"),
         yellowCards: rankMetric(rows, "yellowCards", "asc"),
@@ -452,7 +457,7 @@ function buildLeaguePerformance({ roundsData, teamsBySlug }) {
             rows: [
                 { label: "Goals scored", value: row.goalsFor, rank: ranks.goalsFor.get(row.slug) },
                 { label: "Goals conceded", value: row.goalsAgainst, rank: ranks.goalsAgainst.get(row.slug) },
-                { label: "xG", value: row.played ? row.xg.toFixed(1) : "-", rank: ranks.xg.get(row.slug) },
+                { label: "xG", value: row.xgCount ? row.xg.toFixed(1) : "-", rank: ranks.xg.get(row.slug) },
                 { label: "Shots", value: row.shots, rank: ranks.shots.get(row.slug) },
                 { label: "Possession", value: row.possession == null ? "-" : `${Math.round(row.possession)}%`, rank: ranks.possession.get(row.slug) },
                 { label: "Yellow cards", value: row.yellowCards, rank: ranks.yellowCards.get(row.slug) },
@@ -486,7 +491,7 @@ function buildLeaguePerformanceHtml(team, leaguePerformance) {
                         <tr${row.note ? ` title="${escapeAttr(row.note)}"` : ""}>
                             <td>${escapeAttr(row.label)}</td>
                             <td class="text-center"><strong>${escapeAttr(row.value)}</strong></td>
-                            <td class="text-center"><strong>${ordinal(row.rank)}</strong></td>
+                            <td class="text-center"><strong>${row.rank == null ? "-" : ordinal(row.rank)}</strong></td>
                         </tr>
                     `.trim()).join("\n")}
                     </tbody>

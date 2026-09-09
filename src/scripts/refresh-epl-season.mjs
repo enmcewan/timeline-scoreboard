@@ -110,6 +110,11 @@ const toNum = (v, fallback = 0) => {
   return Number.isFinite(n) ? n : fallback;
 };
 
+const toNullableNum = (v) => {
+  const n = toNum(v, null);
+  return Number.isFinite(n) ? n : null;
+};
+
 function statsToMap(arr) {
   const m = {};
   for (const s of arr || []) m[s.type] = s.value;
@@ -118,9 +123,10 @@ function statsToMap(arr) {
 
 function normalizeTeamStats(statArray) {
   const m = statsToMap(statArray);
+  const xg = toNullableNum(m["expected_goals"]);
 
   return {
-    xg: Number(toNum(m["expected_goals"], 0).toFixed(2)),
+    xg: xg == null ? null : Number(xg.toFixed(2)),
     poss: m["Ball Possession"] ?? "0%",
     shots: toNum(m["Total Shots"], 0),
     sot: toNum(m["Shots on Goal"], 0),
@@ -526,12 +532,12 @@ async function main() {
         const stats = await fetchFixtureStatistics(fixtureId, homeApiId, awayApiId);
 
         if (stats) {
-          const prevHome = rebuiltMatch.statistics?.home ?? {};
-          const prevAway = rebuiltMatch.statistics?.away ?? {};
+          const eventHome = rebuiltMatch.statistics?.home ?? {};
+          const eventAway = rebuiltMatch.statistics?.away ?? {};
 
           rebuiltMatch.statistics = {
-            home: { ...stats.home, ...prevHome },
-            away: { ...stats.away, ...prevAway },
+            home: { ...eventHome, ...stats.home },
+            away: { ...eventAway, ...stats.away },
           };
         } else if (existingMatch?.statistics?.home?.xg != null && existingMatch?.statistics?.away?.xg != null) {
           console.warn(`No fresh stats for fixture ${fixtureId}; keeping existing match.`);

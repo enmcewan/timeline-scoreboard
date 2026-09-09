@@ -10,6 +10,7 @@
   "fetch:fixtures": "node src/scripts/fetch-fixtures.mjs",
   "fetch:events": "node src/scripts/fetch-events.byFixture.mjs",
   "fetch:odds": "node src/scripts/fetch-odds.epl.mjs",
+  "backfill:xg": "node src/scripts/backfill-missing-xg.mjs",
   "refresh:epl": "node src/scripts/refresh-epl-season.mjs",
   "refresh:epl:table": "node src/scripts/fetch-standings.epl.mjs",
   "refresh:epl2025": "node -e \"process.env.TIMELINE_SEASON='2025-26'; import('./src/scripts/refresh-epl-season.mjs')\"",
