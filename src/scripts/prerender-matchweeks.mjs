@@ -555,7 +555,7 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
             <h2 class="text-center">League Performance</h2>
             <div class="team-season-summary">
             <div title="Average Rating"><span class="muted">Avg Rating: </span><strong>${teamSeason.summary.avgRating ?? "-"}</strong></div>
-            <div title="Average Match Control Index"><span class="muted">Avg mX: </span><strong>${teamSeason.summary.avgMx ?? "-"}</strong></div>
+            <div title="Average Performance Index"><span class="muted">Avg pX: </span><strong>${teamSeason.summary.avgMx ?? "-"}</strong></div>
             <div title="Average Execution Index"><span class="muted">Avg eX: </span><strong>${teamSeason.summary.avgEx ?? "-"}</strong></div>
             </div>
         </section>
@@ -676,7 +676,7 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
                     }
 
                     if (typeof m.rating === "number") lines.push("Rating: " + Math.round(m.rating));
-                    if (typeof m.mx === "number") lines.push("mX: " + Math.round(m.mx));
+                    if (typeof m.mx === "number") lines.push("pX: " + Math.round(m.mx));
                     if (typeof m.ex === "number") {
                         const delta = Math.round(m.ex - 50);
                         lines.push("eX Δ: " + (delta >= 0 ? "+" : "") + delta);
@@ -818,7 +818,7 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
                     },
                     {
                         type: "line",
-                        label: "mX",
+                        label: "pX",
                         data: mxVals,
                         yAxisID: "y",
                         borderColor: "rgba(55, 65, 81, 0.65)",

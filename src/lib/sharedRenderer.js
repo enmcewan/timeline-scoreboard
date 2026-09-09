@@ -478,7 +478,7 @@ export function createRenderMatchCard({
                         <div class="pm-grid">
                             <!-- Perf row -->
                             <div class="pm-row">
-                                <div class="pm-row__name" title="Match Control Index">mX</div>
+                                <div class="pm-row__name" title="Performance Index">pX</div>
                                 <div class="pm-bar" role="img" aria-label="Performance ${pe ? pe.homePerf : "—"} out of 100">
                                     <div class="pm-bar__fill" style="width: ${pe ? pe.homePerf : 0}%;"></div>
                                 </div>
@@ -514,7 +514,7 @@ export function createRenderMatchCard({
                         <div class="pm-grid">
                             <!-- Perf row -->
                             <div class="pm-row">
-                                <div class="pm-row__name" title="Match Control Index">mX</div>
+                                <div class="pm-row__name" title="Performance Index">pX</div>
                                 <div class="pm-bar" role="img" aria-label="Performance ${pe ? pe.awayPerf : "—"} out of 100">
                                     <div class="pm-bar__fill" style="width: ${pe ? pe.awayPerf : 0}%;"></div>
                                 </div>

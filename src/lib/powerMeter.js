@@ -214,7 +214,7 @@ export function computePerfExec(match, ctx) {
     const h = st.home;
     const a = st.away;
 
-    // --- Performance / Match Control (mX) ---
+    // --- Performance Index (pX) ---
     // Relative share + Absolute production hybrid
 
     const hxg = h.xg == null ? NaN : Number(h.xg);
