@@ -1965,6 +1965,7 @@ async function main() {
         out = injectBeforeApp(out, navHtml);
 
         out = injectApp(out, appHtml);
+        out = stripAppScripts(out);
 
         const outDir = path.join(ROOT, "dist", "epl", String(seasonPath), "matchweek", String(round));
         await fs.mkdir(outDir, { recursive: true });
