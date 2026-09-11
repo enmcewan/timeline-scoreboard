@@ -19,6 +19,7 @@ const SEASON_DATA_DIR = path.join(
 );
 const FIXTURES_PATH = path.join(SEASON_DATA_DIR, "fixtures.raw.json");
 const OUT_PATH = path.join(SEASON_DATA_DIR, "events.raw.json");
+const MATCHWEEKS_DIR = path.join(SEASON_DATA_DIR, "matchweeks");
 
 const UPCOMING_WINDOW_HOURS = 6;
 const UPCOMING_WINDOW_MS = UPCOMING_WINDOW_HOURS * 60 * 60 * 1000;
@@ -69,6 +70,90 @@ async function readExistingEventsFile() {
   } catch {
     return [];
   }
+}
+
+async function readExistingMatchesByFixtureId() {
+  const byFixtureId = new Map();
+
+  try {
+    const files = await fs.readdir(MATCHWEEKS_DIR);
+    for (const file of files) {
+      if (!/^\d+\.json$/.test(file)) continue;
+
+      const txt = await fs.readFile(path.join(MATCHWEEKS_DIR, file), "utf8");
+      const json = JSON.parse(txt.replace(/^\uFEFF/, ""));
+
+      for (const match of json?.matches || []) {
+        byFixtureId.set(String(match.id), match);
+      }
+    }
+  } catch {
+    // no existing matchweek cache yet
+  }
+
+  return byFixtureId;
+}
+
+function isCompletedStatus(status) {
+  return new Set(["FT", "AET", "PEN"]).has(String(status || "").toUpperCase());
+}
+
+function fixtureScore(fx) {
+  return {
+    home: Number(fx?.goals?.home ?? 0),
+    away: Number(fx?.goals?.away ?? 0),
+  };
+}
+
+function matchScore(match) {
+  return {
+    home: Number(match?.score?.home ?? 0),
+    away: Number(match?.score?.away ?? 0),
+  };
+}
+
+function getIncompleteStartedRounds(fixtures, existingMatchesByFixtureId) {
+  const rounds = new Set();
+  const staleFixtures = [];
+
+  for (const fx of fixtures) {
+    const fixtureId = String(fx?.fixture?.id ?? "");
+    const round = parseMatchweekNumber(fx?.league?.round);
+    if (!fixtureId || !Number.isFinite(round)) continue;
+
+    const apiStatus = String(fx?.fixture?.status?.short ?? "").toUpperCase();
+    if (!isCompletedStatus(apiStatus)) continue;
+
+    const existing = existingMatchesByFixtureId.get(fixtureId);
+    const apiScore = fixtureScore(fx);
+    const localScore = matchScore(existing);
+    const localStatus = String(existing?.status?.state ?? "").toUpperCase();
+
+    const isStale =
+      !existing ||
+      !isCompletedStatus(localStatus) ||
+      localScore.home !== apiScore.home ||
+      localScore.away !== apiScore.away ||
+      !Array.isArray(existing?.events) ||
+      existing.events.length === 0;
+
+    if (!isStale) continue;
+
+    rounds.add(round);
+    staleFixtures.push(
+      `${fixtureId} [MW ${round}] ${localStatus || "missing"} ${localScore.home}-${localScore.away} -> ${apiStatus} ${apiScore.home}-${apiScore.away}`
+    );
+  }
+
+  if (staleFixtures.length) {
+    console.log(
+      "Stale completed fixtures found; forcing rounds:",
+      [...rounds].sort((a, b) => a - b)
+    );
+    for (const line of staleFixtures) console.log(`  ${line}`);
+  }
+
+  return rounds;
 }
 
 function shouldFetchFixture(fx, existingFixtureIds, forcedRounds) {
@@ -126,6 +211,7 @@ async function main() {
   const fixtures = fixturesRaw.response || [];
 
   const existingEvents = await readExistingEventsFile();
+  const existingMatchesByFixtureId = await readExistingMatchesByFixtureId();
 
   const existingFixtureIds = new Set(
     existingEvents
@@ -142,6 +228,13 @@ async function main() {
   }
 
   const forcedRounds = getForcedRefreshRounds(fixtures);
+  for (const round of getIncompleteStartedRounds(fixtures, existingMatchesByFixtureId)) {
+    forcedRounds.add(round);
+  }
+  console.log(
+    "Final event refresh rounds:",
+    [...forcedRounds].sort((a, b) => a - b)
+  );
 
   // console.log(`Fixtures total: ${fixtures.length}`);
   // console.log(`Fixtures already cached: ${existingFixtureIds.size}`);

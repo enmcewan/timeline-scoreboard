@@ -470,6 +470,68 @@ function upsertMatch(roundMap, round, match) {
   roundMap.set(round, arr);
 }
 
+function isCompletedStatus(status) {
+  return new Set(["FT", "AET", "PEN"]).has(String(status || "").toUpperCase());
+}
+
+function fixtureScore(fx) {
+  return {
+    home: Number(fx?.goals?.home ?? 0),
+    away: Number(fx?.goals?.away ?? 0),
+  };
+}
+
+function matchScore(match) {
+  return {
+    home: Number(match?.score?.home ?? 0),
+    away: Number(match?.score?.away ?? 0),
+  };
+}
+
+function getIncompleteStartedRounds(fixtures, existingMatchesByFixtureId) {
+  const rounds = new Set();
+  const staleFixtures = [];
+
+  for (const fx of fixtures) {
+    const fixtureId = String(fx?.fixture?.id ?? "");
+    const round = parseMatchweekNumber(fx?.league?.round);
+    if (!fixtureId || !Number.isFinite(round)) continue;
+
+    const apiStatus = String(fx?.fixture?.status?.short ?? "").toUpperCase();
+    if (!isCompletedStatus(apiStatus)) continue;
+
+    const existing = existingMatchesByFixtureId.get(fixtureId);
+    const apiScore = fixtureScore(fx);
+    const localScore = matchScore(existing);
+    const localStatus = String(existing?.status?.state ?? "").toUpperCase();
+
+    const isStale =
+      !existing ||
+      !isCompletedStatus(localStatus) ||
+      localScore.home !== apiScore.home ||
+      localScore.away !== apiScore.away ||
+      !Array.isArray(existing?.events) ||
+      existing.events.length === 0;
+
+    if (!isStale) continue;
+
+    rounds.add(round);
+    staleFixtures.push(
+      `${fixtureId} [MW ${round}] ${localStatus || "missing"} ${localScore.home}-${localScore.away} -> ${apiStatus} ${apiScore.home}-${apiScore.away}`
+    );
+  }
+
+  if (staleFixtures.length) {
+    console.log(
+      "Stale completed fixtures found; forcing rounds:",
+      [...rounds].sort((a, b) => a - b)
+    );
+    for (const line of staleFixtures) console.log(`  ${line}`);
+  }
+
+  return rounds;
+}
+
 /* ------------ MAIN ------------- */
 
 async function main() {
@@ -496,6 +558,13 @@ async function main() {
     await readExistingMatchweeks();
 
   const forcedRounds = getForcedRefreshRounds(fixtures);
+  for (const round of getIncompleteStartedRounds(fixtures, existingMatchesByFixtureId)) {
+    forcedRounds.add(round);
+  }
+  console.log(
+    "Final matchweek refresh rounds:",
+    [...forcedRounds].sort((a, b) => a - b)
+  );
 
   // console.log(
   //   `Always refresh rounds: ${[...forcedRounds].sort((a, b) => a - b).join(", ")}`
