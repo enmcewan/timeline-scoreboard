@@ -1,0 +1,74 @@
+# Live Data Server
+
+This is the standalone updater for serving fresh Timeline Football JSON from `lauris-webdev.com` while keeping the main site on Netlify.
+
+The first version keeps API-Football as the data source and publishes the same JSON shape the site already consumes.
+
+## Output
+
+By default the updater writes to:
+
+```text
+live-data/
+```
+
+For production, set `LIVE_DATA_OUT_DIR` to a web-served folder on the hosted server, for example:
+
+```text
+/home/<account>/public_html/timeline-data
+```
+
+Expected public URLs:
+
+```text
+https://lauris-webdev.com/timeline-data/epl/2026-27/health.json
+https://lauris-webdev.com/timeline-data/epl/2026-27/matchweeks/current.json
+https://lauris-webdev.com/timeline-data/epl/2026-27/matchweeks/4.json
+```
+
+The publisher writes an `.htaccess` file with:
+
+```text
+Access-Control-Allow-Origin: https://timelinefootball.com
+Cache-Control: public, max-age=60
+Content-Type: application/json
+```
+
+## Local Test
+
+Use the same API key environment variable as the current GitHub Action:
+
+```bash
+export APIFOOTBALL_KEY="..."
+export TIMELINE_SEASON="2026-27"
+export LIVE_DATA_OUT_DIR="./live-data"
+npm run live:update
+```
+
+On Windows Command Prompt:
+
+```bat
+set APIFOOTBALL_KEY=...
+set TIMELINE_SEASON=2026-27
+set LIVE_DATA_OUT_DIR=live-data
+npm run live:update
+```
+
+## Server Cron
+
+Run every 15 minutes:
+
+```cron
+*/15 * * * * cd /home/<account>/timeline-scoreboard && APIFOOTBALL_KEY="..." TIMELINE_SEASON="2026-27" LIVE_DATA_OUT_DIR="/home/<account>/public_html/timeline-data" /usr/bin/npm run live:update >> /home/<account>/timeline-scoreboard/live-update.log 2>&1
+```
+
+If the host has Node but not npm on the cron path, use the full paths from the hosting control panel.
+
+## Integration Plan
+
+1. Confirm `health.json` updates every 15 minutes.
+2. Confirm `matchweeks/current.json` has the same match objects as Netlify data.
+3. Add frontend fallback:
+   - try `https://lauris-webdev.com/timeline-data/epl/2026-27/matchweeks/current.json`
+   - fall back to bundled Netlify JSON.
+4. Keep GitHub/Netlify for daily full rebuilds, sitemap, IndexNow, standings, and player cache.

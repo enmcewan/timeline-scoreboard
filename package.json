@@ -20,6 +20,8 @@
   "refresh:smart": "npm run gate:refresh | tee /dev/stderr | node -e \"let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{if(d.includes('REFRESH=1')) process.exit(0); console.log('Gate: skip refresh'); process.exit(42);});\" && npm run refresh:all",
   "update:matchdays": "npm run fetch:events && npm run refresh:epl",
   "build:season-context": "node src/scripts/build-season-context.mjs",
+  "live:update": "node src/scripts/live-update.mjs",
+  "live:publish": "node src/scripts/publish-live-data.mjs",
   "prerender": "node src/scripts/prerender-matchweeks.mjs",
   "sitemap": "node src/scripts/generate-sitemap.mjs",
   "prerender:all": "node src/scripts/prerender-all-seasons.mjs",
