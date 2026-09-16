@@ -68,7 +68,10 @@ function normalizeTeamStats(statArray) {
 }
 
 function hasXg(stats) {
-  return Number.isFinite(Number(stats?.home?.xg)) && Number.isFinite(Number(stats?.away?.xg));
+  const hasValue = (value) =>
+    value != null && String(value).trim() !== "" && Number.isFinite(Number(value));
+
+  return hasValue(stats?.home?.xg) && hasValue(stats?.away?.xg);
 }
 
 async function readJson(filePath) {
@@ -124,7 +127,13 @@ async function fetchFixtureStatistics(fixtureId, homeApiId, awayApiId) {
 
 function isStartedOrComplete(match) {
   const state = String(match?.status?.state || "").toUpperCase();
-  return state && !["NS", "TBD", "PST"].includes(state);
+  if (state && !["NS", "TBD", "PST"].includes(state)) return true;
+
+  const kickoff = Date.parse(match?.kickoff || "");
+  if (!Number.isFinite(kickoff)) return false;
+
+  // A stale cached status must not prevent delayed xG from being recovered.
+  return kickoff <= Date.now() - 2 * 60 * 60 * 1000;
 }
 
 async function main() {
