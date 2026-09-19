@@ -24,6 +24,8 @@ const MATCHDAYS = {};
 let ODDS_BY_FIXTURE = {};
 const ALL_ROUNDS = Array.from({ length: season.maxRound }, (_, i) => i + 1);
 const SEASON_DATA_PATH = publicSeasonDataPath(season);
+const LIVE_DATA_TIMEOUT_MS = 4000;
+const LIVE_DATA_MAX_AGE_MS = 60 * 60 * 1000;
 
 async function loadAllMatchdays() {
   const results = await Promise.allSettled(
@@ -46,6 +48,54 @@ async function loadAllMatchdays() {
   return Object.keys(MATCHDAYS)
     .map(Number)
     .sort((a, b) => a - b);
+}
+
+async function loadLiveCurrentMatchday() {
+  if (!season.liveDataBaseUrl || season.isArchived) return null;
+
+  const isMatchweekPage = /^\/epl\/\d{4}-\d{2}\/matchweek\/(?:\d+|current)\/?$/.test(
+    window.location.pathname
+  );
+  if (window.location.pathname !== "/" && !isMatchweekPage) return null;
+
+  const controller = new AbortController();
+  const timeout = window.setTimeout(() => controller.abort(), LIVE_DATA_TIMEOUT_MS);
+  const url = `${season.liveDataBaseUrl}/${season.leagueKey}/${season.seasonPath}/matchweeks/current.json`;
+
+  try {
+    const res = await fetch(url, {
+      cache: "no-store",
+      signal: controller.signal,
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+    const matchday = await res.json();
+    const round = Number(matchday?.round);
+    const publishedAt = Date.parse(matchday?.publishedAt || "");
+    const ageMs = Date.now() - publishedAt;
+
+    if (!Number.isInteger(round) || round < 1 || round > season.maxRound) {
+      throw new Error("invalid round");
+    }
+    if (!Array.isArray(matchday?.matches) || matchday.matches.length === 0) {
+      throw new Error("missing matches");
+    }
+    if (matchday.seasonPath && matchday.seasonPath !== season.seasonPath) {
+      throw new Error("season mismatch");
+    }
+    if (!Number.isFinite(ageMs) || ageMs < -5 * 60 * 1000 || ageMs > LIVE_DATA_MAX_AGE_MS) {
+      throw new Error("stale publishedAt");
+    }
+
+    MATCHDAYS[round] = matchday;
+    console.info(`Using live matchday data for round ${round}.`);
+    return round;
+  } catch (err) {
+    console.warn("Live matchday data unavailable; using bundled data:", err);
+    return null;
+  } finally {
+    window.clearTimeout(timeout);
+  }
 }
 
 async function loadOdds() {
@@ -281,8 +331,13 @@ function applyStatsVisibility() {
 async function init() {
   updateSeasonChrome();
 
-  const allRounds = await loadAllMatchdays();
-  await loadOdds();
+  await loadAllMatchdays();
+  await Promise.all([loadLiveCurrentMatchday(), loadOdds()]);
+
+  const allRounds = Object.keys(MATCHDAYS)
+    .map(Number)
+    .filter(Number.isFinite)
+    .sort((a, b) => a - b);
 
   if (!allRounds.length) {
     app.innerHTML = `<div class="match-list"><p>No matchday data found.</p></div>`;

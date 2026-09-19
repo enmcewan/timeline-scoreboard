@@ -24,6 +24,7 @@ export const SEASONS = {
     sourceDataSeason: "2026",
     maxRound: 38,
     isArchived: false,
+    liveDataBaseUrl: "https://lauris-webdev.com/timeline-data",
   },
 };
 
