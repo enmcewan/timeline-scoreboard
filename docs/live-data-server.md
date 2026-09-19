@@ -64,6 +64,11 @@ Run every 15 minutes:
 
 If the host has Node but not npm on the cron path, use the full paths from the hosting control panel.
 
+The cron process is schedule-gated before any API request. It performs the full
+update only from 10 minutes before a cached fixture's kickoff until 195 minutes
+after kickoff. Outside that window it exits successfully without calling
+API-Football. Set `FORCE_REFRESH=1` only for a deliberate manual override.
+
 ## Integration Plan
 
 1. Confirm `health.json` updates every 15 minutes.

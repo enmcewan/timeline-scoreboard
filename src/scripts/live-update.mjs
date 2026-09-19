@@ -2,6 +2,7 @@ import { spawn } from "node:child_process";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { shouldRefresh } from "./should-refresh.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -10,6 +11,15 @@ const LOCK_PATH = path.join(ROOT, ".live-update.lock");
 const STALE_LOCK_MS = 45 * 60 * 1000;
 
 const season = process.env.TIMELINE_SEASON || "2026-27";
+const FIXTURES_PATH = path.join(
+  ROOT,
+  "public",
+  "data",
+  "leagues",
+  "epl",
+  season,
+  "fixtures.raw.json"
+);
 
 const steps = [
   ["Fetch fixtures", "src/scripts/fetch-fixtures.mjs"],
@@ -99,6 +109,32 @@ async function releaseLock() {
   await fs.rm(LOCK_PATH, { force: true });
 }
 
+async function isRefreshWindow() {
+  if (process.env.FORCE_REFRESH === "true" || process.env.FORCE_REFRESH === "1") {
+    console.log("Live update forced with FORCE_REFRESH.");
+    return true;
+  }
+
+  try {
+    const rawText = await fs.readFile(FIXTURES_PATH, "utf8");
+    const raw = JSON.parse(rawText.replace(/^\uFEFF/, ""));
+    const fixtures = Array.isArray(raw?.response) ? raw.response : [];
+
+    if (!fixtures.length) {
+      console.warn("Cached fixtures are empty; allowing a cold-start refresh.");
+      return true;
+    }
+
+    return shouldRefresh(fixtures, Date.now());
+  } catch (err) {
+    if (err?.code === "ENOENT") {
+      console.warn("Cached fixtures are missing; allowing a cold-start refresh.");
+      return true;
+    }
+    throw err;
+  }
+}
+
 async function main() {
   if (!process.env.APIFOOTBALL_KEY) {
     throw new Error("Missing APIFOOTBALL_KEY env var.");
@@ -107,6 +143,11 @@ async function main() {
   await acquireLock();
 
   try {
+    if (!(await isRefreshWindow())) {
+      console.log("Outside the match refresh window. No API requests made.");
+      return;
+    }
+
     for (const step of steps) {
       await runStep(step);
     }

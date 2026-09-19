@@ -1,12 +1,6 @@
 import fs from "node:fs/promises";
 import path from "node:path";
-
-// ---- FORCE OVERRIDE (GitHub Actions workflow_dispatch input) ----
-if (process.env.FORCE_REFRESH === "true" || process.env.FORCE_REFRESH === "1") {
-  console.log("REFRESH=1");
-  console.log("Reason: FORCE_REFRESH set");
-  process.exit(0);
-}
+import { pathToFileURL } from "node:url";
 
 const CANDIDATE_FIXTURE_PATHS = "public/data/dev/fixtures.raw.json";
 
@@ -63,7 +57,7 @@ function isFinished(statusShort) {
   return FINISHED_STATUS.has(statusShort);
 }
 
-function shouldRefresh(fixtures, nowMs) {
+export function shouldRefresh(fixtures, nowMs) {
   const PRE_MS = 10 * 60 * 1000;     // 10 mins before kickoff
   const POST_MS = 195 * 60 * 1000;   // 195 mins after kickoff (105 + buffer for Github Actions delay)
 
@@ -95,6 +89,12 @@ function shouldRefresh(fixtures, nowMs) {
 }
 
 async function main() {
+  if (process.env.FORCE_REFRESH === "true" || process.env.FORCE_REFRESH === "1") {
+    console.log("REFRESH=1");
+    console.log("Reason: FORCE_REFRESH set");
+    return;
+  }
+
   const args = parseArgs(process.argv.slice(2));
 
   const fixturesPath =
@@ -131,7 +131,9 @@ async function main() {
   process.exit(0);
 }
 
-main().catch((err) => {
-  console.error(err);
-  process.exit(1);
-});
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  main().catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
+}
