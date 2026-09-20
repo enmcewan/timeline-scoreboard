@@ -1,27 +1,22 @@
+name: Sync EPL Static Site
+
 permissions:
-  contents: write
-  
+  contents: read
+
 on:
   schedule:
-    - cron: "7 * * * *"
-    - cron: "19 * * * *"
-    - cron: "43 * * * *"
-    - cron: "55 * * * *"
+    # Lauris handles live match updates. Rebuild static/SEO pages once overnight.
+    - cron: "21 4 * * *"
   workflow_dispatch:
-    inputs:
-      force_refresh:
-        description: "Force refresh (ignore gate)"
-        required: false
-        default: false
-        type: boolean
 
 jobs:
-  refresh:
+  sync-static-site:
     runs-on: ubuntu-latest
     env:
       TIMELINE_SEASON: 2026-27
       SEASON_DATA_DIR: public/data/leagues/epl/2026-27
-      LIVE_SEASON_DATA_URL: https://timelinefootball.com/data/leagues/epl/2026-27
+      LIVE_SITE_DATA_URL: https://timelinefootball.com/data/leagues/epl/2026-27
+      LAURIS_DATA_URL: https://lauris-webdev.com/timeline-data/epl/2026-27
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -34,126 +29,95 @@ jobs:
       - name: Install
         run: npm ci
 
-      - name: Hydrate live season data
+      - name: Hydrate deployed season data
         run: |
           mkdir -p "$SEASON_DATA_DIR/matchweeks"
 
           for file in fixtures.raw.json events.raw.json standings.json odds.json; do
-            if curl -fsSL "$LIVE_SEASON_DATA_URL/$file" -o "$SEASON_DATA_DIR/$file"; then
-              echo "Hydrated $file from live site."
+            if curl -fsSL "$LIVE_SITE_DATA_URL/$file" -o "$SEASON_DATA_DIR/$file"; then
+              echo "Hydrated deployed $file."
             else
-              echo "Live $file unavailable; keeping repository copy."
+              echo "Deployed $file unavailable; keeping repository copy."
             fi
           done
 
           for round in $(seq 1 38); do
-            if curl -fsSL "$LIVE_SEASON_DATA_URL/matchweeks/$round.json" -o "$SEASON_DATA_DIR/matchweeks/$round.json"; then
-              echo "Hydrated matchweek $round."
+            if curl -fsSL "$LIVE_SITE_DATA_URL/matchweeks/$round.json" -o "$SEASON_DATA_DIR/matchweeks/$round.json"; then
+              echo "Hydrated deployed matchweek $round."
             else
-              echo "Live matchweek $round unavailable; keeping repository copy."
+              echo "Deployed matchweek $round unavailable; keeping repository copy."
             fi
           done
 
-      - name: Fetch fixtures (always)
-        env:
-          APIFOOTBALL_KEY: ${{ secrets.APIFOOTBALL_KEY }}
-        run: npm run fetch:fixtures
-
-      - name: Smart refresh (gated)
-        id: gate
-        env:
-          FORCE_REFRESH: ${{ github.event.inputs.force_refresh }}
+      - name: Overlay Lauris live match data
         run: |
-          out="$(npm run -s gate:refresh)"
-          echo "$out"
-          if echo "$out" | grep -q "REFRESH=1"; then
-            echo "should_deploy=1" >> "$GITHUB_OUTPUT"
+          mkdir -p .tmp
+
+          for file in fixtures.raw.json events.raw.json; do
+            if curl -fsSL "$LAURIS_DATA_URL/$file" -o "$SEASON_DATA_DIR/$file"; then
+              echo "Overlaid Lauris $file."
+            else
+              echo "Lauris $file unavailable; keeping deployed copy."
+            fi
+          done
+
+          if curl -fsSL "$LAURIS_DATA_URL/health.json" -o .tmp/lauris-health.json; then
+            round=$(node -e "const h=require('./.tmp/lauris-health.json'); if (!Number.isInteger(h.currentRound)) process.exit(1); process.stdout.write(String(h.currentRound));")
+
+            if curl -fsSL "$LAURIS_DATA_URL/matchweeks/$round.json" -o "$SEASON_DATA_DIR/matchweeks/$round.json"; then
+              echo "Overlaid Lauris current matchweek $round."
+            else
+              echo "Lauris current matchweek unavailable; keeping deployed copy."
+            fi
           else
-            echo "should_deploy=0" >> "$GITHUB_OUTPUT"
+            echo "Lauris health check unavailable; using deployed matchweeks."
           fi
 
-      - name: Mark start time
-        if: steps.gate.outputs.should_deploy == '1'
-        run: echo "START_TS=$(date +%s)" >> $GITHUB_ENV
-
-      - name: Fetch odds
-        if: steps.gate.outputs.should_deploy == '1'
+      - name: Cache new player profiles
+        continue-on-error: true
         env:
           APIFOOTBALL_KEY: ${{ secrets.APIFOOTBALL_KEY }}
-        run: npm run fetch:odds
-
-      - name: Refresh events + matchdays
-        if: steps.gate.outputs.should_deploy == '1'
-        env:
-          APIFOOTBALL_KEY: ${{ secrets.APIFOOTBALL_KEY }}
-        run: npm run update:matchdays
-
-      - name: Fetch standings
-        run: node src/scripts/fetch-standings.epl.mjs
-        env:
-          APIFOOTBALL_KEY: ${{ secrets.APIFOOTBALL_KEY }}
-
-      - name: Build players cache
-        if: steps.gate.outputs.should_deploy == '1'
         run: node src/scripts/build-players-cache.mjs
-        env:
-          APIFOOTBALL_KEY: ${{ secrets.APIFOOTBALL_KEY }}
 
       - name: Build season context
-        if: steps.gate.outputs.should_deploy == '1'
         run: npm run build:season-context
 
       - name: Build
-        if: steps.gate.outputs.should_deploy == '1'
         run: npm run build:prerender
 
       - name: Verify prerender output exists
-        if: steps.gate.outputs.should_deploy == '1'
         run: |
-          echo "PWD=$(pwd)"
           test -f dist/index.html
           test -f dist/sitemap.xml
-          echo "---- matchweek dirs ----"
-          ls -la dist/epl/2025-26/matchweek || true
-          ls -la dist/epl/2026-27/matchweek || true
-          echo "---- sample matchweek file ----"
-          test -f dist/epl/2025-26/matchweek/38/index.html && echo "2025-26 MW38 OK" || exit 1
-          test -f dist/epl/2026-27/matchweek/1/index.html && echo "MW1 OK" || echo "MW1 missing (maybe season hasn't reached 1?)"
+          test -f dist/epl/2025-26/matchweek/38/index.html
+          test -f dist/epl/2026-27/matchweek/1/index.html
+          test -f dist/epl/2026-27/table/index.html
 
       - name: Deploy to Netlify (prod)
-        if: steps.gate.outputs.should_deploy == '1'
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         run: npx --yes --package netlify-cli@27.0.1 netlify deploy --dir dist --prod --site "$NETLIFY_SITE_ID" --no-build
 
       - name: Determine current round
-        if: steps.gate.outputs.should_deploy == '1'
         id: current_round
         run: |
           out=$(node src/scripts/get-current-round.mjs)
           echo "$out"
-          echo "$out" >> $GITHUB_OUTPUT
+          echo "$out" >> "$GITHUB_OUTPUT"
 
       - name: Submit IndexNow (current + previous matchweek)
-        if: steps.gate.outputs.should_deploy == '1'
         env:
           INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
           ROUND: ${{ steps.current_round.outputs.round }}
         run: |
-          # Build url list JSON fragments
           urls="\"https://timelinefootball.com/epl/2026-27/matchweek/${ROUND}/\""
 
           if [ "${ROUND}" -gt 1 ]; then
             prev=$((ROUND-1))
-            prevFile="public/data/leagues/epl/2026-27/matchweeks/${prev}.json"
-            # If previous round file was modified during this run, include it
-            if [ -f "$prevFile" ] && [ "$(stat -c %Y "$prevFile")" -ge "${START_TS}" ]; then
-              urls="${urls}, \"https://timelinefootball.com/epl/2026-27/matchweek/${prev}/\""
-            fi
+            urls="${urls}, \"https://timelinefootball.com/epl/2026-27/matchweek/${prev}/\""
           fi
 
-          # Write payload
           cat > indexnow.json << EOF
           {
             "host": "timelinefootball.com",

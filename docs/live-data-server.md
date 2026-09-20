@@ -56,10 +56,11 @@ npm run live:update
 
 ## Server Cron
 
-Run every 15 minutes:
+Run four times per hour, offset to better capture stoppage time for the usual
+on-the-hour and half-hour kickoffs:
 
 ```cron
-*/15 * * * * cd /home/<account>/timeline-scoreboard && APIFOOTBALL_KEY="..." TIMELINE_SEASON="2026-27" LIVE_DATA_OUT_DIR="/home/<account>/public_html/timeline-data" /usr/bin/npm run live:update >> /home/<account>/timeline-scoreboard/live-update.log 2>&1
+3,18,33,51 * * * * cd /home/<account>/timeline-scoreboard && APIFOOTBALL_KEY="..." TIMELINE_SEASON="2026-27" LIVE_DATA_OUT_DIR="/home/<account>/public_html/timeline-data" /usr/bin/npm run live:update >> /home/<account>/timeline-scoreboard/live-update.log 2>&1
 ```
 
 If the host has Node but not npm on the cron path, use the full paths from the hosting control panel.
@@ -76,4 +77,7 @@ API-Football. Set `FORCE_REFRESH=1` only for a deliberate manual override.
 3. Add frontend fallback:
    - try `https://lauris-webdev.com/timeline-data/epl/2026-27/matchweeks/current.json`
    - fall back to bundled Netlify JSON.
-4. Keep GitHub/Netlify for daily full rebuilds, sitemap, IndexNow, standings, and player cache.
+4. Keep GitHub/Netlify for the daily static rebuild, sitemap, IndexNow,
+   standings, odds, delayed xG, and missing player profiles. The daily rebuild
+   overlays the current Lauris matchweek without repeating the live fixture,
+   event, odds, or standings API requests.
