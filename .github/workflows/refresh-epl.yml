@@ -54,23 +54,22 @@ jobs:
           mkdir -p .tmp
 
           for file in fixtures.raw.json events.raw.json; do
-            if curl -fsSL "$LAURIS_DATA_URL/$file" -o "$SEASON_DATA_DIR/$file"; then
-              echo "Overlaid Lauris $file."
+            temp_file=".tmp/lauris-$file"
+            if curl -fsSL "$LAURIS_DATA_URL/$file" -o "$temp_file" && \
+              node -e 'const fs=require("node:fs"); try { const d=JSON.parse(fs.readFileSync(process.argv[1], "utf8").replace(/^\uFEFF/, "")); if (!Array.isArray(d.response)) process.exit(1); } catch (err) { console.error(err.message); process.exit(1); }' "$temp_file"; then
+              cp "$temp_file" "$SEASON_DATA_DIR/$file"
+              echo "Overlaid validated Lauris $file."
             else
-              echo "Lauris $file unavailable; keeping deployed copy."
+              echo "Lauris $file unavailable or invalid; keeping deployed copy."
             fi
           done
 
-          if curl -fsSL "$LAURIS_DATA_URL/health.json" -o .tmp/lauris-health.json; then
-            round=$(node -e "const h=require('./.tmp/lauris-health.json'); if (!Number.isInteger(h.currentRound)) process.exit(1); process.stdout.write(String(h.currentRound));")
-
-            if curl -fsSL "$LAURIS_DATA_URL/matchweeks/$round.json" -o "$SEASON_DATA_DIR/matchweeks/$round.json"; then
-              echo "Overlaid Lauris current matchweek $round."
-            else
-              echo "Lauris current matchweek unavailable; keeping deployed copy."
-            fi
+          if curl -fsSL "$LAURIS_DATA_URL/matchweeks/current.json" -o .tmp/lauris-current.json && \
+            round=$(node -e 'const fs=require("node:fs"); try { const d=JSON.parse(fs.readFileSync(process.argv[1], "utf8").replace(/^\uFEFF/, "")); const round=Number(d.round); if (!Number.isInteger(round) || round < 1 || round > 38 || !Array.isArray(d.matches) || d.matches.length === 0) process.exit(1); process.stdout.write(String(round)); } catch (err) { console.error(err.message); process.exit(1); }' .tmp/lauris-current.json); then
+            cp .tmp/lauris-current.json "$SEASON_DATA_DIR/matchweeks/$round.json"
+            echo "Overlaid validated Lauris current matchweek $round."
           else
-            echo "Lauris health check unavailable; using deployed matchweeks."
+            echo "Lauris current matchweek unavailable or invalid; using deployed matchweeks."
           fi
 
       - name: Cache new player profiles
