@@ -26,6 +26,11 @@ const ALL_ROUNDS = Array.from({ length: season.maxRound }, (_, i) => i + 1);
 const SEASON_DATA_PATH = publicSeasonDataPath(season);
 const LIVE_DATA_TIMEOUT_MS = 4000;
 const LIVE_DATA_MAX_AGE_MS = 60 * 60 * 1000;
+const AUTO_UPDATE_STORAGE_KEY = `timeline-auto-update:${season.seasonPath}`;
+// Lauris runs at :03, :18, :33 and :51. Allow two minutes to publish.
+const AUTO_UPDATE_MINUTES_UTC = [5, 20, 35, 53];
+const MATCH_WINDOW_BEFORE_MS = 10 * 60 * 1000;
+const MATCH_WINDOW_AFTER_MS = 195 * 60 * 1000;
 
 async function loadAllMatchdays() {
   const results = await Promise.allSettled(
@@ -87,9 +92,16 @@ async function loadLiveCurrentMatchday() {
       throw new Error("stale publishedAt");
     }
 
+    const previousPublishedAt = Date.parse(MATCHDAYS[round]?.publishedAt || "");
     MATCHDAYS[round] = matchday;
+    liveCurrentRound = round;
+    livePublishedAtMs = publishedAt;
     console.info(`Using live matchday data for round ${round}.`);
-    return round;
+    return {
+      round,
+      publishedAt,
+      changed: !Number.isFinite(previousPublishedAt) || publishedAt > previousPublishedAt,
+    };
   } catch (err) {
     console.warn("Live matchday data unavailable; using bundled data:", err);
     return null;
@@ -246,6 +258,20 @@ let currentRound = null;
 let currentMatches = [];
 let globalViewMode = VIEW_MODES.FULL; // start compact like you want
 let statsShown = true;
+let liveCurrentRound = null;
+let livePublishedAtMs = null;
+let autoUpdateTimer = null;
+let autoUpdateInFlight = false;
+
+function readAutoUpdatePreference() {
+  try {
+    return window.localStorage.getItem(AUTO_UPDATE_STORAGE_KEY) === "true";
+  } catch {
+    return false;
+  }
+}
+
+let autoUpdateEnabled = readAutoUpdatePreference();
 
 const viewModes = new Map();
 
@@ -328,6 +354,169 @@ function applyStatsVisibility() {
     btn.textContent = statsShown ? "Hide Stats" : "Show Stats";
   }
 }
+
+function isAutoUpdateAvailable() {
+  const activeRound = liveCurrentRound ?? pickCurrentRoundByCompletion(MATCHDAYS);
+  return (
+    !season.isArchived &&
+    Number.isInteger(activeRound) &&
+    currentRound === activeRound
+  );
+}
+
+function setAutoUpdateStatus(text = "") {
+  const status = document.getElementById("auto-update-status");
+  if (status) status.textContent = text;
+}
+
+function updateAutoUpdateControl() {
+  const container = document.getElementById("auto-update-container");
+  const toggle = document.getElementById("auto-update-toggle");
+  if (!container || !toggle) return;
+
+  const available = isAutoUpdateAvailable();
+  container.hidden = !available;
+  toggle.checked = autoUpdateEnabled;
+
+  if (!available && autoUpdateTimer) {
+    window.clearTimeout(autoUpdateTimer);
+    autoUpdateTimer = null;
+  }
+}
+
+function getNextAutoUpdateDelay(nowMs = Date.now()) {
+  const now = new Date(nowMs);
+
+  for (const minute of AUTO_UPDATE_MINUTES_UTC) {
+    const target = new Date(nowMs);
+    target.setUTCMinutes(minute, 0, 0);
+    if (target.getTime() > nowMs + 1000) return target.getTime() - nowMs;
+  }
+
+  const nextHour = new Date(nowMs);
+  nextHour.setUTCHours(now.getUTCHours() + 1, AUTO_UPDATE_MINUTES_UTC[0], 0, 0);
+  return nextHour.getTime() - nowMs;
+}
+
+function getMatchRefreshWindow(nowMs = Date.now()) {
+  const matches = MATCHDAYS[currentRound]?.matches || [];
+  let nextWindowStart = null;
+
+  for (const match of matches) {
+    const kickoffMs = Date.parse(match?.kickoff || "");
+    if (!Number.isFinite(kickoffMs)) continue;
+
+    const windowStart = kickoffMs - MATCH_WINDOW_BEFORE_MS;
+    const windowEnd = kickoffMs + MATCH_WINDOW_AFTER_MS;
+
+    if (nowMs >= windowStart && nowMs <= windowEnd) {
+      return { active: true, nextWindowStart: null };
+    }
+
+    if (windowStart > nowMs && (nextWindowStart == null || windowStart < nextWindowStart)) {
+      nextWindowStart = windowStart;
+    }
+  }
+
+  return { active: false, nextWindowStart };
+}
+
+function scheduleAutoUpdate() {
+  if (autoUpdateTimer) window.clearTimeout(autoUpdateTimer);
+  autoUpdateTimer = null;
+
+  if (!autoUpdateEnabled || !isAutoUpdateAvailable()) return;
+
+  const matchWindow = getMatchRefreshWindow();
+  if (!matchWindow.active) {
+    if (matchWindow.nextWindowStart != null) {
+      autoUpdateTimer = window.setTimeout(
+        scheduleAutoUpdate,
+        Math.max(1000, matchWindow.nextWindowStart - Date.now())
+      );
+    }
+    return;
+  }
+
+  autoUpdateTimer = window.setTimeout(
+    refreshLiveMatchday,
+    getNextAutoUpdateDelay()
+  );
+}
+
+async function refreshLiveMatchday() {
+  if (autoUpdateInFlight || !autoUpdateEnabled || !isAutoUpdateAvailable()) {
+    scheduleAutoUpdate();
+    return;
+  }
+
+  if (!getMatchRefreshWindow().active) {
+    scheduleAutoUpdate();
+    return;
+  }
+
+  autoUpdateInFlight = true;
+  setAutoUpdateStatus("Checking...");
+
+  try {
+    const result = await loadLiveCurrentMatchday();
+    if (!result) {
+      setAutoUpdateStatus("Retrying later");
+      return;
+    }
+
+    if (result.round === currentRound && result.changed) {
+      currentMatches = attachMatchData(MATCHDAYS[currentRound].matches, currentRound);
+      for (const match of currentMatches) {
+        const id = String(match.id);
+        if (!viewModes.has(id)) viewModes.set(id, globalViewMode);
+      }
+      renderAllMatches();
+      applyStatsVisibility();
+    }
+
+    const updatedTime = new Date(livePublishedAtMs).toLocaleTimeString([], {
+      hour: "numeric",
+      minute: "2-digit",
+    });
+    setAutoUpdateStatus(`Updated ${updatedTime}`);
+  } finally {
+    autoUpdateInFlight = false;
+    updateAutoUpdateControl();
+    scheduleAutoUpdate();
+  }
+}
+
+function setAutoUpdateEnabled(enabled) {
+  autoUpdateEnabled = enabled;
+
+  try {
+    window.localStorage.setItem(AUTO_UPDATE_STORAGE_KEY, String(enabled));
+  } catch {
+    // The preference remains active for this page when storage is unavailable.
+  }
+
+  updateAutoUpdateControl();
+
+  if (enabled) {
+    refreshLiveMatchday();
+  } else {
+    if (autoUpdateTimer) window.clearTimeout(autoUpdateTimer);
+    autoUpdateTimer = null;
+    setAutoUpdateStatus("");
+  }
+}
+
+document.getElementById("auto-update-toggle")?.addEventListener("change", (event) => {
+  setAutoUpdateEnabled(event.currentTarget.checked);
+});
+
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden && autoUpdateEnabled && isAutoUpdateAvailable()) {
+    refreshLiveMatchday();
+  }
+});
+
 async function init() {
   updateSeasonChrome();
 
@@ -387,6 +576,8 @@ async function init() {
   renderControls();
   renderAllMatches();
   applyStatsVisibility();
+  updateAutoUpdateControl();
+  scheduleAutoUpdate();
 }
 
 init().catch((err) => {
@@ -469,4 +660,6 @@ document.addEventListener("change", (e) => {
   renderControls();
   renderAllMatches();
   applyStatsVisibility();
+  updateAutoUpdateControl();
+  scheduleAutoUpdate();
 });
