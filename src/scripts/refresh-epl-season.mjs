@@ -4,6 +4,10 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { getSeasonConfigFromEnv } from "../config/seasons.js";
 import { parseMatchweekNumber, getForcedRefreshRounds } from "../lib/utils.js";
+import {
+  applyTheStatsApiXg,
+  createTheStatsApiXgClient,
+} from "./the-stats-api-xg.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -59,6 +63,18 @@ const ODDS_PATH = path.join(
   season.leagueKey,
   season.seasonPath,
   "odds.json"
+);
+
+const THESTATSAPI_XG_PATH = path.join(
+  __dirname,
+  "..",
+  "..",
+  "public",
+  "data",
+  "leagues",
+  season.leagueKey,
+  season.seasonPath,
+  "thestatsapi-xg.json"
 );
 
 const TEAMS_PATH = path.join(
@@ -536,6 +552,19 @@ function getIncompleteStartedRounds(fixtures, existingMatchesByFixtureId) {
 
 async function main() {
   apiTeamIdToSlug = await loadApiTeamIdToSlugMap();
+  const teamsJson = JSON.parse(await fs.readFile(TEAMS_PATH, "utf8"));
+  const theStatsApiXg = await createTheStatsApiXgClient({
+    competitionId: season.theStatsApiCompetitionId,
+    seasonId: season.theStatsApiSeasonId,
+    seasonPath: season.seasonPath,
+    cachePath: THESTATSAPI_XG_PATH,
+    teams: teamsJson,
+  });
+
+  async function overlayTheStatsApiXg(match, rawFixture, options) {
+    const xg = await theStatsApiXg.getXg(rawFixture, options);
+    applyTheStatsApiXg(match, xg);
+  }
 
   console.log("Reading raw fixtures…");
   const fixturesRaw = JSON.parse(await fs.readFile(FIXTURES_RAW_PATH, "utf8"));
@@ -610,6 +639,7 @@ async function main() {
           };
         } else if (existingMatch?.statistics?.home?.xg != null && existingMatch?.statistics?.away?.xg != null) {
           console.warn(`No fresh stats for fixture ${fixtureId}; keeping existing match.`);
+          await overlayTheStatsApiXg(existingMatch, f);
           upsertMatch(matchweeks, round, attachCachedOdds(existingMatch, oddsByFixture));
           touchedRounds.add(round);
           continue;
@@ -622,6 +652,7 @@ async function main() {
     } catch (e) {
       if (existingMatch?.statistics?.home?.xg != null && existingMatch?.statistics?.away?.xg != null) {
         console.warn(`Stats fetch failed for fixture ${fixtureId}; keeping existing match. ${e.message}`);
+        await overlayTheStatsApiXg(existingMatch, f);
         upsertMatch(matchweeks, round, attachCachedOdds(existingMatch, oddsByFixture));
         touchedRounds.add(round);
         continue;
@@ -630,9 +661,12 @@ async function main() {
       console.warn(`Stats fetch failed for fixture ${fixtureId}: ${e.message}`);
     }
 
+    await overlayTheStatsApiXg(rebuiltMatch, f);
     upsertMatch(matchweeks, round, attachCachedOdds(rebuiltMatch, oddsByFixture));
     touchedRounds.add(round);
   }
+
+  await theStatsApiXg.save();
 
   await fs.mkdir(MATCHWEEKS_DIR, { recursive: true });
 

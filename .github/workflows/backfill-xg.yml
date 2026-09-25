@@ -5,7 +5,7 @@ permissions:
 
 on:
   schedule:
-    # API-Sports can lag xG after matches; retry narrowly after weekend match windows.
+    # Recheck TheStatsAPI after weekend match windows for finalized xG corrections.
     - cron: "45 22 * * 0,1"
     - cron: "45 6 * * 1,2"
   workflow_dispatch:
@@ -62,7 +62,7 @@ jobs:
 
       - name: Backfill missing xG
         env:
-          APIFOOTBALL_KEY: ${{ secrets.APIFOOTBALL_KEY }}
+          TSAPI_KEY: ${{ secrets.TSAPI_KEY }}
         run: npm run backfill:xg
 
       - name: Check for xG changes

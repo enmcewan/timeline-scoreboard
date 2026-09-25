@@ -225,6 +225,12 @@ footer {
   outline-offset: 2px;
 }
 
+.auto-update-frequency {
+  color: var(--text-subtle);
+  font-size: 0.72rem;
+  font-weight: 400;
+}
+
 .auto-update-status {
   color: var(--text-subtle);
   font-size: 0.72rem;

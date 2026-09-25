@@ -24,6 +24,7 @@ live-data/
 *.sln
 *.sw?
 .env
+public/data/leagues/*/*/thestatsapi-xg.json
 build
 BBC Screenshots/
 package.json.readme.txt

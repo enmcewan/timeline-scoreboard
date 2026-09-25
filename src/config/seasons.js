@@ -25,6 +25,8 @@ export const SEASONS = {
     maxRound: 38,
     isArchived: false,
     liveDataBaseUrl: "https://lauris-webdev.com/timeline-data",
+    theStatsApiCompetitionId: "comp_3039",
+    theStatsApiSeasonId: "sn_8406098",
   },
 };
 

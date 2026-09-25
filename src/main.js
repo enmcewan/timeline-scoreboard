@@ -265,9 +265,10 @@ let autoUpdateInFlight = false;
 
 function readAutoUpdatePreference() {
   try {
-    return window.localStorage.getItem(AUTO_UPDATE_STORAGE_KEY) === "true";
+    const savedPreference = window.localStorage.getItem(AUTO_UPDATE_STORAGE_KEY);
+    return savedPreference == null ? true : savedPreference === "true";
   } catch {
-    return false;
+    return true;
   }
 }
 

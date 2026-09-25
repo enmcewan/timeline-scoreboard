@@ -61,8 +61,12 @@
           <div class="auto-update-container" id="auto-update-container" hidden>
             <label class="auto-update-control" for="auto-update-toggle">
               <span>Auto-update</span>
-              <input id="auto-update-toggle" type="checkbox" role="switch" />
+              <input id="auto-update-toggle" type="checkbox" role="switch" checked />
               <span class="auto-update-switch" aria-hidden="true"></span>
+              <span
+                class="auto-update-frequency"
+                title="Updates approximately every 15 minutes during live matches"
+              >~15 min</span>
             </label>
             <span class="auto-update-status" id="auto-update-status" aria-live="polite"></span>
           </div>
