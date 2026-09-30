@@ -14,13 +14,13 @@
     {
       "fixture": {
         "id": 1557367,
-        "referee": null,
+        "referee": "Thomas Bramall, England",
         "timezone": "UTC",
         "date": "2026-08-21T19:00:00+00:00",
         "timestamp": 1787338800,
         "periods": {
-          "first": null,
-          "second": null
+          "first": 1787338800,
+          "second": 1787342400
         },
         "venue": {
           "id": 494,
@@ -28,10 +28,10 @@
           "city": "London"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
-          "extra": null
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
+          "extra": 5
         }
       },
       "league": {
@@ -49,27 +49,27 @@
           "id": 42,
           "name": "Arsenal",
           "logo": "https://media.api-sports.io/football/teams/42.png",
-          "winner": null
+          "winner": true
         },
         "away": {
           "id": 1346,
           "name": "Coventry",
           "logo": "https://media.api-sports.io/football/teams/1346.png",
-          "winner": null
+          "winner": false
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 3,
+        "away": 0
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 0
         },
         "fulltime": {
-          "home": null,
-          "away": null
+          "home": 3,
+          "away": 0
         },
         "extratime": {
           "home": null,
@@ -84,13 +84,13 @@
     {
       "fixture": {
         "id": 1557368,
-        "referee": null,
+        "referee": "Darren England, England",
         "timezone": "UTC",
         "date": "2026-08-22T11:30:00+00:00",
         "timestamp": 1787398200,
         "periods": {
-          "first": null,
-          "second": null
+          "first": 1787398200,
+          "second": 1787401800
         },
         "venue": {
           "id": null,
@@ -98,10 +98,10 @@
           "city": "Hull"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
-          "extra": null
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
+          "extra": 7
         }
       },
       "league": {
@@ -119,27 +119,27 @@
           "id": 64,
           "name": "Hull City",
           "logo": "https://media.api-sports.io/football/teams/64.png",
-          "winner": null
+          "winner": true
         },
         "away": {
           "id": 33,
           "name": "Manchester United",
           "logo": "https://media.api-sports.io/football/teams/33.png",
-          "winner": null
+          "winner": false
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 2,
+        "away": 0
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 0
         },
         "fulltime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 0
         },
         "extratime": {
           "home": null,
@@ -154,13 +154,13 @@
     {
       "fixture": {
         "id": 1557369,
-        "referee": null,
+        "referee": "Paul Tierney, England",
         "timezone": "UTC",
         "date": "2026-08-22T14:00:00+00:00",
         "timestamp": 1787407200,
         "periods": {
-          "first": null,
-          "second": null
+          "first": 1787407200,
+          "second": 1787410800
         },
         "venue": {
           "id": null,
@@ -168,10 +168,10 @@
           "city": "Liverpool"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
-          "extra": null
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
+          "extra": 7
         }
       },
       "league": {
@@ -189,27 +189,27 @@
           "id": 45,
           "name": "Everton",
           "logo": "https://media.api-sports.io/football/teams/45.png",
-          "winner": null
+          "winner": true
         },
         "away": {
           "id": 52,
           "name": "Crystal Palace",
           "logo": "https://media.api-sports.io/football/teams/52.png",
-          "winner": null
+          "winner": false
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 2,
+        "away": 0
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 0
         },
         "fulltime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 0
         },
         "extratime": {
           "home": null,
@@ -224,24 +224,24 @@
     {
       "fixture": {
         "id": 1557370,
-        "referee": null,
+        "referee": "Farai Hallam, England",
         "timezone": "UTC",
         "date": "2026-08-22T14:00:00+00:00",
         "timestamp": 1787407200,
         "periods": {
-          "first": null,
-          "second": null
+          "first": 1787407200,
+          "second": 1787410800
         },
         "venue": {
           "id": null,
-          "name": "Portman Road",
+          "name": "Portman Road Stadium",
           "city": "Ipswich"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
-          "extra": null
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
+          "extra": 6
         }
       },
       "league": {
@@ -259,27 +259,27 @@
           "id": 57,
           "name": "Ipswich",
           "logo": "https://media.api-sports.io/football/teams/57.png",
-          "winner": null
+          "winner": true
         },
         "away": {
           "id": 746,
           "name": "Sunderland",
           "logo": "https://media.api-sports.io/football/teams/746.png",
-          "winner": null
+          "winner": false
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 2,
+        "away": 1
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 1
         },
         "fulltime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 1
         },
         "extratime": {
           "home": null,
@@ -294,13 +294,13 @@
     {
       "fixture": {
         "id": 1557371,
-        "referee": null,
+        "referee": "Robert Jones, England",
         "timezone": "UTC",
         "date": "2026-08-22T14:00:00+00:00",
         "timestamp": 1787407200,
         "periods": {
-          "first": null,
-          "second": null
+          "first": 1787407200,
+          "second": 1787410800
         },
         "venue": {
           "id": null,
@@ -308,10 +308,10 @@
           "city": "Nottingham"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
-          "extra": null
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
+          "extra": 4
         }
       },
       "league": {
@@ -329,27 +329,27 @@
           "id": 65,
           "name": "Nottingham Forest",
           "logo": "https://media.api-sports.io/football/teams/65.png",
-          "winner": null
+          "winner": false
         },
         "away": {
           "id": 63,
           "name": "Leeds",
           "logo": "https://media.api-sports.io/football/teams/63.png",
-          "winner": null
+          "winner": true
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 0,
+        "away": 1
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "fulltime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 1
         },
         "extratime": {
           "home": null,
@@ -364,13 +364,13 @@
     {
       "fixture": {
         "id": 1557372,
-        "referee": null,
+        "referee": "Michael Oliver, England",
         "timezone": "UTC",
         "date": "2026-08-22T16:30:00+00:00",
         "timestamp": 1787416200,
         "periods": {
-          "first": null,
-          "second": null
+          "first": 1787416200,
+          "second": 1787419800
         },
         "venue": {
           "id": null,
@@ -378,10 +378,10 @@
           "city": "London"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
-          "extra": null
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
+          "extra": 5
         }
       },
       "league": {
@@ -399,27 +399,27 @@
           "id": 55,
           "name": "Brentford",
           "logo": "https://media.api-sports.io/football/teams/55.png",
-          "winner": null
+          "winner": true
         },
         "away": {
           "id": 47,
           "name": "Tottenham",
           "logo": "https://media.api-sports.io/football/teams/47.png",
-          "winner": null
+          "winner": false
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 3,
+        "away": 0
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 0
         },
         "fulltime": {
-          "home": null,
-          "away": null
+          "home": 3,
+          "away": 0
         },
         "extratime": {
           "home": null,
@@ -434,13 +434,13 @@
     {
       "fixture": {
         "id": 1557374,
-        "referee": null,
+        "referee": "Jarred Gillett, Australia",
         "timezone": "UTC",
         "date": "2026-08-23T13:00:00+00:00",
         "timestamp": 1787490000,
         "periods": {
-          "first": null,
-          "second": null
+          "first": 1787490000,
+          "second": 1787493600
         },
         "venue": {
           "id": 555,
@@ -448,10 +448,10 @@
           "city": "Manchester"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
-          "extra": null
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
+          "extra": 6
         }
       },
       "league": {
@@ -469,27 +469,27 @@
           "id": 50,
           "name": "Manchester City",
           "logo": "https://media.api-sports.io/football/teams/50.png",
-          "winner": null
+          "winner": true
         },
         "away": {
           "id": 35,
           "name": "Bournemouth",
           "logo": "https://media.api-sports.io/football/teams/35.png",
-          "winner": null
+          "winner": false
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 2,
+        "away": 1
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 1
         },
         "fulltime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 1
         },
         "extratime": {
           "home": null,
@@ -504,24 +504,24 @@
     {
       "fixture": {
         "id": 1557373,
-        "referee": null,
+        "referee": "Peter Bankes, England",
         "timezone": "UTC",
         "date": "2026-08-23T13:00:00+00:00",
         "timestamp": 1787490000,
         "periods": {
-          "first": null,
-          "second": null
+          "first": 1787490000,
+          "second": 1787493600
         },
         "venue": {
           "id": null,
-          "name": "Amex Stadium",
-          "city": "Brighton"
+          "name": "American Express Stadium",
+          "city": "Falmer"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
-          "extra": null
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
+          "extra": 5
         }
       },
       "league": {
@@ -539,27 +539,27 @@
           "id": 51,
           "name": "Brighton",
           "logo": "https://media.api-sports.io/football/teams/51.png",
-          "winner": null
+          "winner": true
         },
         "away": {
           "id": 66,
           "name": "Aston Villa",
           "logo": "https://media.api-sports.io/football/teams/66.png",
-          "winner": null
+          "winner": false
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 4,
+        "away": 0
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 4,
+          "away": 0
         },
         "fulltime": {
-          "home": null,
-          "away": null
+          "home": 4,
+          "away": 0
         },
         "extratime": {
           "home": null,
@@ -574,24 +574,24 @@
     {
       "fixture": {
         "id": 1557375,
-        "referee": null,
+        "referee": "Stuart Attwell, England",
         "timezone": "UTC",
         "date": "2026-08-23T15:30:00+00:00",
         "timestamp": 1787499000,
         "periods": {
-          "first": null,
-          "second": null
+          "first": 1787499000,
+          "second": 1787502600
         },
         "venue": {
-          "id": null,
-          "name": null,
+          "id": 562,
+          "name": "St James' Park",
           "city": "Newcastle"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
-          "extra": null
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
+          "extra": 10
         }
       },
       "league": {
@@ -619,17 +619,17 @@
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 2,
+        "away": 2
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 0
         },
         "fulltime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 2
         },
         "extratime": {
           "home": null,
@@ -644,13 +644,13 @@
     {
       "fixture": {
         "id": 1557376,
-        "referee": null,
+        "referee": "John Brooks, England",
         "timezone": "UTC",
         "date": "2026-08-24T19:00:00+00:00",
         "timestamp": 1787598000,
         "periods": {
-          "first": null,
-          "second": null
+          "first": 1787598000,
+          "second": 1787601600
         },
         "venue": {
           "id": 535,
@@ -658,10 +658,10 @@
           "city": "London"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
-          "extra": null
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
+          "extra": 5
         }
       },
       "league": {
@@ -679,27 +679,27 @@
           "id": 36,
           "name": "Fulham",
           "logo": "https://media.api-sports.io/football/teams/36.png",
-          "winner": null
+          "winner": false
         },
         "away": {
           "id": 49,
           "name": "Chelsea",
           "logo": "https://media.api-sports.io/football/teams/49.png",
-          "winner": null
+          "winner": true
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 2,
+        "away": 3
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 2
         },
         "fulltime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 3
         },
         "extratime": {
           "home": null,
@@ -714,13 +714,13 @@
     {
       "fixture": {
         "id": 1557381,
-        "referee": null,
+        "referee": "Andy Madley, England",
         "timezone": "UTC",
         "date": "2026-08-28T19:00:00+00:00",
         "timestamp": 1787943600,
         "periods": {
-          "first": null,
-          "second": null
+          "first": 1787943600,
+          "second": 1787947200
         },
         "venue": {
           "id": 525,
@@ -728,9 +728,9 @@
           "city": "London"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
           "extra": null
         }
       },
@@ -749,27 +749,27 @@
           "id": 52,
           "name": "Crystal Palace",
           "logo": "https://media.api-sports.io/football/teams/52.png",
-          "winner": null
+          "winner": false
         },
         "away": {
           "id": 50,
           "name": "Manchester City",
           "logo": "https://media.api-sports.io/football/teams/50.png",
-          "winner": null
+          "winner": true
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 1,
+        "away": 4
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 1
         },
         "fulltime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 4
         },
         "extratime": {
           "home": null,
@@ -784,13 +784,13 @@
     {
       "fixture": {
         "id": 1557383,
-        "referee": null,
+        "referee": "Samuel Barrott, England",
         "timezone": "UTC",
         "date": "2026-08-29T11:30:00+00:00",
         "timestamp": 1788003000,
         "periods": {
-          "first": null,
-          "second": null
+          "first": 1788003000,
+          "second": 1788006600
         },
         "venue": {
           "id": 550,
@@ -798,9 +798,9 @@
           "city": "Liverpool"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
           "extra": null
         }
       },
@@ -829,17 +829,17 @@
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 2,
+        "away": 2
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 1
         },
         "fulltime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 2
         },
         "extratime": {
           "home": null,
@@ -854,13 +854,13 @@
     {
       "fixture": {
         "id": 1557378,
-        "referee": null,
+        "referee": "Chris Kavanagh, England",
         "timezone": "UTC",
         "date": "2026-08-29T14:00:00+00:00",
         "timestamp": 1788012000,
         "periods": {
-          "first": null,
-          "second": null
+          "first": 1788012000,
+          "second": 1788015600
         },
         "venue": {
           "id": null,
@@ -868,9 +868,9 @@
           "city": "Bournemouth"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
           "extra": null
         }
       },
@@ -899,17 +899,17 @@
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 1,
+        "away": 1
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 0
         },
         "fulltime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 1
         },
         "extratime": {
           "home": null,
@@ -924,13 +924,13 @@
     {
       "fixture": {
         "id": 1557380,
-        "referee": null,
+        "referee": "Josh Smith, England",
         "timezone": "UTC",
         "date": "2026-08-29T14:00:00+00:00",
         "timestamp": 1788012000,
         "periods": {
-          "first": null,
-          "second": null
+          "first": 1788012000,
+          "second": 1788015600
         },
         "venue": {
           "id": null,
@@ -938,9 +938,9 @@
           "city": "Coventry"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
           "extra": null
         }
       },
@@ -959,27 +959,27 @@
           "id": 1346,
           "name": "Coventry",
           "logo": "https://media.api-sports.io/football/teams/1346.png",
-          "winner": null
+          "winner": false
         },
         "away": {
           "id": 64,
           "name": "Hull City",
           "logo": "https://media.api-sports.io/football/teams/64.png",
-          "winner": null
+          "winner": true
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 0,
+        "away": 1
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "fulltime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 1
         },
         "extratime": {
           "home": null,
@@ -994,13 +994,13 @@
     {
       "fixture": {
         "id": 1557386,
-        "referee": null,
+        "referee": "Peter Bankes, England",
         "timezone": "UTC",
         "date": "2026-08-29T16:30:00+00:00",
         "timestamp": 1788021000,
         "periods": {
-          "first": null,
-          "second": null
+          "first": 1788021000,
+          "second": 1788024600
         },
         "venue": {
           "id": 593,
@@ -1008,9 +1008,9 @@
           "city": "London"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
           "extra": null
         }
       },
@@ -1029,27 +1029,27 @@
           "id": 47,
           "name": "Tottenham",
           "logo": "https://media.api-sports.io/football/teams/47.png",
-          "winner": null
+          "winner": false
         },
         "away": {
           "id": 34,
           "name": "Newcastle",
           "logo": "https://media.api-sports.io/football/teams/34.png",
-          "winner": null
+          "winner": true
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 0,
+        "away": 2
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "fulltime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 2
         },
         "extratime": {
           "home": null,
@@ -1064,13 +1064,13 @@
     {
       "fixture": {
         "id": 1557379,
-        "referee": null,
+        "referee": "Michael Oliver, England",
         "timezone": "UTC",
         "date": "2026-08-30T13:00:00+00:00",
         "timestamp": 1788094800,
         "periods": {
-          "first": null,
-          "second": null
+          "first": 1788094800,
+          "second": 1788098400
         },
         "venue": {
           "id": 519,
@@ -1078,10 +1078,10 @@
           "city": "London"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
-          "extra": null
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
+          "extra": 6
         }
       },
       "league": {
@@ -1099,27 +1099,27 @@
           "id": 49,
           "name": "Chelsea",
           "logo": "https://media.api-sports.io/football/teams/49.png",
-          "winner": null
+          "winner": true
         },
         "away": {
           "id": 51,
           "name": "Brighton",
           "logo": "https://media.api-sports.io/football/teams/51.png",
-          "winner": null
+          "winner": false
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 4,
+        "away": 3
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 3,
+          "away": 1
         },
         "fulltime": {
-          "home": null,
-          "away": null
+          "home": 4,
+          "away": 3
         },
         "extratime": {
           "home": null,
@@ -1134,13 +1134,13 @@
     {
       "fixture": {
         "id": 1557382,
-        "referee": null,
+        "referee": "Tony Harrington, England",
         "timezone": "UTC",
         "date": "2026-08-30T13:00:00+00:00",
         "timestamp": 1788094800,
         "periods": {
-          "first": null,
-          "second": null
+          "first": 1788094800,
+          "second": 1788098400
         },
         "venue": {
           "id": null,
@@ -1148,10 +1148,10 @@
           "city": "Leeds"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
-          "extra": null
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
+          "extra": 3
         }
       },
       "league": {
@@ -1179,17 +1179,17 @@
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 1,
+        "away": 1
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 1
         },
         "fulltime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 1
         },
         "extratime": {
           "home": null,
@@ -1204,13 +1204,13 @@
     {
       "fixture": {
         "id": 1557385,
-        "referee": null,
+        "referee": "Michael Salisbury, England",
         "timezone": "UTC",
         "date": "2026-08-30T13:00:00+00:00",
         "timestamp": 1788094800,
         "periods": {
-          "first": null,
-          "second": null
+          "first": 1788094800,
+          "second": 1788098400
         },
         "venue": {
           "id": 589,
@@ -1218,10 +1218,10 @@
           "city": "Sunderland"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
-          "extra": null
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
+          "extra": 5
         }
       },
       "league": {
@@ -1239,27 +1239,27 @@
           "id": 746,
           "name": "Sunderland",
           "logo": "https://media.api-sports.io/football/teams/746.png",
-          "winner": null
+          "winner": true
         },
         "away": {
           "id": 36,
           "name": "Fulham",
           "logo": "https://media.api-sports.io/football/teams/36.png",
-          "winner": null
+          "winner": false
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 1,
+        "away": 0
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "fulltime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 0
         },
         "extratime": {
           "home": null,
@@ -1274,13 +1274,13 @@
     {
       "fixture": {
         "id": 1557384,
-        "referee": null,
+        "referee": "Craig Pawson, England",
         "timezone": "UTC",
         "date": "2026-08-30T15:30:00+00:00",
         "timestamp": 1788103800,
         "periods": {
-          "first": null,
-          "second": null
+          "first": 1788103800,
+          "second": 1788107400
         },
         "venue": {
           "id": 556,
@@ -1288,10 +1288,10 @@
           "city": "Manchester"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
-          "extra": null
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
+          "extra": 9
         }
       },
       "league": {
@@ -1309,27 +1309,27 @@
           "id": 33,
           "name": "Manchester United",
           "logo": "https://media.api-sports.io/football/teams/33.png",
-          "winner": null
+          "winner": true
         },
         "away": {
           "id": 57,
           "name": "Ipswich",
           "logo": "https://media.api-sports.io/football/teams/57.png",
-          "winner": null
+          "winner": false
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 5,
+        "away": 2
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 1
         },
         "fulltime": {
-          "home": null,
-          "away": null
+          "home": 5,
+          "away": 2
         },
         "extratime": {
           "home": null,
@@ -1344,13 +1344,13 @@
     {
       "fixture": {
         "id": 1557377,
-        "referee": null,
+        "referee": "Jarred Gillett, Australia",
         "timezone": "UTC",
         "date": "2026-08-31T19:00:00+00:00",
         "timestamp": 1788202800,
         "periods": {
-          "first": null,
-          "second": null
+          "first": 1788202800,
+          "second": 1788206400
         },
         "venue": {
           "id": 495,
@@ -1358,10 +1358,10 @@
           "city": "Birmingham"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
-          "extra": null
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
+          "extra": 10
         }
       },
       "league": {
@@ -1379,27 +1379,27 @@
           "id": 66,
           "name": "Aston Villa",
           "logo": "https://media.api-sports.io/football/teams/66.png",
-          "winner": null
+          "winner": false
         },
         "away": {
           "id": 42,
           "name": "Arsenal",
           "logo": "https://media.api-sports.io/football/teams/42.png",
-          "winner": null
+          "winner": true
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 0,
+        "away": 1
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "fulltime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 1
         },
         "extratime": {
           "home": null,
@@ -1414,7 +1414,7 @@
     {
       "fixture": {
         "id": 1557393,
-        "referee": null,
+        "referee": "Darren England, England",
         "timezone": "UTC",
         "date": "2026-09-04T19:00:00+00:00",
         "timestamp": 1788548400,
@@ -1424,13 +1424,13 @@
         },
         "venue": {
           "id": null,
-          "name": "Portman Road",
+          "name": "Portman Road Stadium",
           "city": "Ipswich"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
           "extra": null
         }
       },
@@ -1449,27 +1449,27 @@
           "id": 57,
           "name": "Ipswich",
           "logo": "https://media.api-sports.io/football/teams/57.png",
-          "winner": null
+          "winner": false
         },
         "away": {
           "id": 40,
           "name": "Liverpool",
           "logo": "https://media.api-sports.io/football/teams/40.png",
-          "winner": null
+          "winner": true
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 0,
+        "away": 2
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 2
         },
         "fulltime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 2
         },
         "extratime": {
           "home": null,
@@ -1484,7 +1484,7 @@
     {
       "fixture": {
         "id": 1557395,
-        "referee": null,
+        "referee": "Robert Jones, England",
         "timezone": "UTC",
         "date": "2026-09-05T11:30:00+00:00",
         "timestamp": 1788607800,
@@ -1493,14 +1493,14 @@
           "second": null
         },
         "venue": {
-          "id": null,
-          "name": null,
+          "id": 562,
+          "name": "St. James' Park",
           "city": "Newcastle"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
           "extra": null
         }
       },
@@ -1529,17 +1529,17 @@
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 2,
+        "away": 2
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 2
         },
         "fulltime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 2
         },
         "extratime": {
           "home": null,
@@ -1554,7 +1554,7 @@
     {
       "fixture": {
         "id": 1557391,
-        "referee": null,
+        "referee": "Samuel Barrott, England",
         "timezone": "UTC",
         "date": "2026-09-05T14:00:00+00:00",
         "timestamp": 1788616800,
@@ -1568,9 +1568,9 @@
           "city": "London"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
           "extra": null
         }
       },
@@ -1589,27 +1589,27 @@
           "id": 36,
           "name": "Fulham",
           "logo": "https://media.api-sports.io/football/teams/36.png",
-          "winner": null
+          "winner": false
         },
         "away": {
           "id": 52,
           "name": "Crystal Palace",
           "logo": "https://media.api-sports.io/football/teams/52.png",
-          "winner": null
+          "winner": true
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 2,
+        "away": 3
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 1
         },
         "fulltime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 3
         },
         "extratime": {
           "home": null,
@@ -1624,7 +1624,7 @@
     {
       "fixture": {
         "id": 1557394,
-        "referee": null,
+        "referee": "Paul Tierney, England",
         "timezone": "UTC",
         "date": "2026-09-05T14:00:00+00:00",
         "timestamp": 1788616800,
@@ -1638,9 +1638,9 @@
           "city": "Manchester"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
           "extra": null
         }
       },
@@ -1659,27 +1659,27 @@
           "id": 50,
           "name": "Manchester City",
           "logo": "https://media.api-sports.io/football/teams/50.png",
-          "winner": null
+          "winner": true
         },
         "away": {
           "id": 1346,
           "name": "Coventry",
           "logo": "https://media.api-sports.io/football/teams/1346.png",
-          "winner": null
+          "winner": false
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 1,
+        "away": 0
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 0
         },
         "fulltime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 0
         },
         "extratime": {
           "home": null,
@@ -1694,7 +1694,7 @@
     {
       "fixture": {
         "id": 1557389,
-        "referee": null,
+        "referee": "Stuart Attwell, England",
         "timezone": "UTC",
         "date": "2026-09-05T14:00:00+00:00",
         "timestamp": 1788616800,
@@ -1704,13 +1704,13 @@
         },
         "venue": {
           "id": null,
-          "name": "Amex Stadium",
-          "city": "Brighton"
+          "name": "American Express Stadium",
+          "city": "Falmer"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
           "extra": null
         }
       },
@@ -1739,17 +1739,17 @@
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 1,
+        "away": 1
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 1
         },
         "fulltime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 1
         },
         "extratime": {
           "home": null,
@@ -1764,7 +1764,7 @@
     {
       "fixture": {
         "id": 1557388,
-        "referee": null,
+        "referee": "Thomas Bramall, England",
         "timezone": "UTC",
         "date": "2026-09-05T14:00:00+00:00",
         "timestamp": 1788616800,
@@ -1778,9 +1778,9 @@
           "city": "London"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
           "extra": null
         }
       },
@@ -1809,17 +1809,17 @@
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 1,
+        "away": 1
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "fulltime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 1
         },
         "extratime": {
           "home": null,
@@ -1834,7 +1834,7 @@
     {
       "fixture": {
         "id": 1557396,
-        "referee": null,
+        "referee": "Craig Pawson, England",
         "timezone": "UTC",
         "date": "2026-09-05T14:00:00+00:00",
         "timestamp": 1788616800,
@@ -1848,9 +1848,9 @@
           "city": "Nottingham"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
           "extra": null
         }
       },
@@ -1879,17 +1879,17 @@
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 0,
+        "away": 0
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "fulltime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "extratime": {
           "home": null,
@@ -1904,7 +1904,7 @@
     {
       "fixture": {
         "id": 1557392,
-        "referee": null,
+        "referee": "Michael Oliver, England",
         "timezone": "UTC",
         "date": "2026-09-05T16:30:00+00:00",
         "timestamp": 1788625800,
@@ -1918,9 +1918,9 @@
           "city": "Hull"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
           "extra": null
         }
       },
@@ -1949,17 +1949,17 @@
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 0,
+        "away": 0
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "fulltime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "extratime": {
           "home": null,
@@ -1974,7 +1974,7 @@
     {
       "fixture": {
         "id": 1557390,
-        "referee": null,
+        "referee": "John Brooks, England",
         "timezone": "UTC",
         "date": "2026-09-06T13:00:00+00:00",
         "timestamp": 1788699600,
@@ -1988,9 +1988,9 @@
           "city": "Liverpool"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
           "extra": null
         }
       },
@@ -2019,17 +2019,17 @@
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 2,
+        "away": 2
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "fulltime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 2
         },
         "extratime": {
           "home": null,
@@ -2044,7 +2044,7 @@
     {
       "fixture": {
         "id": 1557387,
-        "referee": null,
+        "referee": "Chris Kavanagh, England",
         "timezone": "UTC",
         "date": "2026-09-06T15:30:00+00:00",
         "timestamp": 1788708600,
@@ -2058,9 +2058,9 @@
           "city": "London"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
           "extra": null
         }
       },
@@ -2079,27 +2079,27 @@
           "id": 42,
           "name": "Arsenal",
           "logo": "https://media.api-sports.io/football/teams/42.png",
-          "winner": null
+          "winner": true
         },
         "away": {
           "id": 49,
           "name": "Chelsea",
           "logo": "https://media.api-sports.io/football/teams/49.png",
-          "winner": null
+          "winner": false
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 2,
+        "away": 1
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 1
         },
         "fulltime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 1
         },
         "extratime": {
           "home": null,
@@ -2114,13 +2114,13 @@
     {
       "fixture": {
         "id": 1557398,
-        "referee": null,
+        "referee": "Jarred Gillett, Australia",
         "timezone": "UTC",
         "date": "2026-09-12T14:00:00+00:00",
         "timestamp": 1789221600,
         "periods": {
-          "first": null,
-          "second": null
+          "first": 1789221600,
+          "second": 1789225200
         },
         "venue": {
           "id": null,
@@ -2128,9 +2128,9 @@
           "city": "Bournemouth"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
           "extra": null
         }
       },
@@ -2159,17 +2159,17 @@
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 2,
+        "away": 2
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 1
         },
         "fulltime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 2
         },
         "extratime": {
           "home": null,
@@ -2184,13 +2184,13 @@
     {
       "fixture": {
         "id": 1557403,
-        "referee": null,
+        "referee": "Thomas Bramall, England",
         "timezone": "UTC",
         "date": "2026-09-12T14:00:00+00:00",
         "timestamp": 1789221600,
         "periods": {
-          "first": null,
-          "second": null
+          "first": 1789221600,
+          "second": 1789225200
         },
         "venue": {
           "id": 550,
@@ -2198,9 +2198,9 @@
           "city": "Liverpool"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
           "extra": null
         }
       },
@@ -2229,17 +2229,17 @@
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 0,
+        "away": 0
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "fulltime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "extratime": {
           "home": null,
@@ -2254,13 +2254,13 @@
     {
       "fixture": {
         "id": 1557399,
-        "referee": null,
+        "referee": "Farai Hallam, England",
         "timezone": "UTC",
         "date": "2026-09-12T14:00:00+00:00",
         "timestamp": 1789221600,
         "periods": {
-          "first": null,
-          "second": null
+          "first": 1789221600,
+          "second": 1789225200
         },
         "venue": {
           "id": 519,
@@ -2268,9 +2268,9 @@
           "city": "London"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
           "extra": null
         }
       },
@@ -2299,17 +2299,17 @@
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 2,
+        "away": 2
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 2
         },
         "fulltime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 2
         },
         "extratime": {
           "home": null,
@@ -2324,13 +2324,13 @@
     {
       "fixture": {
         "id": 1557401,
-        "referee": null,
+        "referee": "Chris Kavanagh, England",
         "timezone": "UTC",
         "date": "2026-09-12T14:00:00+00:00",
         "timestamp": 1789221600,
         "periods": {
-          "first": null,
-          "second": null
+          "first": 1789221600,
+          "second": 1789225200
         },
         "venue": {
           "id": 525,
@@ -2338,9 +2338,9 @@
           "city": "London"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
           "extra": null
         }
       },
@@ -2359,27 +2359,27 @@
           "id": 52,
           "name": "Crystal Palace",
           "logo": "https://media.api-sports.io/football/teams/52.png",
-          "winner": null
+          "winner": false
         },
         "away": {
           "id": 57,
           "name": "Ipswich",
           "logo": "https://media.api-sports.io/football/teams/57.png",
-          "winner": null
+          "winner": true
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 2,
+        "away": 3
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 2
         },
         "fulltime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 3
         },
         "extratime": {
           "home": null,
@@ -2394,13 +2394,13 @@
     {
       "fixture": {
         "id": 1557397,
-        "referee": null,
+        "referee": "Andy Madley, England",
         "timezone": "UTC",
         "date": "2026-09-12T14:00:00+00:00",
         "timestamp": 1789221600,
         "periods": {
-          "first": null,
-          "second": null
+          "first": 1789221600,
+          "second": 1789225200
         },
         "venue": {
           "id": 495,
@@ -2408,9 +2408,9 @@
           "city": "Birmingham"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
           "extra": null
         }
       },
@@ -2429,27 +2429,27 @@
           "id": 66,
           "name": "Aston Villa",
           "logo": "https://media.api-sports.io/football/teams/66.png",
-          "winner": null
+          "winner": false
         },
         "away": {
           "id": 65,
           "name": "Nottingham Forest",
           "logo": "https://media.api-sports.io/football/teams/65.png",
-          "winner": null
+          "winner": true
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 1,
+        "away": 2
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "fulltime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 2
         },
         "extratime": {
           "home": null,
@@ -2464,13 +2464,13 @@
     {
       "fixture": {
         "id": 1557406,
-        "referee": null,
+        "referee": "Darren England, England",
         "timezone": "UTC",
         "date": "2026-09-12T16:30:00+00:00",
         "timestamp": 1789230600,
         "periods": {
-          "first": null,
-          "second": null
+          "first": 1789230600,
+          "second": 1789234200
         },
         "venue": {
           "id": 593,
@@ -2478,9 +2478,9 @@
           "city": "London"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
           "extra": null
         }
       },
@@ -2509,17 +2509,17 @@
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 0,
+        "away": 0
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "fulltime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "extratime": {
           "home": null,
@@ -2534,13 +2534,13 @@
     {
       "fixture": {
         "id": 1557405,
-        "referee": null,
+        "referee": "John Brooks, England",
         "timezone": "UTC",
         "date": "2026-09-12T19:00:00+00:00",
         "timestamp": 1789239600,
         "periods": {
-          "first": null,
-          "second": null
+          "first": 1789239600,
+          "second": 1789243200
         },
         "venue": {
           "id": 589,
@@ -2548,9 +2548,9 @@
           "city": "Sunderland"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
           "extra": null
         }
       },
@@ -2569,27 +2569,27 @@
           "id": 746,
           "name": "Sunderland",
           "logo": "https://media.api-sports.io/football/teams/746.png",
-          "winner": null
+          "winner": false
         },
         "away": {
           "id": 42,
           "name": "Arsenal",
           "logo": "https://media.api-sports.io/football/teams/42.png",
-          "winner": null
+          "winner": true
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 0,
+        "away": 2
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "fulltime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 2
         },
         "extratime": {
           "home": null,
@@ -2604,13 +2604,13 @@
     {
       "fixture": {
         "id": 1557400,
-        "referee": null,
+        "referee": "Tony Harrington, England",
         "timezone": "UTC",
         "date": "2026-09-13T13:00:00+00:00",
         "timestamp": 1789304400,
         "periods": {
-          "first": null,
-          "second": null
+          "first": 1789304400,
+          "second": 1789308000
         },
         "venue": {
           "id": null,
@@ -2618,9 +2618,9 @@
           "city": "Coventry"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
           "extra": null
         }
       },
@@ -2639,27 +2639,27 @@
           "id": 1346,
           "name": "Coventry",
           "logo": "https://media.api-sports.io/football/teams/1346.png",
-          "winner": null
+          "winner": false
         },
         "away": {
           "id": 51,
           "name": "Brighton",
           "logo": "https://media.api-sports.io/football/teams/51.png",
-          "winner": null
+          "winner": true
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 0,
+        "away": 5
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 1
         },
         "fulltime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 5
         },
         "extratime": {
           "home": null,
@@ -2674,13 +2674,13 @@
     {
       "fixture": {
         "id": 1557404,
-        "referee": null,
+        "referee": "Michael Oliver, England",
         "timezone": "UTC",
         "date": "2026-09-13T15:30:00+00:00",
         "timestamp": 1789313400,
         "periods": {
-          "first": null,
-          "second": null
+          "first": 1789313400,
+          "second": 1789317000
         },
         "venue": {
           "id": 556,
@@ -2688,9 +2688,9 @@
           "city": "Manchester"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
           "extra": null
         }
       },
@@ -2709,27 +2709,27 @@
           "id": 33,
           "name": "Manchester United",
           "logo": "https://media.api-sports.io/football/teams/33.png",
-          "winner": null
+          "winner": false
         },
         "away": {
           "id": 50,
           "name": "Manchester City",
           "logo": "https://media.api-sports.io/football/teams/50.png",
-          "winner": null
+          "winner": true
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 0,
+        "away": 1
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "fulltime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 1
         },
         "extratime": {
           "home": null,
@@ -2744,7 +2744,7 @@
     {
       "fixture": {
         "id": 1557402,
-        "referee": null,
+        "referee": "Michael Salisbury, England",
         "timezone": "UTC",
         "date": "2026-09-14T19:00:00+00:00",
         "timestamp": 1789412400,
@@ -2758,9 +2758,9 @@
           "city": "Leeds"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
           "extra": null
         }
       },
@@ -2779,27 +2779,27 @@
           "id": 63,
           "name": "Leeds",
           "logo": "https://media.api-sports.io/football/teams/63.png",
-          "winner": null
+          "winner": true
         },
         "away": {
           "id": 34,
           "name": "Newcastle",
           "logo": "https://media.api-sports.io/football/teams/34.png",
-          "winner": null
+          "winner": false
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 4,
+        "away": 1
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 3,
+          "away": 0
         },
         "fulltime": {
-          "home": null,
-          "away": null
+          "home": 4,
+          "away": 1
         },
         "extratime": {
           "home": null,
@@ -2814,7 +2814,7 @@
     {
       "fixture": {
         "id": 1557408,
-        "referee": null,
+        "referee": "Andrew Madley",
         "timezone": "UTC",
         "date": "2026-09-18T19:00:00+00:00",
         "timestamp": 1789758000,
@@ -2823,14 +2823,14 @@
           "second": null
         },
         "venue": {
-          "id": null,
-          "name": "Brentford Community Stadium",
+          "id": 10503,
+          "name": "Gtech Community Stadium",
           "city": "London"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
           "extra": null
         }
       },
@@ -2849,27 +2849,27 @@
           "id": 55,
           "name": "Brentford",
           "logo": "https://media.api-sports.io/football/teams/55.png",
-          "winner": null
+          "winner": true
         },
         "away": {
           "id": 49,
           "name": "Chelsea",
           "logo": "https://media.api-sports.io/football/teams/49.png",
-          "winner": null
+          "winner": false
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 3,
+        "away": 0
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "fulltime": {
-          "home": null,
-          "away": null
+          "home": 3,
+          "away": 0
         },
         "extratime": {
           "home": null,
@@ -2884,7 +2884,7 @@
     {
       "fixture": {
         "id": 1557416,
-        "referee": null,
+        "referee": "Samuel Barrott",
         "timezone": "UTC",
         "date": "2026-09-19T11:30:00+00:00",
         "timestamp": 1789817400,
@@ -2898,9 +2898,9 @@
           "city": "London"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
           "extra": null
         }
       },
@@ -2919,27 +2919,27 @@
           "id": 47,
           "name": "Tottenham",
           "logo": "https://media.api-sports.io/football/teams/47.png",
-          "winner": null
+          "winner": false
         },
         "away": {
           "id": 66,
           "name": "Aston Villa",
           "logo": "https://media.api-sports.io/football/teams/66.png",
-          "winner": null
+          "winner": true
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 2,
+        "away": 3
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 1
         },
         "fulltime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 3
         },
         "extratime": {
           "home": null,
@@ -2954,7 +2954,7 @@
     {
       "fixture": {
         "id": 1557414,
-        "referee": null,
+        "referee": "Tony Harrington",
         "timezone": "UTC",
         "date": "2026-09-19T14:00:00+00:00",
         "timestamp": 1789826400,
@@ -2963,14 +2963,14 @@
           "second": null
         },
         "venue": {
-          "id": null,
-          "name": null,
-          "city": "Newcastle"
+          "id": 562,
+          "name": "St James' Park",
+          "city": "Newcastle upon Tyne"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
           "extra": null
         }
       },
@@ -2989,27 +2989,27 @@
           "id": 34,
           "name": "Newcastle",
           "logo": "https://media.api-sports.io/football/teams/34.png",
-          "winner": null
+          "winner": true
         },
         "away": {
           "id": 64,
           "name": "Hull City",
           "logo": "https://media.api-sports.io/football/teams/64.png",
-          "winner": null
+          "winner": false
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 2,
+        "away": 1
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 0
         },
         "fulltime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 1
         },
         "extratime": {
           "home": null,
@@ -3024,7 +3024,7 @@
     {
       "fixture": {
         "id": 1557410,
-        "referee": null,
+        "referee": "Stuart Attwell",
         "timezone": "UTC",
         "date": "2026-09-19T14:00:00+00:00",
         "timestamp": 1789826400,
@@ -3033,14 +3033,14 @@
           "second": null
         },
         "venue": {
-          "id": null,
+          "id": 22033,
           "name": "Hill Dickinson Stadium",
           "city": "Liverpool"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
           "extra": null
         }
       },
@@ -3059,97 +3059,27 @@
           "id": 45,
           "name": "Everton",
           "logo": "https://media.api-sports.io/football/teams/45.png",
-          "winner": null
+          "winner": true
         },
         "away": {
           "id": 57,
           "name": "Ipswich",
           "logo": "https://media.api-sports.io/football/teams/57.png",
-          "winner": null
+          "winner": false
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 1,
+        "away": 0
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 0
         },
         "fulltime": {
-          "home": null,
-          "away": null
-        },
-        "extratime": {
-          "home": null,
-          "away": null
-        },
-        "penalty": {
-          "home": null,
-          "away": null
-        }
-      }
-    },
-    {
-      "fixture": {
-        "id": 1557413,
-        "referee": null,
-        "timezone": "UTC",
-        "date": "2026-09-19T14:00:00+00:00",
-        "timestamp": 1789826400,
-        "periods": {
-          "first": null,
-          "second": null
-        },
-        "venue": {
-          "id": 555,
-          "name": "Etihad Stadium",
-          "city": "Manchester"
-        },
-        "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
-          "extra": null
-        }
-      },
-      "league": {
-        "id": 39,
-        "name": "Premier League",
-        "country": "England",
-        "logo": "https://media.api-sports.io/football/leagues/39.png",
-        "flag": "https://media.api-sports.io/flags/gb-eng.svg",
-        "season": 2026,
-        "round": "Regular Season - 5",
-        "standings": true
-      },
-      "teams": {
-        "home": {
-          "id": 50,
-          "name": "Manchester City",
-          "logo": "https://media.api-sports.io/football/teams/50.png",
-          "winner": null
-        },
-        "away": {
-          "id": 746,
-          "name": "Sunderland",
-          "logo": "https://media.api-sports.io/football/teams/746.png",
-          "winner": null
-        }
-      },
-      "goals": {
-        "home": null,
-        "away": null
-      },
-      "score": {
-        "halftime": {
-          "home": null,
-          "away": null
-        },
-        "fulltime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 0
         },
         "extratime": {
           "home": null,
@@ -3164,7 +3094,7 @@
     {
       "fixture": {
         "id": 1557409,
-        "referee": null,
+        "referee": "Darren England",
         "timezone": "UTC",
         "date": "2026-09-19T14:00:00+00:00",
         "timestamp": 1789826400,
@@ -3173,14 +3103,14 @@
           "second": null
         },
         "venue": {
-          "id": null,
-          "name": "Amex Stadium",
-          "city": "Brighton"
+          "id": 508,
+          "name": "American Express Stadium",
+          "city": "Falmer"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
           "extra": null
         }
       },
@@ -3199,27 +3129,237 @@
           "id": 51,
           "name": "Brighton",
           "logo": "https://media.api-sports.io/football/teams/51.png",
-          "winner": null
+          "winner": true
         },
         "away": {
           "id": 42,
           "name": "Arsenal",
           "logo": "https://media.api-sports.io/football/teams/42.png",
-          "winner": null
+          "winner": false
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 3,
+        "away": 0
       },
       "score": {
         "halftime": {
+          "home": 2,
+          "away": 0
+        },
+        "fulltime": {
+          "home": 3,
+          "away": 0
+        },
+        "extratime": {
           "home": null,
           "away": null
         },
-        "fulltime": {
+        "penalty": {
           "home": null,
           "away": null
+        }
+      }
+    },
+    {
+      "fixture": {
+        "id": 1557415,
+        "referee": "Jarred Gillett",
+        "timezone": "UTC",
+        "date": "2026-09-19T16:30:00+00:00",
+        "timestamp": 1789835400,
+        "periods": {
+          "first": null,
+          "second": null
+        },
+        "venue": {
+          "id": 566,
+          "name": "City Ground",
+          "city": "Nottingham"
+        },
+        "status": {
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
+          "extra": null
+        }
+      },
+      "league": {
+        "id": 39,
+        "name": "Premier League",
+        "country": "England",
+        "logo": "https://media.api-sports.io/football/leagues/39.png",
+        "flag": "https://media.api-sports.io/flags/gb-eng.svg",
+        "season": 2026,
+        "round": "Regular Season - 5",
+        "standings": true
+      },
+      "teams": {
+        "home": {
+          "id": 65,
+          "name": "Nottingham Forest",
+          "logo": "https://media.api-sports.io/football/teams/65.png",
+          "winner": false
+        },
+        "away": {
+          "id": 1346,
+          "name": "Coventry",
+          "logo": "https://media.api-sports.io/football/teams/1346.png",
+          "winner": true
+        }
+      },
+      "goals": {
+        "home": 0,
+        "away": 1
+      },
+      "score": {
+        "halftime": {
+          "home": 0,
+          "away": 0
+        },
+        "fulltime": {
+          "home": 0,
+          "away": 1
+        },
+        "extratime": {
+          "home": null,
+          "away": null
+        },
+        "penalty": {
+          "home": null,
+          "away": null
+        }
+      }
+    },
+    {
+      "fixture": {
+        "id": 1557407,
+        "referee": "Michael Oliver",
+        "timezone": "UTC",
+        "date": "2026-09-20T13:00:00+00:00",
+        "timestamp": 1789909200,
+        "periods": {
+          "first": null,
+          "second": null
+        },
+        "venue": {
+          "id": 504,
+          "name": "Vitality Stadium",
+          "city": "Bournemouth"
+        },
+        "status": {
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
+          "extra": null
+        }
+      },
+      "league": {
+        "id": 39,
+        "name": "Premier League",
+        "country": "England",
+        "logo": "https://media.api-sports.io/football/leagues/39.png",
+        "flag": "https://media.api-sports.io/flags/gb-eng.svg",
+        "season": 2026,
+        "round": "Regular Season - 5",
+        "standings": true
+      },
+      "teams": {
+        "home": {
+          "id": 35,
+          "name": "Bournemouth",
+          "logo": "https://media.api-sports.io/football/teams/35.png",
+          "winner": false
+        },
+        "away": {
+          "id": 40,
+          "name": "Liverpool",
+          "logo": "https://media.api-sports.io/football/teams/40.png",
+          "winner": true
+        }
+      },
+      "goals": {
+        "home": 0,
+        "away": 1
+      },
+      "score": {
+        "halftime": {
+          "home": 0,
+          "away": 0
+        },
+        "fulltime": {
+          "home": 0,
+          "away": 1
+        },
+        "extratime": {
+          "home": null,
+          "away": null
+        },
+        "penalty": {
+          "home": null,
+          "away": null
+        }
+      }
+    },
+    {
+      "fixture": {
+        "id": 1557413,
+        "referee": "Robert Jones",
+        "timezone": "UTC",
+        "date": "2026-09-20T13:00:00+00:00",
+        "timestamp": 1789909200,
+        "periods": {
+          "first": null,
+          "second": null
+        },
+        "venue": {
+          "id": 555,
+          "name": "Etihad Stadium",
+          "city": "Manchester"
+        },
+        "status": {
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
+          "extra": null
+        }
+      },
+      "league": {
+        "id": 39,
+        "name": "Premier League",
+        "country": "England",
+        "logo": "https://media.api-sports.io/football/leagues/39.png",
+        "flag": "https://media.api-sports.io/flags/gb-eng.svg",
+        "season": 2026,
+        "round": "Regular Season - 5",
+        "standings": true
+      },
+      "teams": {
+        "home": {
+          "id": 50,
+          "name": "Manchester City",
+          "logo": "https://media.api-sports.io/football/teams/50.png",
+          "winner": true
+        },
+        "away": {
+          "id": 746,
+          "name": "Sunderland",
+          "logo": "https://media.api-sports.io/football/teams/746.png",
+          "winner": false
+        }
+      },
+      "goals": {
+        "home": 5,
+        "away": 3
+      },
+      "score": {
+        "halftime": {
+          "home": 3,
+          "away": 2
+        },
+        "fulltime": {
+          "home": 5,
+          "away": 3
         },
         "extratime": {
           "home": null,
@@ -3234,23 +3374,23 @@
     {
       "fixture": {
         "id": 1557412,
-        "referee": null,
+        "referee": "Adam Herczeg",
         "timezone": "UTC",
-        "date": "2026-09-19T14:00:00+00:00",
-        "timestamp": 1789826400,
+        "date": "2026-09-20T13:00:00+00:00",
+        "timestamp": 1789909200,
         "periods": {
           "first": null,
           "second": null
         },
         "venue": {
-          "id": null,
+          "id": 546,
           "name": "Elland Road",
           "city": "Leeds"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
           "extra": null
         }
       },
@@ -3279,157 +3419,17 @@
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 0,
+        "away": 0
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "fulltime": {
-          "home": null,
-          "away": null
-        },
-        "extratime": {
-          "home": null,
-          "away": null
-        },
-        "penalty": {
-          "home": null,
-          "away": null
-        }
-      }
-    },
-    {
-      "fixture": {
-        "id": 1557415,
-        "referee": null,
-        "timezone": "UTC",
-        "date": "2026-09-19T16:30:00+00:00",
-        "timestamp": 1789835400,
-        "periods": {
-          "first": null,
-          "second": null
-        },
-        "venue": {
-          "id": null,
-          "name": "City Ground",
-          "city": "Nottingham"
-        },
-        "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
-          "extra": null
-        }
-      },
-      "league": {
-        "id": 39,
-        "name": "Premier League",
-        "country": "England",
-        "logo": "https://media.api-sports.io/football/leagues/39.png",
-        "flag": "https://media.api-sports.io/flags/gb-eng.svg",
-        "season": 2026,
-        "round": "Regular Season - 5",
-        "standings": true
-      },
-      "teams": {
-        "home": {
-          "id": 65,
-          "name": "Nottingham Forest",
-          "logo": "https://media.api-sports.io/football/teams/65.png",
-          "winner": null
-        },
-        "away": {
-          "id": 1346,
-          "name": "Coventry",
-          "logo": "https://media.api-sports.io/football/teams/1346.png",
-          "winner": null
-        }
-      },
-      "goals": {
-        "home": null,
-        "away": null
-      },
-      "score": {
-        "halftime": {
-          "home": null,
-          "away": null
-        },
-        "fulltime": {
-          "home": null,
-          "away": null
-        },
-        "extratime": {
-          "home": null,
-          "away": null
-        },
-        "penalty": {
-          "home": null,
-          "away": null
-        }
-      }
-    },
-    {
-      "fixture": {
-        "id": 1557407,
-        "referee": null,
-        "timezone": "UTC",
-        "date": "2026-09-20T13:00:00+00:00",
-        "timestamp": 1789909200,
-        "periods": {
-          "first": null,
-          "second": null
-        },
-        "venue": {
-          "id": null,
-          "name": "Vitality Stadium",
-          "city": "Bournemouth"
-        },
-        "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
-          "extra": null
-        }
-      },
-      "league": {
-        "id": 39,
-        "name": "Premier League",
-        "country": "England",
-        "logo": "https://media.api-sports.io/football/leagues/39.png",
-        "flag": "https://media.api-sports.io/flags/gb-eng.svg",
-        "season": 2026,
-        "round": "Regular Season - 5",
-        "standings": true
-      },
-      "teams": {
-        "home": {
-          "id": 35,
-          "name": "Bournemouth",
-          "logo": "https://media.api-sports.io/football/teams/35.png",
-          "winner": null
-        },
-        "away": {
-          "id": 40,
-          "name": "Liverpool",
-          "logo": "https://media.api-sports.io/football/teams/40.png",
-          "winner": null
-        }
-      },
-      "goals": {
-        "home": null,
-        "away": null
-      },
-      "score": {
-        "halftime": {
-          "home": null,
-          "away": null
-        },
-        "fulltime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "extratime": {
           "home": null,
@@ -3444,7 +3444,7 @@
     {
       "fixture": {
         "id": 1557411,
-        "referee": null,
+        "referee": "Peter Bankes",
         "timezone": "UTC",
         "date": "2026-09-20T15:30:00+00:00",
         "timestamp": 1789918200,
@@ -3458,9 +3458,9 @@
           "city": "London"
         },
         "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
+          "long": "Match Finished",
+          "short": "FT",
+          "elapsed": 90,
           "extra": null
         }
       },
@@ -3489,17 +3489,17 @@
         }
       },
       "goals": {
-        "home": null,
-        "away": null
+        "home": 1,
+        "away": 1
       },
       "score": {
         "halftime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "fulltime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 1
         },
         "extratime": {
           "home": null,
@@ -4503,8 +4503,8 @@
           "second": null
         },
         "venue": {
-          "id": null,
-          "name": null,
+          "id": 562,
+          "name": "St. James' Park",
           "city": "Newcastle"
         },
         "status": {
@@ -5053,76 +5053,6 @@
     },
     {
       "fixture": {
-        "id": 1557444,
-        "referee": null,
-        "timezone": "UTC",
-        "date": "2026-10-24T14:00:00+00:00",
-        "timestamp": 1792850400,
-        "periods": {
-          "first": null,
-          "second": null
-        },
-        "venue": {
-          "id": 550,
-          "name": "Anfield",
-          "city": "Liverpool"
-        },
-        "status": {
-          "long": "Not Started",
-          "short": "NS",
-          "elapsed": null,
-          "extra": null
-        }
-      },
-      "league": {
-        "id": 39,
-        "name": "Premier League",
-        "country": "England",
-        "logo": "https://media.api-sports.io/football/leagues/39.png",
-        "flag": "https://media.api-sports.io/flags/gb-eng.svg",
-        "season": 2026,
-        "round": "Regular Season - 8",
-        "standings": true
-      },
-      "teams": {
-        "home": {
-          "id": 40,
-          "name": "Liverpool",
-          "logo": "https://media.api-sports.io/football/teams/40.png",
-          "winner": null
-        },
-        "away": {
-          "id": 51,
-          "name": "Brighton",
-          "logo": "https://media.api-sports.io/football/teams/51.png",
-          "winner": null
-        }
-      },
-      "goals": {
-        "home": null,
-        "away": null
-      },
-      "score": {
-        "halftime": {
-          "home": null,
-          "away": null
-        },
-        "fulltime": {
-          "home": null,
-          "away": null
-        },
-        "extratime": {
-          "home": null,
-          "away": null
-        },
-        "penalty": {
-          "home": null,
-          "away": null
-        }
-      }
-    },
-    {
-      "fixture": {
         "id": 1557437,
         "referee": null,
         "timezone": "UTC",
@@ -5375,6 +5305,76 @@
           "id": 35,
           "name": "Bournemouth",
           "logo": "https://media.api-sports.io/football/teams/35.png",
+          "winner": null
+        }
+      },
+      "goals": {
+        "home": null,
+        "away": null
+      },
+      "score": {
+        "halftime": {
+          "home": null,
+          "away": null
+        },
+        "fulltime": {
+          "home": null,
+          "away": null
+        },
+        "extratime": {
+          "home": null,
+          "away": null
+        },
+        "penalty": {
+          "home": null,
+          "away": null
+        }
+      }
+    },
+    {
+      "fixture": {
+        "id": 1557444,
+        "referee": null,
+        "timezone": "UTC",
+        "date": "2026-10-25T14:00:00+00:00",
+        "timestamp": 1792936800,
+        "periods": {
+          "first": null,
+          "second": null
+        },
+        "venue": {
+          "id": 550,
+          "name": "Anfield",
+          "city": "Liverpool"
+        },
+        "status": {
+          "long": "Not Started",
+          "short": "NS",
+          "elapsed": null,
+          "extra": null
+        }
+      },
+      "league": {
+        "id": 39,
+        "name": "Premier League",
+        "country": "England",
+        "logo": "https://media.api-sports.io/football/leagues/39.png",
+        "flag": "https://media.api-sports.io/flags/gb-eng.svg",
+        "season": 2026,
+        "round": "Regular Season - 8",
+        "standings": true
+      },
+      "teams": {
+        "home": {
+          "id": 40,
+          "name": "Liverpool",
+          "logo": "https://media.api-sports.io/football/teams/40.png",
+          "winner": null
+        },
+        "away": {
+          "id": 51,
+          "name": "Brighton",
+          "logo": "https://media.api-sports.io/football/teams/51.png",
           "winner": null
         }
       },
@@ -6106,8 +6106,8 @@
         "id": 1557447,
         "referee": null,
         "timezone": "UTC",
-        "date": "2026-11-01T14:00:00+00:00",
-        "timestamp": 1793541600,
+        "date": "2026-10-31T20:00:00+00:00",
+        "timestamp": 1793476800,
         "periods": {
           "first": null,
           "second": null
@@ -6253,8 +6253,8 @@
           "second": null
         },
         "venue": {
-          "id": null,
-          "name": null,
+          "id": 562,
+          "name": "St. James' Park",
           "city": "Newcastle"
         },
         "status": {
@@ -7023,8 +7023,8 @@
           "second": null
         },
         "venue": {
-          "id": null,
-          "name": null,
+          "id": 562,
+          "name": "St. James' Park",
           "city": "Newcastle"
         },
         "status": {
@@ -8423,8 +8423,8 @@
           "second": null
         },
         "venue": {
-          "id": null,
-          "name": null,
+          "id": 562,
+          "name": "St. James' Park",
           "city": "Newcastle"
         },
         "status": {
@@ -9193,8 +9193,8 @@
           "second": null
         },
         "venue": {
-          "id": null,
-          "name": null,
+          "id": 562,
+          "name": "St. James' Park",
           "city": "Newcastle"
         },
         "status": {
@@ -11293,8 +11293,8 @@
           "second": null
         },
         "venue": {
-          "id": null,
-          "name": null,
+          "id": 562,
+          "name": "St. James' Park",
           "city": "Newcastle"
         },
         "status": {
@@ -11993,8 +11993,8 @@
           "second": null
         },
         "venue": {
-          "id": null,
-          "name": null,
+          "id": 562,
+          "name": "St. James' Park",
           "city": "Newcastle"
         },
         "status": {
@@ -14023,8 +14023,8 @@
           "second": null
         },
         "venue": {
-          "id": null,
-          "name": null,
+          "id": 562,
+          "name": "St James’ Park",
           "city": "Newcastle"
         },
         "status": {
@@ -15423,8 +15423,8 @@
           "second": null
         },
         "venue": {
-          "id": null,
-          "name": null,
+          "id": 562,
+          "name": "St James’ Park",
           "city": "Newcastle"
         },
         "status": {
@@ -16893,8 +16893,8 @@
           "second": null
         },
         "venue": {
-          "id": null,
-          "name": null,
+          "id": 562,
+          "name": "St James’ Park",
           "city": "Newcastle"
         },
         "status": {
@@ -18293,8 +18293,8 @@
           "second": null
         },
         "venue": {
-          "id": null,
-          "name": null,
+          "id": 562,
+          "name": "St James’ Park",
           "city": "Newcastle"
         },
         "status": {
@@ -19274,8 +19274,8 @@
         },
         "venue": {
           "id": null,
-          "name": "Amex Stadium",
-          "city": "Brighton"
+          "name": "American Express Stadium",
+          "city": "Falmer"
         },
         "status": {
           "long": "Not Started",
@@ -19344,7 +19344,7 @@
         },
         "venue": {
           "id": null,
-          "name": "Brentford Community Stadium",
+          "name": "Gtech Community Stadium",
           "city": "London"
         },
         "status": {
@@ -20323,9 +20323,9 @@
           "second": null
         },
         "venue": {
-          "id": null,
-          "name": null,
-          "city": "Newcastle"
+          "id": 562,
+          "name": "St James' Park",
+          "city": "Newcastle upon Tyne"
         },
         "status": {
           "long": "Not Started",
@@ -20674,8 +20674,8 @@
         },
         "venue": {
           "id": null,
-          "name": "Amex Stadium",
-          "city": "Brighton"
+          "name": "American Express Stadium",
+          "city": "Falmer"
         },
         "status": {
           "long": "Not Started",
@@ -20744,7 +20744,7 @@
         },
         "venue": {
           "id": null,
-          "name": "Brentford Community Stadium",
+          "name": "Gtech Community Stadium",
           "city": "London"
         },
         "status": {
@@ -20814,7 +20814,7 @@
         },
         "venue": {
           "id": null,
-          "name": "Portman Road",
+          "name": "Portman Road Stadium",
           "city": "Ipswich"
         },
         "status": {
@@ -21723,9 +21723,9 @@
           "second": null
         },
         "venue": {
-          "id": null,
-          "name": null,
-          "city": "Newcastle"
+          "id": 562,
+          "name": "St James' Park",
+          "city": "Newcastle upon Tyne"
         },
         "status": {
           "long": "Not Started",
@@ -22074,8 +22074,8 @@
         },
         "venue": {
           "id": null,
-          "name": "Amex Stadium",
-          "city": "Brighton"
+          "name": "American Express Stadium",
+          "city": "Falmer"
         },
         "status": {
           "long": "Not Started",
@@ -22144,7 +22144,7 @@
         },
         "venue": {
           "id": null,
-          "name": "Brentford Community Stadium",
+          "name": "Gtech Community Stadium",
           "city": "London"
         },
         "status": {
@@ -22214,7 +22214,7 @@
         },
         "venue": {
           "id": null,
-          "name": "Portman Road",
+          "name": "Portman Road Stadium",
           "city": "Ipswich"
         },
         "status": {
@@ -22493,9 +22493,9 @@
           "second": null
         },
         "venue": {
-          "id": null,
-          "name": null,
-          "city": "Newcastle"
+          "id": 562,
+          "name": "St James' Park",
+          "city": "Newcastle upon Tyne"
         },
         "status": {
           "long": "Not Started",
@@ -22844,7 +22844,7 @@
         },
         "venue": {
           "id": null,
-          "name": "Brentford Community Stadium",
+          "name": "Gtech Community Stadium",
           "city": "London"
         },
         "status": {
@@ -23404,8 +23404,8 @@
         },
         "venue": {
           "id": null,
-          "name": "Amex Stadium",
-          "city": "Brighton"
+          "name": "American Express Stadium",
+          "city": "Falmer"
         },
         "status": {
           "long": "Not Started",
@@ -23544,7 +23544,7 @@
         },
         "venue": {
           "id": null,
-          "name": "Portman Road",
+          "name": "Portman Road Stadium",
           "city": "Ipswich"
         },
         "status": {
@@ -23823,9 +23823,9 @@
           "second": null
         },
         "venue": {
-          "id": null,
-          "name": null,
-          "city": "Newcastle"
+          "id": 562,
+          "name": "St James' Park",
+          "city": "Newcastle upon Tyne"
         },
         "status": {
           "long": "Not Started",
@@ -24244,8 +24244,8 @@
         },
         "venue": {
           "id": null,
-          "name": "Amex Stadium",
-          "city": "Brighton"
+          "name": "American Express Stadium",
+          "city": "Falmer"
         },
         "status": {
           "long": "Not Started",
@@ -24314,7 +24314,7 @@
         },
         "venue": {
           "id": null,
-          "name": "Brentford Community Stadium",
+          "name": "Gtech Community Stadium",
           "city": "London"
         },
         "status": {
@@ -24874,7 +24874,7 @@
         },
         "venue": {
           "id": null,
-          "name": "Portman Road",
+          "name": "Portman Road Stadium",
           "city": "Ipswich"
         },
         "status": {
@@ -25223,9 +25223,9 @@
           "second": null
         },
         "venue": {
-          "id": null,
-          "name": null,
-          "city": "Newcastle"
+          "id": 562,
+          "name": "St James' Park",
+          "city": "Newcastle upon Tyne"
         },
         "status": {
           "long": "Not Started",
@@ -25644,8 +25644,8 @@
         },
         "venue": {
           "id": null,
-          "name": "Amex Stadium",
-          "city": "Brighton"
+          "name": "American Express Stadium",
+          "city": "Falmer"
         },
         "status": {
           "long": "Not Started",
@@ -25714,7 +25714,7 @@
         },
         "venue": {
           "id": null,
-          "name": "Brentford Community Stadium",
+          "name": "Gtech Community Stadium",
           "city": "London"
         },
         "status": {
@@ -26274,7 +26274,7 @@
         },
         "venue": {
           "id": null,
-          "name": "Portman Road",
+          "name": "Portman Road Stadium",
           "city": "Ipswich"
         },
         "status": {

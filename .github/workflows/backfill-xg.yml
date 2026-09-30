@@ -1,23 +1,23 @@
-name: Backfill EPL xG
+name: Backfill EPL match stats
 
 permissions:
   contents: read
 
 on:
   schedule:
-    # Recheck TheStatsAPI after weekend match windows for finalized xG corrections.
+    # Recheck TheStatsAPI after weekend match windows for finalized match statistics.
     - cron: "45 22 * * 0,1"
     - cron: "45 6 * * 1,2"
   workflow_dispatch:
     inputs:
       force_deploy:
-        description: "Deploy even if no xG values changed"
+        description: "Deploy even if no match statistics changed"
         required: false
         default: false
         type: boolean
 
 jobs:
-  backfill-xg:
+  backfill-stats:
     runs-on: ubuntu-latest
     env:
       TIMELINE_SEASON: 2026-27
@@ -39,7 +39,7 @@ jobs:
         run: |
           mkdir -p "$SEASON_DATA_DIR/matchweeks"
 
-          for file in fixtures.raw.json events.raw.json standings.json odds.json; do
+          for file in fixtures.raw.json events.raw.json standings.json; do
             if curl -fsSL "$LIVE_SEASON_DATA_URL/$file" -o "$SEASON_DATA_DIR/$file"; then
               echo "Hydrated $file from live site."
             else
@@ -55,17 +55,20 @@ jobs:
             fi
           done
 
+      - name: Merge deployed odds archive
+        run: npm run sync:odds
+
       - name: Capture matchweek baseline
         run: |
           mkdir -p .tmp
           cp -R "$SEASON_DATA_DIR/matchweeks" .tmp/matchweeks-before
 
-      - name: Backfill missing xG
+      - name: Backfill finalized TheStatsAPI data
         env:
           TSAPI_KEY: ${{ secrets.TSAPI_KEY }}
-        run: npm run backfill:xg
+        run: npm run backfill:stats
 
-      - name: Check for xG changes
+      - name: Check for match-stat changes
         id: changes
         env:
           FORCE_DEPLOY: ${{ github.event.inputs.force_deploy }}
@@ -78,10 +81,10 @@ jobs:
 
           if diff -qr .tmp/matchweeks-before "$SEASON_DATA_DIR/matchweeks" >/dev/null; then
             echo "should_deploy=0" >> "$GITHUB_OUTPUT"
-            echo "No xG changes; skipping build/deploy."
+            echo "No match-stat changes; skipping build/deploy."
           else
             echo "should_deploy=1" >> "$GITHUB_OUTPUT"
-            echo "xG changed; building and deploying."
+            echo "Match statistics changed; building and deploying."
           fi
 
       - name: Build players cache

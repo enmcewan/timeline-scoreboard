@@ -1,0 +1,117 @@
+TIMELINE FOOTBALL - UPDATE LAURIS SERVER
+========================================
+
+Purpose
+-------
+Update the Timeline Scoreboard checkout on lauris-webdev.com after changes have
+been pushed to GitHub.
+
+
+1. Open the server terminal
+---------------------------
+Sign in to the hosting control panel and open cPanel Terminal.
+
+
+2. Enter the Node 20 environment and project directory
+-------------------------------------------------------
+Run:
+
+source /home/lauriswe/nodevenv/timeline-scoreboard/20/bin/activate && cd /home/lauriswe/timeline-scoreboard
+
+The prompt should indicate timeline-scoreboard and Node 20.
+
+
+3. Inspect the repository
+-------------------------
+Run:
+
+git status --short
+
+Generated data changes may be present and are expected. Do not reset or delete
+them.
+
+
+4. Pull the latest code
+-----------------------
+Run:
+
+git pull --ff-only
+
+
+5. Confirm the latest commit
+----------------------------
+Run:
+
+git log -1 --oneline
+
+Check that the displayed commit is the update you pushed to GitHub.
+
+
+6. Verify TheStatsAPI integration when relevant
+-----------------------------------------------
+Run:
+
+grep -n "live-stats" src/scripts/the-stats-api-xg.mjs
+
+It should print the matching lines from the script.
+
+
+7. Dependencies and application restart
+---------------------------------------
+- Do not run npm ci unless package.json or package-lock.json changed.
+- A Node application restart is not required for cron-only script changes.
+- Cron starts a fresh Node process on every run, so it will use the new code.
+
+
+8. Check the cron job in cPanel
+-------------------------------
+Open cPanel > Cron Jobs and confirm the job still runs at:
+
+3,18,33,51 * * * *
+
+Confirm that its command includes these environment variables:
+
+APIFOOTBALL_KEY
+TSAPI_KEY
+TIMELINE_SEASON="2026-27"
+LIVE_DATA_OUT_DIR="/home/lauriswe/public_html/timeline-data"
+
+Never copy API-key values into Git, screenshots, or support messages.
+
+Leave the cron job enabled between matches. The update script's match-window
+check prevents unnecessary API requests when no game is near or in progress.
+
+
+9. Verify the next live update
+------------------------------
+After the next match starts, use cPanel File Manager or Terminal to inspect:
+
+/home/lauriswe/timeline-scoreboard/live-update.log
+
+For a live match, look for an entry similar to:
+
+TheStatsAPI live-stats xG ...
+
+After a match finishes, look for an entry similar to:
+
+TheStatsAPI stats xG ...
+
+Also verify these published files in a browser:
+
+https://lauris-webdev.com/timeline-data/epl/2026-27/health.json
+https://lauris-webdev.com/timeline-data/epl/2026-27/matchweeks/current.json
+
+The publishedAt timestamp in health.json should advance after a successful run.
+
+
+Troubleshooting
+---------------
+- If git pull --ff-only refuses because of local changes or conflicts, stop and
+  save the exact output. Do not run git reset, git checkout, or delete generated
+  files.
+- If the server reports "Unable to fork" or "Resource temporarily unavailable",
+  check cPanel Resource Usage and Cron Jobs. Make sure the cron job is not
+  duplicated. Contact hosting support if the NPROC limit is exhausted.
+- When no match is within the refresh window, this log entry is expected:
+
+  Outside the match refresh window. No API requests made.

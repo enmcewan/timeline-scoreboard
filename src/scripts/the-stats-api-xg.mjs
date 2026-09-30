@@ -14,6 +14,120 @@ function finiteXg(value) {
     : null;
 }
 
+function finiteStat(value) {
+  if (value == null || String(value).trim() === "") return null;
+  const number = Number(value);
+  return Number.isFinite(number) && number >= 0 ? number : null;
+}
+
+function hasInsights(insights) {
+  return Object.values(insights || {}).some(
+    (pair) => finiteStat(pair?.home) != null && finiteStat(pair?.away) != null
+  );
+}
+
+function hasShotMap(shotMap) {
+  return Array.isArray(shotMap?.shots) && shotMap.shots.length > 0;
+}
+
+function finiteCoordinate(value) {
+  const number = Number(value);
+  return Number.isFinite(number) ? Math.max(0, Math.min(100, number)) : null;
+}
+
+export function extractTheStatsApiShotMap(payload) {
+  const shots = Array.isArray(payload?.data) ? payload.data : [];
+  const homeTeamId = String(payload?.event?.home_team_id || "");
+  const awayTeamId = String(payload?.event?.away_team_id || "");
+  const normalized = shots.flatMap((shot) => {
+    const x = finiteCoordinate(shot?.x);
+    const y = finiteCoordinate(shot?.y);
+    if (x == null || y == null) return [];
+
+    const teamId = String(shot?.team_id || "");
+    const side = teamId === homeTeamId ? "home" : teamId === awayTeamId ? "away" : null;
+    if (!side) return [];
+
+    return [{
+      id: String(shot?.id || ""),
+      side,
+      playerId: String(shot?.player_id || ""),
+      playerName: String(shot?.player_name || "Unknown player"),
+      teamName: String(shot?.team_name || ""),
+      x,
+      y,
+      minute: finiteStat(shot?.minute),
+      result: String(shot?.result || "unknown").toLowerCase(),
+      xg: finiteXg(shot?.expected_goals),
+      situation: shot?.situation ? String(shot.situation) : null,
+      bodyPart: shot?.body_part ? String(shot.body_part) : null,
+      isGoal: Boolean(shot?.is_goal),
+      isOnTarget: Boolean(shot?.is_on_target),
+      isBlocked: Boolean(shot?.is_blocked_shot),
+      isPenalty: Boolean(shot?.is_penalty),
+    }];
+  });
+
+  if (!normalized.length) return null;
+  return {
+    matchId: String(payload?.match_id || payload?.event?.id || ""),
+    shots: normalized,
+    npXg: {
+      home: finiteXg(payload?.np_xg_summary?.stored?.home_team ?? payload?.np_xg_summary?.live?.home_team),
+      away: finiteXg(payload?.np_xg_summary?.stored?.away_team ?? payload?.np_xg_summary?.live?.away_team),
+    },
+    isFinal: Boolean(payload?.meta?.is_final),
+  };
+}
+
+function statPair(payload, paths) {
+  for (const keys of paths) {
+    let value = payload;
+    for (const key of keys) value = value?.[key];
+
+    const all = value?.all;
+    const home = finiteStat(all?.home);
+    const away = finiteStat(all?.away);
+    if (home != null && away != null) return { home, away };
+  }
+
+  return null;
+}
+
+export function extractTheStatsApiInsights(payload) {
+  const roots = [payload?.data?.stats, payload?.data].filter(Boolean);
+  const fields = {
+    bigChances: [["overview", "big_chances"]],
+    bigChancesMissed: [["attack", "big_chances_missed"]],
+    hitWoodwork: [["shots", "hit_woodwork"]],
+    tackles: [["overview", "tackles"]],
+    accuratePasses: [
+      ["passes", "accurate_passes"],
+      ["overview", "accurate_passes"],
+    ],
+    duelsWonPct: [["duels", "duels_won_percentage"]],
+    offsides: [["attack", "offsides"]],
+    interceptions: [["defending", "interceptions"]],
+    clearances: [["defending", "clearances"]],
+    goalkeeperSaves: [
+      ["goalkeeping", "saves"],
+      ["overview", "goalkeeper_saves"],
+    ],
+  };
+  const insights = {};
+
+  for (const [name, paths] of Object.entries(fields)) {
+    for (const root of roots) {
+      const pair = statPair(root, paths);
+      if (!pair) continue;
+      insights[name] = pair;
+      break;
+    }
+  }
+
+  return insights;
+}
+
 function normalizeName(value) {
   return String(value || "")
     .toLowerCase()
@@ -100,6 +214,28 @@ export function applyTheStatsApiXg(match, xg) {
   return true;
 }
 
+export function applyTheStatsApiMatchData(match, data) {
+  if (!match || !data) return false;
+
+  let applied = applyTheStatsApiXg(match, data.xg);
+  if (hasInsights(data.insights)) {
+    match.insights = {
+      provider: "thestatsapi",
+      ...data.insights,
+    };
+    applied = true;
+  }
+  if (hasShotMap(data.shotMap)) {
+    match.shotMap = {
+      provider: "thestatsapi",
+      ...data.shotMap,
+    };
+    applied = true;
+  }
+
+  return applied;
+}
+
 export async function createTheStatsApiXgClient({
   apiKey = process.env.TSAPI_KEY,
   competitionId,
@@ -111,12 +247,13 @@ export async function createTheStatsApiXgClient({
 }) {
   const aliases = buildTeamAliasMap(teams);
   const cache = await readJson(cachePath, {
-    version: 1,
+    version: 3,
     source: "thestatsapi",
     seasonPath,
     updatedAt: null,
     fixtures: {},
   });
+  cache.version = 3;
   cache.fixtures ||= {};
 
   const matchesByRound = new Map();
@@ -229,6 +366,16 @@ export async function createTheStatsApiXgClient({
     return { home: finiteXg(all?.home), away: finiteXg(all?.away) };
   }
 
+  function cachedMatchData(entry) {
+    if (!entry) return null;
+    const data = {
+      xg: hasXg(entry.xg) ? entry.xg : null,
+      insights: hasInsights(entry.insights) ? entry.insights : null,
+      shotMap: hasShotMap(entry.shotMap) ? entry.shotMap : null,
+    };
+    return data.xg || data.insights || data.shotMap ? data : null;
+  }
+
   async function fetchStats(matchId, endpoint, { allowConflictFallback }) {
     try {
       return {
@@ -253,22 +400,22 @@ export async function createTheStatsApiXgClient({
     }
   }
 
-  async function getXg(rawFixture, { force = false, final = false } = {}) {
+  async function getMatchData(rawFixture, { force = false, final = false } = {}) {
     const fixtureId = String(rawFixture?.fixture?.id || "");
     const cached = cache.fixtures[fixtureId];
 
     if (!apiKey || !competitionId || !seasonId) {
-      return hasXg(cached?.xg) ? cached.xg : null;
+      return cachedMatchData(cached);
     }
 
     if (!force && !isInsideLiveWindow(rawFixture, now())) {
-      return hasXg(cached?.xg) ? cached.xg : null;
+      return cachedMatchData(cached);
     }
 
     if (!force && !isFinishedFixture(rawFixture)) {
       const kickoff = fixtureKickoff(rawFixture);
       if (Number.isFinite(kickoff) && now() < kickoff) {
-        return hasXg(cached?.xg) ? cached.xg : null;
+        return cachedMatchData(cached);
       }
     }
 
@@ -277,32 +424,66 @@ export async function createTheStatsApiXgClient({
       const requestedEndpoint = final || isFinishedFixture(rawFixture)
         ? "stats"
         : "live-stats";
-      const result = await fetchStats(matchId, requestedEndpoint, {
-        allowConflictFallback: !final,
-      });
-      const xg = extractXg(result.payload);
+      const [statsResult, shotMapResult] = await Promise.allSettled([
+        fetchStats(matchId, requestedEndpoint, { allowConflictFallback: !final }),
+        apiGet(`/football/matches/${encodeURIComponent(matchId)}/shotmap`),
+      ]);
+      if (statsResult.status === "rejected") {
+        console.warn(`TheStatsAPI match stats failed for fixture ${fixtureId}: ${statsResult.reason?.message || statsResult.reason}`);
+      }
+      if (shotMapResult.status === "rejected") {
+        console.warn(`TheStatsAPI shot map failed for fixture ${fixtureId}: ${shotMapResult.reason?.message || shotMapResult.reason}`);
+      }
 
-      if (!hasXg(xg)) {
-        console.log(`TheStatsAPI xG not yet available for fixture ${fixtureId}.`);
-        return hasXg(cached?.xg) ? cached.xg : null;
+      const result = statsResult.status === "fulfilled" ? statsResult.value : null;
+      const extractedXg = result ? extractXg(result.payload) : null;
+      const extractedInsights = result ? extractTheStatsApiInsights(result.payload) : null;
+      const extractedShotMap = shotMapResult.status === "fulfilled"
+        ? extractTheStatsApiShotMap(shotMapResult.value)
+        : null;
+      const xg = hasXg(extractedXg) ? extractedXg : cached?.xg;
+      const insights = {
+        ...(cached?.insights || {}),
+        ...(extractedInsights || {}),
+      };
+      const shotMap = hasShotMap(extractedShotMap) ? extractedShotMap : cached?.shotMap;
+      delete insights.tacklesWonPct;
+      delete insights.shotsBlocked;
+
+      if (!hasXg(xg) && !hasInsights(insights) && !hasShotMap(shotMap)) {
+        console.log(`TheStatsAPI match stats not yet available for fixture ${fixtureId}.`);
+        return cachedMatchData(cached);
       }
 
       cache.fixtures[fixtureId] = {
         ...cache.fixtures[fixtureId],
-        xg,
+        ...(hasXg(xg) ? { xg } : {}),
+        ...(hasInsights(insights) ? { insights } : {}),
+        ...(hasShotMap(shotMap) ? { shotMap } : {}),
         fetchedAt: new Date(now()).toISOString(),
         matchStatus: rawFixture?.fixture?.status?.short || null,
-        xgPhase: result.endpoint === "stats" ? "final" : "live",
+        xgPhase: result?.endpoint === "stats" ? "final" : cached?.xgPhase || "live",
       };
       dirty = true;
       console.log(
-        `TheStatsAPI ${result.endpoint} xG ${fixtureId}: ${xg.home} / ${xg.away}`
+        `TheStatsAPI ${result?.endpoint || requestedEndpoint} data ${fixtureId}: ` +
+        `xG ${hasXg(xg) ? `${xg.home} / ${xg.away}` : "unavailable"}; ` +
+        `insights ${hasInsights(insights) ? Object.keys(insights).length : 0}; ` +
+        `shots ${hasShotMap(shotMap) ? shotMap.shots.length : 0}`
       );
-      return xg;
+      return {
+        xg: hasXg(xg) ? xg : null,
+        insights: hasInsights(insights) ? insights : null,
+        shotMap: hasShotMap(shotMap) ? shotMap : null,
+      };
     } catch (error) {
-      console.warn(`TheStatsAPI xG failed for fixture ${fixtureId}: ${error.message}`);
-      return hasXg(cached?.xg) ? cached.xg : null;
+      console.warn(`TheStatsAPI stats failed for fixture ${fixtureId}: ${error.message}`);
+      return cachedMatchData(cached);
     }
+  }
+
+  async function getXg(rawFixture, options) {
+    return (await getMatchData(rawFixture, options))?.xg ?? null;
   }
 
   async function save() {
@@ -313,5 +494,5 @@ export async function createTheStatsApiXgClient({
     return true;
   }
 
-  return { getXg, save };
+  return { getMatchData, getXg, save };
 }

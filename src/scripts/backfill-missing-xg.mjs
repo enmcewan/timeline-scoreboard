@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 
 import { getSeasonConfigFromEnv } from "../config/seasons.js";
 import {
-  applyTheStatsApiXg,
+  applyTheStatsApiMatchData,
   createTheStatsApiXgClient,
 } from "./the-stats-api-xg.mjs";
 
@@ -55,11 +55,13 @@ function isStarted(match) {
   return Number.isFinite(kickoff) && kickoff <= Date.now();
 }
 
-function xgSnapshot(match) {
+function statsSnapshot(match) {
   return JSON.stringify({
     home: match?.statistics?.home?.xg ?? null,
     away: match?.statistics?.away?.xg ?? null,
     provider: match?.statistics?.xgProvider ?? null,
+    insights: match?.insights ?? null,
+    shotMap: match?.shotMap ?? null,
   });
 }
 
@@ -102,14 +104,14 @@ async function main() {
       }
 
       candidates++;
-      const before = xgSnapshot(match);
-      const xg = await client.getXg(rawFixture, { force: true, final: true });
-      if (!applyTheStatsApiXg(match, xg)) {
+      const before = statsSnapshot(match);
+      const data = await client.getMatchData(rawFixture, { force: true, final: true });
+      if (!applyTheStatsApiMatchData(match, data)) {
         unavailable++;
         continue;
       }
 
-      if (xgSnapshot(match) !== before) {
+      if (statsSnapshot(match) !== before) {
         touched = true;
         updated++;
       }
@@ -123,7 +125,7 @@ async function main() {
 
   await client.save();
   console.log(
-    `Done. Candidates: ${candidates}. Updated: ${updated}. xG unavailable: ${unavailable}. Files touched: ${touchedFiles.join(", ") || "none"}.`
+    `Done. Candidates: ${candidates}. Updated: ${updated}. Stats unavailable: ${unavailable}. Files touched: ${touchedFiles.join(", ") || "none"}.`
   );
 }
 

@@ -50,7 +50,7 @@ jobs:
         run: |
           mkdir -p "$SEASON_DATA_DIR/matchweeks"
 
-          for file in fixtures.raw.json events.raw.json standings.json odds.json; do
+          for file in fixtures.raw.json events.raw.json standings.json; do
             if curl -fsSL "$LIVE_SEASON_DATA_URL/$file" -o "$SEASON_DATA_DIR/$file"; then
               echo "Hydrated $file from live site."
             else
@@ -65,6 +65,9 @@ jobs:
               echo "Live matchweek $round unavailable; keeping repository copy."
             fi
           done
+
+      - name: Merge deployed odds archive
+        run: npm run sync:odds
 
       - name: Fetch fixtures
         env:

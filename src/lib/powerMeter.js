@@ -27,7 +27,11 @@ function expectationSwing({ homeRank, awayRank, homeForm, awayForm }) {
     }
 
     const blended = 0.7 * formDelta01 + 0.3 * rankDelta01;
-    return blended * 12;
+
+    // Home advantage raises the baseline expectation for the host. A draw or
+    // away win should therefore feel better for the visitor, all else equal.
+    const HOME_ADVANTAGE_SWING = -2;
+    return clamp((blended * 12) + HOME_ADVANTAGE_SWING, -12, 12);
 }
 
 function applyExpectationToPower({ baseHome, baseAway, homeGoals, awayGoals, swing }) {
@@ -232,13 +236,25 @@ export function computePerfExec(match, ctx) {
     const hshots = safeNum(h.shots, 0), ashots = safeNum(a.shots, 0);
     const hcorn = safeNum(h.corners, 0), acorn = safeNum(a.corners, 0);
     const hposs = poss01(h.poss), aposs = poss01(a.poss);
+    const hBigChancesRaw = match.insights?.bigChances?.home;
+    const aBigChancesRaw = match.insights?.bigChances?.away;
+    const hasBigChances = Number.isFinite(Number(hBigChancesRaw)) &&
+        Number.isFinite(Number(aBigChancesRaw));
+    const hBigChances = hasBigChances ? Number(hBigChancesRaw) : 0;
+    const aBigChances = hasBigChances ? Number(aBigChancesRaw) : 0;
 
     const share = (x, y) => (x + y > 0 ? x / (x + y) : 0.5);
+
+    // Big chances distinguish dangerous creation from sterile shot volume.
+    // Reallocate weight from shots on target only when TSAPI supplied both sides.
+    const sotRelativeWeight = hasBigChances ? 0.35 : 0.45;
+    const bigChanceRelativeWeight = hasBigChances ? 0.10 : 0;
 
     // ----- RELATIVE (0..1) -----
     const rel01 =
         0.35 * share(hxg, axg) +
-        0.45 * share(hsot, asot) +
+        sotRelativeWeight * share(hsot, asot) +
+        bigChanceRelativeWeight * share(hBigChances, aBigChances) +
         0.15 * share(hshots, ashots) +
         // 0.10 * share(hposs, aposs) +
         0.05 * share(hcorn, acorn);
@@ -247,7 +263,8 @@ export function computePerfExec(match, ctx) {
 
     const relAway01 =
         0.35 * share(axg, hxg) +
-        0.45 * share(asot, hsot) +
+        sotRelativeWeight * share(asot, hsot) +
+        bigChanceRelativeWeight * share(aBigChances, hBigChances) +
         0.15 * share(ashots, hshots) +
         // 0.10 * share(aposs, hposs) +
         0.05 * share(acorn, hcorn);
@@ -258,16 +275,20 @@ export function computePerfExec(match, ctx) {
     const cap01 = (v, cap) => clamp(v / cap, 0, 1);
 
     // caps are intentionally “good-game” levels, not maxima
+    const sotAbsoluteWeight = hasBigChances ? 0.10 : 0.20;
+    const bigChanceAbsoluteWeight = hasBigChances ? 0.10 : 0;
     const absHome01 =
         0.55 * cap01(hxg, 3.0) +
-        0.20 * cap01(hsot, 10) +
+        sotAbsoluteWeight * cap01(hsot, 10) +
+        bigChanceAbsoluteWeight * cap01(hBigChances, 5) +
         0.10 * cap01(hshots, 25) +
         0.10 * hposs +
         0.05 * cap01(hcorn, 12);
 
     const absAway01 =
         0.55 * cap01(axg, 3.0) +
-        0.20 * cap01(asot, 10) +
+        sotAbsoluteWeight * cap01(asot, 10) +
+        bigChanceAbsoluteWeight * cap01(aBigChances, 5) +
         0.10 * cap01(ashots, 25) +
         0.10 * aposs +
         0.05 * cap01(acorn, 12);

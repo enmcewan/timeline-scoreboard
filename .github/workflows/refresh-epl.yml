@@ -33,7 +33,7 @@ jobs:
         run: |
           mkdir -p "$SEASON_DATA_DIR/matchweeks"
 
-          for file in fixtures.raw.json events.raw.json standings.json odds.json; do
+          for file in fixtures.raw.json events.raw.json standings.json; do
             if curl -fsSL "$LIVE_SITE_DATA_URL/$file" -o "$SEASON_DATA_DIR/$file"; then
               echo "Hydrated deployed $file."
             else
@@ -48,6 +48,9 @@ jobs:
               echo "Deployed matchweek $round unavailable; keeping repository copy."
             fi
           done
+
+      - name: Merge deployed odds archive
+        run: npm run sync:odds
 
       - name: Overlay Lauris live match data
         run: |

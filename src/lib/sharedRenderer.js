@@ -471,6 +471,9 @@ export function createRenderMatchCard({
                 ${renderPreMatchOdds(match, home, away)}
 
                 <section id="stats" class="power-meter" aria-label="Match power meter">
+                    <fieldset class="match-card-group">
+                        <legend>Performance</legend>
+                        <div class="match-card-group__grid">
                     <!-- HOME -->
                     <div class="pm-team pm-team--home">
                         <div class="pm-team__label">${esc(home.display || home.name)}</div>
@@ -543,8 +546,15 @@ export function createRenderMatchCard({
                         </div>
                     </div>
 
+                        </div>
+                    </fieldset>
+
                     <!-- STATS -->
+                    <fieldset class="match-card-group">
+                        <legend>Match stats</legend>
+                        <div class="match-card-group__grid">
                     <div class="pm-stats" aria-label="Team match stats">
+                        <div class="pm-team__label">${esc(home.display || home.name)}</div>
                         <div class="pm-stat"><span class="k" title="Expected Goals">xG</span><span class="v">${statNum("home", "xg")}</span></div>
                         <div class="pm-stat"><span class="k" title="Possession">Poss</span><span class="v">${stat("home", "poss")}</span></div>
                         <div class="pm-stat"><span class="k" title="Total Shots">Shots</span><span class="v">${statNum("home", "shots")}</span></div>
@@ -556,6 +566,7 @@ export function createRenderMatchCard({
                         <div class="pm-stat"><span class="k" title="VAR-Disallowed">VAR-D</span><span class="v">${statNum("home", "disallowedGoals", 0)}</span></div>
                     </div>
                     <div class="pm-stats" aria-label="Team match stats">
+                        <div class="pm-team__label">${esc(away.display || away.name)}</div>
                         <div class="pm-stat"><span class="k" title="Expected Goals">xG</span><span class="v">${statNum("away", "xg")}</span></div>
                         <div class="pm-stat"><span class="k" title="Possession">Poss</span><span class="v">${stat("away", "poss")}</span></div>
                         <div class="pm-stat"><span class="k" title="Total Shots">Shots</span><span class="v">${statNum("away", "shots")}</span></div>
@@ -566,9 +577,14 @@ export function createRenderMatchCard({
                         <div class="pm-stat"><span class="k" title="Red Cards">RC</span><span class="v">${statNum("away", "rc")}</span></div>
                         <div class="pm-stat"><span class="k" title="VAR-Disallowed">VAR-D</span><span class="v">${statNum("away", "disallowedGoals", 0)}</span></div>
                     </div>
+                        </div>
+                    </fieldset>
                 </section>
 
-                <div class="match-body">${eventsHtml}</div>
+                <fieldset class="match-card-group match-card-group--timeline">
+                    <legend>Timeline</legend>
+                    <div class="match-body">${eventsHtml}</div>
+                </fieldset>
 
                 <footer class="match-footer">
                     <span class="footer-label">Venue:</span>

@@ -1197,23 +1197,10 @@ function formatScoreForTitle(match) {
     return `${home}-${away}`;
 }
 
-function formatOddsSummary(match, home, away) {
-    const c = match.odds?.consensus;
-    if (!c) return "";
-
-    const homePct = Number(c.home);
-    const drawPct = Number(c.draw);
-    const awayPct = Number(c.away);
-
-    if (![homePct, drawPct, awayPct].every(Number.isFinite)) return "";
-
-    return `${home.display || home.name} ${homePct}%, draw ${drawPct}%, ${away.display || away.name} ${awayPct}%`;
-}
-
 function buildMatchStory({ match, home, away, seasonLabel, round }) {
     const state = String(match.status?.state || "").toUpperCase();
     const venue = match.venue ? ` at ${match.venue}` : "";
-    const oddsSummary = formatOddsSummary(match, home, away);
+    const features = "Explore odds, stats, ratings, timeline, match insights and shot map.";
 
     if (state === "FT") {
         const homeGoals = Number(match.score?.home ?? 0);
@@ -1226,42 +1213,184 @@ function buildMatchStory({ match, home, away, seasonLabel, round }) {
             resultText = `${away.name} beat ${home.name} ${awayGoals}-${homeGoals}`;
         }
 
-        return `${resultText}${venue} in EPL ${seasonLabel} Matchweek ${round}.${oddsSummary ? ` Pre-match odds: ${oddsSummary}.` : ""}`;
+        return `${resultText}${venue} in EPL ${seasonLabel} Matchweek ${round}. ${features}`;
     }
 
-    return `${home.name} face ${away.name}${venue} in EPL ${seasonLabel} Matchweek ${round}.${oddsSummary ? ` Pre-match odds: ${oddsSummary}.` : ""}`;
+    return `${home.name} face ${away.name}${venue} in EPL ${seasonLabel} Matchweek ${round}. ${features}`;
 }
 
-function buildKeyMomentsHtml(match) {
-    const events = sortedEvents(match.events || []).filter((evt) => {
-        return [
-            "goal",
-            "own-goal",
-            "penalty-miss",
-            "red",
-            "var-goal-cancelled",
-            "var-goal-disallowed-offside",
-            "var-goal-disallowed",
-            "var-pen-cancelled",
-            "var-pen-confirmed",
-        ].includes(evt.kind);
-    });
+function buildMatchInsightsHtml(match, home, away) {
+    const insights = match.insights || {};
+    const definitions = [
+        ["bigChances", "Big chances"],
+        ["bigChancesMissed", "Big chances missed"],
+        ["hitWoodwork", "Hit the woodwork"],
+        ["tackles", "Total tackles"],
+        ["accuratePasses", "Accurate passes"],
+        ["duelsWonPct", "Duels won", true],
+        ["offsides", "Offsides"],
+        ["interceptions", "Interceptions"],
+        ["clearances", "Clearances"],
+        ["goalkeeperSaves", "Goalkeeper saves"],
+    ];
+    const formatValue = (value, percent) => {
+        const number = Number(value);
+        if (!Number.isFinite(number)) return null;
+        const formatted = Number.isInteger(number) ? String(number) : number.toFixed(1);
+        return percent ? `${formatted}%` : formatted;
+    };
+    const rows = definitions.map(([key, label, percent = false]) => {
+        const homeValue = formatValue(insights[key]?.home, percent);
+        const awayValue = formatValue(insights[key]?.away, percent);
+        if (homeValue == null || awayValue == null) return "";
 
-    if (!events.length) return "";
+        return `
+            <tr>
+                <td class="match-insights__value">${escapeAttr(homeValue)}</td>
+                <th scope="row">${escapeAttr(label)}</th>
+                <td class="match-insights__value">${escapeAttr(awayValue)}</td>
+            </tr>
+        `;
+    }).filter(Boolean).join("");
 
-    const rows = events.slice(0, 8).map((evt) => {
-        const minute = evt.minute || (evt.elapsed ? `${evt.elapsed}'` : "");
-        const label = evt.kind
-            .replace(/^var-/, "VAR ")
-            .replace(/-/g, " ");
-        const player = evt.player ? ` - ${evt.player}` : "";
-        return `<li><span class="match-moment__minute">${escapeAttr(minute)}</span><span>${escapeAttr(label)}${escapeAttr(player)}</span></li>`;
-    }).join("");
+    if (!rows) return "";
 
     return `
-        <section class="match-page-section">
-            <h2>Key moments</h2>
-            <ol class="match-moments">${rows}</ol>
+        <section class="match-page-section match-page-insights">
+            <h2>Match Insights</h2>
+            <table class="match-insights">
+                <thead>
+                    <tr>
+                        <th scope="col">${escapeAttr(home.display || home.name)}</th>
+                        <th scope="col">Metric</th>
+                        <th scope="col">${escapeAttr(away.display || away.name)}</th>
+                    </tr>
+                </thead>
+                <tbody>${rows}</tbody>
+            </table>
+        </section>
+    `;
+}
+
+function shotMapLabel(value) {
+    return String(value || "")
+        .replace(/_/g, " ")
+        .replace(/\b\w/g, (letter) => letter.toUpperCase());
+}
+
+function shotMapResult(shot) {
+    const result = String(shot?.result || "").toLowerCase();
+    if (shot?.isGoal || result === "goal") return { key: "goal", label: "Goal" };
+    if (result === "post" || result === "woodwork") return { key: "post", label: "Hit the woodwork" };
+    if (shot?.isBlocked || result === "block" || result === "blocked") return { key: "block", label: "Blocked" };
+    if (shot?.isOnTarget || result === "save" || result === "saved") return { key: "save", label: "Saved" };
+    return { key: "miss", label: "Off target" };
+}
+
+function buildShotMapHtml(match, home, away) {
+    const shots = Array.isArray(match?.shotMap?.shots) ? match.shotMap.shots : [];
+    if (!shots.length) return "";
+
+    const goalEvents = (match.events || []).filter((event) =>
+        event?.kind === "goal" && event?.assist
+    );
+    const assistForShot = (shot) => {
+        if (!shot?.isGoal && String(shot?.result || "").toLowerCase() !== "goal") return "";
+        const minute = Number(shot.minute);
+        if (!Number.isFinite(minute)) return "";
+        const event = goalEvents.find((candidate) =>
+            candidate.team === shot.side && Number(candidate.elapsed) === minute
+        );
+        return event?.assist || "";
+    };
+
+    const validShots = shots.filter((shot) =>
+        ["home", "away"].includes(shot?.side) &&
+        Number.isFinite(Number(shot?.x)) &&
+        Number.isFinite(Number(shot?.y))
+    );
+    if (!validShots.length) return "";
+
+    const teamStats = {
+        home: { team: home, shots: 0, xg: 0 },
+        away: { team: away, shots: 0, xg: 0 },
+    };
+    validShots.forEach((shot) => {
+        const xg = Number(shot.xg);
+        teamStats[shot.side].shots += 1;
+        if (Number.isFinite(xg)) teamStats[shot.side].xg += xg;
+    });
+
+    const markers = validShots
+        .slice()
+        .sort((a, b) => Number(Boolean(a.isGoal)) - Number(Boolean(b.isGoal)))
+        .map((shot) => {
+            const result = shotMapResult(shot);
+            const xg = Number(shot.xg);
+            const minute = Number.isFinite(Number(shot.minute)) ? `${Number(shot.minute)}'` : "";
+            const assist = assistForShot(shot);
+            const situation = assist && shot.situation === "assisted"
+                ? ""
+                : shot.situation;
+            const details = [
+                minute,
+                shot.playerName || "Unknown player",
+                result.label,
+                assist ? `Assist: ${assist}` : "",
+                Number.isFinite(xg) ? `${xg.toFixed(2)} xG` : "",
+                situation ? shotMapLabel(situation) : "",
+                shot.bodyPart ? shotMapLabel(shot.bodyPart) : "",
+            ].filter(Boolean).join(" · ");
+            const left = Math.max(2, Math.min(98, Number(shot.y)));
+            const top = Math.max(2, Math.min(98, Number(shot.x) * 2));
+            const size = Number.isFinite(xg)
+                ? Math.max(11, Math.min(25, 11 + Math.sqrt(Math.max(0, xg)) * 15))
+                : 11;
+
+            return `<button
+                class="shot-map__shot shot-map__shot--${shot.side} shot-map__shot--${result.key}"
+                type="button"
+                style="--shot-left:${left.toFixed(2)}%;--shot-top:${top.toFixed(2)}%;--shot-size:${size.toFixed(1)}px"
+                data-shot-description="${escapeAttr(details)}"
+                aria-label="${escapeAttr(details)}"
+                aria-pressed="false"
+                title="${escapeAttr(details)}"
+            ><span class="sr-only">${escapeAttr(details)}</span></button>`;
+        }).join("");
+
+    const teamSummary = (side) => {
+        const item = teamStats[side];
+        const name = item.team.display || item.team.name;
+        return `<div class="shot-map__team shot-map__team--${side}">
+            <span class="shot-map__team-name">${escapeAttr(name)}</span>
+            <span>${item.shots} shots · ${item.xg.toFixed(2)} xG</span>
+        </div>`;
+    };
+
+    return `
+        <section class="match-page-section match-page-shot-map">
+            <h2>Shot Map</h2>
+            <div class="shot-map__teams">
+                ${teamSummary("home")}
+                ${teamSummary("away")}
+            </div>
+            <div class="shot-map__pitch" role="group" aria-label="Shot locations toward goal">
+                <span class="shot-map__six-yard" aria-hidden="true"></span>
+                <span class="shot-map__penalty-area" aria-hidden="true"></span>
+                <span class="shot-map__penalty-spot" aria-hidden="true"></span>
+                <span class="shot-map__penalty-arc" aria-hidden="true"></span>
+                <span class="shot-map__halfway" aria-hidden="true"></span>
+                ${markers}
+            </div>
+            <div class="shot-map__legend" aria-label="Shot map legend">
+                <span><i class="shot-map__key shot-map__key--goal"></i>Goal</span>
+                <span><i class="shot-map__key shot-map__key--save"></i>Saved</span>
+                <span><i class="shot-map__key shot-map__key--block"></i>Blocked</span>
+                <span><i class="shot-map__key shot-map__key--miss"></i>Off target</span>
+                <span><i class="shot-map__key shot-map__key--post"></i>Woodwork</span>
+                <span class="shot-map__size-note">Marker size = xG</span>
+            </div>
+            <p class="shot-map__detail" aria-live="polite">Select a shot for details</p>
         </section>
     `;
 }
@@ -1382,6 +1511,27 @@ function matchPageToggleScript() {
 
                 copyShareText();
             });
+
+            function showShotDetails(shot) {
+                var section = shot.closest(".match-page-shot-map");
+                if (!section) return;
+                section.querySelectorAll(".shot-map__shot[aria-pressed='true']").forEach(function (marker) {
+                    marker.setAttribute("aria-pressed", "false");
+                });
+                shot.setAttribute("aria-pressed", "true");
+                var detail = section.querySelector(".shot-map__detail");
+                if (detail) detail.textContent = shot.getAttribute("data-shot-description") || "";
+            }
+
+            document.addEventListener("click", function (event) {
+                var shot = event.target.closest(".shot-map__shot");
+                if (shot) showShotDetails(shot);
+            });
+
+            document.addEventListener("focusin", function (event) {
+                var shot = event.target.closest(".shot-map__shot");
+                if (shot) showShotDetails(shot);
+            });
         </script>
     `;
 }
@@ -1392,7 +1542,6 @@ function buildMatchPageHtml({ match, home, away, players, seasonPath, seasonLabe
     const tableHref = `/epl/${seasonPath}/table/`;
     const homeHref = `/epl/${seasonPath}/team/${match.homeTeamId}/`;
     const awayHref = `/epl/${seasonPath}/team/${match.awayTeamId}/`;
-    const status = escapeAttr(match.status?.state || "");
     const score = formatScoreForTitle(match);
     const title = `${home.name} ${score} ${away.name}`;
     const pageUrl = `https://timelinefootball.com${getMatchPagePath({
@@ -1430,16 +1579,8 @@ function buildMatchPageHtml({ match, home, away, players, seasonPath, seasonLabe
                 })}
             </div>
 
-            <section class="match-page-section match-page-facts">
-                <h2>Match context</h2>
-                <dl>
-                    <div><dt>Status</dt><dd>${status}</dd></div>
-                    <div><dt>Venue</dt><dd>${escapeAttr(match.venue || "TBD")}</dd></div>
-                    <div><dt>Matchweek</dt><dd><a href="${matchweekHref}">${round}</a></dd></div>
-                </dl>
-            </section>
-
-            ${buildKeyMomentsHtml(match)}
+            ${buildMatchInsightsHtml(match, home, away)}
+            ${buildShotMapHtml(match, home, away)}
         </section>
         ${matchPageToggleScript()}
     `;
