@@ -1351,6 +1351,7 @@ function buildShotMapHtml(match, home, away) {
                 class="shot-map__shot shot-map__shot--${shot.side} shot-map__shot--${result.key}"
                 type="button"
                 style="--shot-left:${left.toFixed(2)}%;--shot-top:${top.toFixed(2)}%;--shot-size:${size.toFixed(1)}px"
+                data-shot-side="${shot.side}"
                 data-shot-description="${escapeAttr(details)}"
                 aria-label="${escapeAttr(details)}"
                 aria-pressed="false"
@@ -1361,10 +1362,17 @@ function buildShotMapHtml(match, home, away) {
     const teamSummary = (side) => {
         const item = teamStats[side];
         const name = item.team.display || item.team.name;
-        return `<div class="shot-map__team shot-map__team--${side}">
+        return `<button
+            class="shot-map__team shot-map__team--${side}"
+            type="button"
+            data-shot-team="${side}"
+            data-team-name="${escapeAttr(name)}"
+            aria-label="Hide ${escapeAttr(name)} shots"
+            aria-pressed="true"
+        >
             <span class="shot-map__team-name">${escapeAttr(name)}</span>
             <span>${item.shots} shots · ${item.xg.toFixed(2)} xG</span>
-        </div>`;
+        </button>`;
     };
 
     return `
@@ -1523,7 +1531,36 @@ function matchPageToggleScript() {
                 if (detail) detail.textContent = shot.getAttribute("data-shot-description") || "";
             }
 
+            function toggleShotTeam(button) {
+                var section = button.closest(".match-page-shot-map");
+                var side = button.getAttribute("data-shot-team");
+                if (!section || !side) return;
+
+                var isVisible = button.getAttribute("aria-pressed") === "true";
+                var showTeam = !isVisible;
+                var teamName = button.getAttribute("data-team-name") || "team";
+                button.setAttribute("aria-pressed", showTeam ? "true" : "false");
+                button.setAttribute("aria-label", (showTeam ? "Hide " : "Show ") + teamName + " shots");
+
+                var hidingSelectedShot = !showTeam && Boolean(
+                    section.querySelector(".shot-map__shot[data-shot-side='" + side + "'][aria-pressed='true']")
+                );
+                section.querySelectorAll(".shot-map__shot[data-shot-side='" + side + "']").forEach(function (shot) {
+                    shot.hidden = !showTeam;
+                    if (!showTeam) shot.setAttribute("aria-pressed", "false");
+                });
+
+                var detail = section.querySelector(".shot-map__detail");
+                if (hidingSelectedShot && detail) detail.textContent = "Select a shot for details";
+            }
+
             document.addEventListener("click", function (event) {
+                var teamToggle = event.target.closest(".shot-map__team[data-shot-team]");
+                if (teamToggle) {
+                    toggleShotTeam(teamToggle);
+                    return;
+                }
+
                 var shot = event.target.closest(".shot-map__shot");
                 if (shot) showShotDetails(shot);
             });
