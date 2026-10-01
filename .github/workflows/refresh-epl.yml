@@ -29,6 +29,11 @@ jobs:
       - name: Install
         run: npm ci
 
+      - name: Capture repository match enrichment
+        run: |
+          mkdir -p .tmp/repository-matchweeks
+          cp -R "$SEASON_DATA_DIR/matchweeks/." .tmp/repository-matchweeks/
+
       - name: Hydrate deployed season data
         run: |
           mkdir -p "$SEASON_DATA_DIR/matchweeks"
@@ -74,6 +79,9 @@ jobs:
           else
             echo "Lauris current matchweek unavailable or invalid; using deployed matchweeks."
           fi
+
+      - name: Restore TSAPI match enrichment
+        run: node src/scripts/restore-match-enrichment.mjs .tmp/repository-matchweeks "$SEASON_DATA_DIR/matchweeks"
 
       - name: Cache new player profiles
         continue-on-error: true
