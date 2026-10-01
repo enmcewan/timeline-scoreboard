@@ -1554,6 +1554,23 @@ td {
   font-size: larger;
 }
 
+.table-team__inner {
+  align-items: center;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.table-team__inner img {
+  flex: 0 0 auto;
+  height: 28px;
+  object-fit: contain;
+  width: 28px;
+}
+
+.team-match-date__compact {
+  display: none;
+}
+
 thead tr {
   border: var(--accent);
   color: var(--accent-soft);
@@ -1564,6 +1581,8 @@ thead tr {
 .league-table-page {
   max-width: 980px;
   margin: 0 auto;
+  min-width: 0;
+  width: 100%;
 }
 
 /* --- Table styling --- */
@@ -1603,21 +1622,6 @@ thead tr {
   background: rgba(0, 0, 0, 0.03);
 }
 
-/* .league-table th:first-child,
-.league-table td:first-child,
-.league-table th:nth-child(2),
-.league-table td:nth-child(2) {
-  position: sticky;
-  left: 0;
-  background: white;
-  z-index: 1;
-}
-
-.league-table th:nth-child(2),
-.league-table td:nth-child(2) {
-  left: 52px; 
-} */
-
 .tbl-team {
   display: flex;
   align-items: center;
@@ -1635,11 +1639,13 @@ thead tr {
 .league-table tbody tr:nth-child(4),
 .league-table tbody tr:nth-child(5) {
   background-color: rgba(82, 15, 95, 0.12);
+  --league-row-sticky-bg: color-mix(in srgb, var(--card-bg) 88%, #520f5f);
   border-left: 4px solid rgba(59, 10, 69, 0.5);
 }
 /* Higlight Europa League Place */
 .league-table tbody tr:nth-child(6) {
   background-color: rgba(202, 138, 4, 0.12);
+  --league-row-sticky-bg: color-mix(in srgb, var(--card-bg) 88%, #ca8a04);
   border-left: 4px solid rgba(202, 138, 4, 0.6);
 }
 
@@ -1648,6 +1654,7 @@ thead tr {
 .league-table tbody tr:nth-child(19),
 .league-table tr:nth-child(20) {
   background: rgba(220, 38, 38, 0.14);
+  --league-row-sticky-bg: color-mix(in srgb, var(--card-bg) 86%, #dc2626);
   border-left: 4px solid rgba(220, 38, 38, 0.6);
 }
 /* Highlight tiers with a stronger bottom border */
@@ -1780,6 +1787,7 @@ table {
 }
 
 .table-scroll {
+  max-width: 100%;
   width: 100%;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
@@ -1882,6 +1890,92 @@ table {
 
   .table-scroll {
     border-radius: 10px;
+  }
+
+  .league-table {
+    min-width: 44rem;
+  }
+
+  .league-table th,
+  .league-table td {
+    padding: 0.4rem 0.35rem;
+  }
+
+  .league-table .table-position,
+  .league-table .table-team {
+    background: var(--league-row-sticky-bg, var(--card-bg));
+    position: sticky;
+  }
+
+  .league-table .table-position {
+    left: 0;
+    min-width: 2.35rem;
+    width: 2.35rem;
+    z-index: 2;
+  }
+
+  .league-table .table-team {
+    box-shadow: 2px 0 3px rgba(0, 0, 0, 0.08);
+    font-size: 0.9rem;
+    left: 2.35rem;
+    min-width: 13rem;
+    width: 13rem;
+    z-index: 2;
+  }
+
+  .league-table thead .table-position,
+  .league-table thead .table-team {
+    background: var(--card-bg);
+    z-index: 3;
+  }
+
+  .league-table .table-team__inner {
+    gap: 0.35rem;
+  }
+
+  .league-table .table-team__inner img {
+    height: 24px;
+    width: 24px;
+  }
+
+  .team-matches {
+    min-width: 39rem;
+  }
+
+  .team-matches .team-match-date,
+  .team-matches .team-match-opponent {
+    background: var(--card-bg);
+    position: sticky;
+  }
+
+  .team-matches .team-match-date {
+    font-size: 0.82rem;
+    left: 0;
+    min-width: 4.25rem;
+    width: 4.25rem;
+    z-index: 2;
+  }
+
+  .team-matches .team-match-opponent {
+    box-shadow: 2px 0 3px rgba(0, 0, 0, 0.08);
+    font-size: 0.9rem;
+    left: 4.25rem;
+    min-width: 12.75rem;
+    width: 12.75rem;
+    z-index: 2;
+  }
+
+  .team-matches thead .team-match-date,
+  .team-matches thead .team-match-opponent {
+    z-index: 3;
+  }
+
+  .team-match-date__full {
+    display: none;
+  }
+
+  .team-match-date__compact {
+    display: inline;
   }
 
   /* Optional: hint */
@@ -2181,6 +2275,7 @@ table {
   .league-table tbody tr:nth-child(3),
   .league-table tbody tr:nth-child(4),
   .league-table tbody tr:nth-child(5) {
+    --league-row-sticky-bg: color-mix(in srgb, var(--card-bg) 82%, #7c3aed);
     background: linear-gradient(
       90deg,
       rgba(124, 58, 237, 0.18),
@@ -2190,6 +2285,7 @@ table {
   }
   /* Highlight Europa League Place */
   .league-table tbody tr:nth-child(6) {
+    --league-row-sticky-bg: color-mix(in srgb, var(--card-bg) 82%, #f59e0b);
     background: linear-gradient(
       90deg,
       rgba(245, 158, 11, 0.18),
@@ -2202,6 +2298,7 @@ table {
   .league-table tbody tr:nth-child(18),
   .league-table tbody tr:nth-child(19),
   .league-table tr:nth-child(20) {
+    --league-row-sticky-bg: color-mix(in srgb, var(--card-bg) 80%, #ef4444);
     background: linear-gradient(
       90deg,
       rgba(239, 68, 68, 0.20),

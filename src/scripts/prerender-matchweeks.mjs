@@ -140,6 +140,13 @@ function formatISODate(iso) {
     return new Intl.DateTimeFormat("en-US", { year: "numeric", month: "short", day: "2-digit" }).format(d);
 }
 
+function formatISODateCompact(iso) {
+    if (!iso) return "";
+    const d = new Date(iso);
+    if (Number.isNaN(d.getTime())) return String(iso);
+    return new Intl.DateTimeFormat("en-US", { month: "short", day: "2-digit" }).format(d);
+}
+
 function buildApiTeamIdToSlugMap(teamsBySlug) {
     const map = new Map();
     for (const [slug, t] of Object.entries(teamsBySlug)) {
@@ -196,12 +203,12 @@ function buildLeagueTableHtml({ seasonPath, seasonLabel, rows, teamsBySlug, apiI
         const all = r.all || {};
         return `
       <tr>
-        <td id="${r.rank ?? ""}">${r.rank ?? ""}</td>
-        <td class="text-center">
-          <img class="${slug}" src="${team.badge}" alt="${escapeAttr(team.name)} badge" height="28" loading="lazy">
-        </td>
+        <td class="table-position" id="${r.rank ?? ""}">${r.rank ?? ""}</td>
         <td class="table-team">
-            <strong><a class="tbl-link" href="/epl/${seasonPath}/team/${slug}/">${team.name}</a></strong><span> &#9655;</span>
+          <div class="table-team__inner">
+            <img class="${slug}" src="${team.badge}" alt="${escapeAttr(team.name)} badge" height="28" loading="lazy">
+            <strong class="table-team__name"><a class="tbl-link" href="/epl/${seasonPath}/team/${slug}/">${team.name}</a><span> &#9655;</span></strong>
+          </div>
         </td>
         <td class="text-center">${all.p ?? ""}</td>
         <td class="text-center">${all.w ?? ""}</td>
@@ -224,9 +231,8 @@ function buildLeagueTableHtml({ seasonPath, seasonLabel, rows, teamsBySlug, apiI
         <table class="league-table">
             <thead>
             <tr>
-                <th scope="col">Pos</th>
-                <th scope="col"></th>
-                <th scope="col">Team</th>
+                <th class="table-position" scope="col">Pos</th>
+                <th class="table-team" scope="col">Team</th>
                 <th scope="col">P</th>
                 <th scope="col">W</th>
                 <th scope="col">D</th>
@@ -513,6 +519,7 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
 
     const rowsHtml = (matches || []).map((m) => {
         const date = m.kickoff ? formatISODate(m.kickoff) : "";
+        const compactDate = m.kickoff ? formatISODateCompact(m.kickoff) : "";
         const vsAt = m.isHome ? "H &nbsp;" : "A &nbsp;";
         const state = String(m.state || "").toUpperCase();
         const hasStarted = !["NS", "TBD", "PST", "CANC", "ABD", "SUSP", "INT"].includes(state);
@@ -524,8 +531,8 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
 
         return `
                 <tr>
-                    <td class="text-center">${date}</td>
-                    <td>${vsAt} <strong><a class="tbl-link" href="/epl/${seasonPath}/team/${m.opponentSlug}/">${m.opponentName} &#9655;</a></strong></td>
+                    <td class="team-match-date text-center"><span class="team-match-date__full">${date}</span><span class="team-match-date__compact">${compactDate}</span></td>
+                    <td class="team-match-opponent">${vsAt} <strong><a class="tbl-link" href="/epl/${seasonPath}/team/${m.opponentSlug}/">${m.opponentName} &#9655;</a></strong></td>
                     <td class="text-center"><strong>${score}</strong></td>
                     <td class="text-center"><strong>${ratingText}</strong></td>
                     <td class="text-center">${escapeAttr(m.state)}</td>
@@ -613,6 +620,14 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
         const exDeltaVals = chartData.map(m => (
             typeof m.ex === "number" ? m.ex - 50 : null
         ));
+
+        function matchweekTickLabel(value) {
+            const matchweek = Number(this.getLabelForValue(value));
+            if (!Number.isFinite(matchweek)) return "";
+            return matchweek === 1 || matchweek === 38 || matchweek % 5 === 0
+                ? matchweek
+                : "";
+        }
 
         function rollingAvg(arr, window = 5) {
             return arr.map((_, i) => {
@@ -792,7 +807,8 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
                         ticks: {
                             color: "#6b7280",
                             maxRotation: 0,
-                            autoSkip: false
+                            autoSkip: false,
+                            callback: matchweekTickLabel
                         }
                     }
                 }
@@ -891,7 +907,8 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
                         ticks: {
                             color: "#6b7280",
                             maxRotation: 0,
-                            autoSkip: false
+                            autoSkip: false,
+                            callback: matchweekTickLabel
                         }
                     }
                 }
@@ -934,12 +951,12 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
         ${teamChartHtml}
 
         <h2 class="text-center">Matches</h2>
-        <div class="table-scroll" role="region" aria-label="League table" tabindex="0">
+        <div class="table-scroll" role="region" aria-label="${escapeAttr(team.name)} matches" tabindex="0">
             <table class="team-matches">
                 <thead>
                 <tr>
-                    <th scope="col">Date</th>
-                    <th scope="col">Opponent</th>
+                    <th class="team-match-date" scope="col">Date</th>
+                    <th class="team-match-opponent" scope="col">Opponent</th>
                     <th scope="col">Score</th>
                     <th scope="col">Rating</th>
                     <th scope="col">Status</th>
