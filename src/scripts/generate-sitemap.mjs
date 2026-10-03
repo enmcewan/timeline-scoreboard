@@ -130,6 +130,12 @@ async function main() {
 
   // homepage points to the active season.
   urls.push({ loc: `${SITE_ORIGIN}/`, changefreq: "hourly", priority: "1.0", lastmod: await getPageLastmod(".") });
+  urls.push({
+    loc: `${SITE_ORIGIN}/about/`,
+    changefreq: "monthly",
+    priority: "0.6",
+    lastmod: await getPageLastmod("about"),
+  });
 
   for (const seasonPath of PRERENDER_SEASON_PATHS) {
     const season = getSeasonConfig(seasonPath);

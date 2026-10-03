@@ -1005,6 +1005,15 @@ function escapeAttr(s) {
     return String(s ?? "").replace(/"/g, "&quot;");
 }
 
+function escapeHtml(s) {
+    return String(s ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+}
+
 function setTitle(html, title) {
     if (html.includes("<title>")) {
         return html.replace(/<title>.*?<\/title>/s, `<title>${title}</title>`);
@@ -1236,7 +1245,156 @@ function buildMatchStory({ match, home, away, seasonLabel, round }) {
     return `${home.name} face ${away.name}${venue} in EPL ${seasonLabel} Matchweek ${round}. ${features}`;
 }
 
-function buildMatchInsightsHtml(match, home, away) {
+const ABOUT_FAQS = [
+    {
+        question: "Do the two pX scores add up to 100?",
+        answer: "No. Each team receives its own Performance Index from a blend of relative match share and absolute production. Both teams can play well, both can play poorly, and their pX scores are not probabilities or opposite sides of one percentage.",
+    },
+    {
+        question: "Can the losing team have the higher pX?",
+        answer: "Yes. pX describes the quality and volume of a team's performance, not the final result. A team can create the better chances and carry more threat but still lose through poor finishing, strong goalkeeping or a decisive moment.",
+    },
+    {
+        question: "How is Rating different from pX?",
+        answer: "Rating is the overall verdict on the match. The result provides its foundation, while pX, eX, home advantage, recent form, league position and unusual match circumstances refine it. A winner will not finish behind the loser, but a strong underdog performance can still be clearly recognized.",
+    },
+    {
+        question: "Are the pre-match odds used in Rating?",
+        answer: "No. The displayed odds are useful context, but they are currently kept separate from Timeline Football's Rating. Match expectations inside the Rating use home advantage, league position and recent form.",
+    },
+    {
+        question: "What do the pre-match percentages mean?",
+        answer: "They are a consensus view of the home win, draw and away win market from the available bookmakers. Each bookmaker's margin is removed, the probabilities are averaged and the final figures are rounded to total 100%. The snapshot is locked once the match starts.",
+    },
+    {
+        question: "Why can shot-map xG differ from the match xG total?",
+        answer: "The match total and the individual shot feed can be calculated, rounded or corrected separately by the data provider. Timeline Football uses the match statistic as the official aggregate and the shot-level values to show where the chances came from.",
+    },
+    {
+        question: "How often are live matches updated?",
+        answer: "During live match windows, fresh data is normally published approximately every 15 minutes. The Auto-update control on a matchweek page refreshes the displayed match data shortly after those updates and can be switched off at any time.",
+    },
+    {
+        question: "Why do match statistics sometimes change after full time?",
+        answer: "Football data providers review and correct events and statistics after a match. xG and other advanced figures may arrive later than the score or timeline, so completed pages can be updated when more reliable data becomes available.",
+    },
+    {
+        question: "What happens when xG is unavailable?",
+        answer: "The score, events and available statistics can still be shown, but Timeline Football does not publish pX, eX or Rating from incomplete xG data. Those values appear once the required statistics are available.",
+    },
+    {
+        question: "Which VAR events are included?",
+        answer: "The timeline focuses on VAR interventions that change or overturn an on-field outcome, including disallowed goals and upgraded cards. Routine checks, goal confirmations and pre-confirmed decisions are omitted because they do not change what happened on the pitch.",
+    },
+];
+
+function buildAboutPageHtml() {
+    const faqHtml = ABOUT_FAQS.map(({ question, answer }) => `
+        <details>
+            <summary>${escapeHtml(question)}</summary>
+            <p>${escapeHtml(answer)}</p>
+        </details>
+    `).join("");
+
+    return `
+        <article class="about-page">
+            <h1>About Timeline Football</h1>
+            <p class="about-page__intro">Timeline Football is a fan-focused way to review a match at a glance: what happened, how each team performed, where the chances came from and whether the result matched the story of the game.</p>
+
+            <section aria-labelledby="about-purpose-title">
+                <h2 id="about-purpose-title">Built for the post-match conversation</h2>
+                <p>Match cards bring the score, performance, statistics and key events together in chronological order. Match pages add pre-match expectations, fan-focused insights and an interactive shot map. Team pages show results, league rankings and season trends over time.</p>
+                <p>The aim is simple: give supporters, writers and broadcasters a useful reference before the analysis, celebration and friendly arguments begin.</p>
+            </section>
+
+            <section aria-labelledby="about-metrics-title">
+                <h2 id="about-metrics-title">How the ratings work</h2>
+                <dl class="about-metrics">
+                    <div class="about-metric">
+                        <dt>pX</dt>
+                        <dd><strong>Performance Index.</strong> A 0-100 measure of how well a team played, combining chance quality (xG), shots on target, blocked efforts, big chances when available, total shots, corners, a smaller possession component and discipline. It blends performance relative to the opponent with the team's absolute production.</dd>
+                    </div>
+                    <div class="about-metric">
+                        <dt>eX</dt>
+                        <dd><strong>Execution Index.</strong> A 0-100 measure of how effectively a team converted its performance into an outcome. Goals compared with xG provide the core signal, with goalkeeper contribution, disallowed and own goals, discipline and exceptional match circumstances adding context.</dd>
+                    </div>
+                    <div class="about-metric">
+                        <dt>Rating</dt>
+                        <dd><strong>Overall match rating.</strong> The result has the final word, then pX and eX refine the verdict alongside home advantage, recent form, league position and notable match context. It is designed to reflect how satisfying or disappointing the result should feel for each team and its supporters.</dd>
+                    </div>
+                </dl>
+            </section>
+
+            <section aria-labelledby="about-faq-title">
+                <h2 id="about-faq-title">Frequently Asked Questions</h2>
+                <div class="about-faq">${faqHtml}</div>
+            </section>
+
+            <section aria-labelledby="about-data-title">
+                <h2 id="about-data-title">Data and methodology</h2>
+                <p>Fixture information, match events and statistics are supplied by third-party football data services. Timeline Football normalizes those feeds and applies its own methodology to produce pX, eX and Rating. Source data can be corrected after publication, and the calculated values may change when the underlying data changes.</p>
+                <p>Timeline Football is an independent site and is not affiliated with the Premier League, its clubs or the bookmakers represented in the pre-match consensus.</p>
+                <p class="about-disclaimer">Pre-match percentages are provided for information and sporting context only. They are not betting advice or a recommendation to gamble.</p>
+            </section>
+
+            <section class="about-contact" aria-labelledby="about-contact-title">
+                <h2 id="about-contact-title">Contact</h2>
+                <p>Questions, corrections, feedback or media enquiries are welcome.</p>
+                <p><a class="about-contact__email" href="mailto:hello@timelinefootball.com">hello@timelinefootball.com</a></p>
+            </section>
+        </article>
+    `;
+}
+
+function aboutPageJsonLd(pageUrl) {
+    return {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "AboutPage",
+                name: "About Timeline Football",
+                url: pageUrl,
+                description: "About Timeline Football, its match ratings, data methodology and frequently asked questions.",
+                isPartOf: {
+                    "@type": "WebSite",
+                    name: "Timeline Football",
+                    url: "https://timelinefootball.com/",
+                },
+            },
+            {
+                "@type": "FAQPage",
+                mainEntity: ABOUT_FAQS.map(({ question, answer }) => ({
+                    "@type": "Question",
+                    name: question,
+                    acceptedAnswer: {
+                        "@type": "Answer",
+                        text: answer,
+                    },
+                })),
+            },
+        ],
+    };
+}
+
+function downloadImageIcon() {
+    return `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M11 3h2v10.2l3.6-3.6 1.4 1.4-6 6-6-6 1.4-1.4 3.6 3.6V3Zm-6 16h14v2H5v-2Z"/>
+    </svg>`;
+}
+
+function downloadImageButton({ label, filename, target = "section" }) {
+    return `<button
+        class="match-page-export-button"
+        type="button"
+        data-download-image
+        data-download-target="${escapeAttr(target)}"
+        data-download-filename="${escapeAttr(filename)}"
+        aria-label="${escapeAttr(label)}"
+        title="${escapeAttr(label)}"
+    >${downloadImageIcon()}<span class="sr-only">${escapeAttr(label)}</span></button>`;
+}
+
+function buildMatchInsightsHtml(match, home, away, exportBase) {
     const insights = match.insights || {};
     const definitions = [
         ["bigChances", "Big chances"],
@@ -1274,7 +1432,13 @@ function buildMatchInsightsHtml(match, home, away) {
 
     return `
         <section class="match-page-section match-page-insights">
-            <h2>Match Insights</h2>
+            <div class="match-page-section-heading">
+                <h2>Match Insights</h2>
+                ${downloadImageButton({
+                    label: "Download Match Insights image",
+                    filename: `${exportBase}-match-insights.png`,
+                })}
+            </div>
             <table class="match-insights">
                 <thead>
                     <tr>
@@ -1304,7 +1468,7 @@ function shotMapResult(shot) {
     return { key: "miss", label: "Off target" };
 }
 
-function buildShotMapHtml(match, home, away) {
+function buildShotMapHtml(match, home, away, exportBase) {
     const shots = Array.isArray(match?.shotMap?.shots) ? match.shotMap.shots : [];
     if (!shots.length) return "";
 
@@ -1394,7 +1558,13 @@ function buildShotMapHtml(match, home, away) {
 
     return `
         <section class="match-page-section match-page-shot-map">
-            <h2>Shot Map</h2>
+            <div class="match-page-section-heading">
+                <h2>Shot Map</h2>
+                ${downloadImageButton({
+                    label: "Download Shot Map image",
+                    filename: `${exportBase}-shot-map.png`,
+                })}
+            </div>
             <div class="shot-map__teams">
                 ${teamSummary("home")}
                 ${teamSummary("away")}
@@ -1403,7 +1573,9 @@ function buildShotMapHtml(match, home, away) {
                 <span class="shot-map__six-yard" aria-hidden="true"></span>
                 <span class="shot-map__penalty-area" aria-hidden="true"></span>
                 <span class="shot-map__penalty-spot" aria-hidden="true"></span>
-                <span class="shot-map__penalty-arc" aria-hidden="true"></span>
+                <span class="shot-map__penalty-arc" aria-hidden="true">
+                    <span class="shot-map__penalty-arc-circle"></span>
+                </span>
                 <span class="shot-map__halfway" aria-hidden="true"></span>
                 ${markers}
             </div>
@@ -1470,7 +1642,118 @@ function buildShareLinks({ title, pageUrl, story }) {
 
 function matchPageToggleScript() {
     return `
+        <script src="/vendor/html2canvas.min.js"></script>
         <script>
+            function loadHtml2Canvas() {
+                if (window.html2canvas) return Promise.resolve(window.html2canvas);
+                return Promise.reject(new Error("Image exporter unavailable"));
+            }
+
+            function downloadCanvas(canvas, filename) {
+                return new Promise(function (resolve, reject) {
+                    canvas.toBlob(function (blob) {
+                        if (!blob) {
+                            reject(new Error("Unable to create image"));
+                            return;
+                        }
+
+                        var url = URL.createObjectURL(blob);
+                        var link = document.createElement("a");
+                        link.href = url;
+                        link.download = filename || "timeline-football.png";
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                        window.setTimeout(function () {
+                            URL.revokeObjectURL(url);
+                        }, 1000);
+                        resolve();
+                    }, "image/png");
+                });
+            }
+
+            async function exportMatchImage(button) {
+                var container = button.closest(".match-page-card, .match-page-section");
+                var targetName = button.getAttribute("data-download-target");
+                var target = targetName === "card" && container
+                    ? container.querySelector(".match-card")
+                    : container;
+                if (!target) return;
+
+                var originalLabel = button.getAttribute("aria-label") || "Download image";
+                var filename = button.getAttribute("data-download-filename") || "timeline-football.png";
+                var captureId = "match-export-" + Date.now() + "-" + Math.random().toString(16).slice(2);
+                var pageBackground = window.getComputedStyle(document.body).backgroundColor || "#ffffff";
+
+                button.disabled = true;
+                button.classList.add("is-loading");
+                button.setAttribute("aria-label", "Preparing image");
+                target.setAttribute("data-export-capture", captureId);
+
+                try {
+                    var render = await loadHtml2Canvas();
+                    var canvas = await render(target, {
+                        backgroundColor: pageBackground,
+                        logging: false,
+                        scale: 2,
+                        useCORS: true,
+                        windowWidth: 760,
+                        ignoreElements: function (element) {
+                            return Boolean(element.closest && element.closest("[data-download-image]"));
+                        },
+                        onclone: function (clonedDocument) {
+                            var clonedTarget = clonedDocument.querySelector('[data-export-capture="' + captureId + '"]');
+                            if (!clonedTarget) return;
+
+                            clonedTarget.style.boxSizing = "border-box";
+                            clonedTarget.style.margin = "0";
+                            clonedTarget.style.maxWidth = "none";
+                            clonedTarget.style.width = "640px";
+
+                            if (clonedTarget.classList.contains("match-page-section")) {
+                                clonedTarget.style.background = pageBackground;
+                                clonedTarget.style.padding = "16px";
+                            }
+
+                            var brand = clonedDocument.createElement("div");
+                            brand.textContent = "TimelineFootball.com";
+                            brand.style.color = window.getComputedStyle(target).getPropertyValue("--text-subtle") || "#666666";
+                            brand.style.fontSize = "12px";
+                            brand.style.fontWeight = "700";
+                            brand.style.marginTop = "12px";
+                            brand.style.textAlign = "right";
+                            clonedTarget.appendChild(brand);
+                        },
+                    });
+
+                    await downloadCanvas(canvas, filename);
+                    button.classList.add("is-complete");
+                    button.setAttribute("aria-label", "Image downloaded");
+                    window.setTimeout(function () {
+                        button.classList.remove("is-complete");
+                        button.setAttribute("aria-label", originalLabel);
+                    }, 1400);
+                } catch (error) {
+                    console.error("Image export failed:", error);
+                    button.classList.add("is-error");
+                    button.setAttribute("aria-label", "Image download failed");
+                    window.setTimeout(function () {
+                        button.classList.remove("is-error");
+                        button.setAttribute("aria-label", originalLabel);
+                    }, 1800);
+                } finally {
+                    target.removeAttribute("data-export-capture");
+                    button.disabled = false;
+                    button.classList.remove("is-loading");
+                }
+            }
+
+            document.addEventListener("click", function (event) {
+                var downloadButton = event.target.closest("[data-download-image]");
+                if (!downloadButton) return;
+                exportMatchImage(downloadButton);
+            });
+
             document.addEventListener("click", function (event) {
                 var button = event.target.closest(".match-page .timeline-toggle");
                 if (!button) return;
@@ -1598,6 +1881,7 @@ function buildMatchPageHtml({ match, home, away, players, seasonPath, seasonLabe
     const awayHref = `/epl/${seasonPath}/team/${match.awayTeamId}/`;
     const score = formatScoreForTitle(match);
     const title = `${home.name} ${score} ${away.name}`;
+    const exportBase = `${seasonPath}-mw${round}-${match.homeTeamId}-vs-${match.awayTeamId}`;
     const pageUrl = `https://timelinefootball.com${getMatchPagePath({
         seasonPath,
         round,
@@ -1621,6 +1905,13 @@ function buildMatchPageHtml({ match, home, away, players, seasonPath, seasonLabe
             </header>
 
             <div class="match-page-card">
+                <div class="match-page-export-row">
+                    ${downloadImageButton({
+                        label: "Download Match Card image",
+                        filename: `${exportBase}-match-card.png`,
+                        target: "card",
+                    })}
+                </div>
                 ${renderMatchweekHTML({
                     matches: [match],
                     teams: {
@@ -1633,8 +1924,8 @@ function buildMatchPageHtml({ match, home, away, players, seasonPath, seasonLabe
                 })}
             </div>
 
-            ${buildMatchInsightsHtml(match, home, away)}
-            ${buildShotMapHtml(match, home, away)}
+            ${buildMatchInsightsHtml(match, home, away, exportBase)}
+            ${buildShotMapHtml(match, home, away, exportBase)}
         </section>
         ${matchPageToggleScript()}
     `;
@@ -2451,6 +2742,55 @@ async function main() {
         page = stripMatchdayShell(page);
 
         const outDir = path.join(ROOT, "dist", "epl", String(seasonPath), "team", slug);
+        await fs.mkdir(outDir, { recursive: true });
+        await fs.writeFile(path.join(outDir, "index.html"), page, "utf8");
+
+        console.log(`Prerendered ${pagePath}`);
+    }
+
+    if (!season.isArchived) {
+        const pagePath = "/about/";
+        const canonical = "https://timelinefootball.com/about/";
+        const title = "About & FAQ | Timeline Football";
+        const desc = "Learn how Timeline Football calculates pX, eX and match ratings, how live data and odds work, and how to contact the site.";
+
+        let page = setSeasonChrome(template, {
+            seasonPath,
+            seasonLabel,
+            leagueName: season.leagueName,
+        });
+
+        page = setTitle(page, title);
+        page = setDescription(page, desc);
+        page = setCanonical(page, canonical);
+        page = setOpenGraph(page, {
+            title,
+            description: desc,
+            url: canonical,
+            image: OG_DEFAULT_IMAGE,
+            siteName: SITE_NAME,
+        });
+        page = setTwitterCard(page, {
+            title,
+            description: desc,
+            image: OG_DEFAULT_IMAGE,
+        });
+        page = setJsonLd(page, aboutPageJsonLd(canonical));
+
+        const navHtml = `<nav class="mw-nav" aria-label="EPL navigation">
+            <a class="mw-nav__hub" href="/epl/${seasonPath}/">EPL ${seasonLabel} matchweeks &#9655;</a>
+            <div class="mw-nav__pager">
+                <a class="mw-nav__prev" href="/epl/${seasonPath}/table/">League table &#9655;</a>
+                <span class="mw-nav__next is-disabled" aria-disabled="true"></span>
+            </div>
+        </nav>`;
+
+        page = injectBeforeApp(page, navHtml);
+        page = injectApp(page, buildAboutPageHtml());
+        page = stripAppScripts(page);
+        page = stripMatchdayShell(page);
+
+        const outDir = path.join(ROOT, "dist", "about");
         await fs.mkdir(outDir, { recursive: true });
         await fs.writeFile(path.join(outDir, "index.html"), page, "utf8");
 
