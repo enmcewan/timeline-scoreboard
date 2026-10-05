@@ -1,0 +1,2293 @@
+{
+  "fixtureId": "1557405",
+  "matchId": "mt_644018526",
+  "round": 4,
+  "kickoff": "2026-09-12T19:00:00+00:00",
+  "teamIds": {
+    "tm_2674": "sunderland",
+    "tm_9145": "arsenal"
+  },
+  "players": [
+    {
+      "playerId": "pl_3033157",
+      "playerName": "Granit Xhaka",
+      "teamId": "tm_2674",
+      "position": "M",
+      "rating": 7.67,
+      "minutesPlayed": 90,
+      "started": true,
+      "played": true,
+      "passing": {
+        "total_passes": 57,
+        "accurate_passes": 49,
+        "key_passes": 3,
+        "assists": 0,
+        "total_crosses": 5,
+        "accurate_crosses": 2,
+        "total_long_balls": 10,
+        "accurate_long_balls": 6
+      },
+      "shooting": {
+        "goals": 0,
+        "total_shots": 0,
+        "shots_on_target": 0,
+        "shots_off_target": 0,
+        "blocked_shots": 0,
+        "big_chances_created": 1,
+        "expected_goals": 0,
+        "expected_assists": 0.35,
+        "np_expected_goals": 0
+      },
+      "duels": {
+        "duel_won": 5,
+        "duel_lost": 5,
+        "aerial_won": 1,
+        "challenge_lost": 0,
+        "won_contest": 2,
+        "dispossessed": 1
+      },
+      "defending": {
+        "tackles": 1,
+        "interceptions": 1,
+        "clearances": 1,
+        "ball_recoveries": 8
+      },
+      "goalkeeping": {
+        "saves": 0
+      },
+      "general": {
+        "touches": 72,
+        "fouls": 3,
+        "was_fouled": 1,
+        "offsides": 0,
+        "yellow_cards": 1,
+        "red_cards": 0,
+        "possession_lost": 13
+      }
+    },
+    {
+      "playerId": "pl_3601788",
+      "playerName": "Thomas Meunier",
+      "teamId": "tm_2674",
+      "position": "F",
+      "rating": 6.43,
+      "minutesPlayed": 76,
+      "started": true,
+      "played": true,
+      "passing": {
+        "total_passes": 20,
+        "accurate_passes": 14,
+        "key_passes": 0,
+        "assists": 0,
+        "total_crosses": 1,
+        "accurate_crosses": 0,
+        "total_long_balls": 2,
+        "accurate_long_balls": 2
+      },
+      "shooting": {
+        "goals": 0,
+        "total_shots": 3,
+        "shots_on_target": 1,
+        "shots_off_target": 0,
+        "blocked_shots": 2,
+        "big_chances_created": 0,
+        "expected_goals": 0.12,
+        "expected_assists": 0,
+        "np_expected_goals": 0.18
+      },
+      "duels": {
+        "duel_won": 1,
+        "duel_lost": 1,
+        "aerial_won": 1,
+        "challenge_lost": 1,
+        "won_contest": 0,
+        "dispossessed": 0
+      },
+      "defending": {
+        "tackles": 0,
+        "interceptions": 0,
+        "clearances": 2,
+        "ball_recoveries": 4
+      },
+      "goalkeeping": {
+        "saves": 0
+      },
+      "general": {
+        "touches": 31,
+        "fouls": 0,
+        "was_fouled": 0,
+        "offsides": 0,
+        "yellow_cards": 0,
+        "red_cards": 0,
+        "possession_lost": 9
+      }
+    },
+    {
+      "playerId": "pl_08485051",
+      "playerName": "Nordi Mukiele",
+      "teamId": "tm_2674",
+      "position": "D",
+      "rating": 6.84,
+      "minutesPlayed": 90,
+      "started": true,
+      "played": true,
+      "passing": {
+        "total_passes": 21,
+        "accurate_passes": 14,
+        "key_passes": 0,
+        "assists": 0,
+        "total_crosses": 3,
+        "accurate_crosses": 1,
+        "total_long_balls": 3,
+        "accurate_long_balls": 3
+      },
+      "shooting": {
+        "goals": 0,
+        "total_shots": 4,
+        "shots_on_target": 1,
+        "shots_off_target": 1,
+        "blocked_shots": 2,
+        "big_chances_created": 0,
+        "expected_goals": 0.68,
+        "expected_assists": 0.02,
+        "np_expected_goals": 0.63
+      },
+      "duels": {
+        "duel_won": 5,
+        "duel_lost": 8,
+        "aerial_won": 1,
+        "challenge_lost": 1,
+        "won_contest": 0,
+        "dispossessed": 0
+      },
+      "defending": {
+        "tackles": 3,
+        "interceptions": 1,
+        "clearances": 2,
+        "ball_recoveries": 3
+      },
+      "goalkeeping": {
+        "saves": 0
+      },
+      "general": {
+        "touches": 48,
+        "fouls": 3,
+        "was_fouled": 1,
+        "offsides": 0,
+        "yellow_cards": 1,
+        "red_cards": 0,
+        "possession_lost": 13
+      }
+    },
+    {
+      "playerId": "pl_57227287",
+      "playerName": "Kevin Danso",
+      "teamId": "tm_2674",
+      "position": "D",
+      "rating": 6.43,
+      "minutesPlayed": 90,
+      "started": true,
+      "played": true,
+      "passing": {
+        "total_passes": 30,
+        "accurate_passes": 25,
+        "key_passes": 1,
+        "assists": 0,
+        "total_crosses": 1,
+        "accurate_crosses": 0,
+        "total_long_balls": 3,
+        "accurate_long_balls": 2
+      },
+      "shooting": {
+        "goals": 0,
+        "total_shots": 0,
+        "shots_on_target": 0,
+        "shots_off_target": 0,
+        "blocked_shots": 0,
+        "big_chances_created": 0,
+        "expected_goals": 0,
+        "expected_assists": 0.08,
+        "np_expected_goals": 0
+      },
+      "duels": {
+        "duel_won": 2,
+        "duel_lost": 4,
+        "aerial_won": 1,
+        "challenge_lost": 0,
+        "won_contest": 0,
+        "dispossessed": 0
+      },
+      "defending": {
+        "tackles": 0,
+        "interceptions": 0,
+        "clearances": 2,
+        "ball_recoveries": 3
+      },
+      "goalkeeping": {
+        "saves": 0
+      },
+      "general": {
+        "touches": 47,
+        "fouls": 0,
+        "was_fouled": 1,
+        "offsides": 0,
+        "yellow_cards": 0,
+        "red_cards": 0,
+        "possession_lost": 10
+      }
+    },
+    {
+      "playerId": "pl_84734922",
+      "playerName": "Daniel Ballard",
+      "teamId": "tm_2674",
+      "position": "D",
+      "rating": 6.29,
+      "minutesPlayed": 90,
+      "started": true,
+      "played": true,
+      "passing": {
+        "total_passes": 37,
+        "accurate_passes": 27,
+        "key_passes": 1,
+        "assists": 0,
+        "total_crosses": 0,
+        "accurate_crosses": 0,
+        "total_long_balls": 6,
+        "accurate_long_balls": 2
+      },
+      "shooting": {
+        "goals": 0,
+        "total_shots": 1,
+        "shots_on_target": 0,
+        "shots_off_target": 1,
+        "blocked_shots": 0,
+        "big_chances_created": 0,
+        "expected_goals": 0.08,
+        "expected_assists": 0.01,
+        "np_expected_goals": 0.01
+      },
+      "duels": {
+        "duel_won": 9,
+        "duel_lost": 8,
+        "aerial_won": 6,
+        "challenge_lost": 0,
+        "won_contest": 0,
+        "dispossessed": 1
+      },
+      "defending": {
+        "tackles": 1,
+        "interceptions": 1,
+        "clearances": 4,
+        "ball_recoveries": 3
+      },
+      "goalkeeping": {
+        "saves": 0
+      },
+      "general": {
+        "touches": 51,
+        "fouls": 3,
+        "was_fouled": 2,
+        "offsides": 0,
+        "yellow_cards": 1,
+        "red_cards": 0,
+        "possession_lost": 12
+      }
+    },
+    {
+      "playerId": "pl_25329716",
+      "playerName": "Nilson Angulo",
+      "teamId": "tm_2674",
+      "position": "F",
+      "rating": 6.58,
+      "minutesPlayed": 70,
+      "started": true,
+      "played": true,
+      "passing": {
+        "total_passes": 6,
+        "accurate_passes": 6,
+        "key_passes": 0,
+        "assists": 0,
+        "total_crosses": 0,
+        "accurate_crosses": 0,
+        "total_long_balls": 0,
+        "accurate_long_balls": 0
+      },
+      "shooting": {
+        "goals": 0,
+        "total_shots": 0,
+        "shots_on_target": 0,
+        "shots_off_target": 0,
+        "blocked_shots": 0,
+        "big_chances_created": 0,
+        "expected_goals": 0,
+        "expected_assists": 0,
+        "np_expected_goals": 0
+      },
+      "duels": {
+        "duel_won": 2,
+        "duel_lost": 6,
+        "aerial_won": 0,
+        "challenge_lost": 0,
+        "won_contest": 0,
+        "dispossessed": 1
+      },
+      "defending": {
+        "tackles": 2,
+        "interceptions": 0,
+        "clearances": 0,
+        "ball_recoveries": 1
+      },
+      "goalkeeping": {
+        "saves": 0
+      },
+      "general": {
+        "touches": 20,
+        "fouls": 1,
+        "was_fouled": 0,
+        "offsides": 0,
+        "yellow_cards": 0,
+        "red_cards": 0,
+        "possession_lost": 6
+      }
+    },
+    {
+      "playerId": "pl_84849530",
+      "playerName": "Robin Roefs",
+      "teamId": "tm_2674",
+      "position": "G",
+      "rating": 6.57,
+      "minutesPlayed": 90,
+      "started": true,
+      "played": true,
+      "passing": {
+        "total_passes": 31,
+        "accurate_passes": 16,
+        "key_passes": 0,
+        "assists": 0,
+        "total_crosses": 0,
+        "accurate_crosses": 0,
+        "total_long_balls": 19,
+        "accurate_long_balls": 4
+      },
+      "shooting": {
+        "goals": 0,
+        "total_shots": 0,
+        "shots_on_target": 0,
+        "shots_off_target": 0,
+        "blocked_shots": 0,
+        "big_chances_created": 0,
+        "expected_goals": 0,
+        "expected_assists": 0,
+        "np_expected_goals": 0
+      },
+      "duels": {
+        "duel_won": 0,
+        "duel_lost": 0,
+        "aerial_won": 0,
+        "challenge_lost": 0,
+        "won_contest": 0,
+        "dispossessed": 0
+      },
+      "defending": {
+        "tackles": 0,
+        "interceptions": 0,
+        "clearances": 1,
+        "ball_recoveries": 3
+      },
+      "goalkeeping": {
+        "saves": 3
+      },
+      "general": {
+        "touches": 37,
+        "fouls": 0,
+        "was_fouled": 0,
+        "offsides": 0,
+        "yellow_cards": 0,
+        "red_cards": 0,
+        "possession_lost": 16
+      }
+    },
+    {
+      "playerId": "pl_08379444",
+      "playerName": "Reinildo Mandava",
+      "teamId": "tm_2674",
+      "position": "D",
+      "rating": 6.32,
+      "minutesPlayed": 90,
+      "started": true,
+      "played": true,
+      "passing": {
+        "total_passes": 23,
+        "accurate_passes": 20,
+        "key_passes": 0,
+        "assists": 0,
+        "total_crosses": 0,
+        "accurate_crosses": 0,
+        "total_long_balls": 3,
+        "accurate_long_balls": 2
+      },
+      "shooting": {
+        "goals": 0,
+        "total_shots": 0,
+        "shots_on_target": 0,
+        "shots_off_target": 0,
+        "blocked_shots": 0,
+        "big_chances_created": 0,
+        "expected_goals": 0,
+        "expected_assists": 0.01,
+        "np_expected_goals": 0
+      },
+      "duels": {
+        "duel_won": 5,
+        "duel_lost": 3,
+        "aerial_won": 2,
+        "challenge_lost": 0,
+        "won_contest": 0,
+        "dispossessed": 0
+      },
+      "defending": {
+        "tackles": 1,
+        "interceptions": 2,
+        "clearances": 4,
+        "ball_recoveries": 3
+      },
+      "goalkeeping": {
+        "saves": 0
+      },
+      "general": {
+        "touches": 44,
+        "fouls": 3,
+        "was_fouled": 2,
+        "offsides": 0,
+        "yellow_cards": 1,
+        "red_cards": 1,
+        "possession_lost": 7
+      }
+    },
+    {
+      "playerId": "pl_08530510",
+      "playerName": "Enzo Le Fée",
+      "teamId": "tm_2674",
+      "position": "M",
+      "rating": 6.58,
+      "minutesPlayed": 90,
+      "started": true,
+      "played": true,
+      "passing": {
+        "total_passes": 15,
+        "accurate_passes": 10,
+        "key_passes": 2,
+        "assists": 0,
+        "total_crosses": 3,
+        "accurate_crosses": 2,
+        "total_long_balls": 0,
+        "accurate_long_balls": 0
+      },
+      "shooting": {
+        "goals": 0,
+        "total_shots": 3,
+        "shots_on_target": 1,
+        "shots_off_target": 2,
+        "blocked_shots": 0,
+        "big_chances_created": 1,
+        "expected_goals": 0.81,
+        "expected_assists": 0.57,
+        "np_expected_goals": 0.04
+      },
+      "duels": {
+        "duel_won": 2,
+        "duel_lost": 1,
+        "aerial_won": 0,
+        "challenge_lost": 0,
+        "won_contest": 1,
+        "dispossessed": 0
+      },
+      "defending": {
+        "tackles": 0,
+        "interceptions": 0,
+        "clearances": 0,
+        "ball_recoveries": 4
+      },
+      "goalkeeping": {
+        "saves": 0
+      },
+      "general": {
+        "touches": 25,
+        "fouls": 0,
+        "was_fouled": 1,
+        "offsides": 1,
+        "yellow_cards": 0,
+        "red_cards": 0,
+        "possession_lost": 7
+      }
+    },
+    {
+      "playerId": "pl_74265191",
+      "playerName": "Noah Sadiki",
+      "teamId": "tm_2674",
+      "position": "M",
+      "rating": 6.43,
+      "minutesPlayed": 90,
+      "started": true,
+      "played": true,
+      "passing": {
+        "total_passes": 24,
+        "accurate_passes": 20,
+        "key_passes": 0,
+        "assists": 0,
+        "total_crosses": 0,
+        "accurate_crosses": 0,
+        "total_long_balls": 2,
+        "accurate_long_balls": 1
+      },
+      "shooting": {
+        "goals": 0,
+        "total_shots": 1,
+        "shots_on_target": 0,
+        "shots_off_target": 1,
+        "blocked_shots": 0,
+        "big_chances_created": 0,
+        "expected_goals": 0.04,
+        "expected_assists": 0,
+        "np_expected_goals": 0.02
+      },
+      "duels": {
+        "duel_won": 3,
+        "duel_lost": 1,
+        "aerial_won": 0,
+        "challenge_lost": 0,
+        "won_contest": 0,
+        "dispossessed": 0
+      },
+      "defending": {
+        "tackles": 3,
+        "interceptions": 0,
+        "clearances": 4,
+        "ball_recoveries": 3
+      },
+      "goalkeeping": {
+        "saves": 0
+      },
+      "general": {
+        "touches": 35,
+        "fouls": 0,
+        "was_fouled": 0,
+        "offsides": 0,
+        "yellow_cards": 0,
+        "red_cards": 0,
+        "possession_lost": 5
+      }
+    },
+    {
+      "playerId": "pl_84696945",
+      "playerName": "Brian Brobbey",
+      "teamId": "tm_2674",
+      "position": "F",
+      "rating": 6.32,
+      "minutesPlayed": 90,
+      "started": true,
+      "played": true,
+      "passing": {
+        "total_passes": 16,
+        "accurate_passes": 12,
+        "key_passes": 1,
+        "assists": 0,
+        "total_crosses": 0,
+        "accurate_crosses": 0,
+        "total_long_balls": 0,
+        "accurate_long_balls": 0
+      },
+      "shooting": {
+        "goals": 0,
+        "total_shots": 0,
+        "shots_on_target": 0,
+        "shots_off_target": 0,
+        "blocked_shots": 0,
+        "big_chances_created": 0,
+        "expected_goals": 0,
+        "expected_assists": 0.01,
+        "np_expected_goals": 0
+      },
+      "duels": {
+        "duel_won": 2,
+        "duel_lost": 8,
+        "aerial_won": 0,
+        "challenge_lost": 0,
+        "won_contest": 0,
+        "dispossessed": 2
+      },
+      "defending": {
+        "tackles": 0,
+        "interceptions": 0,
+        "clearances": 0,
+        "ball_recoveries": 4
+      },
+      "goalkeeping": {
+        "saves": 0
+      },
+      "general": {
+        "touches": 30,
+        "fouls": 3,
+        "was_fouled": 2,
+        "offsides": 0,
+        "yellow_cards": 1,
+        "red_cards": 0,
+        "possession_lost": 10
+      }
+    },
+    {
+      "playerId": "pl_45857110",
+      "playerName": "Kai Havertz",
+      "teamId": "tm_9145",
+      "position": "F",
+      "rating": 5.95,
+      "minutesPlayed": 90,
+      "started": true,
+      "played": true,
+      "passing": {
+        "total_passes": 20,
+        "accurate_passes": 15,
+        "key_passes": 1,
+        "assists": 0,
+        "total_crosses": 1,
+        "accurate_crosses": 0,
+        "total_long_balls": 0,
+        "accurate_long_balls": 0
+      },
+      "shooting": {
+        "goals": 0,
+        "total_shots": 3,
+        "shots_on_target": 1,
+        "shots_off_target": 2,
+        "blocked_shots": 0,
+        "big_chances_created": 0,
+        "expected_goals": 0.33,
+        "expected_assists": 0.02,
+        "np_expected_goals": 0.35
+      },
+      "duels": {
+        "duel_won": 5,
+        "duel_lost": 11,
+        "aerial_won": 4,
+        "challenge_lost": 0,
+        "won_contest": 0,
+        "dispossessed": 0
+      },
+      "defending": {
+        "tackles": 0,
+        "interceptions": 0,
+        "clearances": 1,
+        "ball_recoveries": 1
+      },
+      "goalkeeping": {
+        "saves": 0
+      },
+      "general": {
+        "touches": 32,
+        "fouls": 2,
+        "was_fouled": 1,
+        "offsides": 0,
+        "yellow_cards": 1,
+        "red_cards": 0,
+        "possession_lost": 9
+      }
+    },
+    {
+      "playerId": "pl_72512343",
+      "playerName": "Ezri Konsa",
+      "teamId": "tm_9145",
+      "position": "D",
+      "rating": 7.06,
+      "minutesPlayed": 90,
+      "started": true,
+      "played": true,
+      "passing": {
+        "total_passes": 28,
+        "accurate_passes": 26,
+        "key_passes": 0,
+        "assists": 0,
+        "total_crosses": 0,
+        "accurate_crosses": 0,
+        "total_long_balls": 0,
+        "accurate_long_balls": 0
+      },
+      "shooting": {
+        "goals": 0,
+        "total_shots": 0,
+        "shots_on_target": 0,
+        "shots_off_target": 0,
+        "blocked_shots": 0,
+        "big_chances_created": 0,
+        "expected_goals": 0,
+        "expected_assists": 0,
+        "np_expected_goals": 0
+      },
+      "duels": {
+        "duel_won": 7,
+        "duel_lost": 2,
+        "aerial_won": 3,
+        "challenge_lost": 0,
+        "won_contest": 0,
+        "dispossessed": 0
+      },
+      "defending": {
+        "tackles": 2,
+        "interceptions": 2,
+        "clearances": 3,
+        "ball_recoveries": 1
+      },
+      "goalkeeping": {
+        "saves": 0
+      },
+      "general": {
+        "touches": 39,
+        "fouls": 2,
+        "was_fouled": 2,
+        "offsides": 1,
+        "yellow_cards": 0,
+        "red_cards": 0,
+        "possession_lost": 2
+      }
+    },
+    {
+      "playerId": "pl_13486574",
+      "playerName": "David Raya",
+      "teamId": "tm_9145",
+      "position": "G",
+      "rating": 8.6,
+      "minutesPlayed": 90,
+      "started": true,
+      "played": true,
+      "passing": {
+        "total_passes": 33,
+        "accurate_passes": 22,
+        "key_passes": 0,
+        "assists": 0,
+        "total_crosses": 0,
+        "accurate_crosses": 0,
+        "total_long_balls": 20,
+        "accurate_long_balls": 9
+      },
+      "shooting": {
+        "goals": 0,
+        "total_shots": 0,
+        "shots_on_target": 0,
+        "shots_off_target": 0,
+        "blocked_shots": 0,
+        "big_chances_created": 0,
+        "expected_goals": 0,
+        "expected_assists": 0,
+        "np_expected_goals": 0
+      },
+      "duels": {
+        "duel_won": 4,
+        "duel_lost": 0,
+        "aerial_won": 4,
+        "challenge_lost": 0,
+        "won_contest": 0,
+        "dispossessed": 0
+      },
+      "defending": {
+        "tackles": 0,
+        "interceptions": 0,
+        "clearances": 2,
+        "ball_recoveries": 14
+      },
+      "goalkeeping": {
+        "saves": 2
+      },
+      "general": {
+        "touches": 50,
+        "fouls": 0,
+        "was_fouled": 2,
+        "offsides": 0,
+        "yellow_cards": 0,
+        "red_cards": 0,
+        "possession_lost": 11
+      }
+    },
+    {
+      "playerId": "pl_72792553",
+      "playerName": "Christos Tzolis",
+      "teamId": "tm_9145",
+      "position": "F",
+      "rating": 7.1,
+      "minutesPlayed": 81,
+      "started": true,
+      "played": true,
+      "passing": {
+        "total_passes": 22,
+        "accurate_passes": 17,
+        "key_passes": 0,
+        "assists": 0,
+        "total_crosses": 1,
+        "accurate_crosses": 1,
+        "total_long_balls": 1,
+        "accurate_long_balls": 1
+      },
+      "shooting": {
+        "goals": 0,
+        "total_shots": 0,
+        "shots_on_target": 0,
+        "shots_off_target": 0,
+        "blocked_shots": 0,
+        "big_chances_created": 0,
+        "expected_goals": 0,
+        "expected_assists": 0.12,
+        "np_expected_goals": 0
+      },
+      "duels": {
+        "duel_won": 4,
+        "duel_lost": 4,
+        "aerial_won": 1,
+        "challenge_lost": 0,
+        "won_contest": 0,
+        "dispossessed": 1
+      },
+      "defending": {
+        "tackles": 1,
+        "interceptions": 1,
+        "clearances": 0,
+        "ball_recoveries": 1
+      },
+      "goalkeeping": {
+        "saves": 0
+      },
+      "general": {
+        "touches": 37,
+        "fouls": 1,
+        "was_fouled": 2,
+        "offsides": 0,
+        "yellow_cards": 0,
+        "red_cards": 0,
+        "possession_lost": 12
+      }
+    },
+    {
+      "playerId": "pl_61926368",
+      "playerName": "Ben White",
+      "teamId": "tm_9145",
+      "position": "D",
+      "rating": 7.1,
+      "minutesPlayed": 45,
+      "started": true,
+      "played": true,
+      "passing": {
+        "total_passes": 15,
+        "accurate_passes": 11,
+        "key_passes": 0,
+        "assists": 0,
+        "total_crosses": 1,
+        "accurate_crosses": 0,
+        "total_long_balls": 0,
+        "accurate_long_balls": 0
+      },
+      "shooting": {
+        "goals": 0,
+        "total_shots": 0,
+        "shots_on_target": 0,
+        "shots_off_target": 0,
+        "blocked_shots": 0,
+        "big_chances_created": 0,
+        "expected_goals": 0,
+        "expected_assists": 0,
+        "np_expected_goals": 0
+      },
+      "duels": {
+        "duel_won": 2,
+        "duel_lost": 2,
+        "aerial_won": 0,
+        "challenge_lost": 0,
+        "won_contest": 0,
+        "dispossessed": 0
+      },
+      "defending": {
+        "tackles": 2,
+        "interceptions": 1,
+        "clearances": 0,
+        "ball_recoveries": 0
+      },
+      "goalkeeping": {
+        "saves": 0
+      },
+      "general": {
+        "touches": 30,
+        "fouls": 1,
+        "was_fouled": 0,
+        "offsides": 0,
+        "yellow_cards": 0,
+        "red_cards": 0,
+        "possession_lost": 8
+      }
+    },
+    {
+      "playerId": "pl_45126714",
+      "playerName": "Bukayo Saka",
+      "teamId": "tm_9145",
+      "position": "F",
+      "rating": 7.83,
+      "minutesPlayed": 90,
+      "started": true,
+      "played": true,
+      "passing": {
+        "total_passes": 27,
+        "accurate_passes": 21,
+        "key_passes": 1,
+        "assists": 0,
+        "total_crosses": 1,
+        "accurate_crosses": 1,
+        "total_long_balls": 1,
+        "accurate_long_balls": 0
+      },
+      "shooting": {
+        "goals": 1,
+        "total_shots": 4,
+        "shots_on_target": 3,
+        "shots_off_target": 0,
+        "blocked_shots": 1,
+        "big_chances_created": 0,
+        "expected_goals": 1.31,
+        "expected_assists": 0.08,
+        "np_expected_goals": 0.68
+      },
+      "duels": {
+        "duel_won": 5,
+        "duel_lost": 3,
+        "aerial_won": 0,
+        "challenge_lost": 1,
+        "won_contest": 0,
+        "dispossessed": 0
+      },
+      "defending": {
+        "tackles": 1,
+        "interceptions": 0,
+        "clearances": 2,
+        "ball_recoveries": 4
+      },
+      "goalkeeping": {
+        "saves": 0
+      },
+      "general": {
+        "touches": 47,
+        "fouls": 1,
+        "was_fouled": 4,
+        "offsides": 0,
+        "yellow_cards": 0,
+        "red_cards": 0,
+        "possession_lost": 11
+      }
+    },
+    {
+      "playerId": "pl_25832289",
+      "playerName": "Myles Lewis-Skelly",
+      "teamId": "tm_9145",
+      "position": "M",
+      "rating": 6.09,
+      "minutesPlayed": 45,
+      "started": true,
+      "played": true,
+      "passing": {
+        "total_passes": 29,
+        "accurate_passes": 27,
+        "key_passes": 0,
+        "assists": 0,
+        "total_crosses": 0,
+        "accurate_crosses": 0,
+        "total_long_balls": 0,
+        "accurate_long_balls": 0
+      },
+      "shooting": {
+        "goals": 0,
+        "total_shots": 0,
+        "shots_on_target": 0,
+        "shots_off_target": 0,
+        "blocked_shots": 0,
+        "big_chances_created": 0,
+        "expected_goals": 0,
+        "expected_assists": 0,
+        "np_expected_goals": 0
+      },
+      "duels": {
+        "duel_won": 1,
+        "duel_lost": 5,
+        "aerial_won": 0,
+        "challenge_lost": 0,
+        "won_contest": 0,
+        "dispossessed": 2
+      },
+      "defending": {
+        "tackles": 0,
+        "interceptions": 0,
+        "clearances": 0,
+        "ball_recoveries": 0
+      },
+      "goalkeeping": {
+        "saves": 0
+      },
+      "general": {
+        "touches": 37,
+        "fouls": 2,
+        "was_fouled": 1,
+        "offsides": 0,
+        "yellow_cards": 0,
+        "red_cards": 0,
+        "possession_lost": 5
+      }
+    },
+    {
+      "playerId": "pl_13495135",
+      "playerName": "Martin Ødegaard",
+      "teamId": "tm_9145",
+      "position": "M",
+      "rating": 7.2,
+      "minutesPlayed": 85,
+      "started": true,
+      "played": true,
+      "passing": {
+        "total_passes": 42,
+        "accurate_passes": 37,
+        "key_passes": 5,
+        "assists": 0,
+        "total_crosses": 1,
+        "accurate_crosses": 1,
+        "total_long_balls": 3,
+        "accurate_long_balls": 1
+      },
+      "shooting": {
+        "goals": 0,
+        "total_shots": 0,
+        "shots_on_target": 0,
+        "shots_off_target": 0,
+        "blocked_shots": 0,
+        "big_chances_created": 1,
+        "expected_goals": 0,
+        "expected_assists": 0.24,
+        "np_expected_goals": 0
+      },
+      "duels": {
+        "duel_won": 5,
+        "duel_lost": 1,
+        "aerial_won": 0,
+        "challenge_lost": 0,
+        "won_contest": 2,
+        "dispossessed": 0
+      },
+      "defending": {
+        "tackles": 1,
+        "interceptions": 1,
+        "clearances": 0,
+        "ball_recoveries": 3
+      },
+      "goalkeeping": {
+        "saves": 0
+      },
+      "general": {
+        "touches": 55,
+        "fouls": 0,
+        "was_fouled": 2,
+        "offsides": 0,
+        "yellow_cards": 0,
+        "red_cards": 0,
+        "possession_lost": 9
+      }
+    },
+    {
+      "playerId": "pl_96369277",
+      "playerName": "Riccardo Calafiori",
+      "teamId": "tm_9145",
+      "position": "D",
+      "rating": 6.43,
+      "minutesPlayed": 90,
+      "started": true,
+      "played": true,
+      "passing": {
+        "total_passes": 24,
+        "accurate_passes": 20,
+        "key_passes": 0,
+        "assists": 0,
+        "total_crosses": 0,
+        "accurate_crosses": 0,
+        "total_long_balls": 2,
+        "accurate_long_balls": 1
+      },
+      "shooting": {
+        "goals": 0,
+        "total_shots": 1,
+        "shots_on_target": 0,
+        "shots_off_target": 0,
+        "blocked_shots": 1,
+        "big_chances_created": 0,
+        "expected_goals": 0.06,
+        "expected_assists": 0.01,
+        "np_expected_goals": 0.06
+      },
+      "duels": {
+        "duel_won": 0,
+        "duel_lost": 2,
+        "aerial_won": 0,
+        "challenge_lost": 1,
+        "won_contest": 0,
+        "dispossessed": 0
+      },
+      "defending": {
+        "tackles": 0,
+        "interceptions": 0,
+        "clearances": 3,
+        "ball_recoveries": 2
+      },
+      "goalkeeping": {
+        "saves": 0
+      },
+      "general": {
+        "touches": 40,
+        "fouls": 1,
+        "was_fouled": 0,
+        "offsides": 0,
+        "yellow_cards": 0,
+        "red_cards": 0,
+        "possession_lost": 6
+      }
+    },
+    {
+      "playerId": "pl_08343894",
+      "playerName": "Declan Rice",
+      "teamId": "tm_9145",
+      "position": "M",
+      "rating": 8.19,
+      "minutesPlayed": 81,
+      "started": true,
+      "played": true,
+      "passing": {
+        "total_passes": 68,
+        "accurate_passes": 59,
+        "key_passes": 3,
+        "assists": 1,
+        "total_crosses": 1,
+        "accurate_crosses": 0,
+        "total_long_balls": 7,
+        "accurate_long_balls": 4
+      },
+      "shooting": {
+        "goals": 0,
+        "total_shots": 0,
+        "shots_on_target": 0,
+        "shots_off_target": 0,
+        "blocked_shots": 0,
+        "big_chances_created": 1,
+        "expected_goals": 0,
+        "expected_assists": 0.35,
+        "np_expected_goals": 0
+      },
+      "duels": {
+        "duel_won": 3,
+        "duel_lost": 0,
+        "aerial_won": 1,
+        "challenge_lost": 0,
+        "won_contest": 0,
+        "dispossessed": 0
+      },
+      "defending": {
+        "tackles": 2,
+        "interceptions": 0,
+        "clearances": 5,
+        "ball_recoveries": 2
+      },
+      "goalkeeping": {
+        "saves": 0
+      },
+      "general": {
+        "touches": 78,
+        "fouls": 0,
+        "was_fouled": 0,
+        "offsides": 0,
+        "yellow_cards": 0,
+        "red_cards": 0,
+        "possession_lost": 11
+      }
+    },
+    {
+      "playerId": "pl_96242662",
+      "playerName": "Gabriel Magalhães",
+      "teamId": "tm_9145",
+      "position": "D",
+      "rating": 8.24,
+      "minutesPlayed": 90,
+      "started": true,
+      "played": true,
+      "passing": {
+        "total_passes": 44,
+        "accurate_passes": 37,
+        "key_passes": 0,
+        "assists": 0,
+        "total_crosses": 0,
+        "accurate_crosses": 0,
+        "total_long_balls": 4,
+        "accurate_long_balls": 1
+      },
+      "shooting": {
+        "goals": 0,
+        "total_shots": 1,
+        "shots_on_target": 0,
+        "shots_off_target": 1,
+        "blocked_shots": 0,
+        "big_chances_created": 0,
+        "expected_goals": 0.01,
+        "expected_assists": 0.01,
+        "np_expected_goals": 0.02
+      },
+      "duels": {
+        "duel_won": 10,
+        "duel_lost": 2,
+        "aerial_won": 7,
+        "challenge_lost": 0,
+        "won_contest": 0,
+        "dispossessed": 0
+      },
+      "defending": {
+        "tackles": 1,
+        "interceptions": 2,
+        "clearances": 6,
+        "ball_recoveries": 2
+      },
+      "goalkeeping": {
+        "saves": 0
+      },
+      "general": {
+        "touches": 63,
+        "fouls": 1,
+        "was_fouled": 2,
+        "offsides": 0,
+        "yellow_cards": 1,
+        "red_cards": 0,
+        "possession_lost": 8
+      }
+    },
+    {
+      "playerId": "pl_01111190",
+      "playerName": "Malick Fofana",
+      "teamId": "tm_2674",
+      "position": "F",
+      "rating": 6.09,
+      "minutesPlayed": 14,
+      "started": false,
+      "played": true,
+      "passing": {
+        "total_passes": 3,
+        "accurate_passes": 3,
+        "key_passes": 0,
+        "assists": 0,
+        "total_crosses": 3,
+        "accurate_crosses": 0,
+        "total_long_balls": 1,
+        "accurate_long_balls": 1
+      },
+      "shooting": {
+        "goals": 0,
+        "total_shots": 0,
+        "shots_on_target": 0,
+        "shots_off_target": 0,
+        "blocked_shots": 0,
+        "big_chances_created": 0,
+        "expected_goals": 0,
+        "expected_assists": 0,
+        "np_expected_goals": 0
+      },
+      "duels": {
+        "duel_won": 0,
+        "duel_lost": 3,
+        "aerial_won": 0,
+        "challenge_lost": 0,
+        "won_contest": 0,
+        "dispossessed": 2
+      },
+      "defending": {
+        "tackles": 0,
+        "interceptions": 0,
+        "clearances": 0,
+        "ball_recoveries": 0
+      },
+      "goalkeeping": {
+        "saves": 0
+      },
+      "general": {
+        "touches": 9,
+        "fouls": 1,
+        "was_fouled": 0,
+        "offsides": 0,
+        "yellow_cards": 0,
+        "red_cards": 0,
+        "possession_lost": 5
+      }
+    },
+    {
+      "playerId": "pl_13688595",
+      "playerName": "Wilson Isidor",
+      "teamId": "tm_2674",
+      "position": "F",
+      "rating": 6.58,
+      "minutesPlayed": 20,
+      "started": false,
+      "played": true,
+      "passing": {
+        "total_passes": 1,
+        "accurate_passes": 1,
+        "key_passes": 0,
+        "assists": 0,
+        "total_crosses": 0,
+        "accurate_crosses": 0,
+        "total_long_balls": 0,
+        "accurate_long_balls": 0
+      },
+      "shooting": {
+        "goals": 0,
+        "total_shots": 0,
+        "shots_on_target": 0,
+        "shots_off_target": 0,
+        "blocked_shots": 0,
+        "big_chances_created": 0,
+        "expected_goals": 0,
+        "expected_assists": 0,
+        "np_expected_goals": 0
+      },
+      "duels": {
+        "duel_won": 1,
+        "duel_lost": 5,
+        "aerial_won": 0,
+        "challenge_lost": 0,
+        "won_contest": 0,
+        "dispossessed": 1
+      },
+      "defending": {
+        "tackles": 1,
+        "interceptions": 0,
+        "clearances": 0,
+        "ball_recoveries": 0
+      },
+      "goalkeeping": {
+        "saves": 0
+      },
+      "general": {
+        "touches": 4,
+        "fouls": 1,
+        "was_fouled": 0,
+        "offsides": 1,
+        "yellow_cards": 0,
+        "red_cards": 0,
+        "possession_lost": 2
+      }
+    },
+    {
+      "playerId": "pl_72642911",
+      "playerName": "Jurriën Timber",
+      "teamId": "tm_9145",
+      "position": "D",
+      "rating": 6.43,
+      "minutesPlayed": 45,
+      "started": false,
+      "played": true,
+      "passing": {
+        "total_passes": 13,
+        "accurate_passes": 10,
+        "key_passes": 0,
+        "assists": 0,
+        "total_crosses": 0,
+        "accurate_crosses": 0,
+        "total_long_balls": 1,
+        "accurate_long_balls": 0
+      },
+      "shooting": {
+        "goals": 0,
+        "total_shots": 0,
+        "shots_on_target": 0,
+        "shots_off_target": 0,
+        "blocked_shots": 0,
+        "big_chances_created": 0,
+        "expected_goals": 0,
+        "expected_assists": 0.01,
+        "np_expected_goals": 0
+      },
+      "duels": {
+        "duel_won": 1,
+        "duel_lost": 0,
+        "aerial_won": 0,
+        "challenge_lost": 0,
+        "won_contest": 0,
+        "dispossessed": 0
+      },
+      "defending": {
+        "tackles": 1,
+        "interceptions": 0,
+        "clearances": 2,
+        "ball_recoveries": 5
+      },
+      "goalkeeping": {
+        "saves": 0
+      },
+      "general": {
+        "touches": 19,
+        "fouls": 0,
+        "was_fouled": 0,
+        "offsides": 1,
+        "yellow_cards": 0,
+        "red_cards": 0,
+        "possession_lost": 5
+      }
+    },
+    {
+      "playerId": "pl_13349471",
+      "playerName": "Mikel Merino",
+      "teamId": "tm_9145",
+      "position": "M",
+      "rating": 6.09,
+      "minutesPlayed": 14,
+      "started": false,
+      "played": true,
+      "passing": {
+        "total_passes": 1,
+        "accurate_passes": 1,
+        "key_passes": 0,
+        "assists": 0,
+        "total_crosses": 0,
+        "accurate_crosses": 0,
+        "total_long_balls": 0,
+        "accurate_long_balls": 0
+      },
+      "shooting": {
+        "goals": 0,
+        "total_shots": 0,
+        "shots_on_target": 0,
+        "shots_off_target": 0,
+        "blocked_shots": 0,
+        "big_chances_created": 0,
+        "expected_goals": 0,
+        "expected_assists": 0,
+        "np_expected_goals": 0
+      },
+      "duels": {
+        "duel_won": 0,
+        "duel_lost": 3,
+        "aerial_won": 0,
+        "challenge_lost": 0,
+        "won_contest": 0,
+        "dispossessed": 1
+      },
+      "defending": {
+        "tackles": 0,
+        "interceptions": 0,
+        "clearances": 0,
+        "ball_recoveries": 0
+      },
+      "goalkeeping": {
+        "saves": 0
+      },
+      "general": {
+        "touches": 7,
+        "fouls": 0,
+        "was_fouled": 0,
+        "offsides": 0,
+        "yellow_cards": 0,
+        "red_cards": 0,
+        "possession_lost": 4
+      }
+    },
+    {
+      "playerId": "pl_72501523",
+      "playerName": "Bruno Guimarães",
+      "teamId": "tm_9145",
+      "position": "M",
+      "rating": 7.69,
+      "minutesPlayed": 45,
+      "started": false,
+      "played": true,
+      "passing": {
+        "total_passes": 13,
+        "accurate_passes": 12,
+        "key_passes": 0,
+        "assists": 0,
+        "total_crosses": 0,
+        "accurate_crosses": 0,
+        "total_long_balls": 0,
+        "accurate_long_balls": 0
+      },
+      "shooting": {
+        "goals": 1,
+        "total_shots": 2,
+        "shots_on_target": 1,
+        "shots_off_target": 1,
+        "blocked_shots": 0,
+        "big_chances_created": 0,
+        "expected_goals": 0.1,
+        "expected_assists": 0.13,
+        "np_expected_goals": 0.08
+      },
+      "duels": {
+        "duel_won": 4,
+        "duel_lost": 2,
+        "aerial_won": 1,
+        "challenge_lost": 1,
+        "won_contest": 0,
+        "dispossessed": 1
+      },
+      "defending": {
+        "tackles": 1,
+        "interceptions": 1,
+        "clearances": 0,
+        "ball_recoveries": 1
+      },
+      "goalkeeping": {
+        "saves": 0
+      },
+      "general": {
+        "touches": 20,
+        "fouls": 0,
+        "was_fouled": 2,
+        "offsides": 0,
+        "yellow_cards": 0,
+        "red_cards": 0,
+        "possession_lost": 2
+      }
+    },
+    {
+      "playerId": "pl_30477667",
+      "playerName": "Martín Zubimendi",
+      "teamId": "tm_9145",
+      "position": "M",
+      "rating": 7.1,
+      "minutesPlayed": 9,
+      "started": false,
+      "played": true,
+      "passing": {
+        "total_passes": 5,
+        "accurate_passes": 4,
+        "key_passes": 0,
+        "assists": 0,
+        "total_crosses": 0,
+        "accurate_crosses": 0,
+        "total_long_balls": 0,
+        "accurate_long_balls": 0
+      },
+      "shooting": {
+        "goals": 0,
+        "total_shots": 0,
+        "shots_on_target": 0,
+        "shots_off_target": 0,
+        "blocked_shots": 0,
+        "big_chances_created": 0,
+        "expected_goals": 0,
+        "expected_assists": 0,
+        "np_expected_goals": 0
+      },
+      "duels": {
+        "duel_won": 2,
+        "duel_lost": 0,
+        "aerial_won": 1,
+        "challenge_lost": 0,
+        "won_contest": 0,
+        "dispossessed": 0
+      },
+      "defending": {
+        "tackles": 1,
+        "interceptions": 0,
+        "clearances": 0,
+        "ball_recoveries": 1
+      },
+      "goalkeeping": {
+        "saves": 0
+      },
+      "general": {
+        "touches": 8,
+        "fouls": 0,
+        "was_fouled": 0,
+        "offsides": 0,
+        "yellow_cards": 0,
+        "red_cards": 0,
+        "possession_lost": 1
+      }
+    },
+    {
+      "playerId": "pl_29771630",
+      "playerName": "Eberechi Eze",
+      "teamId": "tm_9145",
+      "position": "M",
+      "rating": 6.29,
+      "minutesPlayed": 9,
+      "started": false,
+      "played": true,
+      "passing": {
+        "total_passes": 2,
+        "accurate_passes": 1,
+        "key_passes": 0,
+        "assists": 0,
+        "total_crosses": 1,
+        "accurate_crosses": 0,
+        "total_long_balls": 0,
+        "accurate_long_balls": 0
+      },
+      "shooting": {
+        "goals": 0,
+        "total_shots": 0,
+        "shots_on_target": 0,
+        "shots_off_target": 0,
+        "blocked_shots": 0,
+        "big_chances_created": 0,
+        "expected_goals": 0,
+        "expected_assists": 0,
+        "np_expected_goals": 0
+      },
+      "duels": {
+        "duel_won": 0,
+        "duel_lost": 0,
+        "aerial_won": 0,
+        "challenge_lost": 0,
+        "won_contest": 0,
+        "dispossessed": 0
+      },
+      "defending": {
+        "tackles": 0,
+        "interceptions": 0,
+        "clearances": 0,
+        "ball_recoveries": 0
+      },
+      "goalkeeping": {
+        "saves": 0
+      },
+      "general": {
+        "touches": 3,
+        "fouls": 0,
+        "was_fouled": 0,
+        "offsides": 0,
+        "yellow_cards": 0,
+        "red_cards": 0,
+        "possession_lost": 2
+      }
+    },
+    {
+      "playerId": "pl_40988817",
+      "playerName": "Melker Ellborg",
+      "teamId": "tm_2674",
+      "position": "G",
+      "rating": 0,
+      "minutesPlayed": 0,
+      "started": false,
+      "played": false,
+      "passing": {
+        "total_passes": 0,
+        "accurate_passes": 0,
+        "key_passes": 0,
+        "assists": 0,
+        "total_crosses": 0,
+        "accurate_crosses": 0,
+        "total_long_balls": 0,
+        "accurate_long_balls": 0
+      },
+      "shooting": {
+        "goals": 0,
+        "total_shots": 0,
+        "shots_on_target": 0,
+        "shots_off_target": 0,
+        "blocked_shots": 0,
+        "big_chances_created": 0,
+        "expected_goals": 0,
+        "expected_assists": 0,
+        "np_expected_goals": 0
+      },
+      "duels": {
+        "duel_won": 0,
+        "duel_lost": 0,
+        "aerial_won": 0,
+        "challenge_lost": 0,
+        "won_contest": 0,
+        "dispossessed": 0
+      },
+      "defending": {
+        "tackles": 0,
+        "interceptions": 0,
+        "clearances": 0,
+        "ball_recoveries": 0
+      },
+      "goalkeeping": {
+        "saves": 0
+      },
+      "general": {
+        "touches": 0,
+        "fouls": 0,
+        "was_fouled": 0,
+        "offsides": 0,
+        "yellow_cards": 0,
+        "red_cards": 0,
+        "possession_lost": 0
+      }
+    },
+    {
+      "playerId": "pl_9464363",
+      "playerName": "Luke O'Nien",
+      "teamId": "tm_2674",
+      "position": "D",
+      "rating": 0,
+      "minutesPlayed": 0,
+      "started": false,
+      "played": false,
+      "passing": {
+        "total_passes": 0,
+        "accurate_passes": 0,
+        "key_passes": 0,
+        "assists": 0,
+        "total_crosses": 0,
+        "accurate_crosses": 0,
+        "total_long_balls": 0,
+        "accurate_long_balls": 0
+      },
+      "shooting": {
+        "goals": 0,
+        "total_shots": 0,
+        "shots_on_target": 0,
+        "shots_off_target": 0,
+        "blocked_shots": 0,
+        "big_chances_created": 0,
+        "expected_goals": 0,
+        "expected_assists": 0,
+        "np_expected_goals": 0
+      },
+      "duels": {
+        "duel_won": 0,
+        "duel_lost": 0,
+        "aerial_won": 0,
+        "challenge_lost": 0,
+        "won_contest": 0,
+        "dispossessed": 0
+      },
+      "defending": {
+        "tackles": 0,
+        "interceptions": 0,
+        "clearances": 0,
+        "ball_recoveries": 0
+      },
+      "goalkeeping": {
+        "saves": 0
+      },
+      "general": {
+        "touches": 0,
+        "fouls": 0,
+        "was_fouled": 0,
+        "offsides": 0,
+        "yellow_cards": 0,
+        "red_cards": 0,
+        "possession_lost": 0
+      }
+    },
+    {
+      "playerId": "pl_30812732",
+      "playerName": "Omar Alderete",
+      "teamId": "tm_2674",
+      "position": "D",
+      "rating": 0,
+      "minutesPlayed": 0,
+      "started": false,
+      "played": false,
+      "passing": {
+        "total_passes": 0,
+        "accurate_passes": 0,
+        "key_passes": 0,
+        "assists": 0,
+        "total_crosses": 0,
+        "accurate_crosses": 0,
+        "total_long_balls": 0,
+        "accurate_long_balls": 0
+      },
+      "shooting": {
+        "goals": 0,
+        "total_shots": 0,
+        "shots_on_target": 0,
+        "shots_off_target": 0,
+        "blocked_shots": 0,
+        "big_chances_created": 0,
+        "expected_goals": 0,
+        "expected_assists": 0,
+        "np_expected_goals": 0
+      },
+      "duels": {
+        "duel_won": 0,
+        "duel_lost": 0,
+        "aerial_won": 0,
+        "challenge_lost": 0,
+        "won_contest": 0,
+        "dispossessed": 0
+      },
+      "defending": {
+        "tackles": 0,
+        "interceptions": 0,
+        "clearances": 0,
+        "ball_recoveries": 0
+      },
+      "goalkeeping": {
+        "saves": 0
+      },
+      "general": {
+        "touches": 0,
+        "fouls": 0,
+        "was_fouled": 0,
+        "offsides": 0,
+        "yellow_cards": 0,
+        "red_cards": 0,
+        "possession_lost": 0
+      }
+    },
+    {
+      "playerId": "pl_08599919",
+      "playerName": "Trai Hume",
+      "teamId": "tm_2674",
+      "position": "D",
+      "rating": 0,
+      "minutesPlayed": 0,
+      "started": false,
+      "played": false,
+      "passing": {
+        "total_passes": 0,
+        "accurate_passes": 0,
+        "key_passes": 0,
+        "assists": 0,
+        "total_crosses": 0,
+        "accurate_crosses": 0,
+        "total_long_balls": 0,
+        "accurate_long_balls": 0
+      },
+      "shooting": {
+        "goals": 0,
+        "total_shots": 0,
+        "shots_on_target": 0,
+        "shots_off_target": 0,
+        "blocked_shots": 0,
+        "big_chances_created": 0,
+        "expected_goals": 0,
+        "expected_assists": 0,
+        "np_expected_goals": 0
+      },
+      "duels": {
+        "duel_won": 0,
+        "duel_lost": 0,
+        "aerial_won": 0,
+        "challenge_lost": 0,
+        "won_contest": 0,
+        "dispossessed": 0
+      },
+      "defending": {
+        "tackles": 0,
+        "interceptions": 0,
+        "clearances": 0,
+        "ball_recoveries": 0
+      },
+      "goalkeeping": {
+        "saves": 0
+      },
+      "general": {
+        "touches": 0,
+        "fouls": 0,
+        "was_fouled": 0,
+        "offsides": 0,
+        "yellow_cards": 0,
+        "red_cards": 0,
+        "possession_lost": 0
+      }
+    },
+    {
+      "playerId": "pl_51463639",
+      "playerName": "Dayann Methalie",
+      "teamId": "tm_2674",
+      "position": "M",
+      "rating": 0,
+      "minutesPlayed": 0,
+      "started": false,
+      "played": false,
+      "passing": {
+        "total_passes": 0,
+        "accurate_passes": 0,
+        "key_passes": 0,
+        "assists": 0,
+        "total_crosses": 0,
+        "accurate_crosses": 0,
+        "total_long_balls": 0,
+        "accurate_long_balls": 0
+      },
+      "shooting": {
+        "goals": 0,
+        "total_shots": 0,
+        "shots_on_target": 0,
+        "shots_off_target": 0,
+        "blocked_shots": 0,
+        "big_chances_created": 0,
+        "expected_goals": 0,
+        "expected_assists": 0,
+        "np_expected_goals": 0
+      },
+      "duels": {
+        "duel_won": 0,
+        "duel_lost": 0,
+        "aerial_won": 0,
+        "challenge_lost": 0,
+        "won_contest": 0,
+        "dispossessed": 0
+      },
+      "defending": {
+        "tackles": 0,
+        "interceptions": 0,
+        "clearances": 0,
+        "ball_recoveries": 0
+      },
+      "goalkeeping": {
+        "saves": 0
+      },
+      "general": {
+        "touches": 0,
+        "fouls": 0,
+        "was_fouled": 0,
+        "offsides": 0,
+        "yellow_cards": 0,
+        "red_cards": 0,
+        "possession_lost": 0
+      }
+    },
+    {
+      "playerId": "pl_40565794",
+      "playerName": "Chemsdine Talbi",
+      "teamId": "tm_2674",
+      "position": "M",
+      "rating": 0,
+      "minutesPlayed": 0,
+      "started": false,
+      "played": false,
+      "passing": {
+        "total_passes": 0,
+        "accurate_passes": 0,
+        "key_passes": 0,
+        "assists": 0,
+        "total_crosses": 0,
+        "accurate_crosses": 0,
+        "total_long_balls": 0,
+        "accurate_long_balls": 0
+      },
+      "shooting": {
+        "goals": 0,
+        "total_shots": 0,
+        "shots_on_target": 0,
+        "shots_off_target": 0,
+        "blocked_shots": 0,
+        "big_chances_created": 0,
+        "expected_goals": 0,
+        "expected_assists": 0,
+        "np_expected_goals": 0
+      },
+      "duels": {
+        "duel_won": 0,
+        "duel_lost": 0,
+        "aerial_won": 0,
+        "challenge_lost": 0,
+        "won_contest": 0,
+        "dispossessed": 0
+      },
+      "defending": {
+        "tackles": 0,
+        "interceptions": 0,
+        "clearances": 0,
+        "ball_recoveries": 0
+      },
+      "goalkeeping": {
+        "saves": 0
+      },
+      "general": {
+        "touches": 0,
+        "fouls": 0,
+        "was_fouled": 0,
+        "offsides": 0,
+        "yellow_cards": 0,
+        "red_cards": 0,
+        "possession_lost": 0
+      }
+    },
+    {
+      "playerId": "pl_74559476",
+      "playerName": "Chris Rigg",
+      "teamId": "tm_2674",
+      "position": "M",
+      "rating": 0,
+      "minutesPlayed": 0,
+      "started": false,
+      "played": false,
+      "passing": {
+        "total_passes": 0,
+        "accurate_passes": 0,
+        "key_passes": 0,
+        "assists": 0,
+        "total_crosses": 0,
+        "accurate_crosses": 0,
+        "total_long_balls": 0,
+        "accurate_long_balls": 0
+      },
+      "shooting": {
+        "goals": 0,
+        "total_shots": 0,
+        "shots_on_target": 0,
+        "shots_off_target": 0,
+        "blocked_shots": 0,
+        "big_chances_created": 0,
+        "expected_goals": 0,
+        "expected_assists": 0,
+        "np_expected_goals": 0
+      },
+      "duels": {
+        "duel_won": 0,
+        "duel_lost": 0,
+        "aerial_won": 0,
+        "challenge_lost": 0,
+        "won_contest": 0,
+        "dispossessed": 0
+      },
+      "defending": {
+        "tackles": 0,
+        "interceptions": 0,
+        "clearances": 0,
+        "ball_recoveries": 0
+      },
+      "goalkeeping": {
+        "saves": 0
+      },
+      "general": {
+        "touches": 0,
+        "fouls": 0,
+        "was_fouled": 0,
+        "offsides": 0,
+        "yellow_cards": 0,
+        "red_cards": 0,
+        "possession_lost": 0
+      }
+    },
+    {
+      "playerId": "pl_9898384",
+      "playerName": "Kepa Arrizabalaga",
+      "teamId": "tm_9145",
+      "position": "G",
+      "rating": 0,
+      "minutesPlayed": 0,
+      "started": false,
+      "played": false,
+      "passing": {
+        "total_passes": 0,
+        "accurate_passes": 0,
+        "key_passes": 0,
+        "assists": 0,
+        "total_crosses": 0,
+        "accurate_crosses": 0,
+        "total_long_balls": 0,
+        "accurate_long_balls": 0
+      },
+      "shooting": {
+        "goals": 0,
+        "total_shots": 0,
+        "shots_on_target": 0,
+        "shots_off_target": 0,
+        "blocked_shots": 0,
+        "big_chances_created": 0,
+        "expected_goals": 0,
+        "expected_assists": 0,
+        "np_expected_goals": 0
+      },
+      "duels": {
+        "duel_won": 0,
+        "duel_lost": 0,
+        "aerial_won": 0,
+        "challenge_lost": 0,
+        "won_contest": 0,
+        "dispossessed": 0
+      },
+      "defending": {
+        "tackles": 0,
+        "interceptions": 0,
+        "clearances": 0,
+        "ball_recoveries": 0
+      },
+      "goalkeeping": {
+        "saves": 0
+      },
+      "general": {
+        "touches": 0,
+        "fouls": 0,
+        "was_fouled": 0,
+        "offsides": 0,
+        "yellow_cards": 0,
+        "red_cards": 0,
+        "possession_lost": 0
+      }
+    },
+    {
+      "playerId": "pl_30434127",
+      "playerName": "Piero Hincapié",
+      "teamId": "tm_9145",
+      "position": "D",
+      "rating": 0,
+      "minutesPlayed": 0,
+      "started": false,
+      "played": false,
+      "passing": {
+        "total_passes": 0,
+        "accurate_passes": 0,
+        "key_passes": 0,
+        "assists": 0,
+        "total_crosses": 0,
+        "accurate_crosses": 0,
+        "total_long_balls": 0,
+        "accurate_long_balls": 0
+      },
+      "shooting": {
+        "goals": 0,
+        "total_shots": 0,
+        "shots_on_target": 0,
+        "shots_off_target": 0,
+        "blocked_shots": 0,
+        "big_chances_created": 0,
+        "expected_goals": 0,
+        "expected_assists": 0,
+        "np_expected_goals": 0
+      },
+      "duels": {
+        "duel_won": 0,
+        "duel_lost": 0,
+        "aerial_won": 0,
+        "challenge_lost": 0,
+        "won_contest": 0,
+        "dispossessed": 0
+      },
+      "defending": {
+        "tackles": 0,
+        "interceptions": 0,
+        "clearances": 0,
+        "ball_recoveries": 0
+      },
+      "goalkeeping": {
+        "saves": 0
+      },
+      "general": {
+        "touches": 0,
+        "fouls": 0,
+        "was_fouled": 0,
+        "offsides": 0,
+        "yellow_cards": 0,
+        "red_cards": 0,
+        "possession_lost": 0
+      }
+    },
+    {
+      "playerId": "pl_30476420",
+      "playerName": "Noni Madueke",
+      "teamId": "tm_9145",
+      "position": "F",
+      "rating": 0,
+      "minutesPlayed": 0,
+      "started": false,
+      "played": false,
+      "passing": {
+        "total_passes": 0,
+        "accurate_passes": 0,
+        "key_passes": 0,
+        "assists": 0,
+        "total_crosses": 0,
+        "accurate_crosses": 0,
+        "total_long_balls": 0,
+        "accurate_long_balls": 0
+      },
+      "shooting": {
+        "goals": 0,
+        "total_shots": 0,
+        "shots_on_target": 0,
+        "shots_off_target": 0,
+        "blocked_shots": 0,
+        "big_chances_created": 0,
+        "expected_goals": 0,
+        "expected_assists": 0,
+        "np_expected_goals": 0
+      },
+      "duels": {
+        "duel_won": 0,
+        "duel_lost": 0,
+        "aerial_won": 0,
+        "challenge_lost": 0,
+        "won_contest": 0,
+        "dispossessed": 0
+      },
+      "defending": {
+        "tackles": 0,
+        "interceptions": 0,
+        "clearances": 0,
+        "ball_recoveries": 0
+      },
+      "goalkeeping": {
+        "saves": 0
+      },
+      "general": {
+        "touches": 0,
+        "fouls": 0,
+        "was_fouled": 0,
+        "offsides": 0,
+        "yellow_cards": 0,
+        "red_cards": 0,
+        "possession_lost": 0
+      }
+    },
+    {
+      "playerId": "pl_84500047",
+      "playerName": "Viktor Gyökeres",
+      "teamId": "tm_9145",
+      "position": "F",
+      "rating": 0,
+      "minutesPlayed": 0,
+      "started": false,
+      "played": false,
+      "passing": {
+        "total_passes": 0,
+        "accurate_passes": 0,
+        "key_passes": 0,
+        "assists": 0,
+        "total_crosses": 0,
+        "accurate_crosses": 0,
+        "total_long_balls": 0,
+        "accurate_long_balls": 0
+      },
+      "shooting": {
+        "goals": 0,
+        "total_shots": 0,
+        "shots_on_target": 0,
+        "shots_off_target": 0,
+        "blocked_shots": 0,
+        "big_chances_created": 0,
+        "expected_goals": 0,
+        "expected_assists": 0,
+        "np_expected_goals": 0
+      },
+      "duels": {
+        "duel_won": 0,
+        "duel_lost": 0,
+        "aerial_won": 0,
+        "challenge_lost": 0,
+        "won_contest": 0,
+        "dispossessed": 0
+      },
+      "defending": {
+        "tackles": 0,
+        "interceptions": 0,
+        "clearances": 0,
+        "ball_recoveries": 0
+      },
+      "goalkeeping": {
+        "saves": 0
+      },
+      "general": {
+        "touches": 0,
+        "fouls": 0,
+        "was_fouled": 0,
+        "offsides": 0,
+        "yellow_cards": 0,
+        "red_cards": 0,
+        "possession_lost": 0
+      }
+    }
+  ],
+  "fetchedAt": "2026-10-04T13:36:13.452Z"
+}

@@ -55,6 +55,29 @@ jobs:
             fi
           done
 
+          mkdir -p "$SEASON_DATA_DIR/player-stats/matches"
+          player_stats_temp="$SEASON_DATA_DIR/player-stats.json.tmp"
+          if curl -fsSL "$LIVE_SEASON_DATA_URL/player-stats.json" -o "$player_stats_temp"; then
+            mv "$player_stats_temp" "$SEASON_DATA_DIR/player-stats.json"
+            echo "Hydrated player-stats.json."
+          else
+            rm -f "$player_stats_temp"
+            echo "Live player-stats.json unavailable; keeping repository copy."
+          fi
+
+          node -e "const f=require('./$SEASON_DATA_DIR/fixtures.raw.json'); for(const x of f.response||[]) if(['FT','AET','PEN'].includes(x.fixture?.status?.short)) console.log(x.fixture.id)" |
+            while read fixture_id; do
+              cache_file="$SEASON_DATA_DIR/player-stats/matches/$fixture_id.json"
+              temp_file="$cache_file.tmp"
+              if curl -fsSL "$LIVE_SEASON_DATA_URL/player-stats/matches/$fixture_id.json" -o "$temp_file"; then
+                mv "$temp_file" "$cache_file"
+                echo "Hydrated player stats for fixture $fixture_id."
+              else
+                rm -f "$temp_file"
+                echo "Live player stats unavailable for fixture $fixture_id; keeping repository cache."
+              fi
+            done
+
       - name: Merge deployed odds archive
         run: npm run sync:odds
 
@@ -62,11 +85,17 @@ jobs:
         run: |
           mkdir -p .tmp
           cp -R "$SEASON_DATA_DIR/matchweeks" .tmp/matchweeks-before
+          cp "$SEASON_DATA_DIR/player-stats.json" .tmp/player-stats-before.json 2>/dev/null || true
 
       - name: Backfill finalized TheStatsAPI data
         env:
           TSAPI_KEY: ${{ secrets.TSAPI_KEY }}
         run: npm run backfill:stats
+
+      - name: Refresh player statistics
+        env:
+          TSAPI_KEY: ${{ secrets.TSAPI_KEY }}
+        run: npm run refresh:player-stats
 
       - name: Check for match-stat changes
         id: changes
@@ -79,12 +108,21 @@ jobs:
             exit 0
           fi
 
-          if diff -qr .tmp/matchweeks-before "$SEASON_DATA_DIR/matchweeks" >/dev/null; then
+          MATCHWEEKS_CHANGED=0
+          PLAYER_STATS_CHANGED=0
+          diff -qr .tmp/matchweeks-before "$SEASON_DATA_DIR/matchweeks" >/dev/null || MATCHWEEKS_CHANGED=1
+          if [ -f .tmp/player-stats-before.json ] && [ -f "$SEASON_DATA_DIR/player-stats.json" ]; then
+            cmp -s .tmp/player-stats-before.json "$SEASON_DATA_DIR/player-stats.json" || PLAYER_STATS_CHANGED=1
+          elif [ -f "$SEASON_DATA_DIR/player-stats.json" ]; then
+            PLAYER_STATS_CHANGED=1
+          fi
+
+          if [ "$MATCHWEEKS_CHANGED" = "0" ] && [ "$PLAYER_STATS_CHANGED" = "0" ]; then
             echo "should_deploy=0" >> "$GITHUB_OUTPUT"
-            echo "No match-stat changes; skipping build/deploy."
+            echo "No match or player-stat changes; skipping build/deploy."
           else
             echo "should_deploy=1" >> "$GITHUB_OUTPUT"
-            echo "Match statistics changed; building and deploying."
+            echo "Match or player statistics changed; building and deploying."
           fi
 
       - name: Build players cache
@@ -108,6 +146,7 @@ jobs:
           test -f dist/sitemap.xml
           test -f dist/epl/2026-27/matchweek/1/index.html
           test -f dist/epl/2026-27/table/index.html
+          test -f dist/epl/2026-27/players/index.html
 
       - name: Deploy to Netlify (prod)
         if: steps.changes.outputs.should_deploy == '1'

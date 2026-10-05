@@ -47,6 +47,16 @@ const ODDS_PATH = path.join(
     "odds.json"
 );
 
+const PLAYER_STATS_PATH = path.join(
+    ROOT,
+    "public",
+    "data",
+    "leagues",
+    season.leagueKey,
+    season.seasonPath,
+    "player-stats.json"
+);
+
 async function readJsonIfExists(filePath, fallback) {
     try {
         const text = await fs.readFile(filePath, "utf8");
@@ -507,7 +517,395 @@ function buildLeaguePerformanceHtml(team, leaguePerformance) {
     `.trim();
 }
 
-function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, matches, teamSeason, leaguePerformance, updatedLabel }) {
+const PLAYER_STAT_CATEGORIES = [
+    {
+        slug: "player-ratings",
+        shortLabel: "Player Ratings",
+        title: "Premier League Player Ratings",
+        description: "Highest-rated Premier League players with appearances, starts and minutes played.",
+        filter: (player) => player.minutes >= 180 && Number.isFinite(player.playerRating),
+        sort: (player) => player.playerRating,
+        columns: [
+            ["Apps", (player) => player.appearances],
+            ["Starts", (player) => player.starts],
+            ["Min", (player) => player.minutes],
+            ["Rating", (player) => formatDecimal(player.playerRating)],
+        ],
+    },
+    {
+        slug: "top-scorers",
+        shortLabel: "Top Scorers",
+        title: "Premier League Top Scorers",
+        description: "Premier League top scorers with goals, expected goals (xG), shots and appearances.",
+        filter: (player) => player.scoring.goals > 0,
+        sort: (player) => player.scoring.goals,
+        columns: [
+            ["Apps", (player) => player.appearances],
+            ["xG", (player) => formatDecimal(player.scoring.xg)],
+            ["Shots", (player) => player.shooting.shots],
+            ["Goals", (player) => player.scoring.goals],
+        ],
+    },
+    {
+        slug: "assists",
+        shortLabel: "Assists",
+        title: "Premier League Most Assists",
+        description: "Premier League assist leaders with expected assists (xA), key passes and appearances.",
+        filter: (player) => player.scoring.assists > 0,
+        sort: (player) => player.scoring.assists,
+        columns: [
+            ["Apps", (player) => player.appearances],
+            ["xA", (player) => formatDecimal(player.scoring.xa)],
+            ["Key Passes", (player) => player.passing.keyPasses],
+            ["Assists", (player) => player.scoring.assists],
+        ],
+    },
+    {
+        slug: "expected-goals",
+        shortLabel: "xG",
+        title: "Premier League Expected Goals (xG) Leaders",
+        description: "Premier League players ranked by expected goals (xG), with non-penalty xG, goals and xG per 90 minutes.",
+        filter: (player) => player.scoring.xg > 0,
+        sort: (player) => player.scoring.xg,
+        columns: [
+            ["Min", (player) => player.minutes],
+            ["npxG", (player) => formatDecimal(player.scoring.npxg)],
+            ["Goals", (player) => player.scoring.goals],
+            ["xG/90", (player) => player.minutes >= 180 ? formatDecimal(player.scoring.xgPer90) : "-"],
+            ["xG", (player) => formatDecimal(player.scoring.xg)],
+        ],
+    },
+    {
+        slug: "shooting",
+        shortLabel: "Shooting",
+        title: "Premier League Shooting Leaders",
+        description: "Premier League shooting leaders with total shots, shots on target and goals. Conversion rate is shown for players with 10 shots or more.",
+        filter: (player) => player.shooting.shots > 0,
+        sort: (player) => player.shooting.shots,
+        columns: [
+            ["Apps", (player) => player.appearances],
+            ["On Target", (player) => player.shooting.shotsOnTarget],
+            ["Goals", (player) => player.scoring.goals],
+            ["Conversion", (player) => player.shooting.shots >= 10 ? formatPercent(player.shooting.goalConversion) : "-"],
+            ["Shots", (player) => player.shooting.shots],
+        ],
+    },
+    {
+        slug: "finishing",
+        shortLabel: "Finishing",
+        title: "Premier League Best Finishers",
+        description: "Premier League clinical finishing leaders, ranked by conversion rate among players with at least 10 shots, with goals, expected goals (xG) and goals above expected.",
+        filter: (player) => player.shooting.shots >= 10 && Number.isFinite(player.shooting.goalConversion),
+        sort: (player) => player.shooting.goalConversion,
+        columns: [
+            ["Apps", (player) => player.appearances],
+            ["Goals", (player) => player.scoring.goals],
+            ["Shots", (player) => player.shooting.shots],
+            ["On Target", (player) => player.shooting.shotsOnTarget],
+            ["xG", (player) => formatDecimal(player.scoring.xg)],
+            ["G-xG", (player) => Number.isFinite(player.scoring.xg)
+                ? formatSignedDecimal(player.scoring.goals - player.scoring.xg)
+                : "-"],
+            ["Conversion", (player) => formatPercent(player.shooting.goalConversion)],
+        ],
+    },
+    {
+        slug: "passing",
+        shortLabel: "Passing",
+        title: "Premier League Passing Leaders",
+        description: "Premier League passing leaders balancing accurate-pass volume and pass completion among players with at least 100 total passes, with key passes and assists.",
+        filter: (player) => player.passing.passes >= 100,
+        sort: (player) => player.passing.accuratePasses * (player.passing.passAccuracy / 100),
+        columns: [
+            ["Apps", (player) => player.appearances],
+            ["Key Passes", (player) => player.passing.keyPasses],
+            ["Assists", (player) => player.scoring.assists],
+            ["Total", (player) => player.passing.passes],
+            ["Accurate", (player) => player.passing.accuratePasses],
+            ["Pass %", (player) => formatPercent(player.passing.passAccuracy)],
+        ],
+    },
+    {
+        slug: "tackles",
+        shortLabel: "Tackles",
+        title: "Premier League Tackles Leaders",
+        description: "Premier League outfield players with the most tackles, alongside appearances, interceptions, recoveries and clearances.",
+        filter: (player) => player.position !== "G" && player.defending.tackles > 0,
+        sort: (player) => player.defending.tackles,
+        columns: [
+            ["Apps", (player) => player.appearances],
+            ["Interceptions", (player) => player.defending.interceptions],
+            ["Recoveries", (player) => player.defending.ballRecoveries],
+            ["Clearances", (player) => player.defending.clearances],
+            ["Tackles", (player) => player.defending.tackles],
+        ],
+    },
+    {
+        slug: "interceptions",
+        shortLabel: "Interceptions",
+        title: "Premier League Interceptions Leaders",
+        description: "Premier League outfield players with the most interceptions, alongside appearances, tackles, recoveries and clearances.",
+        filter: (player) => player.position !== "G" && player.defending.interceptions > 0,
+        sort: (player) => player.defending.interceptions,
+        columns: [
+            ["Apps", (player) => player.appearances],
+            ["Tackles", (player) => player.defending.tackles],
+            ["Recoveries", (player) => player.defending.ballRecoveries],
+            ["Clearances", (player) => player.defending.clearances],
+            ["Interceptions", (player) => player.defending.interceptions],
+        ],
+    },
+    {
+        slug: "recoveries",
+        shortLabel: "Recoveries",
+        title: "Premier League Ball Recoveries Leaders",
+        description: "Premier League outfield players with the most ball recoveries, alongside appearances, tackles, interceptions and clearances.",
+        filter: (player) => player.position !== "G" && player.defending.ballRecoveries > 0,
+        sort: (player) => player.defending.ballRecoveries,
+        columns: [
+            ["Apps", (player) => player.appearances],
+            ["Tackles", (player) => player.defending.tackles],
+            ["Interceptions", (player) => player.defending.interceptions],
+            ["Clearances", (player) => player.defending.clearances],
+            ["Recoveries", (player) => player.defending.ballRecoveries],
+        ],
+    },
+    {
+        slug: "clearances",
+        shortLabel: "Clearances",
+        title: "Premier League Clearances Leaders",
+        description: "Premier League outfield players with the most clearances, alongside appearances, tackles, interceptions and recoveries.",
+        filter: (player) => player.position !== "G" && player.defending.clearances > 0,
+        sort: (player) => player.defending.clearances,
+        columns: [
+            ["Apps", (player) => player.appearances],
+            ["Tackles", (player) => player.defending.tackles],
+            ["Interceptions", (player) => player.defending.interceptions],
+            ["Recoveries", (player) => player.defending.ballRecoveries],
+            ["Clearances", (player) => player.defending.clearances],
+        ],
+    },
+    {
+        slug: "duels",
+        shortLabel: "Duels",
+        title: "Premier League Duels Won Leaders",
+        description: "Premier League players ranked by duels won, with duel success, aerial duels and successful dribbles.",
+        filter: (player) => player.duels.won > 0,
+        sort: (player) => player.duels.won,
+        columns: [
+            ["Apps", (player) => player.appearances],
+            ["Duel %", (player) => player.duels.won + player.duels.lost >= 10 ? formatPercent(player.duels.winPercentage) : "-"],
+            ["Aerial Won", (player) => player.duels.aerialWon],
+            ["Dribbles", (player) => player.duels.successfulDribbles],
+            ["Duels Won", (player) => player.duels.won],
+        ],
+    },
+    {
+        slug: "goalkeeping",
+        shortLabel: "Goalkeeping",
+        title: "Premier League Goalkeeper Saves",
+        description: "Premier League goalkeepers ranked by saves, with appearances, minutes played, ball recoveries and clearances.",
+        filter: (player) => player.position === "G" || player.goalkeeping.saves > 0,
+        sort: (player) => player.goalkeeping.saves,
+        columns: [
+            ["Apps", (player) => player.appearances],
+            ["Min", (player) => player.minutes],
+            ["Recoveries", (player) => player.defending.ballRecoveries],
+            ["Clearances", (player) => player.defending.clearances],
+            ["Saves", (player) => player.goalkeeping.saves],
+        ],
+    },
+    {
+        slug: "discipline",
+        shortLabel: "Discipline",
+        title: "Premier League Cards and Discipline",
+        description: "Premier League player discipline statistics with yellow cards, red cards, fouls and fouls won.",
+        filter: (player) => player.discipline.yellowCards + player.discipline.redCards + player.discipline.fouls > 0,
+        sort: (player) => player.discipline.yellowCards * 10 + player.discipline.redCards,
+        columns: [
+            ["Apps", (player) => player.appearances],
+            ["Yellow", (player) => player.discipline.yellowCards],
+            ["Red", (player) => player.discipline.redCards],
+            ["Fouls", (player) => player.discipline.fouls],
+            ["Fouls Won", (player) => player.discipline.foulsWon],
+        ],
+    },
+];
+
+function formatDecimal(value) {
+    return Number.isFinite(value) ? Number(value).toFixed(2) : "-";
+}
+
+function formatPercent(value) {
+    return Number.isFinite(value) ? `${Number(value).toFixed(1)}%` : "-";
+}
+
+function formatSignedDecimal(value) {
+    if (!Number.isFinite(value)) return "-";
+    return `${value > 0 ? "+" : ""}${Number(value).toFixed(2)}`;
+}
+
+function currentPlayerTeamSlug(player) {
+    return player.currentTeamSlug || player.teamSlugs?.at(-1) || null;
+}
+
+function playerTeamLinks(player, teamsBySlug, seasonPath) {
+    const slug = currentPlayerTeamSlug(player);
+    if (!slug) return "-";
+    const team = teamsBySlug[slug];
+    return team
+        ? `<a class="tbl-link player-team-link" href="/epl/${seasonPath}/team/${slug}/"><img class="player-team-badge ${escapeAttr(slug)}" src="${escapeAttr(team.badge)}" alt="" aria-hidden="true" width="24" height="24" loading="lazy"><span>${escapeHtml(team.display || team.name)}</span></a>`
+        : escapeHtml(slug);
+}
+
+function sortedCategoryPlayers(players, category, limit = null) {
+    const rows = (players || [])
+        .filter((player) => player.appearances > 0)
+        .filter((player) => !category.filter || category.filter(player))
+        .sort((a, b) => category.compare
+            ? category.compare(a, b)
+            : category.sort(b) - category.sort(a) || b.minutes - a.minutes || a.playerName.localeCompare(b.playerName));
+    return limit ? rows.slice(0, limit) : rows;
+}
+
+function buildPlayerStatsTable({ players, category, teamsBySlug, seasonPath, limit = null, compact = false, showTeam = true }) {
+    const rows = sortedCategoryPlayers(players, category, limit);
+    const rankedRows = rows.map((player, index) => ({
+        player,
+        rank: category.rankTies !== false && index > 0 && category.sort(player) === category.sort(rows[index - 1])
+            ? null
+            : index + 1,
+    }));
+    for (let index = 0; index < rankedRows.length; index += 1) {
+        if (rankedRows[index].rank == null) rankedRows[index].rank = rankedRows[index - 1].rank;
+    }
+    return `
+        <div class="table-scroll player-table-scroll" role="region" aria-label="${escapeAttr(category.title)}" tabindex="0">
+            <table class="player-stats-table${compact ? " player-stats-table--compact" : ""}">
+                <thead><tr>
+                    <th class="player-rank" scope="col">#</th>
+                    <th class="player-name" scope="col">Player</th>
+                    ${showTeam ? '<th class="player-team" scope="col">Team</th>' : ""}
+                    ${category.columns.map(([label]) => `<th scope="col" class="text-center">${escapeHtml(label)}</th>`).join("")}
+                </tr></thead>
+                <tbody>
+                    ${rankedRows.map(({ player, rank }) => `
+                        <tr>
+                            <td class="player-rank text-center">${rank}</td>
+                            <td class="player-name"><strong>${escapeHtml(player.playerName)}</strong></td>
+                            ${showTeam ? `<td class="player-team">${playerTeamLinks(player, teamsBySlug, seasonPath)}</td>` : ""}
+                            ${category.columns.map(([, getter]) => `<td class="text-center">${escapeHtml(getter(player))}</td>`).join("")}
+                        </tr>
+                    `.trim()).join("\n")}
+                </tbody>
+            </table>
+        </div>
+    `.trim();
+}
+
+function buildPlayerCategoryNav(seasonPath, activeSlug = null) {
+    return `<nav class="player-category-nav" aria-label="Player statistics categories" tabindex="0">
+        <a${activeSlug == null ? ' aria-current="page"' : ""} href="/epl/${seasonPath}/players/">Overview</a>
+        ${PLAYER_STAT_CATEGORIES.map((category) => `<a${activeSlug === category.slug ? ' aria-current="page"' : ""} href="/epl/${seasonPath}/players/${category.slug}/">${escapeHtml(category.shortLabel)}</a>`).join("\n")}
+    </nav>`;
+}
+
+function buildPlayerStatsHubHtml({ playerStats, teamsBySlug, seasonPath, seasonLabel }) {
+    const previewSlugs = [
+        "player-ratings",
+        "top-scorers",
+        "assists",
+        "expected-goals",
+        "finishing",
+        "tackles",
+        "interceptions",
+        "recoveries",
+        "clearances",
+        "goalkeeping",
+    ];
+    return `
+        <section class="player-stats-page">
+            <header class="player-stats-header">
+                <h1>Premier League Player Stats ${escapeHtml(seasonLabel)}</h1>
+                <p>Top scorers, assists, expected goals, player ratings, shooting, passing, defending, duels, goalkeeper saves and discipline for the ${escapeHtml(seasonLabel)} Premier League season.</p>
+                ${playerStats.updatedAt ? `<p class="muted">Updated ${escapeHtml(formatISODate(playerStats.updatedAt))} · ${playerStats.matchesIncluded} matches included</p>` : ""}
+            </header>
+            ${buildPlayerCategoryNav(seasonPath)}
+            <div class="player-leader-grid">
+                ${previewSlugs.map((slug) => {
+                    const category = PLAYER_STAT_CATEGORIES.find((item) => item.slug === slug);
+                    return `<section class="player-leader-section">
+                        <div class="player-section-heading">
+                            <h2>${escapeHtml(category.title)}</h2>
+                            <a class="text-link" href="/epl/${seasonPath}/players/${category.slug}/">Full table &#9655;</a>
+                        </div>
+                        ${buildPlayerStatsTable({ players: playerStats.players, category, teamsBySlug, seasonPath, limit: 10, compact: true })}
+                    </section>`;
+                }).join("\n")}
+            </div>
+        </section>
+    `.trim();
+}
+
+function buildPlayerCategoryPageHtml({ playerStats, category, teamsBySlug, seasonPath, seasonLabel }) {
+    return `
+        <section class="player-stats-page">
+            <header class="player-stats-header">
+                <p class="player-stats-kicker">Premier League ${escapeHtml(seasonLabel)}</p>
+                <h1>${escapeHtml(category.title)}</h1>
+                <p>${escapeHtml(category.description)}</p>
+                ${playerStats.updatedAt ? `<p class="muted">Updated ${escapeHtml(formatISODate(playerStats.updatedAt))} · ${playerStats.matchesIncluded} matches included</p>` : ""}
+            </header>
+            ${buildPlayerCategoryNav(seasonPath, category.slug)}
+            ${buildPlayerStatsTable({ players: playerStats.players, category, teamsBySlug, seasonPath })}
+            <p class="player-stats-note">Rate statistics use minimum sample sizes: 180 minutes for player ratings and per-90 values, 10 shots for conversion, and 100 passes for pass accuracy.</p>
+        </section>
+    `.trim();
+}
+
+function buildTeamPlayerStatsHtml({ playerStats, slug, team, seasonPath }) {
+    const players = (playerStats?.players || [])
+        .flatMap((player) => (player.teamStats || [])
+            .filter((row) => row.teamSlug === slug && row.appearances > 0)
+            .map((row) => ({ ...row, teamSlugs: [slug] })));
+    if (!players.length) return "";
+
+    const category = {
+        title: `${team.name} player statistics`,
+        sort: (player) => player.appearances,
+        rankTies: false,
+        compare: (a, b) =>
+            b.appearances - a.appearances ||
+            (b.playerRating ?? -Infinity) - (a.playerRating ?? -Infinity) ||
+            b.minutes - a.minutes ||
+            a.playerName.localeCompare(b.playerName),
+        columns: [
+            ["Apps", (player) => player.appearances],
+            ["Rating", (player) => formatDecimal(player.playerRating)],
+            ["Min", (player) => player.minutes],
+            ["Goals", (player) => player.scoring.goals],
+            ["Assists", (player) => player.scoring.assists],
+            ["xG", (player) => formatDecimal(player.scoring.xg)],
+            ["xA", (player) => formatDecimal(player.scoring.xa)],
+            ["Shots", (player) => player.shooting.shots],
+            ["Key Passes", (player) => player.passing.keyPasses],
+            ["Tackles", (player) => player.defending.tackles],
+            ["Interceptions", (player) => player.defending.interceptions],
+            ["Saves", (player) => player.goalkeeping.saves],
+            ["YC", (player) => player.discipline.yellowCards],
+        ],
+    };
+
+    return `<section class="team-player-stats">
+        <div class="player-section-heading">
+            <h2>Player Statistics</h2>
+            <a class="text-link" href="/epl/${seasonPath}/players/">EPL player leaders &#9655;</a>
+        </div>
+        ${buildPlayerStatsTable({ players, category, teamsBySlug: { [slug]: team }, seasonPath, showTeam: false })}
+    </section>`;
+}
+
+function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, matches, teamSeason, leaguePerformance, playerStats, updatedLabel }) {
     const all = standingsRow?.all || null;
 
     const summary = standingsRow && all
@@ -568,6 +966,7 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
         </section>
     ` : "";
     const leaguePerformanceHtml = buildLeaguePerformanceHtml(team, leaguePerformance);
+    const playerStatsHtml = buildTeamPlayerStatsHtml({ playerStats, slug, team, seasonPath });
 
     const chartId = `team-trend-chart-${slug}`;
 
@@ -949,6 +1348,7 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
         ${leaguePerformanceHtml}
         ${seasonSummaryHtml}
         ${teamChartHtml}
+        ${playerStatsHtml}
 
         <h2 class="text-center">Matches</h2>
         <div class="table-scroll" role="region" aria-label="${escapeAttr(team.name)} matches" tabindex="0">
@@ -998,6 +1398,28 @@ function teamPageJsonLd({ team, seasonLabel }) {
         ...teamToJsonLd(team),
         sport: "https://schema.org/Soccer",
         description: `${team.name} EPL ${seasonLabel} season page with results and match timelines by matchweek.`
+    };
+}
+
+function playerStatsJsonLd({ pageUrl, title, description, players, teamsBySlug }) {
+    return {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        name: title,
+        description,
+        url: pageUrl,
+        mainEntity: {
+            "@type": "ItemList",
+            itemListElement: (players || []).slice(0, 20).map((player, index) => ({
+                "@type": "ListItem",
+                position: index + 1,
+                item: {
+                    "@type": "Person",
+                    name: player.playerName,
+                    affiliation: teamsBySlug[currentPlayerTeamSlug(player)]?.name || undefined,
+                },
+            })),
+        },
     };
 }
 
@@ -1977,7 +2399,7 @@ const HUB_STAT_ICONS = {
     var: `<span class="var-event" title="VAR events" aria-label="VAR events">VAR</span>`
 };
 
-function buildSeasonHubHtml({ seasonPath, seasonLabel, maxRound, matchweekMeta }) {
+function buildSeasonHubHtml({ seasonPath, seasonLabel, maxRound, matchweekMeta, hasPlayerStats = false }) {
 
     const cards = Array.from({ length: maxRound }, (_, i) => {
         const round = i + 1;
@@ -2033,6 +2455,7 @@ function buildSeasonHubHtml({ seasonPath, seasonLabel, maxRound, matchweekMeta }
 
         <div class="season-links">
             <a class="season-link" href="/epl/${seasonPath}/table/">League table &#9655;</a>
+            ${hasPlayerStats ? `<a class="season-link" href="/epl/${seasonPath}/players/">Player stats &#9655;</a>` : ""}
         </div>
         <h2>Matchweeks</h2>
         <p>
@@ -2366,6 +2789,7 @@ async function main() {
         path.join(ROOT, "src", "data", "leagues", season.leagueKey, season.sourceDataSeason, "players.json"),
         {}
     );
+    const playerStats = await readJsonIfExists(PLAYER_STATS_PATH, null);
     const oddsJson = await loadOddsForPrerender();
     const oddsByFixture = oddsJson?.fixtures ?? {};
     await writeDistOdds(oddsJson);
@@ -2562,7 +2986,8 @@ async function main() {
         seasonPath,
         seasonLabel,
         maxRound,
-        matchweekMeta
+        matchweekMeta,
+        hasPlayerStats: Boolean(playerStats?.players?.some((player) => player.appearances > 0)),
     });
 
     out = injectApp(out, hubHtml);
@@ -2678,6 +3103,117 @@ async function main() {
         console.log(`Prerendered ${pagePath}`);
     }
 
+    // ---- Player statistics pages ----
+    if (playerStats?.players?.some((player) => player.appearances > 0)) {
+        const playerHubPath = `/epl/${seasonPath}/players/`;
+        const playerHubCanonical = `https://timelinefootball.com${playerHubPath}`;
+        const playerHubTitle = `Premier League Player Stats ${seasonLabel} | Timeline Football`;
+        const playerHubDesc = `Premier League ${seasonLabel} player stats and leaders for goals, assists, expected goals, player ratings, shooting, passing, tackles, duels, saves and cards.`;
+        let page = setSeasonChrome(template, {
+            seasonPath,
+            seasonLabel,
+            leagueName: season.leagueName,
+        });
+
+        page = setTitle(page, playerHubTitle);
+        page = setDescription(page, playerHubDesc);
+        page = setCanonical(page, playerHubCanonical);
+        page = setOpenGraph(page, {
+            title: playerHubTitle,
+            description: playerHubDesc,
+            url: playerHubCanonical,
+            image: OG_DEFAULT_IMAGE,
+            siteName: SITE_NAME,
+        });
+        page = setTwitterCard(page, {
+            title: playerHubTitle,
+            description: playerHubDesc,
+            image: OG_DEFAULT_IMAGE,
+        });
+        page = setJsonLd(page, playerStatsJsonLd({
+            pageUrl: playerHubCanonical,
+            title: playerHubTitle,
+            description: playerHubDesc,
+            players: sortedCategoryPlayers(playerStats.players, PLAYER_STAT_CATEGORIES[0], 20),
+            teamsBySlug: teams,
+        }));
+        page = injectBeforeApp(page, `<nav class="mw-nav" aria-label="EPL navigation">
+            <a class="mw-nav__hub" href="/epl/${seasonPath}/">EPL ${seasonLabel} matchweeks &#9655;</a>
+            <div class="mw-nav__pager">
+                <a class="mw-nav__prev" href="/epl/${seasonPath}/table/">League table &#9655;</a>
+                <span class="mw-nav__next is-disabled" aria-disabled="true"></span>
+            </div>
+        </nav>`);
+        page = injectApp(page, buildPlayerStatsHubHtml({
+            playerStats,
+            teamsBySlug: teams,
+            seasonPath,
+            seasonLabel,
+        }));
+        page = stripAppScripts(page);
+        page = stripMatchdayShell(page);
+        const playerHubOutDir = path.join(ROOT, "dist", "epl", String(seasonPath), "players");
+        await fs.mkdir(playerHubOutDir, { recursive: true });
+        await fs.writeFile(path.join(playerHubOutDir, "index.html"), page, "utf8");
+        console.log(`Prerendered ${playerHubPath}`);
+
+        for (const category of PLAYER_STAT_CATEGORIES) {
+            const categoryPath = `/epl/${seasonPath}/players/${category.slug}/`;
+            const categoryCanonical = `https://timelinefootball.com${categoryPath}`;
+            const categoryTitle = `${category.title} ${seasonLabel} | Timeline Football`;
+            const categoryDesc = `${category.description} Updated throughout the ${seasonLabel} season.`;
+            const categoryPlayers = sortedCategoryPlayers(playerStats.players, category);
+            let categoryPage = setSeasonChrome(template, {
+                seasonPath,
+                seasonLabel,
+                leagueName: season.leagueName,
+            });
+
+            categoryPage = setTitle(categoryPage, categoryTitle);
+            categoryPage = setDescription(categoryPage, categoryDesc);
+            categoryPage = setCanonical(categoryPage, categoryCanonical);
+            categoryPage = setOpenGraph(categoryPage, {
+                title: categoryTitle,
+                description: categoryDesc,
+                url: categoryCanonical,
+                image: OG_DEFAULT_IMAGE,
+                siteName: SITE_NAME,
+            });
+            categoryPage = setTwitterCard(categoryPage, {
+                title: categoryTitle,
+                description: categoryDesc,
+                image: OG_DEFAULT_IMAGE,
+            });
+            categoryPage = setJsonLd(categoryPage, playerStatsJsonLd({
+                pageUrl: categoryCanonical,
+                title: categoryTitle,
+                description: categoryDesc,
+                players: categoryPlayers,
+                teamsBySlug: teams,
+            }));
+            categoryPage = injectBeforeApp(categoryPage, `<nav class="mw-nav" aria-label="EPL navigation">
+                <a class="mw-nav__hub" href="/epl/${seasonPath}/players/">Player stats overview &#9655;</a>
+                <div class="mw-nav__pager">
+                    <a class="mw-nav__prev" href="/epl/${seasonPath}/table/">League table &#9655;</a>
+                    <span class="mw-nav__next is-disabled" aria-disabled="true"></span>
+                </div>
+            </nav>`);
+            categoryPage = injectApp(categoryPage, buildPlayerCategoryPageHtml({
+                playerStats,
+                category,
+                teamsBySlug: teams,
+                seasonPath,
+                seasonLabel,
+            }));
+            categoryPage = stripAppScripts(categoryPage);
+            categoryPage = stripMatchdayShell(categoryPage);
+            const categoryOutDir = path.join(playerHubOutDir, category.slug);
+            await fs.mkdir(categoryOutDir, { recursive: true });
+            await fs.writeFile(path.join(categoryOutDir, "index.html"), categoryPage, "utf8");
+            console.log(`Prerendered ${categoryPath}`);
+        }
+    }
+
     // ---- Team pages ----
     for (const [slug, team] of Object.entries(teams)) {
         const pagePath = `/epl/${seasonPath}/team/${slug}/`;
@@ -2691,8 +3227,8 @@ async function main() {
 
         const standingsRow = standingsByApiId.get(team.apiTeamId) || null;
 
-        const title = `${team.name} EPL ${seasonLabel} | Results & Match Timelines`;
-        const desc = `${team.name} EPL ${seasonLabel} season page: current league status, ratings, results, season trends and matchweek timeline links.`;
+        const title = `${team.name} EPL ${seasonLabel} | Player Stats, Results & Timelines`;
+        const desc = `${team.name} EPL ${seasonLabel} season page with player statistics, league status, ratings, results, season trends and matchweek timelines.`;
 
         page = setTitle(page, title);
         page = setDescription(page, desc);
@@ -2731,6 +3267,7 @@ async function main() {
             matches: matchesByTeam[slug] || [],
             teamSeason: teamSeasonBySlug[slug] || null,
             leaguePerformance: leaguePerformanceBySlug[slug] || null,
+            playerStats,
             updatedLabel
         });
 

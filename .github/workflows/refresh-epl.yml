@@ -57,6 +57,9 @@ jobs:
       - name: Merge deployed odds archive
         run: npm run sync:odds
 
+      - name: Sync deployed player statistics
+        run: npm run sync:player-stats
+
       - name: Overlay Lauris live match data
         run: |
           mkdir -p .tmp
@@ -102,6 +105,7 @@ jobs:
           test -f dist/epl/2025-26/matchweek/38/index.html
           test -f dist/epl/2026-27/matchweek/1/index.html
           test -f dist/epl/2026-27/table/index.html
+          test -f dist/epl/2026-27/players/index.html
 
       - name: Deploy to Netlify (prod)
         env:

@@ -13,6 +13,23 @@ const DIST_DIR = path.join(ROOT, "dist");
 
 // Change later if you decide on www, but this is fine for now:
 const SITE_ORIGIN = "https://timelinefootball.com";
+const PLAYER_STAT_PAGE_PATHS = [
+  "players",
+  "players/top-scorers",
+  "players/assists",
+  "players/expected-goals",
+  "players/shooting",
+  "players/finishing",
+  "players/passing",
+  "players/tackles",
+  "players/interceptions",
+  "players/recoveries",
+  "players/clearances",
+  "players/duels",
+  "players/player-ratings",
+  "players/goalkeeping",
+  "players/discipline",
+];
 
 function xmlEscape(s) {
   return String(s)
@@ -167,6 +184,21 @@ async function main() {
       priority: isActive ? "0.8" : "0.4",
       lastmod: await getPageLastmod(`epl/${season.seasonPath}/table`),
     });
+
+    for (const playerPath of PLAYER_STAT_PAGE_PATHS) {
+      const relativePath = `epl/${season.seasonPath}/${playerPath}`;
+      try {
+        await fs.access(path.join(DIST_DIR, relativePath, "index.html"));
+      } catch {
+        continue;
+      }
+      urls.push({
+        loc: `${SITE_ORIGIN}/${relativePath}/`,
+        changefreq: liveChangefreq,
+        priority: playerPath === "players" ? "0.8" : "0.7",
+        lastmod: await getPageLastmod(relativePath),
+      });
+    }
 
     for (const slug of Object.keys(teams)) {
       urls.push({
