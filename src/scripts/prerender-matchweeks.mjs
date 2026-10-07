@@ -1694,7 +1694,7 @@ const ABOUT_FAQS = [
     },
     {
         question: "How often are live matches updated?",
-        answer: "During live match windows, fresh data is normally published approximately every 15 minutes. The Auto-update control on a matchweek page refreshes the displayed match data shortly after those updates and can be switched off at any time.",
+        answer: "During live match windows, fresh data is normally published approximately every 5 minutes. The Auto-update control on a matchweek page refreshes the displayed match data shortly after those updates and can be switched off at any time.",
     },
     {
         question: "Why do match statistics sometimes change after full time?",

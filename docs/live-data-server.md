@@ -60,11 +60,13 @@ npm run live:update
 
 ## Server Cron
 
-Run four times per hour, offset to better capture stoppage time for the usual
-on-the-hour and half-hour kickoffs:
+Run every five minutes beginning at three minutes past the hour. This preserves
+the useful offset after the usual on-the-hour and half-hour kickoffs. The
+browser checks for newly published data two minutes later, at `:05`, `:10`, and
+so on, with the `:58` server run followed by the `:00` browser check:
 
 ```cron
-3,18,33,51 * * * * cd /home/<account>/timeline-scoreboard && APIFOOTBALL_KEY="..." TSAPI_KEY="..." TIMELINE_SEASON="2026-27" LIVE_DATA_OUT_DIR="/home/<account>/public_html/timeline-data" /usr/bin/npm run live:update >> /home/<account>/timeline-scoreboard/live-update.log 2>&1
+3-58/5 * * * * cd /home/<account>/timeline-scoreboard && APIFOOTBALL_KEY="..." TSAPI_KEY="..." TIMELINE_SEASON="2026-27" LIVE_DATA_OUT_DIR="/home/<account>/public_html/timeline-data" /usr/bin/npm run live:update >> /home/<account>/timeline-scoreboard/live-update.log 2>&1
 ```
 
 If the host has Node but not npm on the cron path, use the full paths from the hosting control panel.
@@ -83,7 +85,7 @@ live values once available.
 
 ## Integration Plan
 
-1. Confirm `health.json` updates every 15 minutes.
+1. Confirm `health.json` updates approximately every 5 minutes during live match windows.
 2. Confirm `matchweeks/current.json` has the same match objects as Netlify data.
 3. Add frontend fallback:
    - try `https://lauris-webdev.com/timeline-data/epl/2026-27/matchweeks/current.json`

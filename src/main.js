@@ -27,8 +27,12 @@ const SEASON_DATA_PATH = publicSeasonDataPath(season);
 const LIVE_DATA_TIMEOUT_MS = 4000;
 const LIVE_DATA_MAX_AGE_MS = 60 * 60 * 1000;
 const AUTO_UPDATE_STORAGE_KEY = `timeline-auto-update:${season.seasonPath}`;
-// Lauris runs at :03, :18, :33 and :51. Allow two minutes to publish.
-const AUTO_UPDATE_MINUTES_UTC = [5, 20, 35, 53];
+// Lauris runs at :03, :08, ... :58. Check two minutes later, wrapping at :00.
+const AUTO_UPDATE_INTERVAL_MINUTES = 5;
+const AUTO_UPDATE_MINUTES_UTC = Array.from(
+  { length: 60 / AUTO_UPDATE_INTERVAL_MINUTES },
+  (_, index) => index * AUTO_UPDATE_INTERVAL_MINUTES
+);
 const MATCH_WINDOW_BEFORE_MS = 10 * 60 * 1000;
 const MATCH_WINDOW_AFTER_MS = 195 * 60 * 1000;
 

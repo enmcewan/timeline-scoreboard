@@ -67,7 +67,7 @@ It should print the matching lines from the script.
 -------------------------------
 Open cPanel > Cron Jobs and confirm the job still runs at:
 
-3,18,33,51 * * * *
+3-58/5 * * * *
 
 Confirm that its command includes these environment variables:
 
