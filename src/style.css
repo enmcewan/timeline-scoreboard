@@ -2254,7 +2254,7 @@ table {
 .chart-hint {
   text-align: center;
   font-size: 0.8rem;
-  color: #6b7280;
+  color: var(--text-subtle);
   margin-top: -4px;
   margin-bottom: 8px;
 }

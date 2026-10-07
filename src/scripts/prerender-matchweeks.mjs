@@ -1002,6 +1002,35 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
         const perfCanvas = document.getElementById(${JSON.stringify(chartId + "-perf")});
         if (!ratingCanvas || !perfCanvas) return;
 
+        const darkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        const chartColors = darkMode
+            ? {
+                rating: "#60a5fa",
+                form: "rgba(147, 197, 253, 0.58)",
+                average: "rgba(203, 213, 225, 0.62)",
+                performance: "rgba(203, 213, 225, 0.78)",
+                legend: "#d5d6de",
+                ticks: "#aeb1c2",
+                secondaryTicks: "#c5c7d2",
+                grid: "rgba(255, 255, 255, 0.09)",
+                gridSoft: "rgba(255, 255, 255, 0.055)",
+                positiveBar: "rgba(34, 197, 94, 0.68)",
+                negativeBar: "rgba(248, 113, 113, 0.66)"
+            }
+            : {
+                rating: "#3b0a45",
+                form: "rgba(59, 10, 69, 0.45)",
+                average: "rgba(79, 92, 110, 0.35)",
+                performance: "rgba(55, 65, 81, 0.65)",
+                legend: "#4b5563",
+                ticks: "#6b7280",
+                secondaryTicks: "#9ca3af",
+                grid: "rgba(0, 0, 0, 0.05)",
+                gridSoft: "rgba(0, 0, 0, 0.03)",
+                positiveBar: "rgba(34, 197, 94, 0.48)",
+                negativeBar: "rgba(220, 38, 38, 0.42)"
+            };
+
         console.log("ratingCanvas:", ratingCanvas);
         console.log("perfCanvas:", perfCanvas);
 
@@ -1065,8 +1094,8 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
         const exBarColors = exDeltaVals.map(v => {
             if (v == null) return "rgba(0,0,0,0)";
             return v >= 0
-                ? "rgba(34, 197, 94, 0.48)"
-                : "rgba(220, 38, 38, 0.42)";
+                ? chartColors.positiveBar
+                : chartColors.negativeBar;
         });
 
         const sharedTooltip = {
@@ -1125,7 +1154,7 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
                     {
                         label: "Rating",
                         data: ratingVals,
-                        borderColor: "#3b0a45",
+                        borderColor: chartColors.rating,
                         backgroundColor: resultColors,
                         pointBackgroundColor: resultColors,
                         pointBorderColor: resultColors,
@@ -1139,7 +1168,7 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
                     {
                         label: "Form (Last 5)",
                         data: rollingRatingVals,
-                        borderColor: "rgba(59, 10, 69, 0.45)",
+                        borderColor: chartColors.form,
                         pointRadius: 0,
                         pointHoverRadius: 0,
                         borderWidth: 2.5,
@@ -1149,7 +1178,7 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
                     {
                         label: "Season Avg",
                         data: Array(labels.length).fill(avgRating),
-                        borderColor: "rgba(79, 92, 110, 0.35)",
+                        borderColor: chartColors.average,
                         borderDash: [6, 6],
                         pointRadius: 0,
                         pointHoverRadius: 0,
@@ -1181,7 +1210,7 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
                         position: "top",
                         labels: {
                             boxWidth: 14,
-                            color: "#4b5563",
+                            color: chartColors.legend,
                             usePointStyle: false
                         }
                     }
@@ -1192,19 +1221,19 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
                         min: 0,
                         max: 100,
                         grid: {
-                            color: "rgba(0,0,0,0.05)"
+                            color: chartColors.grid
                         },
                         ticks: {
-                            color: "#6b7280",
+                            color: chartColors.ticks,
                             maxTicksLimit: 6
                         }
                     },
                     x: {
                         grid: {
-                            color: "rgba(0,0,0,0.03)"
+                            color: chartColors.gridSoft
                         },
                         ticks: {
-                            color: "#6b7280",
+                            color: chartColors.ticks,
                             maxRotation: 0,
                             autoSkip: false,
                             callback: matchweekTickLabel
@@ -1236,7 +1265,7 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
                         label: "pX",
                         data: mxVals,
                         yAxisID: "y",
-                        borderColor: "rgba(55, 65, 81, 0.65)",
+                        borderColor: chartColors.performance,
                         pointRadius: 0,
                         pointHoverRadius: 0,
                         borderWidth: 2,
@@ -1268,7 +1297,7 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
                         position: "top",
                         labels: {
                             boxWidth: 14,
-                            color: "#4b5563",
+                            color: chartColors.legend,
                             usePointStyle: false
                         }
                     }
@@ -1279,10 +1308,10 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
                         min: 0,
                         max: 100,
                         grid: {
-                            color: "rgba(0,0,0,0.04)"
+                            color: chartColors.grid
                         },
                         ticks: {
-                            color: "#6b7280",
+                            color: chartColors.ticks,
                             maxTicksLimit: 5
                         }
                     },
@@ -1294,17 +1323,17 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
                             drawOnChartArea: false
                         },
                         ticks: {
-                            color: "#9ca3af",
+                            color: chartColors.secondaryTicks,
                             callback: (v) => v > 0 ? "+" + v : v,
                             maxTicksLimit: 5
                         }
                     },
                     x: {
                         grid: {
-                            color: "rgba(0,0,0,0.03)"
+                            color: chartColors.gridSoft
                         },
                         ticks: {
-                            color: "#6b7280",
+                            color: chartColors.ticks,
                             maxRotation: 0,
                             autoSkip: false,
                             callback: matchweekTickLabel

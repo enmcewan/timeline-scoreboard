@@ -48,12 +48,16 @@ export function sortedEvents(events) {
       const base = evt.elapsed ?? 0;
       const extra =
         typeof evt.extra === "number" && evt.extra != null ? evt.extra : 0;
-      return { base, extra };
+      return {
+        base,
+        extra,
+        isHalfTimeSub: base === 45 && extra === 0 && evt.kind === "sub",
+      };
     }
 
     // Fallback: parse from minute string
     const minStr = evt.minute;
-    if (!minStr) return { base: 0, extra: 0 };
+    if (!minStr) return { base: 0, extra: 0, isHalfTimeSub: false };
 
     const s = String(minStr);
 
@@ -66,7 +70,27 @@ export function sortedEvents(events) {
     const base = m && m[1] ? parseInt(m[1], 10) || 0 : 0;
     const extra = m && m[2] ? parseInt(m[2], 10) || 0 : 0;
 
-    return { base, extra };
+    return {
+      base,
+      extra,
+      isHalfTimeSub: base === 45 && extra === 0 && evt.kind === "sub",
+    };
+  }
+
+  const lastFirstHalfStoppageIndex = withIndex.reduce((latest, evt) => {
+    const time = getTimeParts(evt);
+    return time.base === 45 && time.extra > 0
+      ? Math.max(latest, evt.__idx)
+      : latest;
+  }, -1);
+
+  function isHalfTimeEvent(evt, time) {
+    if (time.base !== 45 || time.extra !== 0) return false;
+
+    // API-Football does not provide a period field. Its event array retains
+    // source order, so a plain 45' event after 45'+N belongs to half-time.
+    return time.isHalfTimeSub ||
+      (lastFirstHalfStoppageIndex >= 0 && evt.__idx > lastFirstHalfStoppageIndex);
   }
 
   withIndex.sort((a, b) => {
@@ -74,6 +98,14 @@ export function sortedEvents(events) {
     const tb = getTimeParts(b);
 
     if (ta.base !== tb.base) return ta.base - tb.base;
+
+    // Keep inferred half-time events after 45'+N and before the first 46' event.
+    const aIsHalfTime = isHalfTimeEvent(a, ta);
+    const bIsHalfTime = isHalfTimeEvent(b, tb);
+    if (aIsHalfTime !== bIsHalfTime) {
+      return aIsHalfTime ? 1 : -1;
+    }
+
     if (ta.extra !== tb.extra) return ta.extra - tb.extra;
 
     // stable tie-breaker
