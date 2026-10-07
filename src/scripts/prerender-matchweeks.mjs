@@ -1557,8 +1557,7 @@ function setTwitterCard(html, { title, description, image }) {
     out = setMetaName(out, "twitter:title", title);
     out = setMetaName(out, "twitter:description", description);
     out = setMetaName(out, "twitter:image", image);
-
-    // Add twitter:site only if you have an actual handle.
+    out = setMetaName(out, "twitter:site", "@TimelineFootyHQ");
     return out;
 }
 
@@ -1791,7 +1790,10 @@ function buildAboutPageHtml() {
             <section class="about-contact" aria-labelledby="about-contact-title">
                 <h2 id="about-contact-title">Contact</h2>
                 <p>Questions, corrections, feedback or media enquiries are welcome.</p>
-                <p><a class="about-contact__email" href="mailto:hello@timelinefootball.com">hello@timelinefootball.com</a></p>
+                <p class="about-contact__links">
+                    <a href="mailto:hello@timelinefootball.com">hello@timelinefootball.com</a>
+                    <a href="https://x.com/TimelineFootyHQ" rel="me noopener noreferrer" target="_blank">@TimelineFootyHQ on X</a>
+                </p>
             </section>
         </article>
     `;
@@ -1810,6 +1812,7 @@ function aboutPageJsonLd(pageUrl) {
                     "@type": "WebSite",
                     name: "Timeline Football",
                     url: "https://timelinefootball.com/",
+                    sameAs: ["https://x.com/TimelineFootyHQ"],
                 },
             },
             {

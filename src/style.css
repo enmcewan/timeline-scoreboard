@@ -203,7 +203,14 @@ footer {
   text-align: center;
 }
 
-.about-contact__email {
+.about-contact__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem 1.25rem;
+  justify-content: center;
+}
+
+.about-contact__links a {
   color: var(--accent);
   font-size: 1.05rem;
   font-weight: 800;
