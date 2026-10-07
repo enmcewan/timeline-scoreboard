@@ -1830,6 +1830,65 @@ function aboutPageJsonLd(pageUrl) {
     };
 }
 
+function buildPrivacyPageHtml() {
+    return `
+        <article class="about-page privacy-page">
+            <h1>Privacy</h1>
+            <p class="about-page__intro">Timeline Football collects as little information as practical. The site does not use cookies, advertising trackers or behavioral profiling.</p>
+            <p class="privacy-page__updated">Last updated: <time datetime="2026-10-07">October 7, 2026</time></p>
+
+            <section aria-labelledby="privacy-cookies-title">
+                <h2 id="privacy-cookies-title">Cookies and browser storage</h2>
+                <p>Timeline Football does not set or use cookies.</p>
+                <p>Matchweek pages use your browser's local storage only to remember whether you have enabled or disabled Auto-update. This preference stays on your device and is not used to identify you, advertise to you or track you across websites. You can change it with the Auto-update control or remove it by clearing this site's stored data in your browser.</p>
+            </section>
+
+            <section aria-labelledby="privacy-analytics-title">
+                <h2 id="privacy-analytics-title">Hosting and analytics</h2>
+                <p>Timeline Football is hosted by Netlify and uses Netlify Web Analytics. This analytics service works from server request data rather than a tracking script or cookie placed in your browser.</p>
+                <p>Netlify provides aggregate information such as pageviews, popular pages, referring sites, approximate visitor locations and bandwidth usage. Netlify uses IP addresses to estimate unique visitors. Timeline Football uses these reports to understand site traffic, improve the service and diagnose technical problems. We do not use this information to build individual profiles or for targeted advertising.</p>
+                <p>More information is available in <a href="https://www.netlify.com/privacy/" target="_blank" rel="noopener noreferrer">Netlify's privacy statement</a>.</p>
+            </section>
+
+            <section aria-labelledby="privacy-contact-title">
+                <h2 id="privacy-contact-title">Contacting us</h2>
+                <p>If you email Timeline Football, we receive your email address and the information you include in your message. We use it to respond to your enquiry and retain it only as reasonably necessary for correspondence and record keeping.</p>
+            </section>
+
+            <section aria-labelledby="privacy-links-title">
+                <h2 id="privacy-links-title">Links to other websites</h2>
+                <p>The site includes ordinary links to third-party websites, including X. Those services do not receive information from Timeline Football merely because the link appears here. If you follow a link, the destination site's own privacy practices apply.</p>
+            </section>
+
+            <section aria-labelledby="privacy-changes-title">
+                <h2 id="privacy-changes-title">Changes to this notice</h2>
+                <p>This notice will be updated if the site's data practices change, including if advertising, embedded social content or additional analytics services are introduced. The latest revision date appears at the top of this page.</p>
+            </section>
+
+            <section class="about-contact" aria-labelledby="privacy-questions-title">
+                <h2 id="privacy-questions-title">Privacy questions</h2>
+                <p>For questions about this notice or information you have sent us, contact:</p>
+                <p class="about-contact__links"><a href="mailto:hello@timelinefootball.com">hello@timelinefootball.com</a></p>
+            </section>
+        </article>
+    `;
+}
+
+function privacyPageJsonLd(pageUrl) {
+    return {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        name: "Timeline Football Privacy Notice",
+        url: pageUrl,
+        description: "How Timeline Football handles browser storage, server-side analytics and contact information.",
+        isPartOf: {
+            "@type": "WebSite",
+            name: "Timeline Football",
+            url: "https://timelinefootball.com/",
+        },
+    };
+}
+
 function downloadImageIcon() {
     return `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
         <path d="M11 3h2v10.2l3.6-3.6 1.4 1.4-6 6-6-6 1.4-1.4 3.6 3.6V3Zm-6 16h14v2H5v-2Z"/>
@@ -3364,6 +3423,45 @@ async function main() {
         await fs.writeFile(path.join(outDir, "index.html"), page, "utf8");
 
         console.log(`Prerendered ${pagePath}`);
+
+        const privacyPath = "/privacy/";
+        const privacyCanonical = "https://timelinefootball.com/privacy/";
+        const privacyTitle = "Privacy | Timeline Football";
+        const privacyDesc = "Learn how Timeline Football handles browser storage, server-side analytics and information sent by email.";
+
+        let privacyPage = setSeasonChrome(template, {
+            seasonPath,
+            seasonLabel,
+            leagueName: season.leagueName,
+        });
+
+        privacyPage = setTitle(privacyPage, privacyTitle);
+        privacyPage = setDescription(privacyPage, privacyDesc);
+        privacyPage = setCanonical(privacyPage, privacyCanonical);
+        privacyPage = setOpenGraph(privacyPage, {
+            title: privacyTitle,
+            description: privacyDesc,
+            url: privacyCanonical,
+            image: OG_DEFAULT_IMAGE,
+            siteName: SITE_NAME,
+        });
+        privacyPage = setTwitterCard(privacyPage, {
+            title: privacyTitle,
+            description: privacyDesc,
+            image: OG_DEFAULT_IMAGE,
+        });
+        privacyPage = setJsonLd(privacyPage, privacyPageJsonLd(privacyCanonical));
+
+        privacyPage = injectBeforeApp(privacyPage, navHtml);
+        privacyPage = injectApp(privacyPage, buildPrivacyPageHtml());
+        privacyPage = stripAppScripts(privacyPage);
+        privacyPage = stripMatchdayShell(privacyPage);
+
+        const privacyOutDir = path.join(ROOT, "dist", "privacy");
+        await fs.mkdir(privacyOutDir, { recursive: true });
+        await fs.writeFile(path.join(privacyOutDir, "index.html"), privacyPage, "utf8");
+
+        console.log(`Prerendered ${privacyPath}`);
     }
 
     console.log(`Prerendered /epl/${seasonPath}/`);

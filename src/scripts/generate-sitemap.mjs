@@ -153,6 +153,12 @@ async function main() {
     priority: "0.6",
     lastmod: await getPageLastmod("about"),
   });
+  urls.push({
+    loc: `${SITE_ORIGIN}/privacy/`,
+    changefreq: "yearly",
+    priority: "0.3",
+    lastmod: await getPageLastmod("privacy"),
+  });
 
   for (const seasonPath of PRERENDER_SEASON_PATHS) {
     const season = getSeasonConfig(seasonPath);

@@ -95,6 +95,7 @@ footer {
 
 .site-footer-nav {
   display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
   justify-content: center;
   margin-bottom: 0.45rem;
@@ -219,6 +220,25 @@ footer {
 .about-disclaimer {
   color: var(--text-subtle);
   font-size: 0.88rem;
+}
+
+.privacy-page h2 {
+  text-align: left;
+}
+
+.privacy-page .about-contact h2 {
+  text-align: center;
+}
+
+.privacy-page__updated {
+  color: var(--text-subtle);
+  font-size: 0.88rem;
+  margin: -1rem 0 1.5rem;
+  text-align: center;
+}
+
+.privacy-page a {
+  color: var(--accent);
 }
 
 @media (max-width: 560px) {
