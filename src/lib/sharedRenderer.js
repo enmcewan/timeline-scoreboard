@@ -93,8 +93,8 @@ export function createRenderEventText(esc, playersById = {}) {
             const iconClass = isOG ? "og-goal-ball" : "goal-ball";
             const iconTitle = isOG ? "Own Goal" : "Goal";
             const goalImg = `
-                            <span class="evt-svg ${iconClass}" title="${iconTitle}">
-                                <svg width="18" height="18" viewBox="0 0 16 16">
+                            <span class="evt-svg ${iconClass}" title="${iconTitle}" aria-label="${iconTitle}" role="img">
+                                <svg width="18" height="18" viewBox="0 0 16 16" aria-hidden="true">
                                     <use href="/img/misc/ball.svg"></use>
                                 </svg>
                             </span>
@@ -130,7 +130,7 @@ export function createRenderEventText(esc, playersById = {}) {
             let missImg = "";
             if (mode === VIEW_MODES.FULL) {
                 missImg = `
-                    <span class="evt-svg missed-pen-ball" title="Missed penalty" aria-label="Missed penalty">
+                    <span class="evt-svg missed-pen-ball" title="Missed penalty" aria-label="Missed penalty" role="img">
                         <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <use href="/img/misc/ball.svg"></use>
                         </svg>
@@ -161,8 +161,8 @@ export function createRenderEventText(esc, playersById = {}) {
                 // 2. Handle the Icon logic
                 const showIcon = config.isDisallowed;
                 const varIcon = showIcon ? `
-                    <span class="evt-svg var-goal-cancelled-icon" title="Disallowed (VAR)" aria-label="Goal Disallowed (VAR)">
-                        <svg width="16" height="16" viewBox="0 0 16 16"><use href="/img/misc/ball.svg"></use></svg>
+                    <span class="evt-svg var-goal-cancelled-icon" title="Disallowed (VAR)" aria-label="Goal Disallowed (VAR)" role="img">
+                        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><use href="/img/misc/ball.svg"></use></svg>
                     </span>
                 ` : "";
 

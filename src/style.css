@@ -241,8 +241,57 @@ footer {
   color: var(--accent);
 }
 
+.not-found-page {
+  margin: 0 auto;
+  max-width: 680px;
+  padding: 2rem 1rem 4rem;
+  text-align: center;
+}
+
+.not-found-page__code {
+  color: var(--accent);
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  margin: 0 0 0.5rem;
+}
+
+.not-found-page h1 {
+  margin: 0 0 1rem;
+}
+
+.not-found-page__message {
+  color: var(--text-muted);
+  line-height: 1.65;
+  margin: 0 auto 2rem;
+  max-width: 540px;
+}
+
+.not-found-page__links {
+  border-bottom: 1px solid var(--border-subtle);
+  border-top: 1px solid var(--border-subtle);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.not-found-page__links a {
+  color: var(--accent);
+  font-weight: 750;
+  padding: 1rem;
+  text-decoration: none;
+}
+
+.not-found-page__links a:hover,
+.not-found-page__links a:focus-visible {
+  text-decoration: underline;
+}
+
 @media (max-width: 560px) {
   .about-metric {
+    grid-template-columns: 1fr;
+  }
+
+  .not-found-page__links {
     grid-template-columns: 1fr;
   }
 }

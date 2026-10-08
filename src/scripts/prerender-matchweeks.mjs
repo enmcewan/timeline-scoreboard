@@ -1889,6 +1889,22 @@ function privacyPageJsonLd(pageUrl) {
     };
 }
 
+function buildNotFoundPageHtml({ seasonPath, seasonLabel }) {
+    return `
+        <article class="not-found-page">
+            <p class="not-found-page__code" aria-hidden="true">404</p>
+            <h1>Page not found</h1>
+            <p class="not-found-page__message">That page may have moved, or the address may be incorrect. The current season is still right here.</p>
+            <nav class="not-found-page__links" aria-label="Helpful links">
+                <a href="/epl/${escapeAttr(seasonPath)}/">${escapeHtml(seasonLabel)} matchweeks</a>
+                <a href="/epl/${escapeAttr(seasonPath)}/table/">League table</a>
+                <a href="/epl/${escapeAttr(seasonPath)}/players/">Player stats</a>
+                <a href="/about/">About &amp; FAQ</a>
+            </nav>
+        </article>
+    `;
+}
+
 function downloadImageIcon() {
     return `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
         <path d="M11 3h2v10.2l3.6-3.6 1.4 1.4-6 6-6-6 1.4-1.4 3.6 3.6V3Zm-6 16h14v2H5v-2Z"/>
@@ -2487,7 +2503,7 @@ const HUB_STAT_ICONS = {
     </span>`,
     yellows: `<span class="card yellow" title="Yellow cards" aria-label="Yellow cards" role="img"></span>`,
     reds: `<span class="card red" title="Red cards" aria-label="Red cards" role="img"></span>`,
-    var: `<span class="var-event" title="VAR events" aria-label="VAR events">VAR</span>`
+    var: `<span class="var-event" title="VAR events" aria-label="VAR events" role="img">VAR</span>`
 };
 
 function buildSeasonHubHtml({ seasonPath, seasonLabel, maxRound, matchweekMeta, hasPlayerStats = false }) {
@@ -3462,6 +3478,27 @@ async function main() {
         await fs.writeFile(path.join(privacyOutDir, "index.html"), privacyPage, "utf8");
 
         console.log(`Prerendered ${privacyPath}`);
+
+        const notFoundTitle = "Page Not Found | Timeline Football";
+        const notFoundDesc = "The requested Timeline Football page could not be found.";
+
+        let notFoundPage = setSeasonChrome(template, {
+            seasonPath,
+            seasonLabel,
+            leagueName: season.leagueName,
+        });
+
+        notFoundPage = setTitle(notFoundPage, notFoundTitle);
+        notFoundPage = setDescription(notFoundPage, notFoundDesc);
+        notFoundPage = setCanonical(notFoundPage, "https://timelinefootball.com/404.html");
+        notFoundPage = setMetaName(notFoundPage, "robots", "noindex, follow");
+        notFoundPage = injectApp(notFoundPage, buildNotFoundPageHtml({ seasonPath, seasonLabel }));
+        notFoundPage = stripAppScripts(notFoundPage);
+        notFoundPage = stripMatchdayShell(notFoundPage);
+
+        await fs.writeFile(path.join(ROOT, "dist", "404.html"), notFoundPage, "utf8");
+
+        console.log("Prerendered /404.html");
     }
 
     console.log(`Prerendered /epl/${seasonPath}/`);
