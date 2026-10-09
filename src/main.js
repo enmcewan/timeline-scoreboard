@@ -284,8 +284,9 @@ const app = document.querySelector("#app");
 
 function updateSeasonChrome() {
   const tagline = document.querySelector(".site-tagline");
-  if (tagline) {
-    tagline.textContent = `${season.leagueName} ${SEASON_LABEL}`;
+  const taglineText = `${season.leagueName} ${SEASON_LABEL}`;
+  if (tagline && tagline.textContent !== taglineText) {
+    tagline.textContent = taglineText;
   }
 
   document.querySelectorAll('.page-nav a[href^="/epl/"]').forEach((link) => {
