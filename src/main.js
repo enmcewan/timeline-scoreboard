@@ -1,4 +1,3 @@
-import "./style.css";
 import teams2025 from "./data/leagues/epl/2025/teams.json";
 import players2025 from "./data/leagues/epl/2025/players.json";
 import teams2026 from "./data/leagues/epl/2026/teams.json";
@@ -586,9 +585,16 @@ async function init() {
   scheduleAutoUpdate();
 }
 
-init().catch((err) => {
-  console.error("Init failed:", err);
-  app.innerHTML = `<div class="match-list"><p>Failed to load matchday data.</p></div>`;
+function startApp() {
+  init().catch((err) => {
+    console.error("Init failed:", err);
+    app.innerHTML = `<div class="match-list"><p>Failed to load matchday data.</p></div>`;
+  });
+}
+
+// Let the prerendered page paint before live-data requests begin.
+window.requestAnimationFrame(() => {
+  window.requestAnimationFrame(startApp);
 });
 
 document.addEventListener("click", (e) => {
