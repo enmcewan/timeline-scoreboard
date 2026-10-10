@@ -5,6 +5,7 @@ import players2026 from "./data/leagues/epl/2026/players.json";
 import { getSeasonConfigFromPathname, publicSeasonDataPath } from "./config/seasons.js";
 import { esc, sortedEvents } from "./lib/utils.js";
 import { VIEW_MODES, isVisibleInMode, createRenderEventText, createRenderEventRow, createRenderMatchCard } from "./lib/sharedRenderer.js";
+import { buildMatchPageSectionsHtml } from "./lib/matchPageSections.js";
 
 const season = getSeasonConfigFromPathname(window.location.pathname);
 const teamsBySeason = {
@@ -281,6 +282,7 @@ const viewModes = new Map();
 
 const app = document.querySelector("#app");
 const matchPageCard = document.querySelector(".match-page-card .match-list");
+const matchPageSections = document.querySelector(".match-page-live-sections");
 const matchPageMatchId = matchPageCard?.querySelector(".match-card")?.dataset.matchId ?? null;
 
 function selectMatchesForPage(matches) {
@@ -306,11 +308,24 @@ function renderAllMatches() {
 
   if (matchPageCard) {
     matchPageCard.innerHTML = matchesHtml;
+    renderMatchPageSections();
     return;
   }
 
   if (!app) return;
   app.innerHTML = `<div class="match-list">${matchesHtml}</div>`;
+}
+
+function renderMatchPageSections() {
+  if (!matchPageSections || currentMatches.length !== 1) return;
+
+  const match = currentMatches[0];
+  const home = teams[match.homeTeamId];
+  const away = teams[match.awayTeamId];
+  if (!home || !away) return;
+
+  const exportBase = `${season.seasonPath}-mw${currentRound}-${match.homeTeamId}-vs-${match.awayTeamId}`;
+  matchPageSections.innerHTML = buildMatchPageSectionsHtml(match, home, away, exportBase);
 }
 
 let showAllAriaPressed = "false";
