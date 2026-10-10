@@ -97,7 +97,10 @@ function statPair(payload, paths) {
 export function extractTheStatsApiInsights(payload) {
   const roots = [payload?.data?.stats, payload?.data].filter(Boolean);
   const fields = {
-    bigChances: [["overview", "big_chances"]],
+    bigChances: [
+      ["overview", "big_chances"],
+      ["big_chances"],
+    ],
     bigChancesMissed: [["attack", "big_chances_missed"]],
     hitWoodwork: [["shots", "hit_woodwork"]],
     tackles: [["overview", "tackles"]],
@@ -112,6 +115,7 @@ export function extractTheStatsApiInsights(payload) {
     goalkeeperSaves: [
       ["goalkeeping", "saves"],
       ["overview", "goalkeeper_saves"],
+      ["goalkeeper_saves"],
     ],
   };
   const insights = {};
