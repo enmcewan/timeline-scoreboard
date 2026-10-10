@@ -61,7 +61,7 @@ async function loadAllMatchdays() {
 async function loadLiveCurrentMatchday() {
   if (!season.liveDataBaseUrl || season.isArchived) return null;
 
-  const isMatchweekPage = /^\/epl\/\d{4}-\d{2}\/matchweek\/(?:\d+|current)\/?$/.test(
+  const isMatchweekPage = /^\/epl\/\d{4}-\d{2}\/matchweek\/(?:\d+|current)(?:\/[a-z0-9-]+)?\/?$/.test(
     window.location.pathname
   );
   if (window.location.pathname !== "/" && !isMatchweekPage) return null;
@@ -280,6 +280,13 @@ let autoUpdateEnabled = readAutoUpdatePreference();
 const viewModes = new Map();
 
 const app = document.querySelector("#app");
+const matchPageCard = document.querySelector(".match-page-card .match-list");
+const matchPageMatchId = matchPageCard?.querySelector(".match-card")?.dataset.matchId ?? null;
+
+function selectMatchesForPage(matches) {
+  if (!matchPageMatchId) return matches;
+  return matches.filter((match) => String(match.id) === matchPageMatchId);
+}
 
 function updateSeasonChrome() {
   const tagline = document.querySelector(".site-tagline");
@@ -295,15 +302,15 @@ function updateSeasonChrome() {
 }
 
 function renderAllMatches() {
+  const matchesHtml = currentMatches.map(renderMatchCard).join("");
 
-  const app = document.querySelector("#app");
+  if (matchPageCard) {
+    matchPageCard.innerHTML = matchesHtml;
+    return;
+  }
+
   if (!app) return;
-
-  app.innerHTML = `
-    <div class="match-list">
-      ${currentMatches.map(renderMatchCard).join("")}
-    </div>
-  `;
+  app.innerHTML = `<div class="match-list">${matchesHtml}</div>`;
 }
 
 let showAllAriaPressed = "false";
@@ -471,7 +478,9 @@ async function refreshLiveMatchday() {
     }
 
     if (result.round === currentRound && result.changed) {
-      currentMatches = attachMatchData(MATCHDAYS[currentRound].matches, currentRound);
+      currentMatches = selectMatchesForPage(
+        attachMatchData(MATCHDAYS[currentRound].matches, currentRound)
+      );
       for (const match of currentMatches) {
         const id = String(match.id);
         if (!viewModes.has(id)) viewModes.set(id, globalViewMode);
@@ -552,9 +561,10 @@ async function init() {
 
 
   currentRound = initialRound;
-  setPageMetaForRound(currentRound);
-
-  updateHeaderNav(currentRound);
+  if (!matchPageMatchId) {
+    setPageMetaForRound(currentRound);
+    updateHeaderNav(currentRound);
+  }
 
   currentRound = initialRound;
 
@@ -572,11 +582,17 @@ async function init() {
     throw new Error(`Invalid currentRound: ${currentRound}`);
   }
 
-  currentMatches = attachMatchData(MATCHDAYS[currentRound].matches, currentRound);
+  currentMatches = selectMatchesForPage(
+    attachMatchData(MATCHDAYS[currentRound].matches, currentRound)
+  );
 
   // initialize per-card modes to match the global mode
   viewModes.clear();
-  for (const m of currentMatches) viewModes.set(String(m.id), globalViewMode);
+  const initialViewMode = matchPageMatchId
+    && matchPageCard?.querySelector(".timeline-toggle")?.getAttribute("aria-expanded") === "false"
+      ? VIEW_MODES.COMPACT
+      : globalViewMode;
+  for (const m of currentMatches) viewModes.set(String(m.id), initialViewMode);
 
   renderControls();
   renderAllMatches();

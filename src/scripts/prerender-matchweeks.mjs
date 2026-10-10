@@ -2284,19 +2284,6 @@ function matchPageToggleScript() {
             });
 
             document.addEventListener("click", function (event) {
-                var button = event.target.closest(".match-page .timeline-toggle");
-                if (!button) return;
-
-                var card = button.closest(".match-card");
-                if (!card) return;
-
-                var resultOnly = !card.classList.contains("is-result-only");
-                card.classList.toggle("is-result-only", resultOnly);
-                button.setAttribute("aria-expanded", resultOnly ? "false" : "true");
-                button.textContent = resultOnly ? "Show Timeline" : "Show Result";
-            });
-
-            document.addEventListener("click", function (event) {
                 var button = event.target.closest("[data-share-native], [data-share-copy]");
                 if (!button) return;
 
@@ -2581,7 +2568,7 @@ function buildSeasonHubHtml({ seasonPath, seasonLabel, maxRound, matchweekMeta, 
 }
 
 function stripAppScripts(html) {
-    // Remove any module scripts (Vite-built bundle or dev script tag)
+    // Remove any module scripts (Vite-built bundle or dev script tag).
     return html
         .replace(/<script\b[^>]*type=["']module["'][^>]*>[\s\S]*?<\/script>\s*/gi, "")
         .replace(/<script\b[^>]*type=["']module["'][^>]*\/>\s*/gi, "");
@@ -3042,7 +3029,6 @@ async function main() {
                 round,
             }));
             matchPage = setJsonLd(matchPage, matchPageJsonLd({ match, home, away, pageUrl: matchCanonical }));
-            matchPage = stripAppScripts(matchPage);
             matchPage = stripMatchdayShell(matchPage);
 
             const matchOutDir = path.join(ROOT, "dist", matchPath.replace(/^\/+|\/+$/g, ""));

@@ -590,7 +590,7 @@ export function createRenderMatchCard({
                     <span class="footer-label">Venue:</span>
                     <span class="footer-data">${esc(match.venue)}</span>
                     ${matchHref ? `<a class="match-page-link" href="${esc(matchHref)}">Match page &#9655;</a>` : ""}
-                    <button class="timeline-toggle" aria-expanded="false">
+                    <button class="timeline-toggle" aria-expanded="${mode === "full" ? "true" : "false"}">
                         ${mode === "full" ? "Show Result" : "Show Timeline"}
                     </button>
                 </footer>
