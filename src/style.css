@@ -2,7 +2,7 @@
   font-family: "Inter";
   font-style: normal;
   font-weight: 100 900;
-  font-display: optional;
+  font-display: swap;
   src: url("/fonts/inter-latin-variable-normal.woff2") format("woff2");
   unicode-range:
     U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
@@ -14,7 +14,7 @@
   font-family: "Inter";
   font-style: normal;
   font-weight: 100 900;
-  font-display: optional;
+  font-display: swap;
   src: url("/fonts/inter-latin-ext-variable-normal.woff2") format("woff2");
   unicode-range:
     U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
@@ -26,7 +26,7 @@
   font-family: "Inter";
   font-style: italic;
   font-weight: 100 900;
-  font-display: optional;
+  font-display: swap;
   src: url("/fonts/inter-latin-variable-italic.woff2") format("woff2");
   unicode-range:
     U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
@@ -38,7 +38,7 @@
   font-family: "Inter";
   font-style: italic;
   font-weight: 100 900;
-  font-display: optional;
+  font-display: swap;
   src: url("/fonts/inter-latin-ext-variable-italic.woff2") format("woff2");
   unicode-range:
     U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
