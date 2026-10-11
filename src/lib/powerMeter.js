@@ -69,40 +69,6 @@ function applyExpectationToPower({ baseHome, baseAway, homeGoals, awayGoals, swi
     }
 }
 
-function postRedGoalsBonus(teamSide, goalsFor, goalsAgainst, rcMinutes, events) {
-    if (!Array.isArray(rcMinutes) || rcMinutes.length === 0) return 0;
-
-    const firstRed = Math.min(...rcMinutes.map(Number).filter(Number.isFinite));
-    if (!Number.isFinite(firstRed)) return 0;
-
-    // ignore late reds
-    if (firstRed >= 80) return 0;
-
-    let goalsAfterRed = 0;
-
-    for (const e of events || []) {
-        if (e.team !== teamSide) continue;
-
-        const minute = Number(e.elapsed ?? 0);
-        if (!Number.isFinite(minute) || minute < firstRed) continue;
-
-        // count real goals scored by this team after the red
-        if (e.rawType === "Goal" && e.rawDetail !== "Own Goal") {
-            goalsAfterRed++;
-        }
-    }
-
-    if (goalsAfterRed === 0) return 0;
-
-    // strong bonus: scoring after a red is elite execution/game management
-    let bonus = goalsAfterRed * 18;
-
-    // extra credit if they still won
-    if (goalsFor > goalsAgainst) bonus += 24;
-
-    return bonus;
-}
-
 function postRedWinBonus(goalsFor, goalsAgainst, rcMinutes, events, teamSide) {
     if (!Array.isArray(rcMinutes) || rcMinutes.length === 0) return 0;
 
@@ -443,22 +409,6 @@ export function computePerfExec(match, ctx) {
 
     const homeGoals = Number(match?.score?.home ?? 0);
     const awayGoals = Number(match?.score?.away ?? 0);
-
-    homeExec += postRedGoalsBonus(
-        "home",
-        homeGoals,
-        awayGoals,
-        ctx?.homeCards?.rc ?? [],
-        match.events
-    );
-
-    awayExec += postRedGoalsBonus(
-        "away",
-        awayGoals,
-        homeGoals,
-        ctx?.awayCards?.rc ?? [],
-        match.events
-    );
 
     // --- Dominance floor for eX (execution) ---
     // If you win comfortably and created enough, don't let xG delta make eX look mediocre.
