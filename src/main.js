@@ -72,6 +72,46 @@ async function loadAllMatchdays() {
     .sort((a, b) => a - b);
 }
 
+function mergeLiveMatchday(bundledMatchday, liveMatchday) {
+  if (!Array.isArray(bundledMatchday?.matches)) return liveMatchday;
+
+  const bundledById = new Map(
+    bundledMatchday.matches.map((match) => [String(match.id), match])
+  );
+  const matches = liveMatchday.matches.map((liveMatch) => {
+    const bundledMatch = bundledById.get(String(liveMatch.id));
+    if (!bundledMatch) return liveMatch;
+
+    const bundledContext = bundledMatch.context || {};
+    const liveContext = liveMatch.context || {};
+    const hasContext = bundledMatch.context || liveMatch.context;
+    const hasPreMatch = bundledContext.preMatch || liveContext.preMatch;
+
+    return {
+      ...bundledMatch,
+      ...liveMatch,
+      ...(hasContext ? {
+        context: {
+          ...bundledContext,
+          ...liveContext,
+          ...(hasPreMatch ? {
+            preMatch: {
+              ...(bundledContext.preMatch || {}),
+              ...(liveContext.preMatch || {}),
+            },
+          } : {}),
+        },
+      } : {}),
+    };
+  });
+
+  return {
+    ...bundledMatchday,
+    ...liveMatchday,
+    matches,
+  };
+}
+
 async function loadLiveCurrentMatchday() {
   if (!season.liveDataBaseUrl || season.isArchived) return null;
 
@@ -115,8 +155,9 @@ async function loadLiveCurrentMatchday() {
       throw new Error("stale publishedAt");
     }
 
-    const previousPublishedAt = Date.parse(MATCHDAYS[round]?.publishedAt || "");
-    MATCHDAYS[round] = matchday;
+    const bundledMatchday = MATCHDAYS[round];
+    const previousPublishedAt = Date.parse(bundledMatchday?.publishedAt || "");
+    MATCHDAYS[round] = mergeLiveMatchday(bundledMatchday, matchday);
     liveCurrentRound = round;
     livePublishedAtMs = publishedAt;
     console.info(`Using live matchday data for round ${round}.`);
