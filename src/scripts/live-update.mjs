@@ -3,6 +3,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { shouldRefresh } from "./should-refresh.mjs";
+import { retryFinalMatchData } from "./retry-final-match-data.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -144,7 +145,11 @@ async function main() {
 
   try {
     if (!(await isRefreshWindow())) {
-      console.log("Outside the match refresh window. No API requests made.");
+      console.log("Outside the live match refresh window.");
+      const retry = await retryFinalMatchData();
+      if (retry.updated > 0) {
+        await runStep(["Publish recovered final match data", "src/scripts/publish-live-data.mjs"]);
+      }
       return;
     }
 

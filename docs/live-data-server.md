@@ -71,10 +71,12 @@ so on, with the `:58` server run followed by the `:00` browser check:
 
 If the host has Node but not npm on the cron path, use the full paths from the hosting control panel.
 
-The cron process is schedule-gated before any API request. It performs the full
-update only from 10 minutes before a cached fixture's kickoff until 195 minutes
-after kickoff. Outside that window it exits successfully without calling either
-provider. Set `FORCE_REFRESH=1` only for a deliberate manual override.
+The cron process performs the full API-Football update only from 10 minutes
+before a cached fixture's kickoff until 195 minutes after kickoff. Outside that
+window it checks for finished matches that are still missing finalized Insights
+or Shot Map data. Those matches are retried against TheStatsAPI at most once
+every 30 minutes for 24 hours after kickoff and are republished only when new
+data arrives. Set `FORCE_REFRESH=1` only for a deliberate manual override.
 
 TheStatsAPI fixture IDs and the last valid xG values are cached in the ignored
 `thestatsapi-xg.json` season file. Only xG is overlaid on the match data;

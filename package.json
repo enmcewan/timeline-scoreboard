@@ -27,6 +27,7 @@
   "update:matchdays": "npm run fetch:events && npm run refresh:epl",
   "build:season-context": "node src/scripts/build-season-context.mjs",
   "live:update": "node src/scripts/live-update.mjs",
+  "retry:final-match-data": "node --env-file-if-exists=.env src/scripts/retry-final-match-data.mjs",
   "live:publish": "node src/scripts/publish-live-data.mjs",
   "prerender": "node src/scripts/prerender-matchweeks.mjs",
   "sitemap": "node src/scripts/generate-sitemap.mjs",
