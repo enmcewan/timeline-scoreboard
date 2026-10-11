@@ -26,6 +26,7 @@ const ALL_ROUNDS = Array.from({ length: season.maxRound }, (_, i) => i + 1);
 const SEASON_DATA_PATH = publicSeasonDataPath(season);
 const LIVE_DATA_TIMEOUT_MS = 4000;
 const LIVE_DATA_MAX_AGE_MS = 60 * 60 * 1000;
+const FINAL_MATCH_STATES = new Set(["FT", "AET", "PEN"]);
 const AUTO_UPDATE_STORAGE_KEY = `timeline-auto-update:${season.seasonPath}`;
 // Lauris runs at :03, :08, ... :58. Check two minutes later, wrapping at :00.
 const AUTO_UPDATE_INTERVAL_MINUTES = 5;
@@ -35,6 +36,18 @@ const AUTO_UPDATE_MINUTES_UTC = Array.from(
 );
 const MATCH_WINDOW_BEFORE_MS = 10 * 60 * 1000;
 const MATCH_WINDOW_AFTER_MS = 195 * 60 * 1000;
+
+function canRecoverCompletedMatchFromStaleLiveData(matchday) {
+  const matchId = document.querySelector(".match-page-card .match-card")?.dataset.matchId;
+  if (!matchId) return false;
+
+  const match = matchday.matches.find((candidate) => String(candidate.id) === matchId);
+  const state = String(match?.status?.state || "").toUpperCase();
+  const hasInsights = Boolean(match?.insights);
+  const hasShotMap = Array.isArray(match?.shotMap?.shots) && match.shotMap.shots.length > 0;
+
+  return FINAL_MATCH_STATES.has(state) && (hasInsights || hasShotMap);
+}
 
 async function loadAllMatchdays() {
   const results = await Promise.allSettled(
@@ -92,7 +105,13 @@ async function loadLiveCurrentMatchday() {
     if (matchday.seasonPath && matchday.seasonPath !== season.seasonPath) {
       throw new Error("season mismatch");
     }
-    if (!Number.isFinite(ageMs) || ageMs < -5 * 60 * 1000 || ageMs > LIVE_DATA_MAX_AGE_MS) {
+    if (!Number.isFinite(ageMs) || ageMs < -5 * 60 * 1000) {
+      throw new Error("stale publishedAt");
+    }
+    if (
+      ageMs > LIVE_DATA_MAX_AGE_MS &&
+      !canRecoverCompletedMatchFromStaleLiveData(matchday)
+    ) {
       throw new Error("stale publishedAt");
     }
 
