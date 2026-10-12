@@ -3042,7 +3042,7 @@ async function main() {
             const categoryPath = `/epl/${seasonPath}/players/${category.slug}/`;
             const categoryCanonical = `https://timelinefootball.com${categoryPath}`;
             const categoryTitle = `${category.title} ${seasonLabel} | Timeline Football`;
-            const categoryDesc = `${category.description} Updated throughout the ${seasonLabel} season.`;
+            const categoryDesc = category.description;
             const categoryPlayers = sortedCategoryPlayers(playerStats.players, category);
             let categoryPage = setSeasonChrome(template, {
                 seasonPath,
