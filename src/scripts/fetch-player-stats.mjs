@@ -182,6 +182,11 @@ function normalizePlayer(row) {
     for (const field of fields) normalized[group][field] = finite(row?.[group]?.[field]);
   }
 
+  // TSAPI returns null xG for some zero-shot appearances; these are covered zeroes.
+  if (normalized.shooting.total_shots === 0 && normalized.shooting.expected_goals == null) {
+    normalized.shooting.expected_goals = 0;
+  }
+
   return normalized;
 }
 
@@ -221,7 +226,15 @@ function addAppearance(acc, player) {
 
   for (const [group, fields] of Object.entries(GROUP_FIELDS)) {
     for (const field of fields) {
-      const value = player[group]?.[field];
+      let value = player[group]?.[field];
+      if (
+        group === "shooting" &&
+        field === "expected_goals" &&
+        value == null &&
+        player.shooting?.total_shots === 0
+      ) {
+        value = 0;
+      }
       if (value == null) continue;
       acc.stats[group][field] += value;
       acc.coverage[group][field] += 1;
