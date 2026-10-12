@@ -297,6 +297,7 @@ function buildTeamMatchesIndex({ roundsData, teamsBySlug, seasonPath }) {
                 isHome: true,
                 opponentSlug: away,
                 opponentName: teamsBySlug[away].name,
+                opponentBadge: teamsBySlug[away].badge,
                 scoreFor: m.score?.home ?? null,
                 scoreAgainst: m.score?.away ?? null,
                 state,
@@ -311,6 +312,7 @@ function buildTeamMatchesIndex({ roundsData, teamsBySlug, seasonPath }) {
                 isHome: false,
                 opponentSlug: home,
                 opponentName: teamsBySlug[home].name,
+                opponentBadge: teamsBySlug[home].badge,
                 scoreFor: m.score?.away ?? null,
                 scoreAgainst: m.score?.home ?? null,
                 state,
@@ -919,7 +921,7 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
     const rowsHtml = (matches || []).map((m) => {
         const date = m.kickoff ? formatISODate(m.kickoff) : "";
         const compactDate = m.kickoff ? formatISODateCompact(m.kickoff) : "";
-        const vsAt = m.isHome ? "H &nbsp;" : "A &nbsp;";
+        const vsAt = m.isHome ? "H" : "A";
         const state = String(m.state || "").toUpperCase();
         const hasStarted = !["NS", "TBD", "PST", "CANC", "ABD", "SUSP", "INT"].includes(state);
         let score = hasStarted && m.scoreFor != null && m.scoreAgainst != null ? `${m.scoreFor}–${m.scoreAgainst}` : "–";
@@ -931,7 +933,7 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
         return `
                 <tr>
                     <td class="team-match-date text-center"><span class="team-match-date__full">${date}</span><span class="team-match-date__compact">${compactDate}</span></td>
-                    <td class="team-match-opponent">${vsAt} <strong><a class="tbl-link" href="/epl/${seasonPath}/team/${m.opponentSlug}/">${m.opponentName} &#9655;</a></strong></td>
+                    <td class="team-match-opponent"><div class="team-match-opponent__inner"><span class="team-match-opponent__designation">${vsAt}</span><strong><a class="tbl-link team-match-opponent__link" href="/epl/${seasonPath}/team/${m.opponentSlug}/"><img class="team-match-opponent__badge ${escapeAttr(m.opponentSlug)}" src="${escapeAttr(m.opponentBadge)}" alt="" aria-hidden="true" width="24" height="24" loading="lazy"><span>${m.opponentName} &#9655;</span></a></strong></div></td>
                     <td class="text-center"><strong>${score}</strong></td>
                     <td class="text-center"><strong>${ratingText}</strong></td>
                     <td class="text-center">${escapeAttr(m.state)}</td>

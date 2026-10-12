@@ -1947,6 +1947,37 @@ thead tr {
   background: rgba(0, 0, 0, 0.03);
 }
 
+.team-match-opponent__inner {
+  align-items: center;
+  display: grid;
+  gap: 0.4rem;
+  grid-template-columns: 1rem minmax(0, 1fr);
+}
+
+.team-match-opponent__designation {
+  text-align: center;
+}
+
+.team-match-opponent__inner strong {
+  align-items: center;
+  display: flex;
+  min-width: 0;
+}
+
+.team-match-opponent__link {
+  align-items: center;
+  display: inline-flex;
+  gap: 0.4rem;
+  line-height: 1.2;
+}
+
+.team-match-opponent__badge {
+  flex: 0 0 24px;
+  height: 24px;
+  object-fit: contain;
+  width: 24px;
+}
+
 .tbl-team {
   display: flex;
   align-items: center;
