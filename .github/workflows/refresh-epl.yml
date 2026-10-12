@@ -1,5 +1,9 @@
 name: Sync EPL Static Site
 
+concurrency:
+  group: timeline-football-production-deploy
+  cancel-in-progress: false
+
 permissions:
   contents: read
 
