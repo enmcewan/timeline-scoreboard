@@ -12,6 +12,8 @@ const apiKey = process.env.TSAPI_KEY;
 const refreshLatest = process.argv.includes("--refresh-latest");
 const fixtureArg = process.argv.find((arg) => arg.startsWith("--fixture="));
 const onlyFixtureId = fixtureArg ? fixtureArg.split("=")[1] : null;
+const MAX_RATE_LIMIT_RETRIES = 3;
+const DEFAULT_RATE_LIMIT_WAIT_MS = 60_000;
 
 const seasonDataDir = path.join(
   ROOT,
@@ -112,26 +114,55 @@ async function writeJsonIfChanged(filePath, value) {
 }
 
 let quotaLogged = false;
+function wait(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function rateLimitWaitMs(response, attempt) {
+  const retryAfter = response.headers.get("retry-after");
+  const seconds = Number(retryAfter);
+  if (Number.isFinite(seconds) && seconds >= 0) return Math.max(1_000, seconds * 1_000);
+
+  const retryAt = Date.parse(retryAfter || "");
+  if (Number.isFinite(retryAt)) return Math.max(1_000, retryAt - Date.now());
+
+  return DEFAULT_RATE_LIMIT_WAIT_MS * (attempt + 1);
+}
+
 async function apiGet(pathname) {
   if (!apiKey) throw new Error("Missing TSAPI_KEY environment variable.");
-  const response = await fetch(`${BASE_URL}${pathname}`, {
-    headers: { Authorization: `Bearer ${apiKey}` },
-  });
 
-  if (!quotaLogged) {
-    const remaining = response.headers.get("x-monthly-quota-remaining");
-    const limit = response.headers.get("x-monthly-quota-limit");
-    if (remaining != null || limit != null) {
-      console.log(`TheStatsAPI monthly quota: ${remaining ?? "?"}/${limit ?? "?"} remaining`);
+  for (let attempt = 0; attempt <= MAX_RATE_LIMIT_RETRIES; attempt += 1) {
+    const response = await fetch(`${BASE_URL}${pathname}`, {
+      headers: { Authorization: `Bearer ${apiKey}` },
+    });
+
+    if (!quotaLogged) {
+      const remaining = response.headers.get("x-monthly-quota-remaining");
+      const limit = response.headers.get("x-monthly-quota-limit");
+      if (remaining != null || limit != null) {
+        console.log(`TheStatsAPI monthly quota: ${remaining ?? "?"}/${limit ?? "?"} remaining`);
+      }
+      quotaLogged = true;
     }
-    quotaLogged = true;
+
+    const text = await response.text();
+    if (response.status === 429 && attempt < MAX_RATE_LIMIT_RETRIES) {
+      const waitMs = rateLimitWaitMs(response, attempt);
+      console.warn(
+        `TheStatsAPI rate limit reached for ${pathname}; retrying in ${Math.ceil(waitMs / 1_000)}s ` +
+        `(${attempt + 1}/${MAX_RATE_LIMIT_RETRIES}).`
+      );
+      await wait(waitMs);
+      continue;
+    }
+    if (!response.ok) {
+      throw new Error(`TheStatsAPI ${response.status} for ${pathname}: ${text.slice(0, 300)}`);
+    }
+    return JSON.parse(text);
   }
 
-  const text = await response.text();
-  if (!response.ok) {
-    throw new Error(`TheStatsAPI ${response.status} for ${pathname}: ${text.slice(0, 300)}`);
-  }
-  return JSON.parse(text);
+  throw new Error(`TheStatsAPI rate limit retries exhausted for ${pathname}`);
 }
 
 function normalizePlayer(row) {

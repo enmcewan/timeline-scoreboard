@@ -92,6 +92,9 @@ jobs:
           TSAPI_KEY: ${{ secrets.TSAPI_KEY }}
         run: npm run backfill:stats
 
+      - name: Cool down TheStatsAPI rate window
+        run: sleep 65
+
       - name: Refresh player statistics
         env:
           TSAPI_KEY: ${{ secrets.TSAPI_KEY }}
