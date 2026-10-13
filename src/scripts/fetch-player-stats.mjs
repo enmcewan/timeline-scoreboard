@@ -14,6 +14,7 @@ const fixtureArg = process.argv.find((arg) => arg.startsWith("--fixture="));
 const onlyFixtureId = fixtureArg ? fixtureArg.split("=")[1] : null;
 const MAX_RATE_LIMIT_RETRIES = 3;
 const DEFAULT_RATE_LIMIT_WAIT_MS = 60_000;
+const KICKOFF_TOLERANCE_MS = 30 * 60 * 1000;
 
 const seasonDataDir = path.join(
   ROOT,
@@ -28,6 +29,15 @@ const eventsPath = path.join(seasonDataDir, "events.raw.json");
 const matchCachePath = path.join(seasonDataDir, "thestatsapi-xg.json");
 const playerMatchDir = path.join(seasonDataDir, "player-stats", "matches");
 const aggregatePath = path.join(seasonDataDir, "player-stats.json");
+const teamsPath = path.join(
+  ROOT,
+  "src",
+  "data",
+  "leagues",
+  season.leagueKey,
+  season.sourceDataSeason,
+  "teams.json"
+);
 
 const GROUP_FIELDS = {
   passing: [
@@ -261,6 +271,32 @@ function normalizeName(value) {
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, " ")
     .trim();
+}
+
+function normalizeTeamName(value) {
+  return String(value || "")
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/\b(afc|fc|football club)\b/g, "")
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim()
+    .replace(/\s+/g, " ");
+}
+
+function buildTeamAliasMap(teams) {
+  const aliases = new Map();
+  for (const [slug, team] of Object.entries(teams || {})) {
+    for (const name of [team?.name, team?.display, ...(team?.altNames || [])]) {
+      const normalized = normalizeTeamName(name);
+      if (normalized) aliases.set(normalized, slug);
+    }
+  }
+  return aliases;
+}
+
+function canonicalTeam(name, aliases) {
+  const normalized = normalizeTeamName(name);
+  return aliases.get(normalized) || normalized;
 }
 
 function editDistance(left, right) {
@@ -621,9 +657,13 @@ async function main() {
     return;
   }
 
-  const fixturesPayload = await readJson(fixturesPath, null);
-  const eventsPayload = await readJson(eventsPath, { response: [] });
-  const matchCache = await readJson(matchCachePath, { fixtures: {} });
+  const [fixturesPayload, eventsPayload, matchCache, teams] = await Promise.all([
+    readJson(fixturesPath, null),
+    readJson(eventsPath, { response: [] }),
+    readJson(matchCachePath, { fixtures: {} }),
+    readJson(teamsPath, {}),
+  ]);
+  const teamAliases = buildTeamAliasMap(teams);
   const finishedFixtures = (fixturesPayload?.response || []).filter(isFinished);
   const latestFinishedRound = Math.max(0, ...finishedFixtures.map(fixtureRound).filter(Number.isFinite));
   const matchesByRound = new Map();
@@ -642,7 +682,30 @@ async function main() {
       const payload = await apiGet(`/football/matches?${params}`);
       matchesByRound.set(round, Array.isArray(payload?.data) ? payload.data : []);
     }
-    return matchesByRound.get(round).find((match) => String(match?.id) === String(matchId)) || null;
+    const matches = matchesByRound.get(round);
+    const cachedMatch = matchId
+      ? matches.find((match) => String(match?.id) === String(matchId))
+      : null;
+    if (cachedMatch) return cachedMatch;
+
+    const home = canonicalTeam(rawFixture?.teams?.home?.name, teamAliases);
+    const away = canonicalTeam(rawFixture?.teams?.away?.name, teamAliases);
+    const teamMatches = matches.filter(
+      (match) =>
+        canonicalTeam(match?.home_team?.name, teamAliases) === home &&
+        canonicalTeam(match?.away_team?.name, teamAliases) === away
+    );
+    const kickoff = Date.parse(rawFixture?.fixture?.date || "");
+    const kickoffMatches = teamMatches.filter((match) => {
+      const providerKickoff = Date.parse(match?.utc_date || "");
+      return (
+        Number.isFinite(kickoff) &&
+        Number.isFinite(providerKickoff) &&
+        Math.abs(kickoff - providerKickoff) <= KICKOFF_TOLERANCE_MS
+      );
+    });
+    const candidates = kickoffMatches.length === 1 ? kickoffMatches : teamMatches;
+    return candidates.length === 1 ? candidates[0] : null;
   }
 
   for (const rawFixture of finishedFixtures) {
@@ -655,19 +718,22 @@ async function main() {
     const shouldRefresh = !existing || (refreshLatest && round === latestFinishedRound);
     if (!shouldRefresh) continue;
 
-    const matchId = matchCache?.fixtures?.[fixtureId]?.matchId;
-    if (!matchId) {
-      console.warn(`No TheStatsAPI match ID cached for fixture ${fixtureId}; skipping.`);
+    const cachedMatchId = matchCache?.fixtures?.[fixtureId]?.matchId;
+    const providerMatch = await matchForFixture(rawFixture, cachedMatchId);
+    const matchId = String(providerMatch?.id || "");
+    const homeTeamId = String(providerMatch?.home_team?.id || "");
+    const awayTeamId = String(providerMatch?.away_team?.id || "");
+    if (!matchId || !homeTeamId || !awayTeamId) {
+      console.warn(`Could not resolve TheStatsAPI match for fixture ${fixtureId}; skipping.`);
       continue;
     }
 
-    const providerMatch = await matchForFixture(rawFixture, matchId);
-    const homeTeamId = String(providerMatch?.home_team?.id || "");
-    const awayTeamId = String(providerMatch?.away_team?.id || "");
-    if (!homeTeamId || !awayTeamId) {
-      console.warn(`Could not resolve TheStatsAPI team IDs for fixture ${fixtureId}; skipping.`);
-      continue;
-    }
+    const homeTeamSlug =
+      matchCache?.fixtures?.[fixtureId]?.homeTeam ||
+      canonicalTeam(rawFixture?.teams?.home?.name, teamAliases);
+    const awayTeamSlug =
+      matchCache?.fixtures?.[fixtureId]?.awayTeam ||
+      canonicalTeam(rawFixture?.teams?.away?.name, teamAliases);
 
     const payload = await apiGet(
       `/football/matches/${encodeURIComponent(matchId)}/player-stats`
@@ -683,8 +749,8 @@ async function main() {
       round,
       kickoff: rawFixture?.fixture?.date || null,
       teamIds: {
-        [homeTeamId]: matchCache.fixtures[fixtureId]?.homeTeam || null,
-        [awayTeamId]: matchCache.fixtures[fixtureId]?.awayTeam || null,
+        [homeTeamId]: homeTeamSlug,
+        [awayTeamId]: awayTeamSlug,
       },
       players,
     };
