@@ -1556,7 +1556,7 @@ function setOpenGraph(html, { title, description, url, image, siteName }) {
 function setTwitterCard(html, { title, description, image }) {
     let out = html;
 
-    out = setMetaName(out, "twitter:card", "summary_large_image");
+    out = setMetaName(out, "twitter:card", "summary");
     out = setMetaName(out, "twitter:title", title);
     out = setMetaName(out, "twitter:description", description);
     out = setMetaName(out, "twitter:image", image);
