@@ -721,19 +721,37 @@ const PLAYER_STAT_CATEGORIES = [
     {
         slug: "discipline",
         shortLabel: "Discipline",
-        title: "Premier League Cards and Discipline",
-        description: "Premier League player discipline statistics with yellow cards, red cards, fouls and fouls won.",
+        title: "Premier League Discipline",
+        description: "Premier League discipline leaders ranked by disciplinary points, calculated as one point per yellow card and three points per red card, with fouls committed used as the primary tiebreaker.",
         filter: (player) => player.discipline.yellowCards + player.discipline.redCards + player.discipline.fouls > 0,
-        sort: (player) => player.discipline.yellowCards * 10 + player.discipline.redCards,
+        sort: disciplinaryPoints,
+        compare: (a, b) =>
+            disciplinaryPoints(b) - disciplinaryPoints(a) ||
+            b.discipline.fouls - a.discipline.fouls ||
+            b.discipline.redCards - a.discipline.redCards ||
+            b.discipline.yellowCards - a.discipline.yellowCards ||
+            a.appearances - b.appearances ||
+            a.playerName.localeCompare(b.playerName),
+        rankGroup: (player) => [
+            disciplinaryPoints(player),
+            player.discipline.fouls,
+            player.discipline.redCards,
+            player.discipline.yellowCards,
+            player.appearances,
+        ].join("|"),
         columns: [
             ["Apps", (player) => player.appearances],
-            ["Yellow", (player) => player.discipline.yellowCards],
-            ["Red", (player) => player.discipline.redCards],
             ["Fouls", (player) => player.discipline.fouls],
-            ["Fouls Won", (player) => player.discipline.foulsWon],
+            ["YC", (player) => player.discipline.yellowCards],
+            ["RC", (player) => player.discipline.redCards],
+            ["Disc. Pts", disciplinaryPoints],
         ],
     },
 ];
+
+function disciplinaryPoints(player) {
+    return player.discipline.yellowCards + player.discipline.redCards * 3;
+}
 
 function formatDecimal(value) {
     return Number.isFinite(value) ? Number(value).toFixed(2) : "-";
@@ -775,7 +793,9 @@ function buildPlayerStatsTable({ players, category, teamsBySlug, seasonPath, lim
     const rows = sortedCategoryPlayers(players, category, limit);
     const rankedRows = rows.map((player, index) => ({
         player,
-        rank: category.rankTies !== false && index > 0 && category.sort(player) === category.sort(rows[index - 1])
+        rank: category.rankTies !== false && index > 0 &&
+            (category.rankGroup ? category.rankGroup(player) : category.sort(player)) ===
+                (category.rankGroup ? category.rankGroup(rows[index - 1]) : category.sort(rows[index - 1]))
             ? null
             : index + 1,
     }));

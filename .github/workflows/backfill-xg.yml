@@ -12,6 +12,8 @@ on:
     # Recheck TheStatsAPI after weekend match windows for finalized match statistics.
     - cron: "45 22 * * 0,1"
     - cron: "45 6 * * 1,2"
+    # Recheck the latest completed matchweek for midweek corrections before weekend fixtures.
+    - cron: "45 6 * * 5"
   workflow_dispatch:
     inputs:
       force_deploy:
