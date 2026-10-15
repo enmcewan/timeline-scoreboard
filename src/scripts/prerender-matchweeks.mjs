@@ -722,7 +722,7 @@ const PLAYER_STAT_CATEGORIES = [
         slug: "discipline",
         shortLabel: "Discipline",
         title: "Premier League Discipline",
-        description: "Premier League discipline leaders ranked by disciplinary points, calculated as one point per yellow card and three points per red card, with fouls committed used as the primary tiebreaker.",
+        description: "Premier League players with the most disciplinary points, calculated as one point per yellow card and three points per red card, with fouls committed used as the primary tiebreaker.",
         filter: (player) => player.discipline.yellowCards + player.discipline.redCards + player.discipline.fouls > 0,
         sort: disciplinaryPoints,
         compare: (a, b) =>
