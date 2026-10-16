@@ -826,6 +826,147 @@ function buildPlayerStatsTable({ players, category, teamsBySlug, seasonPath, lim
     `.trim();
 }
 
+function playerStatsExportScript() {
+    return `
+        <script src="/vendor/html2canvas.min.js"></script>
+        <script>
+            function downloadPlayerStatsCanvas(canvas, filename) {
+                return new Promise(function (resolve, reject) {
+                    canvas.toBlob(function (blob) {
+                        if (!blob) {
+                            reject(new Error("Unable to create image"));
+                            return;
+                        }
+
+                        var url = URL.createObjectURL(blob);
+                        var link = document.createElement("a");
+                        link.href = url;
+                        link.download = filename || "timeline-football-player-stats.png";
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                        window.setTimeout(function () {
+                            URL.revokeObjectURL(url);
+                        }, 1000);
+                        resolve();
+                    }, "image/png");
+                });
+            }
+
+            async function exportPlayerStatsImage(button) {
+                var target = button.closest("[data-player-stats-export]");
+                if (!target || !window.html2canvas) return;
+
+                var originalLabel = button.getAttribute("aria-label") || "Download Top 10 image";
+                var filename = button.getAttribute("data-download-filename") || "timeline-football-player-stats.png";
+                var captureId = "player-stats-export-" + Date.now() + "-" + Math.random().toString(16).slice(2);
+                var pageBackground = window.getComputedStyle(document.body).backgroundColor || "#ffffff";
+
+                button.disabled = true;
+                button.classList.add("is-loading");
+                button.setAttribute("aria-label", "Preparing image");
+                target.setAttribute("data-export-capture", captureId);
+
+                try {
+                    var canvas = await window.html2canvas(target, {
+                        backgroundColor: pageBackground,
+                        logging: false,
+                        scale: 2,
+                        useCORS: true,
+                        windowWidth: 1100,
+                        ignoreElements: function (element) {
+                            return Boolean(element.closest && element.closest("[data-download-image]"));
+                        },
+                        onclone: function (clonedDocument) {
+                            var clonedTarget = clonedDocument.querySelector('[data-export-capture="' + captureId + '"]');
+                            if (!clonedTarget) return;
+
+                            clonedTarget.style.background = pageBackground;
+                            clonedTarget.style.boxSizing = "border-box";
+                            clonedTarget.style.margin = "0";
+                            clonedTarget.style.maxWidth = "none";
+                            clonedTarget.style.padding = "24px";
+                            clonedTarget.style.width = "980px";
+
+                            clonedTarget.querySelectorAll(".text-link, [data-download-image]").forEach(function (element) {
+                                element.remove();
+                            });
+
+                            var heading = clonedTarget.querySelector(".player-section-heading");
+                            if (heading) {
+                                heading.style.display = "block";
+                                var title = heading.querySelector("h2");
+                                if (title) title.style.margin = "0 0 6px";
+                            }
+
+                            var subtitleText = clonedTarget.getAttribute("data-export-subtitle");
+                            if (subtitleText && heading) {
+                                var subtitle = clonedDocument.createElement("p");
+                                subtitle.textContent = subtitleText;
+                                subtitle.style.color = "var(--text-muted)";
+                                subtitle.style.fontSize = "14px";
+                                subtitle.style.margin = "0 0 16px";
+                                heading.insertAdjacentElement("afterend", subtitle);
+                            }
+
+                            var scroll = clonedTarget.querySelector(".player-table-scroll");
+                            if (scroll) {
+                                scroll.style.maxWidth = "none";
+                                scroll.style.overflow = "visible";
+                            }
+
+                            var table = clonedTarget.querySelector(".player-stats-table");
+                            if (table) {
+                                table.style.minWidth = "0";
+                                table.style.width = "100%";
+                            }
+
+                            clonedTarget.querySelectorAll(".player-rank, .player-name").forEach(function (cell) {
+                                cell.style.position = "static";
+                            });
+
+                            var brand = clonedDocument.createElement("div");
+                            brand.textContent = "TimelineFootball.com";
+                            brand.style.color = "var(--text-subtle)";
+                            brand.style.fontSize = "12px";
+                            brand.style.fontWeight = "700";
+                            brand.style.marginTop = "12px";
+                            brand.style.textAlign = "right";
+                            clonedTarget.appendChild(brand);
+                        },
+                    });
+
+                    await downloadPlayerStatsCanvas(canvas, filename);
+                    button.classList.add("is-complete");
+                    button.setAttribute("aria-label", "Image downloaded");
+                    window.setTimeout(function () {
+                        button.classList.remove("is-complete");
+                        button.setAttribute("aria-label", originalLabel);
+                    }, 1400);
+                } catch (error) {
+                    console.error("Player statistics image export failed:", error);
+                    button.classList.add("is-error");
+                    button.setAttribute("aria-label", "Image download failed");
+                    window.setTimeout(function () {
+                        button.classList.remove("is-error");
+                        button.setAttribute("aria-label", originalLabel);
+                    }, 1800);
+                } finally {
+                    target.removeAttribute("data-export-capture");
+                    button.disabled = false;
+                    button.classList.remove("is-loading");
+                }
+            }
+
+            document.addEventListener("click", function (event) {
+                var button = event.target.closest("[data-player-stats-download]");
+                if (!button) return;
+                exportPlayerStatsImage(button);
+            });
+        </script>
+    `;
+}
+
 function buildPlayerCategoryNav(seasonPath, activeSlug = null) {
     return `<nav class="player-category-nav" aria-label="Player statistics categories" tabindex="0">
         <a${activeSlug == null ? ' aria-current="page"' : ""} href="/epl/${seasonPath}/players/">Overview</a>
@@ -846,6 +987,7 @@ function buildPlayerStatsHubHtml({ playerStats, teamsBySlug, seasonPath, seasonL
         "clearances",
         "goalkeeping",
     ];
+    const exportSubtitle = `Premier League ${seasonLabel} · Updated ${playerStats.updatedAt ? formatISODate(playerStats.updatedAt) : "this season"} · ${playerStats.matchesIncluded} matches included`;
     return `
         <section class="player-stats-page">
             <header class="player-stats-header">
@@ -857,16 +999,23 @@ function buildPlayerStatsHubHtml({ playerStats, teamsBySlug, seasonPath, seasonL
             <div class="player-leader-grid">
                 ${previewSlugs.map((slug) => {
                     const category = PLAYER_STAT_CATEGORIES.find((item) => item.slug === slug);
-                    return `<section class="player-leader-section">
+                    return `<section class="player-leader-section" data-player-stats-export data-export-subtitle="${escapeAttr(exportSubtitle)}">
                         <div class="player-section-heading">
                             <h2>${escapeHtml(category.title)}</h2>
-                            <a class="text-link" href="/epl/${seasonPath}/players/${category.slug}/">Full table &#9655;</a>
+                            <div class="player-section-actions">
+                                <a class="text-link" href="/epl/${seasonPath}/players/${category.slug}/">Full table &#9655;</a>
+                                ${downloadImageButton({
+                                    label: `Download ${category.title} Top 10 image`,
+                                    filename: `epl-${seasonPath}-${category.slug}-top-10.png`,
+                                }).replace("data-download-image", "data-download-image data-player-stats-download")}
+                            </div>
                         </div>
                         ${buildPlayerStatsTable({ players: playerStats.players, category, teamsBySlug, seasonPath, limit: 10, compact: true })}
                     </section>`;
                 }).join("\n")}
             </div>
         </section>
+        ${playerStatsExportScript()}
     `.trim();
 }
 

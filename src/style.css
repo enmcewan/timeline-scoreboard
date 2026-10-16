@@ -2190,6 +2190,23 @@ thead tr {
   font-size: 0.9rem;
 }
 
+.player-section-actions {
+  align-items: center;
+  display: flex;
+  flex: 0 0 auto;
+  gap: 0.65rem;
+}
+
+.player-section-actions .match-page-export-button {
+  height: 1.85rem;
+  width: 1.85rem;
+}
+
+[data-player-stats-export][data-export-capture] .player-table-scroll::before {
+  content: none;
+  display: none;
+}
+
 .player-stats-table {
   --player-name-width: 13rem;
   --player-rank-width: 3.5rem;
