@@ -2949,10 +2949,15 @@ async function main() {
         path.join(ROOT, "src", "data", "leagues", season.leagueKey, season.sourceDataSeason, "teams.json"),
         {}
     );
-    const players = await readJsonIfExists(
+    const sourcePlayers = await readJsonIfExists(
         path.join(ROOT, "src", "data", "leagues", season.leagueKey, season.sourceDataSeason, "players.json"),
         {}
     );
+    const publicPlayers = await readJsonIfExists(
+        path.join(ROOT, "public", "data", "leagues", season.leagueKey, seasonPath, "player-profiles.json"),
+        {}
+    );
+    const players = { ...publicPlayers, ...sourcePlayers };
     const playerStats = await readJsonIfExists(PLAYER_STATS_PATH, null);
     const oddsJson = await loadOddsForPrerender();
     const oddsByFixture = oddsJson?.fixtures ?? {};

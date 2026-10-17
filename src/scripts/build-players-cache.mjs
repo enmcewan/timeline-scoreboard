@@ -11,6 +11,8 @@ const ROOT = path.join(__dirname, "../..");
 const season = getSeasonConfigFromEnv();
 const SEASON = season.sourceDataSeason;
 const LEAGUE = season.leagueKey;
+const API_LEAGUE = season.apiLeagueId;
+const API_SEASON = season.apiSeason;
 
 const MATCHDAYS_DIR = path.join(
   ROOT,
@@ -32,10 +34,20 @@ const PLAYERS_FILE = path.join(
   "players.json"
 );
 
+const PUBLIC_PLAYERS_FILE = path.join(
+  ROOT,
+  "public",
+  "data",
+  "leagues",
+  LEAGUE,
+  season.seasonPath,
+  "player-profiles.json"
+);
+
 const API_BASE = "https://v3.football.api-sports.io";
 const API_KEY = process.env.APIFOOTBALL_KEY;
 
-  if (!API_KEY) {
+if (!API_KEY) {
   console.error("Missing APIFOOTBALL_KEY (env var not set).");
   process.exit(1);
 }
@@ -119,31 +131,89 @@ function normalizePlayer(profilePlayer) {
   };
 }
 
-async function fetchProfile(playerId) {
-  const url = `${API_BASE}/players/profiles?player=${encodeURIComponent(
-    playerId
-  )}`;
+async function apiGet(url, label) {
+  const retryDelays = [15_000, 30_000, 60_000];
 
-  const res = await fetch(url, {
-    headers: { "x-apisports-key": API_KEY }
-  });
-
-  if (!res.ok) {
+  for (let attempt = 0; attempt <= retryDelays.length; attempt++) {
+    const res = await fetch(url, {
+      headers: { "x-apisports-key": API_KEY }
+    });
     const text = await res.text().catch(() => "");
-    throw new Error(
-      `Profile fetch failed (${res.status}) for player=${playerId}: ${text.slice(
-        0,
-        200
-      )}`
+    let data = null;
+
+    try {
+      data = JSON.parse(text);
+    } catch {
+      // The status error below includes a useful excerpt of a non-JSON body.
+    }
+
+    const apiErrors = data?.errors && typeof data.errors === "object"
+      ? Object.values(data.errors).filter(Boolean)
+      : [];
+    const rateLimited = res.status === 429 || apiErrors.some((error) =>
+      String(error).toLowerCase().includes("rate limit")
     );
+
+    if (rateLimited && attempt < retryDelays.length) {
+      const delay = retryDelays[attempt];
+      console.warn(`${label} rate limited; retrying in ${delay / 1000}s.`);
+      await sleep(delay);
+      continue;
+    }
+
+    if (!res.ok || apiErrors.length) {
+      throw new Error(
+        `${label} failed (${res.status}): ${text.slice(0, 200)}`
+      );
+    }
+
+    if (!data) {
+      throw new Error(`${label} returned invalid JSON.`);
+    }
+
+    return data;
   }
 
-  const data = await res.json();
+  throw new Error(`${label} exhausted its retries.`);
+}
+
+async function fetchProfile(playerId) {
+  const url = `${API_BASE}/players/profiles?player=${encodeURIComponent(playerId)}`;
+  const data = await apiGet(url, `Profile fetch for player=${playerId}`);
   const item = data?.response?.[0];
   const player = item?.player;
 
   if (!player?.id) return null;
   return normalizePlayer(player);
+}
+
+async function fetchLeagueProfiles(profiles) {
+  let page = 1;
+  let totalPages = 1;
+
+  do {
+    const params = new URLSearchParams({
+      league: String(API_LEAGUE),
+      season: String(API_SEASON),
+      page: String(page),
+    });
+    const data = await apiGet(
+      `${API_BASE}/players?${params}`,
+      `League player page ${page}`
+    );
+
+    for (const item of data?.response || []) {
+      const player = normalizePlayer(item?.player);
+      if (player?.id) profiles[String(player.id)] = player;
+    }
+
+    totalPages = Math.max(1, Number(data?.paging?.total) || 1);
+    console.log(`Loaded league player page ${page}/${totalPages}.`);
+    page++;
+
+    if (page <= totalPages) await sleep(2_100);
+  } while (page <= totalPages);
+
 }
 
 async function listMatchdayFiles() {
@@ -166,22 +236,32 @@ function collectPlayerIdsFromMatchday(md) {
   return ids;
 }
 
-async function loadPlayersMap() {
-  if (!(await fileExists(PLAYERS_FILE))) return {};
-  const raw = await fs.readFile(PLAYERS_FILE, "utf8");
+async function readPlayersMap(filePath) {
+  if (!(await fileExists(filePath))) return {};
+  const raw = await fs.readFile(filePath, "utf8");
   const obj = JSON.parse(raw.replace(/^\uFEFF/, ""));
   return obj && typeof obj === "object" ? obj : {};
 }
 
-async function savePlayersMap(map) {
-  await fs.mkdir(path.dirname(PLAYERS_FILE), { recursive: true });
+async function loadPlayersMap() {
+  const [publicPlayers, sourcePlayers] = await Promise.all([
+    readPlayersMap(PUBLIC_PLAYERS_FILE),
+    readPlayersMap(PLAYERS_FILE),
+  ]);
+  return { ...publicPlayers, ...sourcePlayers };
+}
 
+async function savePlayersMap(map) {
   // Keep keys sorted for diff stability (even if you don't commit, this helps debugging)
   const sorted = Object.fromEntries(
     Object.entries(map).sort((a, b) => Number(a[0]) - Number(b[0]))
   );
+  const json = `${JSON.stringify(sorted, null, 2)}\n`;
 
-  await fs.writeFile(PLAYERS_FILE, JSON.stringify(sorted, null, 2), "utf8");
+  for (const filePath of [PLAYERS_FILE, PUBLIC_PLAYERS_FILE]) {
+    await fs.mkdir(path.dirname(filePath), { recursive: true });
+    await fs.writeFile(filePath, json, "utf8");
+  }
 }
 
 async function main() {
@@ -223,17 +303,35 @@ async function main() {
   const have = new Set(Object.keys(players).map((k) => Number(k)));
 
   // 3) Determine missing
-  const missing = [...allIds].filter((id) => !have.has(id));
+  let missing = [...allIds].filter((id) => !have.has(id));
   console.log(`Players already cached: ${have.size}`);
   console.log(`Players missing: ${missing.length}`);
 
   if (!missing.length) {
-    console.log("No missing players. Done.");
+    await savePlayersMap(players);
+    console.log("No missing players. Published the existing cache.");
     return;
   }
 
-  // 4) Fetch missing profiles with gentle throttling
-  // Keep it simple: sequential + small delay (low risk of rate limits)
+  // Populate a cold cache in league-sized pages instead of one request per player.
+  let leagueSyncCompleted = false;
+  try {
+    await fetchLeagueProfiles(players);
+    leagueSyncCompleted = true;
+  } catch (error) {
+    console.warn(`League player sync failed: ${error.message}`);
+  }
+
+  missing = [...allIds].filter((id) => !players[String(id)]);
+  console.log(`Players still missing after league sync: ${missing.length}`);
+
+  if (!leagueSyncCompleted) {
+    await savePlayersMap(players);
+    console.warn("Saved the partial league cache; remaining profiles will retry next run.");
+    return;
+  }
+
+  // Fetch any unusual IDs omitted from the league response, with conservative pacing.
   let ok = 0;
   let fail = 0;
 
@@ -254,14 +352,14 @@ async function main() {
       // Don't cache failures; we want to retry next run
     }
 
-    // small delay keeps API happy
-    await sleep(50);
+    await sleep(2_100);
   }
 
   await savePlayersMap(players);
 
   console.log(`Profiles fetched OK: ${ok}, failed: ${fail}`);
   console.log(`Wrote players cache: ${PLAYERS_FILE}`);
+  console.log(`Wrote public players cache: ${PUBLIC_PLAYERS_FILE}`);
 }
 
 main().catch((err) => {

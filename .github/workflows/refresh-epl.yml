@@ -58,6 +58,15 @@ jobs:
             fi
           done
 
+          profile_cache="$SEASON_DATA_DIR/player-profiles.json"
+          if curl -fsSL "$LIVE_SITE_DATA_URL/player-profiles.json" -o "$profile_cache.tmp"; then
+            mv "$profile_cache.tmp" "$profile_cache"
+            echo "Hydrated deployed player profile cache."
+          else
+            rm -f "$profile_cache.tmp"
+            echo "Deployed player profile cache unavailable; keeping repository copy."
+          fi
+
       - name: Merge deployed odds archive
         run: npm run sync:odds
 

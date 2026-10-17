@@ -61,6 +61,15 @@ jobs:
             fi
           done
 
+          profile_cache="$SEASON_DATA_DIR/player-profiles.json"
+          if curl -fsSL "$LIVE_SEASON_DATA_URL/player-profiles.json" -o "$profile_cache.tmp"; then
+            mv "$profile_cache.tmp" "$profile_cache"
+            echo "Hydrated player profile cache."
+          else
+            rm -f "$profile_cache.tmp"
+            echo "Live player profile cache unavailable; keeping repository copy."
+          fi
+
           mkdir -p "$SEASON_DATA_DIR/player-stats/matches"
           player_stats_temp="$SEASON_DATA_DIR/player-stats.json.tmp"
           if curl -fsSL "$LIVE_SEASON_DATA_URL/player-stats.json" -o "$player_stats_temp"; then
