@@ -122,7 +122,9 @@ async function loadLiveCurrentMatchday() {
 
   const controller = new AbortController();
   const timeout = window.setTimeout(() => controller.abort(), LIVE_DATA_TIMEOUT_MS);
-  const url = `${season.liveDataBaseUrl}/${season.leagueKey}/${season.seasonPath}/matchweeks/current.json`;
+  const isLocalPreview = ["localhost", "127.0.0.1"].includes(window.location.hostname);
+  const liveDataBaseUrl = isLocalPreview ? "/live-data" : season.liveDataBaseUrl;
+  const url = `${liveDataBaseUrl}/${season.leagueKey}/${season.seasonPath}/matchweeks/current.json`;
 
   try {
     const res = await fetch(url, {

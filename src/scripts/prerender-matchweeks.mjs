@@ -2450,7 +2450,120 @@ const HUB_STAT_ICONS = {
     var: `<span class="var-event" title="VAR events" aria-label="VAR events" role="img">VAR</span>`
 };
 
-function buildSeasonHubHtml({ seasonPath, seasonLabel, maxRound, matchweekMeta, hasPlayerStats = false }) {
+function seasonHubLiveScript({ seasonPath, liveDataBaseUrl }) {
+    if (!liveDataBaseUrl) return "";
+
+    const liveUrl = `${liveDataBaseUrl}/${season.leagueKey}/${seasonPath}/matchweeks/current.json`;
+    const localLiveUrl = `/live-data/${season.leagueKey}/${seasonPath}/matchweeks/current.json`;
+
+    return `
+        <script>
+            (() => {
+                const isLocalPreview = ["localhost", "127.0.0.1"].includes(window.location.hostname);
+                const liveUrl = isLocalPreview ? ${JSON.stringify(localLiveUrl)} : ${JSON.stringify(liveUrl)};
+                const seasonPath = ${JSON.stringify(seasonPath)};
+                const finalStates = new Set(["FT", "AET", "PEN"]);
+                const maxLiveAgeMs = 60 * 60 * 1000;
+                const refreshIntervalMs = 5 * 60 * 1000;
+                const normalizeState = (state) => String(state || "").trim().toUpperCase();
+
+                function matchweekStatus(matches) {
+                    const states = matches
+                        .map((match) => normalizeState(match?.status?.state))
+                        .filter(Boolean);
+
+                    if (!states.length || states.every((state) => state === "NS")) return "not-started";
+                    if (states.every((state) => finalStates.has(state))) return "completed";
+                    return "in-progress";
+                }
+
+                function matchweekStats(matches) {
+                    const stats = { goals: 0, ownGoals: 0, yellows: 0, reds: 0, var: 0 };
+
+                    for (const match of matches) {
+                        for (const event of match?.events || []) {
+                            const kind = String(event.kind || "").toLowerCase();
+                            const rawType = String(event.rawType || "").toLowerCase();
+                            const rawDetail = String(event.rawDetail || "").toLowerCase();
+
+                            if (rawType === "var" || kind.startsWith("var-")) {
+                                stats.var++;
+                            } else if (kind === "goal" || kind === "own-goal" || rawType === "goal") {
+                                stats.goals++;
+                                if (kind === "own-goal" || rawDetail === "own goal") stats.ownGoals++;
+                            } else if (kind === "yellow") {
+                                stats.yellows++;
+                            } else if (kind === "red") {
+                                stats.reds++;
+                            }
+                        }
+                    }
+
+                    return stats;
+                }
+
+                function updateCard(matchday) {
+                    const round = Number(matchday?.round);
+                    const matches = Array.isArray(matchday?.matches) ? matchday.matches : [];
+                    const card = document.querySelector('.mw-card[data-round="' + round + '"]');
+                    if (!card || !matches.length) return;
+
+                    const status = matchweekStatus(matches);
+                    const statusLabels = {
+                        completed: "Completed",
+                        "in-progress": "In Progress",
+                        "not-started": "Not Started",
+                    };
+                    const statusElement = card.querySelector(".mw-status");
+                    if (statusElement) {
+                        statusElement.className = "mw-status mw-status--" + status;
+                        statusElement.textContent = statusLabels[status];
+                    }
+
+                    const statsElement = card.querySelector(".mw-stats");
+                    if (!statsElement) return;
+
+                    statsElement.hidden = status === "not-started";
+                    const stats = matchweekStats(matches);
+                    for (const [key, value] of Object.entries(stats)) {
+                        const valueElement = statsElement.querySelector('[data-mw-stat="' + key + '"]');
+                        if (valueElement) valueElement.textContent = String(value);
+                    }
+                }
+
+                async function refreshCurrentMatchweek() {
+                    const controller = new AbortController();
+                    const timeout = window.setTimeout(() => controller.abort(), 4000);
+
+                    try {
+                        const response = await fetch(liveUrl, { cache: "no-store", signal: controller.signal });
+                        if (!response.ok) return;
+
+                        const matchday = await response.json();
+                        const publishedAt = Date.parse(matchday?.publishedAt || "");
+                        const ageMs = Date.now() - publishedAt;
+                        if (matchday?.seasonPath && matchday.seasonPath !== seasonPath) return;
+                        if (!Number.isFinite(ageMs) || ageMs < -5 * 60 * 1000 || ageMs > maxLiveAgeMs) return;
+
+                        updateCard(matchday);
+                    } catch (error) {
+                        console.warn("Live matchweek summary unavailable; using prerendered status.", error);
+                    } finally {
+                        window.clearTimeout(timeout);
+                    }
+                }
+
+                refreshCurrentMatchweek();
+                window.setInterval(refreshCurrentMatchweek, refreshIntervalMs);
+                document.addEventListener("visibilitychange", () => {
+                    if (document.visibilityState === "visible") refreshCurrentMatchweek();
+                });
+            })();
+        </script>
+    `;
+}
+
+function buildSeasonHubHtml({ seasonPath, seasonLabel, maxRound, matchweekMeta, hasPlayerStats = false, liveDataBaseUrl = null }) {
 
     const cards = Array.from({ length: maxRound }, (_, i) => {
         const round = i + 1;
@@ -2476,21 +2589,19 @@ function buildSeasonHubHtml({ seasonPath, seasonLabel, maxRound, matchweekMeta, 
             </div>
         `;
 
-        const statsHtml =
-            status !== "not-started" && stats
-                ? `
-                <div class="mw-stats" aria-label="Matchweek stats">
-                    <span class="mw-stat">${HUB_STAT_ICONS.goals}<span class="mw-stat__num">${stats.goals}</span></span>
-                    <span class="mw-stat">${HUB_STAT_ICONS.ownGoals}<span class="mw-stat__num">${stats.ownGoals}</span></span>
-                    <span class="mw-stat">${HUB_STAT_ICONS.yellows}<span class="mw-stat__num">${stats.yellows}</span></span>
-                    <span class="mw-stat">${HUB_STAT_ICONS.reds}<span class="mw-stat__num">${stats.reds}</span></span>
-                    <span class="mw-stat">${HUB_STAT_ICONS.var}<span class="mw-stat__num">${stats.var}</span></span>
-                </div>
-            `
-                : "";
+        const statValues = stats ?? { goals: 0, ownGoals: 0, yellows: 0, reds: 0, var: 0 };
+        const statsHtml = `
+            <div class="mw-stats" aria-label="Matchweek stats"${status === "not-started" ? " hidden" : ""}>
+                <span class="mw-stat">${HUB_STAT_ICONS.goals}<span class="mw-stat__num" data-mw-stat="goals">${statValues.goals}</span></span>
+                <span class="mw-stat">${HUB_STAT_ICONS.ownGoals}<span class="mw-stat__num" data-mw-stat="ownGoals">${statValues.ownGoals}</span></span>
+                <span class="mw-stat">${HUB_STAT_ICONS.yellows}<span class="mw-stat__num" data-mw-stat="yellows">${statValues.yellows}</span></span>
+                <span class="mw-stat">${HUB_STAT_ICONS.reds}<span class="mw-stat__num" data-mw-stat="reds">${statValues.reds}</span></span>
+                <span class="mw-stat">${HUB_STAT_ICONS.var}<span class="mw-stat__num" data-mw-stat="var">${statValues.var}</span></span>
+            </div>
+        `;
 
         return `
-                <a href="/epl/${seasonPath}/matchweek/${round}/" class="mw-card">
+                <a href="/epl/${seasonPath}/matchweek/${round}/" class="mw-card" data-round="${round}">
                     <div class="mw-number">${displayRound}</div>
                     <div class="mw-label">Matchweek</div>
                     <div class="mw-divider"></div>
@@ -2519,6 +2630,8 @@ function buildSeasonHubHtml({ seasonPath, seasonLabel, maxRound, matchweekMeta, 
             ${cards}
             </div>
         </nav>
+
+        ${seasonHubLiveScript({ seasonPath, liveDataBaseUrl })}
 
     </section>
   `.trim();
@@ -2576,7 +2689,7 @@ function normState(s) {
 function matchweekStatus(md) {
     const states = (md.matches || []).map(m => normState(m.status?.state)).filter(Boolean);
     if (!states.length) return "not-started";
-    if (states.every(s => s === "FT")) return "completed";
+    if (states.every(s => ["FT", "AET", "PEN"].includes(s))) return "completed";
     if (states.every(s => s === "NS")) return "not-started";
     return "in-progress";
 }
@@ -3038,6 +3151,7 @@ async function main() {
         maxRound,
         matchweekMeta,
         hasPlayerStats: Boolean(playerStats?.players?.some((player) => player.appearances > 0)),
+        liveDataBaseUrl: season.isArchived ? null : season.liveDataBaseUrl,
     });
 
     out = injectApp(out, hubHtml);
