@@ -100,6 +100,18 @@ function postRedWinBonus(goalsFor, goalsAgainst, rcMinutes, events, teamSide) {
     return 12 + (goalsAfterRed * 4);
 }
 
+function opponentEarlyRedWinAdjustment(goalsFor, goalsAgainst, opponentRcMinutes) {
+    if (goalsFor <= goalsAgainst || !Array.isArray(opponentRcMinutes) || opponentRcMinutes.length === 0) {
+        return 0;
+    }
+
+    const firstRed = Math.min(...opponentRcMinutes.map(Number).filter(Number.isFinite));
+    if (!Number.isFinite(firstRed) || firstRed >= 70) return 0;
+
+    const MAX_ADJUSTMENT = 4;
+    return Math.round(MAX_ADJUSTMENT * clamp((70 - firstRed) / 70, 0, 1));
+}
+
 function siegeLateLossAdjustment(match, losingSide) {
     const events = match.events ?? [];
     const st = match.statistics ?? {};
@@ -609,6 +621,18 @@ export function computePerfExec(match, ctx) {
         "away"
     );
 
+    const homeOpponentRedWinAdjustment = opponentEarlyRedWinAdjustment(
+        homeGoals,
+        awayGoals,
+        ctx?.awayCards?.rc ?? []
+    );
+
+    const awayOpponentRedWinAdjustment = opponentEarlyRedWinAdjustment(
+        awayGoals,
+        homeGoals,
+        ctx?.homeCards?.rc ?? []
+    );
+
     const homeSiegeLateLoss = siegeLateLossAdjustment(match, "home");
     const awaySiegeLateLoss = siegeLateLossAdjustment(match, "away");
 
@@ -617,14 +641,16 @@ export function computePerfExec(match, ctx) {
         safeNum(ctx?.homeDisallowedGoals, 0) * 3 +
         homePostRedWin +
         homeSiegeLateLoss -
-        awaySiegeLateLoss;
+        awaySiegeLateLoss -
+        homeOpponentRedWinAdjustment;
 
     let awayPower =
         anchoredAway +
         safeNum(ctx?.awayDisallowedGoals, 0) * 3 +
         awayPostRedWin +
         awaySiegeLateLoss -
-        homeSiegeLateLoss;
+        homeSiegeLateLoss -
+        awayOpponentRedWinAdjustment;
 
     // --- Winner guardrail for Rating ---
     // Winner should never finish below loser.
@@ -669,5 +695,7 @@ export function computePerfExec(match, ctx) {
         // debugging / display if you want
         expectationSwing: swing,   // -12..+12 (away stronger if +)
         expectationApplied: adj.delta, // 0 if not applied
+        homeOpponentRedWinAdjustment,
+        awayOpponentRedWinAdjustment,
     };
 }
