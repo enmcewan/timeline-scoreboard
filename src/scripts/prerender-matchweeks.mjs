@@ -2945,6 +2945,7 @@ async function main() {
     const maxRound = season.maxRound;
     const SITE_NAME = "Timeline";
     const OG_DEFAULT_IMAGE = "https://timelinefootball.com/og/og-default.png";
+    const TWITTER_SUMMARY_IMAGE = "https://timelinefootball.com/img/misc/Avatar-800.png";
     const teams = await readJsonIfExists(
         path.join(ROOT, "src", "data", "leagues", season.leagueKey, season.sourceDataSeason, "teams.json"),
         {}
@@ -3019,7 +3020,7 @@ async function main() {
         out = setTwitterCard(out, {
             title: ogTitle,
             description: ogDesc,
-            image: OG_DEFAULT_IMAGE,
+            image: TWITTER_SUMMARY_IMAGE,
         });
 
         // ---- JSON-LD (matchweek page) ----
@@ -3082,7 +3083,7 @@ async function main() {
             matchPage = setTwitterCard(matchPage, {
                 title,
                 description: desc,
-                image: OG_DEFAULT_IMAGE,
+                image: TWITTER_SUMMARY_IMAGE,
             });
 
             const navHtml = `<nav class="mw-nav" aria-label="EPL navigation">
@@ -3145,7 +3146,7 @@ async function main() {
     out = setTwitterCard(out, {
         title: ogTitle,
         description: ogDesc,
-        image: OG_DEFAULT_IMAGE,
+        image: TWITTER_SUMMARY_IMAGE,
     });
 
     const matchweekMeta = await buildMatchweekMetaMap(rounds);
@@ -3236,7 +3237,7 @@ async function main() {
         page = setTwitterCard(page, {
             title,
             description: desc,
-            image: OG_DEFAULT_IMAGE,
+            image: TWITTER_SUMMARY_IMAGE,
         });
 
         const navHtml = `<nav class="mw-nav" aria-label="EPL navigation">
@@ -3297,7 +3298,7 @@ async function main() {
         page = setTwitterCard(page, {
             title: playerHubTitle,
             description: playerHubDesc,
-            image: OG_DEFAULT_IMAGE,
+            image: TWITTER_SUMMARY_IMAGE,
         });
         page = setJsonLd(page, playerStatsJsonLd({
             pageUrl: playerHubCanonical,
@@ -3351,7 +3352,7 @@ async function main() {
             categoryPage = setTwitterCard(categoryPage, {
                 title: categoryTitle,
                 description: categoryDesc,
-                image: OG_DEFAULT_IMAGE,
+                image: TWITTER_SUMMARY_IMAGE,
             });
             categoryPage = setJsonLd(categoryPage, playerStatsJsonLd({
                 pageUrl: categoryCanonical,
@@ -3414,7 +3415,7 @@ async function main() {
         page = setTwitterCard(page, {
             title,
             description: desc,
-            image: OG_DEFAULT_IMAGE,
+            image: TWITTER_SUMMARY_IMAGE,
         });
 
         const navHtml = `<nav class="mw-nav" aria-label="EPL navigation">
@@ -3479,7 +3480,7 @@ async function main() {
         page = setTwitterCard(page, {
             title,
             description: desc,
-            image: OG_DEFAULT_IMAGE,
+            image: TWITTER_SUMMARY_IMAGE,
         });
         page = setJsonLd(page, aboutPageJsonLd(canonical));
 
@@ -3526,7 +3527,7 @@ async function main() {
         privacyPage = setTwitterCard(privacyPage, {
             title: privacyTitle,
             description: privacyDesc,
-            image: OG_DEFAULT_IMAGE,
+            image: TWITTER_SUMMARY_IMAGE,
         });
         privacyPage = setJsonLd(privacyPage, privacyPageJsonLd(privacyCanonical));
 
