@@ -9,17 +9,13 @@ permissions:
 
 on:
   schedule:
-    # Standings and final match data can lag the final whistle.
-    - cron: "30 0 * * *"
+    # Hourly through the broad EPL match-day window, plus an overnight fallback.
+    - cron: "17 0-4,12-23 * * *"
     - cron: "30 6 * * *"
-    - cron: "30 12 * * *"
-    - cron: "30 18 * * *"
-    - cron: "30 20 * * *"
-    - cron: "30 22 * * *"
   workflow_dispatch:
     inputs:
       force_deploy:
-        description: "Deploy even if standings and match data match the live site"
+        description: "Deploy even if refreshed data matches the live site"
         required: false
         default: false
         type: boolean
@@ -29,10 +25,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       TIMELINE_SEASON: 2026-27
-      STANDINGS_PATH: public/data/leagues/epl/2026-27/standings.json
       SEASON_DATA_DIR: public/data/leagues/epl/2026-27
       LIVE_SEASON_DATA_URL: https://timelinefootball.com/data/leagues/epl/2026-27
-      LIVE_STANDINGS_URL: https://timelinefootball.com/data/leagues/epl/2026-27/standings.json
       LAURIS_CURRENT_URL: https://lauris-webdev.com/timeline-data/epl/2026-27/matchweeks/current.json
     steps:
       - name: Checkout
@@ -43,20 +37,9 @@ jobs:
         with:
           node-version: "24"
 
-      - name: Install
-        run: npm ci
-
-      - name: Capture live standings
-        run: |
-          mkdir -p .tmp
-          if curl -fsSL "$LIVE_STANDINGS_URL" -o .tmp/live-standings.json; then
-            echo "Live standings downloaded."
-          else
-            echo "Live standings unavailable; will deploy after fetch."
-          fi
-
       - name: Capture Lauris current matchweek
         run: |
+          mkdir -p .tmp
           if curl -fsSL "$LAURIS_CURRENT_URL" -o .tmp/lauris-current.json; then
             round=$(jq -r '.round // empty' .tmp/lauris-current.json)
             season_path=$(jq -r '.seasonPath // empty' .tmp/lauris-current.json)
@@ -77,14 +60,57 @@ jobs:
               rm -f .tmp/lauris-current.json
             fi
           else
-            echo "Lauris current matchweek unavailable; standings can still trigger a deploy."
+            echo "Lauris current matchweek unavailable; API-Football can still refresh the site."
           fi
 
-      - name: Hydrate live match data
+      - name: Hydrate deployed fixture schedule
         run: |
           mkdir -p "$SEASON_DATA_DIR/matchweeks"
+          if curl -fsSL "$LIVE_SEASON_DATA_URL/fixtures.raw.json" -o "$SEASON_DATA_DIR/fixtures.raw.json"; then
+            echo "Hydrated fixture schedule from live site."
+          else
+            echo "Live fixture schedule unavailable; using repository copy for the gate."
+          fi
 
-          for file in fixtures.raw.json events.raw.json; do
+      - name: Check active post-match window
+        id: gate
+        env:
+          MANUAL_RUN: ${{ github.event_name == 'workflow_dispatch' }}
+          FALLBACK_RUN: ${{ github.event.schedule == '30 6 * * *' }}
+        run: |
+          if [ "$MANUAL_RUN" = "true" ]; then
+            echo "should_process=1" >> "$GITHUB_OUTPUT"
+            echo "Reason: manual workflow run"
+            exit 0
+          fi
+
+          if [ "$FALLBACK_RUN" = "true" ]; then
+            echo "should_process=1" >> "$GITHUB_OUTPUT"
+            echo "Reason: daily overnight fallback"
+            exit 0
+          fi
+
+          gate=$(node src/scripts/should-refresh.mjs \
+            --fixtures "$SEASON_DATA_DIR/fixtures.raw.json" \
+            --post-hours 8)
+          echo "$gate"
+          if grep -q "REFRESH=1" <<< "$gate"; then
+            echo "should_process=1" >> "$GITHUB_OUTPUT"
+            echo "Reason: a fixture is live or inside the post-match retry window"
+            exit 0
+          fi
+
+          echo "should_process=0" >> "$GITHUB_OUTPUT"
+          echo "No live or recently completed fixture; no football APIs will be called."
+
+      - name: Install
+        if: steps.gate.outputs.should_process == '1'
+        run: npm ci
+
+      - name: Hydrate deployed season data
+        if: steps.gate.outputs.should_process == '1'
+        run: |
+          for file in events.raw.json standings.json; do
             if curl -fsSL "$LIVE_SEASON_DATA_URL/$file" -o "$SEASON_DATA_DIR/$file"; then
               echo "Hydrated $file from live site."
             else
@@ -109,19 +135,70 @@ jobs:
             echo "Live player profile cache unavailable; keeping repository copy."
           fi
 
-      - name: Merge deployed odds archive
-        run: npm run sync:odds
+      - name: Hydrate deployed odds and player statistics
+        if: steps.gate.outputs.should_process == '1'
+        run: |
+          npm run sync:odds
+          npm run sync:player-stats
 
-      - name: Sync deployed player statistics
-        run: npm run sync:player-stats
+      - name: Capture deployed data baseline
+        if: steps.gate.outputs.should_process == '1'
+        run: |
+          mkdir -p .tmp/baseline
+          cp -R "$SEASON_DATA_DIR/matchweeks" .tmp/baseline/matchweeks
+          for file in standings.json fixtures.raw.json events.raw.json odds.json player-stats.json; do
+            if [ -f "$SEASON_DATA_DIR/$file" ]; then
+              cp "$SEASON_DATA_DIR/$file" ".tmp/baseline/$file"
+            fi
+          done
 
-      - name: Fetch standings
+      - name: Refresh standings, fixtures, events, and matchdays
+        if: steps.gate.outputs.should_process == '1'
         env:
           APIFOOTBALL_KEY: ${{ secrets.APIFOOTBALL_KEY }}
-        run: npm run refresh:epl:table
+        run: |
+          npm run refresh:epl:table
+          npm run fetch:fixtures
+          npm run fetch:events
+          npm run fetch:odds
+          npm run refresh:epl
 
-      - name: Check for standings or matchweek changes
+      - name: Overlay Lauris current matchweek
+        if: steps.gate.outputs.should_process == '1'
+        run: |
+          if [ -f .tmp/lauris-current.json ]; then
+            round=$(jq -r '.round' .tmp/lauris-current.json)
+            cp .tmp/lauris-current.json "$SEASON_DATA_DIR/matchweeks/$round.json"
+            echo "Applied Lauris matchweek $round to the static build."
+          else
+            echo "No Lauris matchweek available; using refreshed API-Football data."
+          fi
+
+      - name: Restore existing TSAPI enrichment
+        if: steps.gate.outputs.should_process == '1'
+        run: node src/scripts/restore-match-enrichment.mjs .tmp/baseline/matchweeks "$SEASON_DATA_DIR/matchweeks"
+
+      - name: Refresh recent match insights and shot maps
+        if: steps.gate.outputs.should_process == '1'
+        continue-on-error: true
+        env:
+          TSAPI_KEY: ${{ secrets.TSAPI_KEY }}
+        run: npm run backfill:recent-stats
+
+      - name: Pause between TSAPI request groups
+        if: steps.gate.outputs.should_process == '1'
+        run: sleep 65
+
+      - name: Refresh recent player statistics
+        if: steps.gate.outputs.should_process == '1'
+        continue-on-error: true
+        env:
+          TSAPI_KEY: ${{ secrets.TSAPI_KEY }}
+        run: npm run refresh:recent-player-stats
+
+      - name: Check refreshed data for changes
         id: changes
+        if: steps.gate.outputs.should_process == '1'
         env:
           FORCE_DEPLOY: ${{ github.event.inputs.force_deploy }}
         run: |
@@ -131,66 +208,26 @@ jobs:
             exit 0
           fi
 
-          standings_changed=0
-          matchweek_changed=0
-
-          if [ ! -f .tmp/live-standings.json ]; then
-            echo "Reason: no live standings baseline"
-            standings_changed=1
-          elif cmp -s .tmp/live-standings.json "$STANDINGS_PATH"; then
-            echo "Standings unchanged."
-          else
-            echo "Standings changed."
-            standings_changed=1
+          changed=0
+          if ! diff -qr .tmp/baseline/matchweeks "$SEASON_DATA_DIR/matchweeks"; then
+            echo "Matchweek data changed."
+            changed=1
           fi
 
-          if [ -f .tmp/lauris-current.json ]; then
-            round=$(jq -r '.round' .tmp/lauris-current.json)
-            deployed_matchweek="$SEASON_DATA_DIR/matchweeks/$round.json"
-
-            if [ ! -f "$deployed_matchweek" ]; then
-              echo "Current matchweek $round is missing from the deployed data."
-              matchweek_changed=1
-            else
-              jq -S -c '.matches // []' .tmp/lauris-current.json > .tmp/lauris-matches.json
-              jq -S -c '.matches // []' "$deployed_matchweek" > .tmp/deployed-matches.json
-
-              if cmp -s .tmp/lauris-matches.json .tmp/deployed-matches.json; then
-                echo "Current matchweek $round unchanged."
-              else
-                echo "Current matchweek $round changed."
-                matchweek_changed=1
-              fi
+          for file in standings.json fixtures.raw.json events.raw.json odds.json player-stats.json; do
+            baseline=".tmp/baseline/$file"
+            current="$SEASON_DATA_DIR/$file"
+            if [ ! -f "$baseline" ] || [ ! -f "$current" ] || ! cmp -s "$baseline" "$current"; then
+              echo "$file changed."
+              changed=1
             fi
-          fi
+          done
 
-          if [ "$standings_changed" = "1" ] || [ "$matchweek_changed" = "1" ]; then
-            echo "should_deploy=1" >> "$GITHUB_OUTPUT"
-            echo "Building and deploying refreshed standings and match data."
+          echo "should_deploy=$changed" >> "$GITHUB_OUTPUT"
+          if [ "$changed" = "1" ]; then
+            echo "Refreshed football data changed; building and deploying."
           else
-            echo "should_deploy=0" >> "$GITHUB_OUTPUT"
-            echo "Standings and current matchweek unchanged; skipping build/deploy."
-          fi
-
-      - name: Refresh fixtures, events, and matchdays
-        if: steps.changes.outputs.should_deploy == '1'
-        env:
-          APIFOOTBALL_KEY: ${{ secrets.APIFOOTBALL_KEY }}
-        run: |
-          npm run fetch:fixtures
-          npm run fetch:events
-          npm run fetch:odds
-          npm run refresh:epl
-
-      - name: Overlay Lauris current matchweek
-        if: steps.changes.outputs.should_deploy == '1'
-        run: |
-          if [ -f .tmp/lauris-current.json ]; then
-            round=$(jq -r '.round' .tmp/lauris-current.json)
-            cp .tmp/lauris-current.json "$SEASON_DATA_DIR/matchweeks/$round.json"
-            echo "Applied Lauris matchweek $round to the static build."
-          else
-            echo "No Lauris matchweek available; using refreshed API-Football data."
+            echo "All refreshed data matches the deployed site; skipping build/deploy."
           fi
 
       - name: Build players cache
@@ -224,7 +261,7 @@ jobs:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         run: npx --yes --package netlify-cli@27.0.1 netlify deploy --dir dist --prod --site "$NETLIFY_SITE_ID" --no-build
 
-      - name: Submit IndexNow for standings pages
+      - name: Submit IndexNow for current EPL pages
         if: steps.changes.outputs.should_deploy == '1'
         env:
           INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
@@ -236,12 +273,11 @@ jobs:
             "keyLocation": "https://timelinefootball.com/${INDEXNOW_KEY}.txt",
             "urlList": [
               "https://timelinefootball.com/epl/2026-27/table/",
-              "https://timelinefootball.com/epl/2026-27/"
+              "https://timelinefootball.com/epl/2026-27/",
+              "https://timelinefootball.com/epl/2026-27/players/"
             ]
           }
           EOF
-
-          cat indexnow-standings.json
 
           code=$(curl -s -o /dev/null -w "%{http_code}" \
             -H "Content-Type: application/json" \

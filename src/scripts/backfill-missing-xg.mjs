@@ -32,6 +32,13 @@ const TEAMS_PATH = path.join(
   season.sourceDataSeason,
   "teams.json"
 );
+const recentHoursArg = process.argv.find((arg) => arg.startsWith("--recent-hours="));
+const recentHours = recentHoursArg ? Number(recentHoursArg.split("=")[1]) : null;
+const FINISHED_STATUSES = new Set(["FT", "AET", "PEN"]);
+
+if (recentHoursArg && (!Number.isFinite(recentHours) || recentHours <= 0)) {
+  throw new Error("--recent-hours must be a positive number.");
+}
 
 if (!process.env.TSAPI_KEY) {
   console.error("Missing TSAPI_KEY env var.");
@@ -53,6 +60,16 @@ function isStarted(match) {
   if (state && !["NS", "TBD", "PST"].includes(state)) return true;
   const kickoff = Date.parse(match?.kickoff || "");
   return Number.isFinite(kickoff) && kickoff <= Date.now();
+}
+
+function isRecentFinishedFixture(rawFixture) {
+  if (recentHours == null) return true;
+  const status = String(rawFixture?.fixture?.status?.short || "").toUpperCase();
+  if (!FINISHED_STATUSES.has(status)) return false;
+  const kickoff = Date.parse(rawFixture?.fixture?.date || "");
+  if (!Number.isFinite(kickoff)) return false;
+  const age = Date.now() - kickoff;
+  return age >= 0 && age <= recentHours * 60 * 60 * 1000;
 }
 
 function statsSnapshot(match) {
@@ -102,6 +119,7 @@ async function main() {
         console.warn(`Skipping ${match.id}: raw fixture not found.`);
         continue;
       }
+      if (!isRecentFinishedFixture(rawFixture)) continue;
 
       candidates++;
       const before = statsSnapshot(match);

@@ -17,6 +17,7 @@ function parseArgs(argv) {
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     if (a === "--fixtures" && argv[i + 1]) out.fixtures = argv[++i];
+    if (a === "--post-hours" && argv[i + 1]) out.postHours = Number(argv[++i]);
   }
   return out;
 }
@@ -57,9 +58,9 @@ function isFinished(statusShort) {
   return FINISHED_STATUS.has(statusShort);
 }
 
-export function shouldRefresh(fixtures, nowMs) {
+export function shouldRefresh(fixtures, nowMs, { postHours = 3.25 } = {}) {
   const PRE_MS = 10 * 60 * 1000;     // 10 mins before kickoff
-  const POST_MS = 195 * 60 * 1000;   // 195 mins after kickoff (105 + buffer for Github Actions delay)
+  const POST_MS = postHours * 60 * 60 * 1000;
 
   // statuses we never refresh for
   const DEAD = new Set(["PST", "CANC", "ABD", "SUSP", "INT", "WO", "TBD"]);
@@ -123,7 +124,10 @@ async function main() {
 
   const fixtures = raw?.response ?? [];
 
-  const ok = shouldRefresh(fixtures, Date.now());
+  const postHours = Number.isFinite(args.postHours) && args.postHours > 0
+    ? args.postHours
+    : 3.25;
+  const ok = shouldRefresh(fixtures, Date.now(), { postHours });
 
   // Write a simple token that GitHub Actions can consume.
   // Also keep it human-readable for local runs.

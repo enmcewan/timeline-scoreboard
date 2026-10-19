@@ -12,9 +12,15 @@ const apiKey = process.env.TSAPI_KEY;
 const refreshLatest = process.argv.includes("--refresh-latest");
 const fixtureArg = process.argv.find((arg) => arg.startsWith("--fixture="));
 const onlyFixtureId = fixtureArg ? fixtureArg.split("=")[1] : null;
+const recentHoursArg = process.argv.find((arg) => arg.startsWith("--recent-hours="));
+const recentHours = recentHoursArg ? Number(recentHoursArg.split("=")[1]) : null;
 const MAX_RATE_LIMIT_RETRIES = 3;
 const DEFAULT_RATE_LIMIT_WAIT_MS = 60_000;
 const KICKOFF_TOLERANCE_MS = 30 * 60 * 1000;
+
+if (recentHoursArg && (!Number.isFinite(recentHours) || recentHours <= 0)) {
+  throw new Error("--recent-hours must be a positive number.");
+}
 
 const seasonDataDir = path.join(
   ROOT,
@@ -102,6 +108,14 @@ function isFinished(rawFixture) {
   return new Set(["FT", "AET", "PEN"]).has(
     String(rawFixture?.fixture?.status?.short || "").toUpperCase()
   );
+}
+
+function isRecentFixture(rawFixture) {
+  if (recentHours == null) return false;
+  const kickoff = Date.parse(rawFixture?.fixture?.date || "");
+  if (!Number.isFinite(kickoff)) return false;
+  const age = Date.now() - kickoff;
+  return age >= 0 && age <= recentHours * 60 * 60 * 1000;
 }
 
 async function readJson(filePath, fallback) {
@@ -715,7 +729,9 @@ async function main() {
     const cacheFile = path.join(playerMatchDir, `${fixtureId}.json`);
     const existing = await readJson(cacheFile, null);
     const round = fixtureRound(rawFixture);
-    const shouldRefresh = !existing || (refreshLatest && round === latestFinishedRound);
+    const shouldRefresh = recentHours != null
+      ? isRecentFixture(rawFixture)
+      : !existing || (refreshLatest && round === latestFinishedRound);
     if (!shouldRefresh) continue;
 
     const cachedMatchId = matchCache?.fixtures?.[fixtureId]?.matchId;
@@ -742,6 +758,12 @@ async function main() {
       .map(normalizePlayer)
       .filter((player) => player.playerId && player.teamId);
     fetched += 1;
+    if (players.length === 0) {
+      console.warn(
+        `TheStatsAPI returned no player stats for fixture ${fixtureId}; keeping any existing cache.`
+      );
+      continue;
+    }
 
     const nextCore = {
       fixtureId,
