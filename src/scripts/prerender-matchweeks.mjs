@@ -1118,11 +1118,8 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
             ${v.image ? `<img class="team-venue__img" src="${v.image}" alt="${escapeAttr(v.name)}" loading="lazy">` : ""}
             <div class="team-venue__meta">
             <div class="team-venue__name"><strong>${escapeAttr(v.name)}</strong></div>
-            <div class="muted">
-                ${escapeAttr(v.city || "")}
-                ${v.capacity ? ` • Capacity ${Number(v.capacity).toLocaleString("en-US")}` : ""}
-                ${v.surface ? ` • ${escapeAttr(v.surface)}` : ""}
-            </div>
+            ${v.city ? `<div class="muted">${escapeAttr(v.city)}</div>` : ""}
+            ${v.capacity ? `<div class="muted">Capacity ${Number(v.capacity).toLocaleString("en-US")}</div>` : ""}
             </div>
         </div>
     ` : "";
