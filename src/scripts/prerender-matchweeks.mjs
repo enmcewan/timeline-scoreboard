@@ -613,6 +613,28 @@ const PLAYER_STAT_CATEGORIES = [
         ],
     },
     {
+        slug: "creativity",
+        shortLabel: "Creativity",
+        title: "Premier League Chance Creation Leaders",
+        description: "Premier League chance creation leaders, ranked by chances created (key passes), with big chances created, expected assists (xA) and assists.",
+        filter: (player) => player.passing.keyPasses > 0,
+        sort: (player) => player.passing.keyPasses,
+        compare: (a, b) =>
+            b.passing.keyPasses - a.passing.keyPasses ||
+            (b.scoring.xa ?? -Infinity) - (a.scoring.xa ?? -Infinity) ||
+            b.scoring.bigChancesCreated - a.scoring.bigChancesCreated ||
+            b.scoring.assists - a.scoring.assists ||
+            b.minutes - a.minutes ||
+            a.playerName.localeCompare(b.playerName),
+        columns: [
+            ["Apps", (player) => player.appearances],
+            ["Big Chances", (player) => player.scoring.bigChancesCreated],
+            ["xA", (player) => formatDecimal(player.scoring.xa)],
+            ["Assists", (player) => player.scoring.assists],
+            ["Chances Created", (player) => player.passing.keyPasses],
+        ],
+    },
+    {
         slug: "passing",
         shortLabel: "Passing",
         title: "Premier League Passing Leaders",
@@ -981,6 +1003,7 @@ function buildPlayerStatsHubHtml({ playerStats, teamsBySlug, seasonPath, seasonL
         "assists",
         "expected-goals",
         "finishing",
+        "creativity",
         "tackles",
         "interceptions",
         "recoveries",
@@ -992,7 +1015,7 @@ function buildPlayerStatsHubHtml({ playerStats, teamsBySlug, seasonPath, seasonL
         <section class="player-stats-page">
             <header class="player-stats-header">
                 <h1>Premier League Player Stats ${escapeHtml(seasonLabel)}</h1>
-                <p>Top scorers, assists, expected goals, player ratings, shooting, passing, defending, duels, goalkeeper saves and discipline for the ${escapeHtml(seasonLabel)} Premier League season.</p>
+                <p>Top scorers, assists, expected goals, player ratings, shooting, creativity, passing, defending, duels, goalkeeper saves and discipline for the ${escapeHtml(seasonLabel)} Premier League season.</p>
                 ${playerStats.updatedAt ? `<p class="muted">Updated ${escapeHtml(formatISODate(playerStats.updatedAt))} · ${playerStats.matchesIncluded} matches included</p>` : ""}
             </header>
             ${buildPlayerCategoryNav(seasonPath)}
@@ -3275,7 +3298,7 @@ async function main() {
         const playerHubPath = `/epl/${seasonPath}/players/`;
         const playerHubCanonical = `https://timelinefootball.com${playerHubPath}`;
         const playerHubTitle = `Premier League Player Stats ${seasonLabel} | Timeline Football`;
-        const playerHubDesc = `Premier League ${seasonLabel} player stats and leaders for goals, assists, expected goals, player ratings, shooting, passing, tackles, duels, saves and cards.`;
+        const playerHubDesc = `Premier League ${seasonLabel} player stats and leaders for goals, assists, expected goals, player ratings, shooting, chance creation, passing, tackles, duels, saves and cards.`;
         let page = setSeasonChrome(template, {
             seasonPath,
             seasonLabel,

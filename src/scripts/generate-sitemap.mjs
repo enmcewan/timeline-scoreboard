@@ -20,6 +20,7 @@ const PLAYER_STAT_PAGE_PATHS = [
   "players/expected-goals",
   "players/shooting",
   "players/finishing",
+  "players/creativity",
   "players/passing",
   "players/tackles",
   "players/interceptions",
