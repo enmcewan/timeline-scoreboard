@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "corrections": [
+    {
+      "fixtureId": "1557424",
+      "playerId": "pl_30263610",
+      "playerName": "Ryan Gravenberch",
+      "stats": {
+        "general.red_cards": {
+          "expected": 1,
+          "corrected": 0
+        }
+      },
+      "reason": "Red card officially rescinded",
+      "reviewedAt": "2026-10-21"
+    }
+  ]
+}

@@ -35,6 +35,15 @@ const eventsPath = path.join(seasonDataDir, "events.raw.json");
 const matchCachePath = path.join(seasonDataDir, "thestatsapi-xg.json");
 const playerMatchDir = path.join(seasonDataDir, "player-stats", "matches");
 const aggregatePath = path.join(seasonDataDir, "player-stats.json");
+const correctionsPath = path.join(
+  ROOT,
+  "src",
+  "data",
+  "leagues",
+  season.leagueKey,
+  season.sourceDataSeason,
+  "player-stat-corrections.json"
+);
 const teamsPath = path.join(
   ROOT,
   "src",
@@ -264,6 +273,77 @@ function addAppearance(acc, player) {
       acc.coverage[group][field] += 1;
     }
   }
+}
+
+function applyPlayerStatCorrections(fixtureId, players, corrections, summary) {
+  const fixtureCorrections = corrections.filter(
+    (correction) => String(correction?.fixtureId || "") === fixtureId
+  );
+  if (!fixtureCorrections.length) return players;
+
+  const correctedPlayers = players.map((player) => ({ ...player }));
+  for (const correction of fixtureCorrections) {
+    const player = correctedPlayers.find(
+      (candidate) => candidate.playerId === String(correction?.playerId || "")
+    );
+    if (!player) {
+      summary.skipped += 1;
+      console.warn(
+        `Player-stat correction skipped for fixture ${fixtureId}: ` +
+        `player ${correction?.playerName || correction?.playerId || "unknown"} was not found.`
+      );
+      continue;
+    }
+
+    for (const [statPath, values] of Object.entries(correction?.stats || {})) {
+      const [group, field] = statPath.split(".");
+      if (!GROUP_FIELDS[group]?.includes(field)) {
+        summary.skipped += 1;
+        console.warn(
+          `Player-stat correction skipped for fixture ${fixtureId}, ${player.playerName}: ` +
+          `unknown stat ${statPath}.`
+        );
+        continue;
+      }
+
+      const expected = finite(values?.expected);
+      const corrected = finite(values?.corrected);
+      const current = player[group]?.[field] ?? null;
+      if (expected == null || corrected == null || corrected < 0) {
+        summary.skipped += 1;
+        console.warn(
+          `Player-stat correction skipped for fixture ${fixtureId}, ${player.playerName}: ` +
+          `${statPath} requires non-negative numeric expected and corrected values.`
+        );
+        continue;
+      }
+      if (current === corrected) {
+        summary.alreadyCorrected += 1;
+        console.warn(
+          `Player-stat correction may now be redundant for fixture ${fixtureId}, ` +
+          `${player.playerName}: TSAPI already reports ${statPath}=${corrected}.`
+        );
+        continue;
+      }
+      if (current !== expected) {
+        summary.skipped += 1;
+        console.warn(
+          `Player-stat correction skipped for fixture ${fixtureId}, ${player.playerName}: ` +
+          `expected TSAPI ${statPath}=${expected}, received ${current}.`
+        );
+        continue;
+      }
+
+      player[group] = { ...player[group], [field]: corrected };
+      summary.applied += 1;
+      console.log(
+        `Applied player-stat correction for fixture ${fixtureId}, ${player.playerName}: ` +
+        `${statPath} ${current} -> ${corrected}.`
+      );
+    }
+  }
+
+  return correctedPlayers;
 }
 
 function percentage(numerator, denominator) {
@@ -567,7 +647,7 @@ function compactTeamStats(row) {
   };
 }
 
-async function buildAggregate(finishedFixtures, events, matchCache) {
+async function buildAggregate(finishedFixtures, events, matchCache, corrections) {
   const leaguePlayers = new Map();
   const teamPlayers = new Map();
   const latestTeamByPlayer = new Map();
@@ -581,6 +661,7 @@ async function buildAggregate(finishedFixtures, events, matchCache) {
   let latestFetchedAt = null;
   let goalMismatches = 0;
   let assistMismatches = 0;
+  const correctionSummary = { applied: 0, alreadyCorrected: 0, skipped: 0 };
 
   for (const fixture of finishedFixtures) {
     const fixtureId = String(fixture?.fixture?.id || "");
@@ -594,12 +675,18 @@ async function buildAggregate(finishedFixtures, events, matchCache) {
     );
     goalMismatches += reconciled.goalMismatches;
     assistMismatches += reconciled.assistMismatches;
+    const correctedPlayers = applyPlayerStatCorrections(
+      fixtureId,
+      reconciled.players,
+      corrections,
+      correctionSummary
+    );
     matchesIncluded += 1;
     if (cached.fetchedAt && (!latestFetchedAt || cached.fetchedAt > latestFetchedAt)) {
       latestFetchedAt = cached.fetchedAt;
     }
 
-    for (const player of reconciled.players) {
+    for (const player of correctedPlayers) {
       const teamSlug = cached.teamIds?.[player.teamId];
       if (!player.playerId || !teamSlug) continue;
 
@@ -654,6 +741,7 @@ async function buildAggregate(finishedFixtures, events, matchCache) {
     updatedAt: latestFetchedAt,
     matchesIncluded,
     reconciliation: { goalMismatches, assistMismatches },
+    corrections: correctionSummary,
     qualification: {
       per90Minutes: 180,
       conversionShots: 10,
@@ -671,12 +759,14 @@ async function main() {
     return;
   }
 
-  const [fixturesPayload, eventsPayload, matchCache, teams] = await Promise.all([
-    readJson(fixturesPath, null),
-    readJson(eventsPath, { response: [] }),
-    readJson(matchCachePath, { fixtures: {} }),
-    readJson(teamsPath, {}),
-  ]);
+  const [fixturesPayload, eventsPayload, matchCache, correctionsPayload, teams] =
+    await Promise.all([
+      readJson(fixturesPath, null),
+      readJson(eventsPath, { response: [] }),
+      readJson(matchCachePath, { fixtures: {} }),
+      readJson(correctionsPath, { corrections: [] }),
+      readJson(teamsPath, {}),
+    ]);
   const teamAliases = buildTeamAliasMap(teams);
   const finishedFixtures = (fixturesPayload?.response || []).filter(isFinished);
   const latestFinishedRound = Math.max(0, ...finishedFixtures.map(fixtureRound).filter(Number.isFinite));
@@ -791,7 +881,8 @@ async function main() {
   const aggregate = await buildAggregate(
     finishedFixtures,
     eventsPayload?.response || [],
-    matchCache
+    matchCache,
+    Array.isArray(correctionsPayload?.corrections) ? correctionsPayload.corrections : []
   );
   const aggregateChanged = await writeJsonIfChanged(aggregatePath, aggregate);
   console.log(
