@@ -2177,6 +2177,43 @@ function matchPageToggleScript() {
                 });
             }
 
+            async function rasterizeMatchBadges(target) {
+                var badges = Array.from(target.querySelectorAll(".team-badge"));
+
+                return Promise.all(badges.map(async function (badge) {
+                    if (badge.decode) {
+                        try {
+                            await badge.decode();
+                        } catch (error) {
+                            // A completed image can still reject decode in some browsers.
+                        }
+                    }
+
+                    var rect = badge.getBoundingClientRect();
+                    var width = Math.max(1, Math.round(rect.width * 4));
+                    var height = Math.max(1, Math.round(rect.height * 4));
+                    var sourceWidth = badge.naturalWidth || rect.width || 1;
+                    var sourceHeight = badge.naturalHeight || rect.height || 1;
+                    var scale = Math.min(width / sourceWidth, height / sourceHeight);
+                    var drawWidth = sourceWidth * scale;
+                    var drawHeight = sourceHeight * scale;
+                    var canvas = document.createElement("canvas");
+                    var context = canvas.getContext("2d");
+
+                    canvas.width = width;
+                    canvas.height = height;
+                    context.drawImage(
+                        badge,
+                        (width - drawWidth) / 2,
+                        (height - drawHeight) / 2,
+                        drawWidth,
+                        drawHeight
+                    );
+
+                    return canvas.toDataURL("image/png");
+                }));
+            }
+
             async function exportMatchImage(button) {
                 var container = button.closest(".match-page-card, .match-page-section");
                 var targetName = button.getAttribute("data-download-target");
@@ -2197,6 +2234,7 @@ function matchPageToggleScript() {
 
                 try {
                     var render = await loadHtml2Canvas();
+                    var badgeSnapshots = await rasterizeMatchBadges(target);
                     var canvas = await render(target, {
                         backgroundColor: pageBackground,
                         logging: false,
@@ -2214,6 +2252,10 @@ function matchPageToggleScript() {
                             clonedTarget.style.margin = "0";
                             clonedTarget.style.maxWidth = "none";
                             clonedTarget.style.width = "640px";
+
+                            Array.from(clonedTarget.querySelectorAll(".team-badge")).forEach(function (badge, index) {
+                                if (badgeSnapshots[index]) badge.src = badgeSnapshots[index];
+                            });
 
                             if (clonedTarget.classList.contains("match-page-section")) {
                                 clonedTarget.style.background = pageBackground;
