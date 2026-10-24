@@ -7,13 +7,19 @@ function escapeHtml(value) {
     .replace(/'/g, "&#39;");
 }
 
-function downloadImageIcon() {
+function downloadImageIcon(icon = "download") {
+  if (icon === "compact") {
+    return `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Zm0 2v12h16V6H4Zm2 9 3.2-3.2 2.3 2.3 3.4-4.1L19 15H6Zm2-7.5A1.5 1.5 0 1 1 8 10a1.5 1.5 0 0 1 0-3Z"/>
+    </svg>`;
+  }
+
   return `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
     <path d="M11 3h2v10.2l3.6-3.6 1.4 1.4-6 6-6-6 1.4-1.4 3.6 3.6V3Zm-6 16h14v2H5v-2Z"/>
   </svg>`;
 }
 
-export function downloadImageButton({ label, filename, target = "section" }) {
+export function downloadImageButton({ label, filename, target = "section", icon = "download" }) {
   return `<button
     class="match-page-export-button"
     type="button"
@@ -22,7 +28,69 @@ export function downloadImageButton({ label, filename, target = "section" }) {
     data-download-filename="${escapeHtml(filename)}"
     aria-label="${escapeHtml(label)}"
     title="${escapeHtml(label)}"
-  >${downloadImageIcon()}<span class="sr-only">${escapeHtml(label)}</span></button>`;
+  >${downloadImageIcon(icon)}<span class="sr-only">${escapeHtml(label)}</span></button>`;
+}
+
+function compactMetricRow({ label, homeValue, awayValue, homeDisplay, awayDisplay, maxValue }) {
+  const homeNumber = Number.parseFloat(homeValue);
+  const awayNumber = Number.parseFloat(awayValue);
+  const homeFinite = Number.isFinite(homeNumber);
+  const awayFinite = Number.isFinite(awayNumber);
+
+  const scale = Number.isFinite(maxValue)
+    ? Math.max(1, maxValue)
+    : Math.max(1, homeFinite ? Math.abs(homeNumber) : 0, awayFinite ? Math.abs(awayNumber) : 0);
+  const width = (value) => Number.isFinite(value)
+    ? Math.max(value === 0 ? 0 : 5, Math.min(100, Math.abs(value) / scale * 100))
+    : 0;
+  const display = (value, formatted, finite) => formatted ?? (finite ? value : "—");
+
+  return `
+    <div class="social-card-metric">
+      <strong class="social-card-metric__value">${escapeHtml(display(homeValue, homeDisplay, homeFinite))}</strong>
+      <span class="social-card-metric__track social-card-metric__track--home"><i style="width:${width(homeNumber).toFixed(1)}%"></i></span>
+      <span class="social-card-metric__label">${escapeHtml(label)}</span>
+      <span class="social-card-metric__track social-card-metric__track--away"><i style="width:${width(awayNumber).toFixed(1)}%"></i></span>
+      <strong class="social-card-metric__value">${escapeHtml(display(awayValue, awayDisplay, awayFinite))}</strong>
+    </div>
+  `;
+}
+
+export function buildCompactSocialCardHtml(match) {
+  const homeStats = match.statistics?.home ?? {};
+  const awayStats = match.statistics?.away ?? {};
+  const insights = match.insights ?? {};
+  const fmtNumber = (value, digits = 0) => {
+    const number = Number.parseFloat(value);
+    if (!Number.isFinite(number)) return null;
+    return digits ? number.toFixed(digits) : String(Math.round(number));
+  };
+  const possession = (value) => {
+    const number = Number.parseFloat(value);
+    return Number.isFinite(number) ? `${Math.round(number)}%` : null;
+  };
+  const comparisonRows = [
+    compactMetricRow({ label: "xG", homeValue: homeStats.xg, awayValue: awayStats.xg, homeDisplay: fmtNumber(homeStats.xg, 2), awayDisplay: fmtNumber(awayStats.xg, 2) }),
+    compactMetricRow({ label: "Possession", homeValue: homeStats.poss, awayValue: awayStats.poss, homeDisplay: possession(homeStats.poss), awayDisplay: possession(awayStats.poss), maxValue: 100 }),
+    compactMetricRow({ label: "Shots", homeValue: homeStats.shots, awayValue: awayStats.shots }),
+    compactMetricRow({ label: "Big chances", homeValue: insights.bigChances?.home, awayValue: insights.bigChances?.away }),
+    compactMetricRow({ label: "Hit the woodwork", homeValue: insights.hitWoodwork?.home, awayValue: insights.hitWoodwork?.away }),
+    compactMetricRow({
+      label: "Saves",
+      homeValue: insights.goalkeeperSaves?.home ?? homeStats.saves,
+      awayValue: insights.goalkeeperSaves?.away ?? awayStats.saves,
+    }),
+  ].join("");
+
+  return `
+    <template data-social-stats-template>
+      <fieldset class="match-card-group match-social-card__comparison">
+        <legend>Match stats &amp; insights</legend>
+        <div class="match-social-card__metrics">${comparisonRows}</div>
+      </fieldset>
+    </template>
+    <div class="match-social-export-host" aria-hidden="true"></div>
+  `;
 }
 
 export function buildMatchInsightsHtml(match, home, away, exportBase) {

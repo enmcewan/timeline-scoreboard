@@ -6,7 +6,7 @@ import { getSeasonConfigFromEnv } from "../config/seasons.js";
 import { renderMatchweekHTML } from "../lib/prerender/render.js";
 import { getMatchPagePath } from "../lib/matchUrls.js";
 import { sortedEvents } from "../lib/utils.js";
-import { buildMatchPageSectionsHtml, downloadImageButton } from "../lib/matchPageSections.js";
+import { buildCompactSocialCardHtml, buildMatchPageSectionsHtml, downloadImageButton } from "../lib/matchPageSections.js";
 
 import { computePerfExec } from "../lib/powerMeter.js";
 
@@ -2253,12 +2253,46 @@ function matchPageToggleScript() {
                 }));
             }
 
+            function buildSocialCardTarget(container) {
+                var source = container ? container.querySelector(".match-card") : null;
+                var template = container ? container.querySelector("[data-social-stats-template]") : null;
+                var host = container ? container.querySelector(".match-social-export-host") : null;
+                if (!source || !template || !host) return null;
+
+                var card = source.cloneNode(true);
+                card.removeAttribute("id");
+                card.classList.add("match-social-card");
+
+                var statGroups = card.querySelectorAll(".power-meter > .match-card-group");
+                var replacement = template.content.firstElementChild;
+                if (statGroups[1] && replacement) {
+                    statGroups[1].replaceWith(replacement.cloneNode(true));
+                }
+
+                Array.from(card.querySelectorAll('[data-result-event="false"]')).forEach(function (row) {
+                    row.remove();
+                });
+
+                var footer = card.querySelector(".match-footer");
+                if (footer) footer.remove();
+
+                var brand = document.createElement("footer");
+                brand.className = "match-social-card__brand";
+                brand.innerHTML = "<strong>TL</strong><span>TimelineFootball.com</span>";
+                card.appendChild(brand);
+                host.appendChild(card);
+                return card;
+            }
+
             async function exportMatchImage(button) {
                 var container = button.closest(".match-page-card, .match-page-section");
                 var targetName = button.getAttribute("data-download-target");
-                var target = targetName === "card" && container
-                    ? container.querySelector(".match-card")
-                    : container;
+                var temporaryTarget = targetName === "social";
+                var target = temporaryTarget
+                    ? buildSocialCardTarget(container)
+                    : targetName === "card" && container
+                        ? container.querySelector(".match-card")
+                        : container;
                 if (!target) return;
 
                 var originalLabel = button.getAttribute("aria-label") || "Download image";
@@ -2290,7 +2324,7 @@ function matchPageToggleScript() {
                             clonedTarget.style.boxSizing = "border-box";
                             clonedTarget.style.margin = "0";
                             clonedTarget.style.maxWidth = "none";
-                            clonedTarget.style.width = "640px";
+                            clonedTarget.style.width = targetName === "social" ? "600px" : "640px";
 
                             Array.from(clonedTarget.querySelectorAll(".team-badge")).forEach(function (badge, index) {
                                 if (badgeSnapshots[index]) badge.src = badgeSnapshots[index];
@@ -2301,14 +2335,16 @@ function matchPageToggleScript() {
                                 clonedTarget.style.padding = "16px";
                             }
 
-                            var brand = clonedDocument.createElement("div");
-                            brand.textContent = "TimelineFootball.com";
-                            brand.style.color = window.getComputedStyle(target).getPropertyValue("--text-subtle") || "#666666";
-                            brand.style.fontSize = "12px";
-                            brand.style.fontWeight = "700";
-                            brand.style.marginTop = "12px";
-                            brand.style.textAlign = "right";
-                            clonedTarget.appendChild(brand);
+                            if (targetName !== "social") {
+                                var brand = clonedDocument.createElement("div");
+                                brand.textContent = "TimelineFootball.com";
+                                brand.style.color = window.getComputedStyle(target).getPropertyValue("--text-subtle") || "#666666";
+                                brand.style.fontSize = "12px";
+                                brand.style.fontWeight = "700";
+                                brand.style.marginTop = "12px";
+                                brand.style.textAlign = "right";
+                                clonedTarget.appendChild(brand);
+                            }
                         },
                     });
 
@@ -2328,7 +2364,8 @@ function matchPageToggleScript() {
                         button.setAttribute("aria-label", originalLabel);
                     }, 1800);
                 } finally {
-                    target.removeAttribute("data-export-capture");
+                    if (temporaryTarget) target.remove();
+                    else target.removeAttribute("data-export-capture");
                     button.disabled = false;
                     button.classList.remove("is-loading");
                 }
@@ -2480,6 +2517,12 @@ function buildMatchPageHtml({ match, home, away, players, seasonPath, seasonLabe
             <div class="match-page-card">
                 <div class="match-page-export-row">
                     ${downloadImageButton({
+                        label: "Download Compact Social Card image",
+                        filename: `${exportBase}-social-card.png`,
+                        target: "social",
+                        icon: "compact",
+                    })}
+                    ${downloadImageButton({
                         label: "Download Match Card image",
                         filename: `${exportBase}-match-card.png`,
                         target: "card",
@@ -2495,6 +2538,7 @@ function buildMatchPageHtml({ match, home, away, players, seasonPath, seasonLabe
                     seasonPath,
                     globalMode: "compact",
                 })}
+                ${buildCompactSocialCardHtml(match)}
             </div>
 
             <div class="match-page-live-sections">

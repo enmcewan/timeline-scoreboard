@@ -647,8 +647,140 @@ footer {
 
 .match-page-export-row {
   display: flex;
+  gap: 0.4rem;
   justify-content: flex-end;
   margin-bottom: 0.35rem;
+}
+
+.match-social-export-host {
+  left: -10000px;
+  position: fixed;
+  top: 0;
+  width: 600px;
+}
+
+.match-card.match-social-card {
+  --social-away: #007a68;
+  --social-home: #5a1763;
+  background: var(--card-bg);
+  border: 1px solid var(--border-subtle);
+  box-sizing: border-box;
+  color: var(--text-main);
+  display: flex;
+  flex-direction: column;
+  height: 600px;
+  max-width: none;
+  overflow: hidden;
+  padding: 12px 18px 10px;
+  width: 600px;
+}
+
+.match-social-card .match-date {
+  margin-bottom: 0.2rem;
+}
+
+.match-social-card .match-header {
+  min-height: 90px;
+}
+
+.match-social-card .match-odds {
+  margin-top: 0.3rem;
+}
+
+.match-social-card .power-meter {
+  gap: 0.3rem;
+  margin-bottom: 0.3rem;
+  margin-top: 0.4rem;
+}
+
+.match-social-card .pm-team {
+  padding: 0.3rem 0.7rem;
+}
+
+.match-social-card__comparison {
+  padding-bottom: 0.25rem;
+}
+
+.match-social-card__metrics {
+  padding: 0 0.45rem;
+}
+
+.social-card-metric {
+  align-items: center;
+  display: grid;
+  gap: 8px;
+  grid-template-columns: 42px minmax(0, 1fr) 106px minmax(0, 1fr) 42px;
+  height: 17px;
+}
+
+.social-card-metric__value {
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  text-align: center;
+}
+
+.social-card-metric__label {
+  color: var(--text-subtle);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.social-card-metric__track {
+  background: var(--border-subtle);
+  display: flex;
+  height: 8px;
+  overflow: hidden;
+}
+
+.social-card-metric__track--home {
+  justify-content: flex-end;
+}
+
+.social-card-metric__track i {
+  background: var(--social-away);
+  display: block;
+  height: 100%;
+}
+
+.social-card-metric__track--home i {
+  background: var(--social-home);
+}
+
+.match-social-card .match-card-group--timeline {
+  flex: 0 0 auto;
+  overflow: visible;
+  padding-bottom: 0.25rem;
+}
+
+.match-social-card .match-body .row {
+  font-size: 0.8rem;
+  min-height: 1rem;
+}
+
+.match-social-card .minute {
+  margin-left: 0.45rem;
+  margin-right: 0.45rem;
+}
+
+.match-social-card__brand {
+  align-items: center;
+  color: var(--text-subtle);
+  display: flex;
+  font-size: 12px;
+  font-weight: 700;
+  gap: 7px;
+  justify-content: flex-end;
+  margin-top: auto;
+  padding-top: 5px;
+}
+
+.match-social-card__brand strong {
+  color: var(--accent-minute);
+  font-size: 14px;
 }
 
 .match-page-section-heading {
@@ -2858,6 +2990,11 @@ table {
   .match-page-shot-map {
     --shot-home: #e0a0e7;
     --shot-away: #58d8c5;
+  }
+
+  .match-social-card {
+    --social-away: #5eead4;
+    --social-home: #c084fc;
   }
 
   .shot-map__pitch {
