@@ -5,7 +5,7 @@ import players2026 from "./data/leagues/epl/2026/players.json";
 import { getSeasonConfigFromPathname, publicSeasonDataPath } from "./config/seasons.js";
 import { esc, sortedEvents } from "./lib/utils.js";
 import { VIEW_MODES, isVisibleInMode, createRenderEventText, createRenderEventRow, createRenderMatchCard } from "./lib/sharedRenderer.js";
-import { buildMatchPageSectionsHtml } from "./lib/matchPageSections.js";
+import { buildCompactSocialCardHtml, buildMatchPageSectionsHtml } from "./lib/matchPageSections.js";
 
 const season = getSeasonConfigFromPathname(window.location.pathname);
 const teamsBySeason = {
@@ -388,6 +388,14 @@ function renderMatchPageSections() {
 
   const exportBase = `${season.seasonPath}-mw${currentRound}-${match.homeTeamId}-vs-${match.awayTeamId}`;
   matchPageSections.innerHTML = buildMatchPageSectionsHtml(match, home, away, exportBase);
+
+  const socialTemplate = document.querySelector(".match-page-card [data-social-stats-template]");
+  if (socialTemplate) {
+    const markup = document.createElement("div");
+    markup.innerHTML = buildCompactSocialCardHtml(match);
+    const updatedTemplate = markup.querySelector("[data-social-stats-template]");
+    if (updatedTemplate) socialTemplate.replaceWith(updatedTemplate);
+  }
 }
 
 let showAllAriaPressed = "false";
