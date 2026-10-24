@@ -1194,13 +1194,14 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
         const perfCanvas = document.getElementById(${JSON.stringify(chartId + "-perf")});
         if (!ratingCanvas || !perfCanvas) return;
 
-        const darkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        const chartColors = darkMode
-            ? {
+        const themeQuery = window.matchMedia("(prefers-color-scheme: dark)");
+
+        function getChartColors(darkMode) {
+            return darkMode ? {
                 rating: "#60a5fa",
-                form: "rgba(147, 197, 253, 0.58)",
+                form: "#5eead4",
                 average: "rgba(203, 213, 225, 0.62)",
-                performance: "rgba(203, 213, 225, 0.78)",
+                performance: "#5eead4",
                 legend: "#d5d6de",
                 ticks: "#aeb1c2",
                 secondaryTicks: "#c5c7d2",
@@ -1211,9 +1212,9 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
             }
             : {
                 rating: "#3b0a45",
-                form: "rgba(59, 10, 69, 0.45)",
+                form: "#7c3f7c",
                 average: "rgba(79, 92, 110, 0.35)",
-                performance: "rgba(55, 65, 81, 0.65)",
+                performance: "#7c3f7c",
                 legend: "#4b5563",
                 ticks: "#6b7280",
                 secondaryTicks: "#9ca3af",
@@ -1222,6 +1223,10 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
                 positiveBar: "rgba(34, 197, 94, 0.48)",
                 negativeBar: "rgba(220, 38, 38, 0.42)"
             };
+
+        }
+
+        let chartColors = getChartColors(themeQuery.matches);
 
         console.log("ratingCanvas:", ratingCanvas);
         console.log("perfCanvas:", perfCanvas);
@@ -1278,7 +1283,7 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
 
         const resultColors = chartData.map(m => {
             if (m.result === "W") return "#16a34a";
-            if (m.result === "D") return "#ca8a04";
+            if (m.result === "D") return "#6b7280";
             if (m.result === "L") return "#dc2626";
             return "rgba(107, 114, 128, 0.35)";
         });
@@ -1338,7 +1343,7 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
             window.location.assign(url);
         }
 
-        new Chart(ratingCanvas, {
+        const ratingChart = new Chart(ratingCanvas, {
             type: "line",
             data: {
                 labels,
@@ -1435,7 +1440,7 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
             }
         });
 
-        new Chart(perfCanvas, {
+        const performanceChart = new Chart(perfCanvas, {
             type: "bar",
             data: {
                 labels,
@@ -1534,6 +1539,40 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
                 }
             }
         });
+
+        function updateChartTheme(event) {
+            chartColors = getChartColors(event.matches);
+
+            ratingChart.data.datasets[0].borderColor = chartColors.rating;
+            ratingChart.data.datasets[1].borderColor = chartColors.form;
+            ratingChart.data.datasets[2].borderColor = chartColors.average;
+            ratingChart.options.plugins.legend.labels.color = chartColors.legend;
+            ratingChart.options.scales.y.grid.color = chartColors.grid;
+            ratingChart.options.scales.y.ticks.color = chartColors.ticks;
+            ratingChart.options.scales.x.grid.color = chartColors.gridSoft;
+            ratingChart.options.scales.x.ticks.color = chartColors.ticks;
+
+            performanceChart.data.datasets[0].backgroundColor = exDeltaVals.map(v => {
+                if (v == null) return "rgba(0,0,0,0)";
+                return v >= 0 ? chartColors.positiveBar : chartColors.negativeBar;
+            });
+            performanceChart.data.datasets[1].borderColor = chartColors.performance;
+            performanceChart.options.plugins.legend.labels.color = chartColors.legend;
+            performanceChart.options.scales.y.grid.color = chartColors.grid;
+            performanceChart.options.scales.y.ticks.color = chartColors.ticks;
+            performanceChart.options.scales.yEx.ticks.color = chartColors.secondaryTicks;
+            performanceChart.options.scales.x.grid.color = chartColors.gridSoft;
+            performanceChart.options.scales.x.ticks.color = chartColors.ticks;
+
+            ratingChart.update("none");
+            performanceChart.update("none");
+        }
+
+        if (themeQuery.addEventListener) {
+            themeQuery.addEventListener("change", updateChartTheme);
+        } else {
+            themeQuery.addListener(updateChartTheme);
+        }
     })();
     </script>
     ` : "";
