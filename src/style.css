@@ -660,8 +660,8 @@ footer {
 }
 
 .match-card.match-social-card {
-  --social-away: #007a68;
-  --social-home: #5a1763;
+  --social-away: #e76f2e;
+  --social-home: #2563eb;
   background: var(--card-bg);
   border: 1px solid var(--border-subtle);
   box-sizing: border-box;
@@ -714,6 +714,7 @@ footer {
 }
 
 .social-card-metric__value {
+  color: var(--text-main);
   font-size: 13px;
   font-variant-numeric: tabular-nums;
   line-height: 1;
@@ -748,6 +749,13 @@ footer {
 
 .social-card-metric__track--home i {
   background: var(--social-home);
+}
+
+.social-card-metric:nth-child(4) {
+  border-top: 1px solid var(--border-subtle);
+  height: 20px;
+  margin-top: 2px;
+  padding-top: 3px;
 }
 
 .match-social-card .match-card-group--timeline {
@@ -2993,8 +3001,8 @@ table {
   }
 
   .match-social-card {
-    --social-away: #5eead4;
-    --social-home: #c084fc;
+    --social-away: #fb923c;
+    --social-home: #60a5fa;
   }
 
   .shot-map__pitch {
