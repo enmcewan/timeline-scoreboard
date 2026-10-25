@@ -390,6 +390,162 @@ footer {
   padding: 0.5rem 1rem 1rem 1rem;
 }
 
+.matchweek-team-stats {
+  margin: 1.25rem auto 0.75rem;
+  max-width: 1180px;
+  padding: 0 1rem;
+  width: 100%;
+}
+
+.matchweek-team-stats__heading {
+  margin: 0 auto 0.8rem;
+  text-align: center;
+}
+
+.matchweek-team-stats__heading h2 {
+  font-size: 1.35rem;
+  margin: 0;
+}
+
+.matchweek-team-stats__heading p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin: 0.35rem 0 0;
+}
+
+.matchweek-team-stats__status strong {
+  color: var(--text-main);
+}
+
+.matchweek-team-stats__table-wrap {
+  border: 1px solid var(--border-subtle);
+  border-radius: 0.4rem;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.06);
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.matchweek-team-stats__table {
+  background: var(--card-bg);
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+  min-width: 860px;
+  width: 100%;
+}
+
+.matchweek-team-stats__table th,
+.matchweek-team-stats__table td {
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 0.55rem 0.65rem;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.matchweek-team-stats__table thead th {
+  color: var(--text-muted);
+  font-size: 0.76rem;
+  text-transform: uppercase;
+}
+
+.matchweek-team-stats__table tbody tr:last-child > * {
+  border-bottom: 0;
+}
+
+.matchweek-team-stats__table tbody tr:hover {
+  background: rgba(82, 15, 95, 0.05);
+}
+
+.matchweek-team-stats__table a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.matchweek-team-stats__table a:hover {
+  text-decoration: underline;
+}
+
+.matchweek-team-stats__table .mw-team-stat-rank {
+  color: var(--text-muted);
+  width: 2.5rem;
+}
+
+.matchweek-team-stats__table .mw-team-stat-team,
+.matchweek-team-stats__table .mw-team-stat-opponent {
+  text-align: left;
+}
+
+.matchweek-team-stats__table .mw-team-stat-team {
+  min-width: 10.5rem;
+}
+
+.mw-team-stat-team a {
+  align-items: center;
+  display: inline-flex;
+  gap: 0.55rem;
+}
+
+.mw-team-stat-team img {
+  flex: 0 0 28px;
+  object-fit: contain;
+}
+
+.mw-team-stat-result {
+  align-items: center;
+  display: inline-flex;
+  gap: 0.35rem;
+  white-space: nowrap;
+}
+
+.mw-team-stat-result span {
+  border-radius: 2px;
+  color: #fff;
+  display: inline-grid;
+  font-size: 0.72rem;
+  font-weight: 700;
+  height: 1.3rem;
+  place-items: center;
+  width: 1.3rem;
+}
+
+.mw-team-stat-result.is-win span {
+  background: #16a34a;
+}
+
+.mw-team-stat-result.is-draw span {
+  background: #6b7280;
+}
+
+.mw-team-stat-result.is-loss span {
+  background: #dc2626;
+}
+
+.mw-team-stat-rating {
+  color: var(--accent);
+  font-size: 1.02rem;
+  font-weight: 800;
+}
+
+.matchweek-team-stats__empty {
+  background: var(--card-bg);
+  border: 1px solid var(--border-subtle);
+  border-radius: 0.4rem;
+  color: var(--text-muted);
+  margin: 0;
+  padding: 1rem;
+  text-align: center;
+}
+
+.visually-hidden {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
 .matchday-header {
   align-items: center;
   display: flex;
@@ -2604,6 +2760,61 @@ table {
 
 /* Medium screens – just tighten padding & gaps a bit */
 @media (max-width: 720px) {
+  .matchweek-team-stats {
+    padding: 0 0.25rem;
+  }
+
+  .matchweek-team-stats__heading h2 {
+    font-size: 1.15rem;
+  }
+
+  .matchweek-team-stats__table {
+    font-size: 0.88rem;
+    min-width: 46rem;
+  }
+
+  .matchweek-team-stats__table th,
+  .matchweek-team-stats__table td {
+    padding: 0.4rem 0.35rem;
+    white-space: nowrap;
+  }
+
+  .matchweek-team-stats__table thead th {
+    font-size: 0.68rem;
+  }
+
+  .matchweek-team-stats__table .mw-team-stat-rank {
+    width: 2.1rem;
+  }
+
+  .matchweek-team-stats__table .mw-team-stat-team {
+    min-width: 9rem;
+  }
+
+  .mw-team-stat-team a {
+    gap: 0.35rem;
+  }
+
+  .mw-team-stat-team img {
+    flex-basis: 24px;
+    height: 24px;
+    width: 24px;
+  }
+
+  .mw-team-stat-result {
+    gap: 0.25rem;
+  }
+
+  .mw-team-stat-result span {
+    font-size: 0.65rem;
+    height: 1.15rem;
+    width: 1.15rem;
+  }
+
+  .mw-team-stat-rating {
+    font-size: 0.95rem;
+  }
+
   #app {
     padding: 2rem 0.75rem;
   }

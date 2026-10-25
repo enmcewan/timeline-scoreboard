@@ -7,6 +7,7 @@ import { renderMatchweekHTML } from "../lib/prerender/render.js";
 import { getMatchPagePath } from "../lib/matchUrls.js";
 import { sortedEvents } from "../lib/utils.js";
 import { buildCompactSocialCardHtml, buildMatchPageSectionsHtml, downloadImageButton } from "../lib/matchPageSections.js";
+import { buildMatchweekTeamStatsHtml } from "../lib/matchweekTeamStats.js";
 
 import { computePerfExec } from "../lib/powerMeter.js";
 
@@ -1801,6 +1802,10 @@ function injectApp(html, appHtml) {
     return html.replace(/<div\s+id="app"\s*>\s*<\/div>/, `<div id="app">${appHtml}</div>`);
 }
 
+function injectBeforeMainEnd(html, contentHtml) {
+    return html.replace('</main>', `${contentHtml}</main>`);
+}
+
 function setJsonLd(html, jsonLdObject) {
     const json = JSON.stringify(jsonLdObject);
     // if already present, replace first ld+json block
@@ -3189,7 +3194,15 @@ async function main() {
 
         out = injectBeforeApp(out, navHtml);
 
+        const teamRatingsHtml = buildMatchweekTeamStatsHtml({
+            matches,
+            teams,
+            seasonPath,
+            round,
+        });
+
         out = injectApp(out, appHtml);
+        out = injectBeforeMainEnd(out, teamRatingsHtml);
 
         const outDir = path.join(ROOT, "dist", "epl", String(seasonPath), "matchweek", String(round));
         await fs.mkdir(outDir, { recursive: true });

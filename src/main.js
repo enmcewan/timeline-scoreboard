@@ -6,6 +6,7 @@ import { getSeasonConfigFromPathname, publicSeasonDataPath } from "./config/seas
 import { esc, sortedEvents } from "./lib/utils.js";
 import { VIEW_MODES, isVisibleInMode, createRenderEventText, createRenderEventRow, createRenderMatchCard } from "./lib/sharedRenderer.js";
 import { buildCompactSocialCardHtml, buildMatchPageSectionsHtml } from "./lib/matchPageSections.js";
+import { buildMatchweekTeamStatsHtml } from "./lib/matchweekTeamStats.js";
 
 const season = getSeasonConfigFromPathname(window.location.pathname);
 const teamsBySeason = {
@@ -376,6 +377,26 @@ function renderAllMatches() {
 
   if (!app) return;
   app.innerHTML = `<div class="match-list">${matchesHtml}</div>`;
+  renderMatchweekTeamStats();
+}
+
+function renderMatchweekTeamStats() {
+  const currentSection = document.querySelector("[data-matchweek-team-stats]");
+  if (matchPageMatchId || !currentRound || !app) return;
+
+  const container = document.createElement("div");
+  container.innerHTML = buildMatchweekTeamStatsHtml({
+    matches: currentMatches,
+    teams,
+    seasonPath: SEASON_PATH,
+    round: currentRound,
+  });
+
+  const nextSection = container.firstElementChild;
+  if (!nextSection) return;
+
+  currentSection?.remove();
+  app.after(nextSection);
 }
 
 function renderMatchPageSections() {
