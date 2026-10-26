@@ -91,6 +91,10 @@ function buildRows(matches, teams, seasonPath, round) {
         team: home,
         opponentId: match.awayTeamId,
         opponent: away,
+        homeTeam: home,
+        awayTeam: away,
+        homeGoals,
+        awayGoals,
         stats: match.statistics?.home ?? {},
         goalsFor: homeGoals,
         goalsAgainst: awayGoals,
@@ -103,6 +107,10 @@ function buildRows(matches, teams, seasonPath, round) {
         team: away,
         opponentId: match.homeTeamId,
         opponent: home,
+        homeTeam: home,
+        awayTeam: away,
+        homeGoals,
+        awayGoals,
         stats: match.statistics?.away ?? {},
         goalsFor: awayGoals,
         goalsAgainst: homeGoals,
@@ -178,9 +186,10 @@ export function buildMatchweekTeamStatsHtml({
           </thead>
           <tbody>
             ${rows.map((row) => {
-              const teamName = row.team.display || row.team.name;
-              const opponentName = row.opponent.display || row.opponent.name;
-              const score = `${row.goalsFor}-${row.goalsAgainst}`;
+              const homeTeamName = row.homeTeam.display || row.homeTeam.name;
+              const awayTeamName = row.awayTeam.display || row.awayTeam.name;
+              const score = `${row.homeGoals}-${row.awayGoals}`;
+              const resultLabel = `${row.result.label}, ${homeTeamName} ${score} ${awayTeamName}`;
               return `
                 <tr>
                   <td class="mw-team-stat-rank">${row.rank}</td>
@@ -194,7 +203,7 @@ export function buildMatchweekTeamStatsHtml({
                     <a href="/epl/${escapeHtml(seasonPath)}/team/${escapeHtml(row.opponentId)}/" aria-label="${escapeHtml(row.opponent.name)}">${responsiveTeamName(row.opponent)}</a>
                   </td>
                   <td>
-                    <a class="mw-team-stat-result ${row.result.className}" href="${escapeHtml(row.matchHref)}" aria-label="${escapeHtml(row.result.label)} ${escapeHtml(score)} against ${escapeHtml(opponentName)}">
+                    <a class="mw-team-stat-result ${row.result.className}" href="${escapeHtml(row.matchHref)}" aria-label="${escapeHtml(resultLabel)}">
                       <span>${row.result.label}</span> ${escapeHtml(score)}
                     </a>
                   </td>
