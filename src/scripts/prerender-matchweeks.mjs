@@ -219,7 +219,7 @@ function buildLeagueTableHtml({ seasonPath, seasonLabel, rows, teamsBySlug, apiI
         <td class="table-team">
           <div class="table-team__inner">
             <img class="${slug}" src="${team.badge}" alt="${escapeAttr(team.name)} badge" height="28" loading="lazy">
-            <strong class="table-team__name"><a class="tbl-link" href="/epl/${seasonPath}/team/${slug}/">${team.name}</a><span> &#9655;</span></strong>
+            <strong class="table-team__name"><a class="tbl-link" href="/epl/${seasonPath}/team/${slug}/" aria-label="${escapeAttr(team.name)}">${responsiveTeamName(team, team.name)}</a><span> &#9655;</span></strong>
           </div>
         </td>
         <td class="text-center">${all.p ?? ""}</td>
@@ -298,6 +298,7 @@ function buildTeamMatchesIndex({ roundsData, teamsBySlug, seasonPath }) {
                 isHome: true,
                 opponentSlug: away,
                 opponentName: teamsBySlug[away].name,
+                opponentShortName: teamsBySlug[away].shortName || teamsBySlug[away].display || teamsBySlug[away].name,
                 opponentBadge: teamsBySlug[away].badge,
                 scoreFor: m.score?.home ?? null,
                 scoreAgainst: m.score?.away ?? null,
@@ -313,6 +314,7 @@ function buildTeamMatchesIndex({ roundsData, teamsBySlug, seasonPath }) {
                 isHome: false,
                 opponentSlug: home,
                 opponentName: teamsBySlug[home].name,
+                opponentShortName: teamsBySlug[home].shortName || teamsBySlug[home].display || teamsBySlug[home].name,
                 opponentBadge: teamsBySlug[home].badge,
                 scoreFor: m.score?.away ?? null,
                 scoreAgainst: m.score?.home ?? null,
@@ -798,7 +800,7 @@ function playerTeamLinks(player, teamsBySlug, seasonPath) {
     if (!slug) return "-";
     const team = teamsBySlug[slug];
     return team
-        ? `<a class="tbl-link player-team-link" href="/epl/${seasonPath}/team/${slug}/"><img class="player-team-badge ${escapeAttr(slug)}" src="${escapeAttr(team.badge)}" alt="" aria-hidden="true" width="24" height="24" loading="lazy"><span>${escapeHtml(team.display || team.name)}</span></a>`
+        ? `<a class="tbl-link player-team-link" href="/epl/${seasonPath}/team/${slug}/" aria-label="${escapeAttr(team.name)}"><img class="player-team-badge ${escapeAttr(slug)}" src="${escapeAttr(team.badge)}" alt="" aria-hidden="true" width="24" height="24" loading="lazy"><span>${responsiveTeamName(team)}</span></a>`
         : escapeHtml(slug);
 }
 
@@ -1126,7 +1128,7 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
         return `
                 <tr>
                     <td class="team-match-date text-center"><span class="team-match-date__full">${date}</span><span class="team-match-date__compact">${compactDate}</span></td>
-                    <td class="team-match-opponent"><div class="team-match-opponent__inner"><span class="team-match-opponent__designation">${vsAt}</span><strong><a class="tbl-link team-match-opponent__link" href="/epl/${seasonPath}/team/${m.opponentSlug}/"><img class="team-match-opponent__badge ${escapeAttr(m.opponentSlug)}" src="${escapeAttr(m.opponentBadge)}" alt="" aria-hidden="true" width="24" height="24" loading="lazy"><span>${m.opponentName} &#9655;</span></a></strong></div></td>
+                    <td class="team-match-opponent"><div class="team-match-opponent__inner"><span class="team-match-opponent__designation">${vsAt}</span><strong><a class="tbl-link team-match-opponent__link" href="/epl/${seasonPath}/team/${m.opponentSlug}/" aria-label="${escapeAttr(m.opponentName)}"><img class="team-match-opponent__badge ${escapeAttr(m.opponentSlug)}" src="${escapeAttr(m.opponentBadge)}" alt="" aria-hidden="true" width="24" height="24" loading="lazy"><span><span class="team-name-full">${escapeHtml(m.opponentName)}</span><span class="team-name-short" aria-hidden="true">${escapeHtml(m.opponentShortName)}</span> &#9655;</span></a></strong></div></td>
                     <td class="text-center"><strong>${score}</strong></td>
                     <td class="text-center"><strong>${ratingText}</strong></td>
                     <td class="text-center">${escapeAttr(m.state)}</td>
@@ -1695,6 +1697,11 @@ function escapeHtml(s) {
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#39;");
+}
+
+function responsiveTeamName(team, fullName = team.display || team.name) {
+    const shortName = team.shortName || fullName;
+    return `<span class="team-name-full">${escapeHtml(fullName)}</span><span class="team-name-short" aria-hidden="true">${escapeHtml(shortName)}</span>`;
 }
 
 function setTitle(html, title) {

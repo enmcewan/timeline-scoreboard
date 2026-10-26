@@ -465,6 +465,10 @@ footer {
   text-decoration: underline;
 }
 
+.team-name-short {
+  display: none;
+}
+
 .matchweek-team-stats__table .mw-team-stat-rank {
   color: var(--text-muted);
   width: 2.5rem;
@@ -2760,6 +2764,20 @@ table {
 
 /* Medium screens – just tighten padding & gaps a bit */
 @media (max-width: 720px) {
+  .league-table .team-name-full,
+  .player-stats-table .team-name-full,
+  .team-matches .team-name-full,
+  .matchweek-team-stats__table .team-name-full {
+    display: none;
+  }
+
+  .league-table .team-name-short,
+  .player-stats-table .team-name-short,
+  .team-matches .team-name-short,
+  .matchweek-team-stats__table .team-name-short {
+    display: inline;
+  }
+
   .matchweek-team-stats {
     padding: 0 0.25rem;
   }
@@ -2770,7 +2788,7 @@ table {
 
   .matchweek-team-stats__table {
     font-size: 0.88rem;
-    min-width: 46rem;
+    min-width: 36rem;
   }
 
   .matchweek-team-stats__table th,
@@ -2788,7 +2806,7 @@ table {
   }
 
   .matchweek-team-stats__table .mw-team-stat-team {
-    min-width: 9rem;
+    min-width: 5rem;
   }
 
   .mw-team-stat-team a {
@@ -2838,7 +2856,7 @@ table {
   }
 
   .league-table {
-    min-width: 44rem;
+    min-width: 38.25rem;
   }
 
   .league-table th,
@@ -2863,8 +2881,8 @@ table {
     box-shadow: 2px 0 3px rgba(0, 0, 0, 0.08);
     font-size: 0.9rem;
     left: 2.35rem;
-    min-width: 13rem;
-    width: 13rem;
+    min-width: 7.25rem;
+    width: 7.25rem;
     z-index: 2;
   }
 
@@ -2884,7 +2902,7 @@ table {
   }
 
   .team-matches {
-    min-width: 39rem;
+    min-width: 32rem;
   }
 
   .team-matches .team-match-date,
@@ -2905,8 +2923,8 @@ table {
     box-shadow: 2px 0 3px rgba(0, 0, 0, 0.08);
     font-size: 0.9rem;
     left: 4.25rem;
-    min-width: 12.75rem;
-    width: 12.75rem;
+    min-width: 7.25rem;
+    width: 7.25rem;
     z-index: 2;
   }
 

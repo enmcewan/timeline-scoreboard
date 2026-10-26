@@ -10,6 +10,12 @@ function escapeHtml(value) {
     .replaceAll("'", "&#039;");
 }
 
+function responsiveTeamName(team) {
+  const fullName = team.display || team.name;
+  const shortName = team.shortName || fullName;
+  return `<span class="team-name-full">${escapeHtml(fullName)}</span><span class="team-name-short" aria-hidden="true">${escapeHtml(shortName)}</span>`;
+}
+
 function numberOrNull(value) {
   if (value == null || value === "") return null;
   const parsed = Number(String(value).replace("%", ""));
@@ -160,13 +166,13 @@ export function buildMatchweekTeamStatsHtml({
             <tr>
               <th scope="col" class="mw-team-stat-rank">#</th>
               <th scope="col" class="mw-team-stat-team">Team</th>
-              <th scope="col" class="mw-team-stat-opponent">Opponent</th>
+              <th scope="col" class="mw-team-stat-opponent">Opp</th>
               <th scope="col">Result</th>
               <th scope="col"><abbr title="Performance Index">pX</abbr></th>
               <th scope="col"><abbr title="Execution Index versus the 50 baseline">eX</abbr></th>
               <th scope="col">Rating</th>
               <th scope="col"><abbr title="Expected goals">xG</abbr></th>
-              <th scope="col">Possession</th>
+              <th scope="col">Poss</th>
               <th scope="col">Shots</th>
             </tr>
           </thead>
@@ -179,13 +185,13 @@ export function buildMatchweekTeamStatsHtml({
                 <tr>
                   <td class="mw-team-stat-rank">${row.rank}</td>
                   <th scope="row" class="mw-team-stat-team">
-                    <a href="/epl/${escapeHtml(seasonPath)}/team/${escapeHtml(row.teamId)}/">
+                    <a href="/epl/${escapeHtml(seasonPath)}/team/${escapeHtml(row.teamId)}/" aria-label="${escapeHtml(row.team.name)}">
                       <img src="${escapeHtml(row.team.badge)}" alt="" aria-hidden="true" width="28" height="28" loading="lazy">
-                      <span>${escapeHtml(teamName)}</span>
+                      <span>${responsiveTeamName(row.team)}</span>
                     </a>
                   </th>
                   <td class="mw-team-stat-opponent">
-                    <a href="/epl/${escapeHtml(seasonPath)}/team/${escapeHtml(row.opponentId)}/">${escapeHtml(opponentName)}</a>
+                    <a href="/epl/${escapeHtml(seasonPath)}/team/${escapeHtml(row.opponentId)}/" aria-label="${escapeHtml(row.opponent.name)}">${responsiveTeamName(row.opponent)}</a>
                   </td>
                   <td>
                     <a class="mw-team-stat-result ${row.result.className}" href="${escapeHtml(row.matchHref)}" aria-label="${escapeHtml(row.result.label)} ${escapeHtml(score)} against ${escapeHtml(opponentName)}">
