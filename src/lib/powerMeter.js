@@ -422,6 +422,20 @@ export function computePerfExec(match, ctx) {
     const homeGoals = Number(match?.score?.home ?? 0);
     const awayGoals = Number(match?.score?.away ?? 0);
 
+    function finalMatchDeductionWeight() {
+        const state = String(match?.status?.state ?? "").trim().toUpperCase();
+        if (["FT", "AET", "PEN"].includes(state)) return 1;
+        if (state === "HT") return 0;
+
+        const minute = Number.parseInt(state, 10);
+        if (!Number.isFinite(minute)) return 1;
+        if (minute <= 60) return 0;
+        if (minute >= 85) return 1;
+        return (minute - 60) / 25;
+    }
+
+    const finalDeductionWeight = finalMatchDeductionWeight();
+
     // --- Dominance floor for eX (execution) ---
     // If you win comfortably and created enough, don't let xG delta make eX look mediocre.
     function applyDominanceFloor(exec, goalsFor, goalsAgainst, xg) {
@@ -519,7 +533,7 @@ export function computePerfExec(match, ctx) {
 
         // match intensity (high/low event)
         if (totalGoals >= 5) base += 2;
-        if (totalGoals <= 1) base -= 2;
+        if (totalGoals <= 1) base -= Math.round(2 * finalDeductionWeight);
 
         return clamp(Math.round(base), 0, 100);
     }
@@ -550,7 +564,7 @@ export function computePerfExec(match, ctx) {
         const totalSot = hsotRaw + asotRaw;
 
         if (gd === 1 && totalXg < 2.2 && totalSot <= 5) {
-            r -= 10;
+            r -= Math.round(10 * finalDeductionWeight);
             // console.log("Low-quality narrow-win clip");
         }
 
