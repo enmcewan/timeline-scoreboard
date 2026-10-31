@@ -805,6 +805,10 @@ footer {
   width: min(640px, 100%);
 }
 
+.match-page-live-sections {
+  width: 100%;
+}
+
 .match-page-export-row {
   display: flex;
   gap: 0.4rem;
@@ -1071,7 +1075,7 @@ footer {
 .match-insights__metrics .social-card-metric {
   gap: 0.75rem;
   grid-template-columns: 4.5rem minmax(0, 1fr) 11rem minmax(0, 1fr) 4.5rem;
-  height: 3.25rem;
+  height: 2.65rem;
 }
 
 .match-insights__metrics .social-card-metric + .social-card-metric {
@@ -1079,7 +1083,7 @@ footer {
 }
 
 .match-insights__metrics .social-card-metric:nth-child(4) {
-  height: 3.25rem;
+  height: 2.65rem;
   margin-top: 0;
   padding-top: 0;
 }
@@ -1094,7 +1098,7 @@ footer {
 }
 
 .match-insights__metrics .social-card-metric__track {
-  height: 0.75rem;
+  height: 0.65rem;
 }
 
 .match-page-shot-map {
