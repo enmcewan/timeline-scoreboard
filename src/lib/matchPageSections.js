@@ -114,17 +114,20 @@ export function buildMatchInsightsHtml(match, home, away, exportBase) {
     return percent ? `${formatted}%` : formatted;
   };
   const rows = definitions.map(([key, label, percent = false]) => {
-    const homeValue = formatValue(insights[key]?.home, percent);
-    const awayValue = formatValue(insights[key]?.away, percent);
-    if (homeValue == null || awayValue == null) return "";
+    const homeRaw = insights[key]?.home;
+    const awayRaw = insights[key]?.away;
+    const homeDisplay = formatValue(homeRaw, percent);
+    const awayDisplay = formatValue(awayRaw, percent);
+    if (homeDisplay == null || awayDisplay == null) return "";
 
-    return `
-      <tr>
-        <td class="match-insights__value">${escapeHtml(homeValue)}</td>
-        <th scope="row">${escapeHtml(label)}</th>
-        <td class="match-insights__value">${escapeHtml(awayValue)}</td>
-      </tr>
-    `;
+    return compactMetricRow({
+      label,
+      homeValue: homeRaw,
+      awayValue: awayRaw,
+      homeDisplay,
+      awayDisplay,
+      maxValue: percent ? 100 : undefined,
+    });
   }).filter(Boolean).join("");
 
   if (!rows) return "";
@@ -138,16 +141,14 @@ export function buildMatchInsightsHtml(match, home, away, exportBase) {
           filename: `${exportBase}-match-insights.png`,
         })}
       </div>
-      <table class="match-insights">
-        <thead>
-          <tr>
-            <th scope="col">${escapeHtml(home.display || home.name)}</th>
-            <th scope="col">Metric</th>
-            <th scope="col">${escapeHtml(away.display || away.name)}</th>
-          </tr>
-        </thead>
-        <tbody>${rows}</tbody>
-      </table>
+      <div class="match-insights">
+        <div class="match-insights__header">
+          <strong>${escapeHtml(home.display || home.name)}</strong>
+          <span>Metric</span>
+          <strong>${escapeHtml(away.display || away.name)}</strong>
+        </div>
+        <div class="match-insights__metrics">${rows}</div>
+      </div>
     </section>
   `;
 }
