@@ -37,6 +37,8 @@ const AUTO_UPDATE_MINUTES_UTC = Array.from(
 );
 const MATCH_WINDOW_BEFORE_MS = 10 * 60 * 1000;
 const MATCH_WINDOW_AFTER_MS = 195 * 60 * 1000;
+const EXPECTED_MATCH_DURATION_MS = 2 * 60 * 60 * 1000;
+const COMPLETED_ROUND_HOLD_MS = 24 * 60 * 60 * 1000;
 
 function canRecoverCompletedMatchFromStaleLiveData(matchday) {
   const matchId = document.querySelector(".match-page-card .match-card")?.dataset.matchId;
@@ -270,15 +272,34 @@ function isCompletedState(state) {
   return s === "FT" || s === "AET" || s === "PEN";
 }
 
-function pickCurrentRoundByCompletion(matchdays) {
+function pickCurrentRoundByCompletion(matchdays, nowMs = Date.now()) {
   const rounds = Object.keys(matchdays).map(Number).filter(Number.isFinite).sort((a, b) => a - b);
-  for (const r of rounds) {
+  for (let index = 0; index < rounds.length; index += 1) {
+    const r = rounds[index];
     const md = matchdays[r];
     const matches = md?.matches || [];
     if (!matches.length) continue;
 
     // If any match is not completed, this round is the current one
     if (matches.some(m => !isCompletedState(m.status?.state))) {
+      const previousRound = rounds[index - 1];
+      const previousMatches = matchdays[previousRound]?.matches || [];
+      const latestKickoffMs = Math.max(
+        ...previousMatches.map((match) => Date.parse(match.kickoff)).filter(Number.isFinite)
+      );
+      const holdUntilMs = latestKickoffMs
+        + EXPECTED_MATCH_DURATION_MS
+        + COMPLETED_ROUND_HOLD_MS;
+
+      if (
+        previousMatches.length > 0
+        && previousMatches.every((match) => isCompletedState(match.status?.state))
+        && Number.isFinite(latestKickoffMs)
+        && nowMs < holdUntilMs
+      ) {
+        return previousRound;
+      }
+
       return r;
     }
   }
