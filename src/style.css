@@ -131,6 +131,17 @@ body {
   padding: 0 1rem 1rem;
 }
 
+.site-title,
+.site-title:visited {
+  color: var(--text-main);
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0.67em 0 0.25rem;
+  text-decoration: none;
+}
+
 h1 {
   margin-bottom: 0.25rem;
 }
@@ -377,8 +388,18 @@ footer {
 }
 
 .site-tagline {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0.83em 0;
   text-transform: capitalize;
   font-variant-numeric: tabular-nums;
+}
+
+.matchweek-page-title {
+  font-size: 1.6rem;
+  margin: 0 0 0.65rem;
+  text-align: center;
 }
 
 /* Use #app as the main layout container */
@@ -2029,7 +2050,7 @@ span.sub {
 .season-hub p {
   padding: 0 0.5rem;
 }
-.season-hub h2 {
+.season-hub h1 {
   text-align: center;
   margin-top: 0;
 }
@@ -2351,13 +2372,64 @@ thead tr {
   border-bottom: 2px solid rgba(0, 0, 0, 0.2);
 }
 
-/* --- Team header --- */
-.team-header {
-  display: flex;
+/* --- Team identity and venue --- */
+.team-intro {
+  align-items: stretch;
+  background: var(--card-bg);
+  border-radius: 0.4rem;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(0, 1.05fr) minmax(18rem, 1.55fr) minmax(0, 0.9fr);
+  margin-bottom: 0.9rem;
+  padding: 0.9rem;
+}
+
+.team-intro--identity-only {
+  grid-template-columns: 1fr;
+}
+
+.team-identity {
   align-items: center;
-  gap: 14px;
-  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
   justify-content: center;
+  min-width: 0;
+  padding: 0.5rem;
+  text-align: center;
+}
+
+.team-intro--identity-only .team-identity {
+  justify-content: center;
+}
+
+.team-identity__badge {
+  flex: 0 0 88px;
+  height: 88px;
+  object-fit: contain;
+  width: 88px;
+}
+
+.team-identity__copy {
+  min-width: 0;
+}
+
+.team-identity h1 {
+  font-size: 1.55rem;
+  line-height: 1.12;
+  margin: 0;
+}
+
+.team-nickname {
+  color: var(--text-muted);
+  font-size: 1rem;
+  font-weight: 650;
+  margin: 0.35rem 0 0;
+}
+
+.team-updated {
+  font-size: 0.75rem;
+  margin: 0.65rem 0 0;
 }
 
 .team-strip {
@@ -2645,23 +2717,28 @@ thead tr {
 
 /* --- Venue block --- */
 .team-venue {
-  display: flex;
-  gap: 14px;
-  align-items: center;
-  padding: 0.75rem;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 0.75rem;
-  margin: 10px 0 14px;
-  background: rgba(0, 0, 0, 0.02);
-  text-transform: capitalize;
+  display: contents;
 }
 
 .team-venue__img {
-  width: 420px;
-  height: 264px;
-  object-fit: cover;
-  border-radius: 10px;
   border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+  height: 100%;
+  min-height: 13.75rem;
+  object-fit: cover;
+  width: 100%;
+}
+
+.team-venue__image-placeholder {
+  background: rgba(0, 0, 0, 0.04);
+  border-radius: 0.5rem;
+  min-height: 13.75rem;
+}
+
+.team-venue__meta {
+  align-self: center;
+  min-width: 0;
+  padding: 0.5rem;
 }
 
 .team-venue__name {
@@ -2686,8 +2763,7 @@ thead tr {
   text-decoration: underline;
 }
 
-.team-header,
-.team-venue,
+.team-intro,
 .team-strip,
 .team-matches,
 .league-table,
@@ -3206,13 +3282,50 @@ table {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
+  .team-intro {
+    background: transparent;
+    display: block;
+    padding: 0;
+  }
+
+  .team-identity {
+    background: var(--card-bg);
+    border-radius: 0.4rem;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-bottom: 0.65rem;
+    padding: 0.9rem;
+    text-align: left;
+  }
+
+  .team-identity__badge {
+    flex-basis: 80px;
+    height: 80px;
+    width: 80px;
+  }
+
+  .team-identity h1 {
+    font-size: 1.65rem;
+  }
+
   .team-venue {
+    background: var(--card-bg);
+    border-radius: 0.4rem;
+    display: flex;
     flex-direction: column;
     align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.9rem;
   }
+
   .team-venue__img {
     width: 100%;
     height: auto;
+    min-height: 0;
+  }
+
+  .team-venue__meta {
+    padding: 0;
   }
 
   .league-table th,

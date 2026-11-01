@@ -310,6 +310,11 @@ function setPageMetaForRound(round) {
   const title = `${season.leagueShortName} ${SEASON_LABEL} Matchweek ${round} Timelines, Stats & Ratings`;
   document.title = title;
 
+  const pageHeading = document.querySelector("#matchweek-page-title");
+  if (pageHeading) {
+    pageHeading.textContent = `${season.leagueName} ${SEASON_LABEL} Matchweek ${round}`;
+  }
+
   const desc = `${season.leagueName} ${SEASON_LABEL} Matchweek ${round} results with goals, cards, VAR, odds, stats and team ratings.`;
   let meta = document.querySelector('meta[name="description"]');
   if (!meta) {

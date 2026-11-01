@@ -237,7 +237,7 @@ function buildLeagueTableHtml({ seasonPath, seasonLabel, rows, teamsBySlug, apiI
 
     return `
     <section class="league-table-page">
-      <h2 class="text-center">${seasonLabel} Table</h2>
+      <h1 class="text-center">Premier League ${seasonLabel} Table</h1>
       ${updatedLabel ? `<p class="muted">Last updated: ${updatedLabel}</p>` : ""}
       <div class="table-scroll" role="region" aria-label="League table" tabindex="0">
         <table class="league-table">
@@ -1148,17 +1148,30 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
     }).join("\n");
 
     const v = team.venue;
-
-    const venueHtml = v?.name ? `
-        <div class="team-venue">
-            ${v.image ? `<img class="team-venue__img" src="${v.image}" alt="${escapeAttr(v.name)}" loading="lazy">` : ""}
-            <div class="team-venue__meta">
-            <div class="team-venue__name"><strong>${escapeAttr(v.name)}</strong></div>
-            ${v.city ? `<div class="muted">${escapeAttr(v.city)}</div>` : ""}
-            ${v.capacity ? `<div class="muted">Capacity ${Number(v.capacity).toLocaleString("en-US")}</div>` : ""}
+    const nickname = team.nicknames?.[0] ?? "";
+    const hasVenue = Boolean(v?.name);
+    const teamIntroHtml = `
+        <section class="team-intro${hasVenue ? "" : " team-intro--identity-only"}" aria-labelledby="team-name">
+            <div class="team-identity">
+                <img class="team-identity__badge slug ${slug}" src="${team.badge}" alt="${escapeAttr(team.name)} badge" width="88" height="88" loading="lazy">
+                <div class="team-identity__copy">
+                    <h1 id="team-name">${escapeHtml(team.name)}</h1>
+                    ${nickname ? `<p class="team-nickname">${escapeHtml(nickname)}</p>` : ""}
+                    ${updatedLabel ? `<p class="team-updated muted">Last updated: ${updatedLabel}</p>` : ""}
+                </div>
             </div>
-        </div>
-    ` : "";
+            ${hasVenue ? `
+                <div class="team-venue">
+                    ${v.image ? `<img class="team-venue__img" src="${v.image}" alt="${escapeAttr(v.name)}" loading="lazy">` : `<div class="team-venue__image-placeholder" aria-hidden="true"></div>`}
+                    <div class="team-venue__meta">
+                        <div class="team-venue__name"><strong>${escapeHtml(v.name)}</strong></div>
+                        ${v.city ? `<div class="muted">${escapeHtml(v.city)}</div>` : ""}
+                        ${v.capacity ? `<div class="muted">Capacity ${Number(v.capacity).toLocaleString("en-US")}</div>` : ""}
+                    </div>
+                </div>
+            ` : ""}
+        </section>
+    `;
 
     const seasonSummaryHtml = teamSeason ? `
         <section class="team-season-performance">
@@ -1592,15 +1605,7 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
 
     return `
         <section class="team-page">
-        <div class="team-header">
-            <img class="slug ${slug}" src="${team.badge}" alt="${escapeAttr(team.name)} badge" height="72" loading="lazy">
-            <div>
-            <h2>${team.name} - ${team.nicknames?.[0] ?? ""}</h2>
-            ${updatedLabel ? `<p class="muted">Last updated: ${updatedLabel}</p>` : ""}
-            </div>
-        </div>
-
-        ${venueHtml}
+        ${teamIntroHtml}
 
         ${standingsRow && all ? `
             <h2 class="text-center">League Summary</h2>
@@ -1721,11 +1726,18 @@ function setTitle(html, title) {
     return html.replace("</head>", `  <title>${title}</title>\n</head>`);
 }
 
+function setMatchweekHeading(html, heading) {
+    return html.replace(
+        /(<h1 class="matchweek-page-title" id="matchweek-page-title">).*?(<\/h1>)/s,
+        `$1${escapeHtml(heading)}$2`
+    );
+}
+
 function setSeasonChrome(html, { seasonPath, seasonLabel, leagueName }) {
     return html
         .replace(
-            /<h2 class="site-tagline">.*?<\/h2>/s,
-            `<h2 class="site-tagline">${escapeAttr(leagueName)} ${escapeAttr(seasonLabel)}</h2>`
+            /<(?:h2|div) class="site-tagline">.*?<\/(?:h2|div)>/s,
+            `<div class="site-tagline">${escapeHtml(leagueName)} ${escapeHtml(seasonLabel)}</div>`
         )
         .replace(/href="\/epl\/\d{4}-\d{2}\/table\/"/g, `href="/epl/${seasonPath}/table/"`)
         .replace(/href="\/epl\/\d{4}-\d{2}\/"/g, `href="/epl/${seasonPath}/"`);
@@ -2786,7 +2798,7 @@ function buildSeasonHubHtml({ seasonPath, seasonLabel, maxRound, matchweekMeta, 
             <a class="season-link" href="/epl/${seasonPath}/table/">League table &#9655;</a>
             ${hasPlayerStats ? `<a class="season-link" href="/epl/${seasonPath}/players/">Player stats &#9655;</a>` : ""}
         </div>
-        <h2>Matchweeks</h2>
+        <h1>EPL ${escapeHtml(seasonLabel)} Matchweeks</h1>
         <p>
             Browse match timelines by matchweek for the EPL ${seasonLabel} season.
             Each matchweek page includes goals, cards, VAR decisions, and substitutions in chronological order.
@@ -3163,6 +3175,7 @@ async function main() {
             seasonLabel,
             leagueName: season.leagueName,
         });
+        out = setMatchweekHeading(out, `${season.leagueName} ${seasonLabel} Matchweek ${round}`);
         out = setTitle(
             out,
             title
