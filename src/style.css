@@ -2301,6 +2301,14 @@ thead tr {
   width: 24px;
 }
 
+.team-match-score__inner {
+  align-items: center;
+  display: inline-flex;
+  gap: 0.35rem;
+  justify-content: center;
+  white-space: nowrap;
+}
+
 .tbl-team {
   display: flex;
   align-items: center;
@@ -2936,6 +2944,10 @@ table {
     min-width: 4.25rem;
     width: 4.25rem;
     z-index: 2;
+  }
+
+  .team-match-score__inner {
+    gap: 0.25rem;
   }
 
   .team-matches .team-match-opponent {

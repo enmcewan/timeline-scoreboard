@@ -1122,6 +1122,16 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
         let score = hasStarted && m.scoreFor != null && m.scoreAgainst != null ? `${m.scoreFor}–${m.scoreAgainst}` : "–";
         const rating = ratingByFixtureId.get(String(m.fixtureId));
         const ratingText = typeof rating === "number" ? Math.round(rating) : "–";
+        const result = state === "FT" && m.scoreFor != null && m.scoreAgainst != null
+            ? m.scoreFor > m.scoreAgainst
+                ? { label: "W", className: "is-win", ariaLabel: "Win" }
+                : m.scoreFor < m.scoreAgainst
+                    ? { label: "L", className: "is-loss", ariaLabel: "Loss" }
+                    : { label: "D", className: "is-draw", ariaLabel: "Draw" }
+            : null;
+        const resultBadge = result
+            ? `<span class="mw-team-stat-result ${result.className}" role="img" aria-label="${result.ariaLabel}"><span aria-hidden="true">${result.label}</span></span>`
+            : "";
 
         if (hasStarted && !m.isHome) score = `${m.scoreAgainst}–${m.scoreFor}`; // reverse for away matches
 
@@ -1129,7 +1139,7 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
                 <tr>
                     <td class="team-match-date text-center"><span class="team-match-date__full">${date}</span><span class="team-match-date__compact">${compactDate}</span></td>
                     <td class="team-match-opponent"><div class="team-match-opponent__inner"><span class="team-match-opponent__designation">${vsAt}</span><strong><a class="tbl-link team-match-opponent__link" href="/epl/${seasonPath}/team/${m.opponentSlug}/" aria-label="${escapeAttr(m.opponentName)}"><img class="team-match-opponent__badge ${escapeAttr(m.opponentSlug)}" src="${escapeAttr(m.opponentBadge)}" alt="" aria-hidden="true" width="24" height="24" loading="lazy"><span><span class="team-name-full">${escapeHtml(m.opponentName)}</span><span class="team-name-short" aria-hidden="true">${escapeHtml(m.opponentShortName)}</span> &#9655;</span></a></strong></div></td>
-                    <td class="text-center"><strong>${score}</strong></td>
+                    <td class="team-match-score text-center"><span class="team-match-score__inner">${resultBadge}<strong>${score}</strong></span></td>
                     <td class="text-center"><strong>${ratingText}</strong></td>
                     <td class="text-center">${escapeAttr(m.state)}</td>
                     <td class="text-center"><a class="tbl-link" href="${m.href}">Timeline &#9655;</a></td>
@@ -1611,7 +1621,6 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
         ${leaguePerformanceHtml}
         ${seasonSummaryHtml}
         ${teamChartHtml}
-        ${playerStatsHtml}
 
         <h2 class="text-center">Matches</h2>
         <div class="table-scroll" role="region" aria-label="${escapeAttr(team.name)} matches" tabindex="0">
@@ -1631,6 +1640,7 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
                 </tbody>
             </table>
         </div>
+        ${playerStatsHtml}
          ${teamChartScript}
         </section>
   `.trim();
