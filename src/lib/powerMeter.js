@@ -350,9 +350,50 @@ export function computePerfExec(match, ctx) {
     let homeExec = Math.round(baseExec(hg, hxg) + hDeltaN * (hDeltaN >= 0 ? POS_M : NEG_M));
     let awayExec = Math.round(baseExec(ag, axg) + aDeltaN * (aDeltaN >= 0 ? POS_M : NEG_M));
 
-    // keeper impact (subtle)
-    homeExec += Math.round(clamp(safeNum(h.goalsPrevented, 0), -2, 2) * 3);
-    awayExec += Math.round(clamp(safeNum(a.goalsPrevented, 0), -2, 2) * 3);
+    function savedShotResistance(attackingSide) {
+        const shots = Array.isArray(match?.shotMap?.shots) ? match.shotMap.shots : [];
+        const placementWeight = {
+            high_left: 0.18,
+            high_right: 0.18,
+            low_left: 0.12,
+            low_right: 0.12,
+            high_centre: 0.05,
+            high_center: 0.05,
+        };
+
+        return shots.reduce((total, shot) => {
+            if (shot?.side !== attackingSide) return total;
+            const result = String(shot?.result || "").toLowerCase();
+            if (result !== "save" && result !== "saved") return total;
+
+            // Pre-shot xG recognizes the chance; goal-mouth placement separates
+            // routine central saves from efforts requiring stronger shot-stopping.
+            const chanceQuality = clamp(safeNum(shot?.xg, 0), 0, 1) * 0.5;
+            const location = String(shot?.goalMouthLocation || "").toLowerCase();
+            return total + chanceQuality + safeNum(placementWeight[location], 0);
+        }, 0);
+    }
+
+    const hSavedShotResistance = savedShotResistance("home");
+    const aSavedShotResistance = savedShotResistance("away");
+    const attackingRelief = (resistance) => Math.round(clamp(resistance * 10, 0, 10));
+    const derivedKeeperCredit = (resistance) => Math.round(clamp(resistance * 8, 0, 8));
+
+    // The shooting team should not be judged exactly like a side that produced
+    // weak, routine saves. This only softens eX; it never changes pX.
+    homeExec += attackingRelief(hSavedShotResistance);
+    awayExec += attackingRelief(aSavedShotResistance);
+
+    // Prefer the provider's goals-prevented measure when present. API-Football
+    // often supplies zero, so saved-shot quality provides a conservative fallback.
+    const hProviderKeeperImpact = Math.round(clamp(safeNum(h.goalsPrevented, 0), -2, 2) * 3);
+    const aProviderKeeperImpact = Math.round(clamp(safeNum(a.goalsPrevented, 0), -2, 2) * 3);
+    const hKeeperImpact = hProviderKeeperImpact !== 0
+        ? hProviderKeeperImpact
+        : derivedKeeperCredit(aSavedShotResistance);
+    const aKeeperImpact = aProviderKeeperImpact !== 0
+        ? aProviderKeeperImpact
+        : derivedKeeperCredit(hSavedShotResistance);
 
     // waste penalty (this is the “Forest blew it” lever)
     const wastePenalty = (xg, goals) => {
@@ -491,6 +532,11 @@ export function computePerfExec(match, ctx) {
 
     homeExec = applyNoThreatCap(homeExec, hg, hxg, hsot, hshots, hDis);
     awayExec = applyNoThreatCap(awayExec, ag, axg, asot, ashots, aDis);
+
+    // Goalkeeping remains valuable even when the same team offered no attacking
+    // threat, so apply this after the attacking no-threat cap.
+    homeExec += hKeeperImpact;
+    awayExec += aKeeperImpact;
 
     homeExec = clamp(homeExec, 0, 100);
     awayExec = clamp(awayExec, 0, 100);

@@ -59,6 +59,16 @@ export function extractTheStatsApiShotMap(payload) {
       minute: finiteStat(shot?.minute),
       result: String(shot?.result || "unknown").toLowerCase(),
       xg: finiteXg(shot?.expected_goals),
+      goalMouthLocation: shot?.goal_mouth_location
+        ? String(shot.goal_mouth_location).toLowerCase()
+        : null,
+      goalMouthCoordinates: shot?.goal_mouth_coordinates
+        ? {
+            x: finiteCoordinate(shot.goal_mouth_coordinates.x),
+            y: finiteCoordinate(shot.goal_mouth_coordinates.y),
+            z: finiteCoordinate(shot.goal_mouth_coordinates.z),
+          }
+        : null,
       situation: shot?.situation ? String(shot.situation) : null,
       bodyPart: shot?.body_part ? String(shot.body_part) : null,
       isGoal: Boolean(shot?.is_goal),
