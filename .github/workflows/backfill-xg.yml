@@ -61,6 +61,15 @@ jobs:
             fi
           done
 
+          match_cache="$SEASON_DATA_DIR/thestatsapi-xg.json"
+          if curl -fsSL "$LIVE_SEASON_DATA_URL/thestatsapi-xg.json" -o "$match_cache.tmp"; then
+            mv "$match_cache.tmp" "$match_cache"
+            echo "Hydrated TheStatsAPI match cache."
+          else
+            rm -f "$match_cache.tmp"
+            echo "Live TheStatsAPI match cache unavailable; starting with the repository cache."
+          fi
+
           profile_cache="$SEASON_DATA_DIR/player-profiles.json"
           if curl -fsSL "$LIVE_SEASON_DATA_URL/player-profiles.json" -o "$profile_cache.tmp"; then
             mv "$profile_cache.tmp" "$profile_cache"

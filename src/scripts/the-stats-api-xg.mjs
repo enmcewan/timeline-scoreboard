@@ -331,7 +331,7 @@ export async function createTheStatsApiXgClient({
   let dirty = false;
   let quotaLogged = false;
 
-  async function apiGet(pathname) {
+  async function apiGet(pathname, attempt = 0) {
     const response = await fetch(`${BASE_URL}${pathname}`, {
       headers: { Authorization: `Bearer ${apiKey}` },
     });
@@ -346,6 +346,24 @@ export async function createTheStatsApiXgClient({
     }
 
     const body = await response.text();
+    if (response.status === 429 && attempt < 4) {
+      const retryAfter = Number(response.headers.get("retry-after"));
+      const resetAt = Number(response.headers.get("x-ratelimit-reset"));
+      const resetDelay = Number.isFinite(resetAt)
+        ? Math.max(0, resetAt * 1000 - Date.now())
+        : 0;
+      const waitMs = Math.max(
+        65_000,
+        Number.isFinite(retryAfter) ? retryAfter * 1000 + 1_000 : 0,
+        resetDelay + 1_000,
+      );
+      console.warn(
+        `TheStatsAPI rate limit reached for ${pathname}; retrying in ${Math.ceil(waitMs / 1000)}s.`
+      );
+      await new Promise((resolve) => setTimeout(resolve, waitMs));
+      return apiGet(pathname, attempt + 1);
+    }
+
     if (!response.ok) {
       const error = new Error(
         `TheStatsAPI ${response.status} for ${pathname}: ${body.slice(0, 300)}`
