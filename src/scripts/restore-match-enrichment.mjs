@@ -122,11 +122,32 @@ function restoreShotMap(sourceMatch, targetMatch) {
   return true;
 }
 
+function restoreLineups(sourceMatch, targetMatch) {
+  const sourceLineups = sourceMatch?.lineups;
+  if (
+    sourceLineups?.provider !== "thestatsapi" ||
+    !Array.isArray(sourceLineups.home?.startingXi) ||
+    !Array.isArray(sourceLineups.away?.startingXi) ||
+    sourceLineups.home.startingXi.length === 0 ||
+    sourceLineups.away.startingXi.length === 0
+  ) {
+    return false;
+  }
+
+  const before = JSON.stringify(targetMatch?.lineups);
+  const after = JSON.stringify(sourceLineups);
+  if (before === after) return false;
+
+  targetMatch.lineups = sourceLineups;
+  return true;
+}
+
 function restoreMatch(sourceMatch, targetMatch) {
   return [
     restoreXg(sourceMatch, targetMatch),
     restoreInsights(sourceMatch, targetMatch),
     restoreShotMap(sourceMatch, targetMatch),
+    restoreLineups(sourceMatch, targetMatch),
   ].some(Boolean);
 }
 

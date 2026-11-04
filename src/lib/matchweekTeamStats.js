@@ -46,6 +46,14 @@ function resultFor(goalsFor, goalsAgainst) {
   return { label: "D", className: "is-draw" };
 }
 
+function downloadIcon() {
+  return `
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M12 3v12m0 0 4-4m-4 4-4-4M5 20h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+    </svg>
+  `;
+}
+
 function performanceContext(match) {
   const statsH = match.statistics?.home ?? {};
   const statsA = match.statistics?.away ?? {};
@@ -164,6 +172,7 @@ export function buildMatchweekTeamStatsHtml({
   ).length;
   const totalMatches = matches.length;
   const statusText = `${completedMatches} of ${totalMatches} matches complete.`;
+  const exportBase = `epl-${seasonPath}-matchweek-${round}-team-ratings`;
 
   const body = rows.length
     ? `
@@ -225,7 +234,21 @@ export function buildMatchweekTeamStatsHtml({
   return `
     <section class="matchweek-team-stats" data-matchweek-team-stats aria-labelledby="matchweek-team-stats-title">
       <div class="matchweek-team-stats__heading">
-        <h2 id="matchweek-team-stats-title">${escapeHtml(competitionName)} Matchweek ${escapeHtml(round)} Team Ratings</h2>
+        <div class="matchweek-team-stats__title-row">
+          <h2 id="matchweek-team-stats-title">${escapeHtml(competitionName)} Matchweek ${escapeHtml(round)} Team Ratings</h2>
+          ${rows.length ? `
+            <div class="matchweek-team-stats__export-actions" aria-label="Download team ratings images">
+              <button type="button" class="matchweek-team-stats__export-button" data-matchweek-ratings-download data-export-range="top" data-download-filename="${escapeHtml(exportBase)}-top-10.jpg" title="Download Top 10 ratings image">
+                ${downloadIcon()}
+                <span>Top 10</span>
+              </button>
+              <button type="button" class="matchweek-team-stats__export-button" data-matchweek-ratings-download data-export-range="bottom" data-download-filename="${escapeHtml(exportBase)}-bottom-10.jpg" title="Download Bottom 10 ratings image">
+                ${downloadIcon()}
+                <span>Bottom 10</span>
+              </button>
+            </div>
+          ` : ""}
+        </div>
         <p>Compare each team&rsquo;s match performance, execution, rating and core statistics at a glance.</p>
         <p class="matchweek-team-stats__status"><strong>${escapeHtml(statusText)}</strong> Teams are ranked by Rating.</p>
       </div>

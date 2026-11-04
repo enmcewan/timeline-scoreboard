@@ -425,6 +425,165 @@ function renderMatchweekTeamStats() {
   app.after(nextSection);
 }
 
+let matchweekRatingsRendererPromise;
+
+function loadMatchweekRatingsRenderer() {
+  if (window.html2canvas) return Promise.resolve(window.html2canvas);
+  if (matchweekRatingsRendererPromise) return matchweekRatingsRendererPromise;
+
+  matchweekRatingsRendererPromise = new Promise((resolve, reject) => {
+    const script = document.createElement("script");
+    script.src = "/vendor/html2canvas.min.js";
+    script.onload = () => resolve(window.html2canvas);
+    script.onerror = () => reject(new Error("Could not load the image renderer."));
+    document.head.appendChild(script);
+  });
+
+  return matchweekRatingsRendererPromise;
+}
+
+function waitForExportImages(container) {
+  const images = Array.from(container.querySelectorAll("img"));
+  return Promise.all(images.map((image) => {
+    image.loading = "eager";
+    if (image.complete) return image.decode?.().catch(() => {}) ?? Promise.resolve();
+    return new Promise((resolve) => {
+      image.addEventListener("load", resolve, { once: true });
+      image.addEventListener("error", resolve, { once: true });
+    });
+  }));
+}
+
+async function rasterizeExportBadges(container) {
+  const badges = Array.from(container.querySelectorAll(".mw-team-stat-team img"));
+
+  await Promise.all(badges.map(async (badge) => {
+    try {
+      await badge.decode?.();
+    } catch {
+      // Completed SVG images can still reject decode in some browsers.
+    }
+
+    const rect = badge.getBoundingClientRect();
+    const width = Math.max(1, Math.round(rect.width * 4));
+    const height = Math.max(1, Math.round(rect.height * 4));
+    const sourceWidth = badge.naturalWidth || rect.width || 1;
+    const sourceHeight = badge.naturalHeight || rect.height || 1;
+    const scale = Math.min(width / sourceWidth, height / sourceHeight);
+    const drawWidth = sourceWidth * scale;
+    const drawHeight = sourceHeight * scale;
+    const canvas = document.createElement("canvas");
+    const context = canvas.getContext("2d");
+
+    canvas.width = width;
+    canvas.height = height;
+    context.drawImage(
+      badge,
+      (width - drawWidth) / 2,
+      (height - drawHeight) / 2,
+      drawWidth,
+      drawHeight
+    );
+    badge.src = canvas.toDataURL("image/png");
+  }));
+}
+
+function buildMatchweekRatingsExport(section, range) {
+  const sourceTable = section.querySelector(".matchweek-team-stats__table");
+  const title = section.querySelector("#matchweek-team-stats-title")?.textContent?.trim() || "Team Ratings";
+  const sourceRows = Array.from(sourceTable?.tBodies?.[0]?.rows || []);
+  const selectedRows = range === "bottom" ? sourceRows.slice(-10) : sourceRows.slice(0, 10);
+  if (!sourceTable || !selectedRows.length) return null;
+
+  const card = document.createElement("div");
+  card.className = "matchweek-team-stats-export-card";
+  card.setAttribute("aria-hidden", "true");
+
+  const heading = document.createElement("header");
+  heading.className = "matchweek-team-stats-export-card__heading";
+  heading.innerHTML = `<p>Premier League</p><h2>${title}</h2><strong>${range === "bottom" ? "Bottom 10" : "Top 10"}</strong>`;
+
+  const table = sourceTable.cloneNode(true);
+  table.classList.add("matchweek-team-stats-export-card__table");
+  Array.from(table.rows).forEach((row) => {
+    Array.from(row.cells).slice(7).forEach((cell) => cell.remove());
+  });
+  table.tBodies[0].replaceChildren(...selectedRows.map((row) => {
+    const clone = row.cloneNode(true);
+    Array.from(clone.cells).slice(7).forEach((cell) => cell.remove());
+    clone.querySelectorAll("a").forEach((link) => link.removeAttribute("href"));
+    return clone;
+  }));
+
+  const footer = document.createElement("footer");
+  footer.className = "matchweek-team-stats-export-card__footer";
+  footer.innerHTML = `<strong>TL</strong><span>TimelineFootball.com</span>`;
+
+  card.append(heading, table, footer);
+  document.body.appendChild(card);
+  return card;
+}
+
+function downloadCanvasAsJpeg(canvas, filename) {
+  return new Promise((resolve, reject) => {
+    canvas.toBlob((blob) => {
+      if (!blob) {
+        reject(new Error("Could not create the ratings image."));
+        return;
+      }
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = filename;
+      link.click();
+      window.setTimeout(() => {
+        URL.revokeObjectURL(url);
+        resolve();
+      }, 100);
+    }, "image/jpeg", 0.94);
+  });
+}
+
+async function exportMatchweekRatings(button) {
+  const section = button.closest("[data-matchweek-team-stats]");
+  if (!section) return;
+
+  button.disabled = true;
+  button.classList.remove("is-complete", "is-error");
+  button.classList.add("is-loading");
+  let card;
+
+  try {
+    const html2canvas = await loadMatchweekRatingsRenderer();
+    card = buildMatchweekRatingsExport(section, button.dataset.exportRange);
+    if (!card) throw new Error("No team ratings are available to export.");
+
+    await document.fonts?.ready;
+    await waitForExportImages(card);
+    await rasterizeExportBadges(card);
+    const canvas = await html2canvas(card, {
+      backgroundColor: "#ffffff",
+      height: 1200,
+      logging: false,
+      scale: 1,
+      useCORS: true,
+      width: 1200,
+      windowHeight: 1200,
+      windowWidth: 1200,
+    });
+    await downloadCanvasAsJpeg(canvas, button.dataset.downloadFilename || "matchweek-team-ratings.jpg");
+    button.classList.add("is-complete");
+  } catch (error) {
+    console.error("Ratings export failed:", error);
+    button.classList.add("is-error");
+  } finally {
+    card?.remove();
+    button.classList.remove("is-loading");
+    button.disabled = false;
+    window.setTimeout(() => button.classList.remove("is-complete", "is-error"), 1800);
+  }
+}
+
 function renderMatchPageSections() {
   if (!matchPageSections || currentMatches.length !== 1) return;
 
@@ -746,6 +905,25 @@ window.requestAnimationFrame(() => {
 });
 
 document.addEventListener("click", (e) => {
+
+  const lineupTab = e.target.closest("[data-lineup-tab]");
+  if (lineupTab) {
+    const section = lineupTab.closest("[data-match-lineups]");
+    const side = lineupTab.dataset.lineupTab;
+    if (section && ["home", "away"].includes(side)) {
+      section.dataset.activeLineup = side;
+      section.querySelectorAll("[data-lineup-tab]").forEach((button) => {
+        button.setAttribute("aria-selected", button === lineupTab ? "true" : "false");
+      });
+    }
+    return;
+  }
+
+  const ratingsDownloadButton = e.target.closest("[data-matchweek-ratings-download]");
+  if (ratingsDownloadButton) {
+    exportMatchweekRatings(ratingsDownloadButton);
+    return;
+  }
 
   const globalBtn = e.target.closest(".show-all-timelines");
 

@@ -79,6 +79,7 @@ function statsSnapshot(match) {
     provider: match?.statistics?.xgProvider ?? null,
     insights: match?.insights ?? null,
     shotMap: match?.shotMap ?? null,
+    lineups: match?.lineups ?? null,
   });
 }
 

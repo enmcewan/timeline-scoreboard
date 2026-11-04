@@ -43,10 +43,19 @@ function hasShotMap(match) {
   return Array.isArray(match?.shotMap?.shots) && match.shotMap.shots.length > 0;
 }
 
+function hasLineups(match) {
+  return match?.lineups?.confirmed === true &&
+    Array.isArray(match?.lineups?.home?.startingXi) &&
+    Array.isArray(match?.lineups?.away?.startingXi) &&
+    match.lineups.home.startingXi.length > 0 &&
+    match.lineups.away.startingXi.length > 0;
+}
+
 function enrichmentSnapshot(match) {
   return JSON.stringify({
     insights: match?.insights || null,
     shotMap: match?.shotMap || null,
+    lineups: match?.lineups || null,
   });
 }
 
@@ -106,7 +115,7 @@ export async function retryFinalMatchData({ nowMs = Date.now(), root = ROOT } = 
     let touched = false;
 
     for (const match of matchweek.matches || []) {
-      if (hasInsights(match) && hasShotMap(match)) continue;
+      if (hasInsights(match) && hasShotMap(match) && hasLineups(match)) continue;
 
       const fixtureId = String(match?.id || "");
       const fixture = fixturesById.get(fixtureId);

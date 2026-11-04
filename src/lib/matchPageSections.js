@@ -153,6 +153,78 @@ export function buildMatchInsightsHtml(match, home, away, exportBase) {
   `;
 }
 
+function lineupPositionLabel(position) {
+  const labels = {
+    G: "GK",
+    GK: "GK",
+    D: "DEF",
+    DF: "DEF",
+    M: "MID",
+    MF: "MID",
+    F: "FWD",
+    FW: "FWD",
+  };
+  return labels[String(position || "").toUpperCase()] || String(position || "").toUpperCase();
+}
+
+function lineupPlayerHtml(player) {
+  const number = player?.number != null && Number.isFinite(Number(player.number))
+    ? Number(player.number)
+    : "-";
+  const position = lineupPositionLabel(player?.position);
+  return `<li class="match-lineups__player">
+    <span class="match-lineups__number">${escapeHtml(number)}</span>
+    <strong>${escapeHtml(player?.name || "Unknown player")}</strong>
+    <span class="match-lineups__position">${escapeHtml(position)}</span>
+    ${player?.captain ? '<span class="match-lineups__captain" title="Captain">C</span>' : ""}
+  </li>`;
+}
+
+function lineupTeamHtml(side, lineup, team) {
+  const starters = Array.isArray(lineup?.startingXi) ? lineup.startingXi : [];
+  const substitutes = Array.isArray(lineup?.substitutes) ? lineup.substitutes : [];
+  const teamName = team.display || team.name;
+  return `<article class="match-lineups__team match-lineups__team--${side}" data-lineup-panel="${side}">
+    <header class="match-lineups__team-header">
+      <img src="${escapeHtml(team.badge)}" alt="" width="42" height="42">
+      <div>
+        <h3>${escapeHtml(teamName)}</h3>
+        <p>${escapeHtml(lineup?.formation || "Formation unavailable")}</p>
+      </div>
+    </header>
+    <h4>Starting XI</h4>
+    <ol class="match-lineups__players">${starters.map(lineupPlayerHtml).join("")}</ol>
+    ${substitutes.length ? `
+      <h4>Substitutes</h4>
+      <ol class="match-lineups__players match-lineups__players--substitutes">${substitutes.map(lineupPlayerHtml).join("")}</ol>
+    ` : ""}
+  </article>`;
+}
+
+export function buildLineupsHtml(match, home, away) {
+  const lineups = match?.lineups;
+  const hasConfirmedTeams = lineups?.confirmed === true && [lineups?.home, lineups?.away].every(
+    (team) => Array.isArray(team?.startingXi) && team.startingXi.length > 0
+  );
+  if (!hasConfirmedTeams) return "";
+
+  const homeName = home.display || home.name;
+  const awayName = away.display || away.name;
+  return `
+    <section class="match-page-section match-page-lineups" data-match-lineups data-active-lineup="home">
+      <div class="match-page-section-heading"><h2>Lineups</h2></div>
+      <div class="match-lineups__tabs" role="tablist" aria-label="Team lineups">
+        <button type="button" role="tab" aria-selected="true" data-lineup-tab="home">${escapeHtml(homeName)}</button>
+        <button type="button" role="tab" aria-selected="false" data-lineup-tab="away">${escapeHtml(awayName)}</button>
+      </div>
+      <div class="match-lineups">
+        ${lineupTeamHtml("home", lineups.home, home)}
+        ${lineupTeamHtml("away", lineups.away, away)}
+      </div>
+    </section>
+  `;
+}
+
 function shotMapLabel(value) {
   return String(value || "")
     .replace(/_/g, " ")
@@ -292,6 +364,7 @@ export function buildShotMapHtml(match, home, away, exportBase) {
 
 export function buildMatchPageSectionsHtml(match, home, away, exportBase) {
   return [
+    buildLineupsHtml(match, home, away),
     buildMatchInsightsHtml(match, home, away, exportBase),
     buildShotMapHtml(match, home, away, exportBase),
   ].filter(Boolean).join("\n");

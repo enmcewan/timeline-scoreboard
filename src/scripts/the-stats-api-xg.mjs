@@ -2,7 +2,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 
 const BASE_URL = "https://api.thestatsapi.com/api";
-const PRE_MATCH_MS = 10 * 60 * 1000;
+const PRE_MATCH_MS = 90 * 60 * 1000;
 const POST_MATCH_MS = 195 * 60 * 1000;
 const KICKOFF_TOLERANCE_MS = 30 * 60 * 1000;
 
@@ -28,6 +28,56 @@ function hasInsights(insights) {
 
 function hasShotMap(shotMap) {
   return Array.isArray(shotMap?.shots) && shotMap.shots.length > 0;
+}
+
+function hasLineups(lineups) {
+  return lineups?.confirmed === true && [lineups?.home, lineups?.away].every(
+    (team) => Array.isArray(team?.startingXi) && team.startingXi.length > 0
+  );
+}
+
+function normalizeLineupPlayer(player, captainId) {
+  const id = String(player?.id ?? player?.player_id ?? "");
+  const number = finiteStat(player?.jersey_number ?? player?.shirt_number ?? player?.number);
+  if (!id && !player?.name) return null;
+
+  return {
+    id,
+    name: String(player?.name || "Unknown player"),
+    position: String(player?.position || "").toUpperCase(),
+    number,
+    captain: Boolean(player?.captain || player?.is_captain || (captainId && id === captainId)),
+  };
+}
+
+export function extractTheStatsApiLineups(payload) {
+  const data = payload?.data ?? payload;
+  const normalizeTeam = (team) => {
+    if (!team) return null;
+    const captainId = String(team.captain_id ?? team.captain?.id ?? "");
+    const normalizePlayers = (players) => (Array.isArray(players) ? players : [])
+      .map((player) => normalizeLineupPlayer(player, captainId))
+      .filter(Boolean);
+
+    return {
+      id: String(team.id ?? team.team_id ?? team.team?.id ?? ""),
+      name: String(team.name ?? team.team?.name ?? ""),
+      formation: team.formation ? String(team.formation) : null,
+      startingXi: normalizePlayers(team.starting_xi ?? team.startingXi),
+      substitutes: normalizePlayers(team.substitutes ?? team.bench),
+    };
+  };
+  const home = normalizeTeam(data?.home);
+  const away = normalizeTeam(data?.away);
+  const lineups = {
+    matchId: String(data?.match_id || ""),
+    confirmed: Boolean(data?.confirmed),
+    benchAvailable: Boolean(data?.bench_available),
+    home,
+    away,
+  };
+
+  return hasLineups(lineups) ? lineups : null;
 }
 
 function finiteCoordinate(value) {
@@ -246,6 +296,13 @@ export function applyTheStatsApiMatchData(match, data) {
     };
     applied = true;
   }
+  if (hasLineups(data.lineups)) {
+    match.lineups = {
+      provider: "thestatsapi",
+      ...data.lineups,
+    };
+    applied = true;
+  }
 
   return applied;
 }
@@ -261,13 +318,13 @@ export async function createTheStatsApiXgClient({
 }) {
   const aliases = buildTeamAliasMap(teams);
   const cache = await readJson(cachePath, {
-    version: 3,
+    version: 4,
     source: "thestatsapi",
     seasonPath,
     updatedAt: null,
     fixtures: {},
   });
-  cache.version = 3;
+  cache.version = 4;
   cache.fixtures ||= {};
 
   const matchesByRound = new Map();
@@ -386,8 +443,9 @@ export async function createTheStatsApiXgClient({
       xg: hasXg(entry.xg) ? entry.xg : null,
       insights: hasInsights(entry.insights) ? entry.insights : null,
       shotMap: hasShotMap(entry.shotMap) ? entry.shotMap : null,
+      lineups: hasLineups(entry.lineups) ? entry.lineups : null,
     };
-    return data.xg || data.insights || data.shotMap ? data : null;
+    return data.xg || data.insights || data.shotMap || data.lineups ? data : null;
   }
 
   async function fetchStats(matchId, endpoint, { allowConflictFallback }) {
@@ -426,27 +484,50 @@ export async function createTheStatsApiXgClient({
       return cachedMatchData(cached);
     }
 
-    if (!force && !isFinishedFixture(rawFixture)) {
-      const kickoff = fixtureKickoff(rawFixture);
-      if (Number.isFinite(kickoff) && now() < kickoff) {
-        return cachedMatchData(cached);
-      }
-    }
-
     try {
       const matchId = await resolveMatch(rawFixture);
+      const kickoff = fixtureKickoff(rawFixture);
+      const isPreMatch = !isFinishedFixture(rawFixture) && Number.isFinite(kickoff) && now() < kickoff;
+      const shouldFetchLineups = !isFinishedFixture(rawFixture) || !hasLineups(cached?.lineups);
+      const lineupPromise = shouldFetchLineups
+        ? apiGet(`/football/matches/${encodeURIComponent(matchId)}/lineups`)
+        : Promise.resolve(null);
+
+      if (isPreMatch) {
+        const lineupPayload = await lineupPromise;
+        const lineups = extractTheStatsApiLineups(lineupPayload) || cached?.lineups;
+        if (!hasLineups(lineups)) {
+          console.log(`TheStatsAPI lineups not yet available for fixture ${fixtureId}.`);
+          return cachedMatchData(cached);
+        }
+
+        cache.fixtures[fixtureId] = {
+          ...cache.fixtures[fixtureId],
+          lineups,
+          fetchedAt: new Date(now()).toISOString(),
+          matchStatus: rawFixture?.fixture?.status?.short || null,
+        };
+        dirty = true;
+        console.log(`TheStatsAPI confirmed lineups ${fixtureId}: ${lineups.home.formation || "?"} / ${lineups.away.formation || "?"}`);
+        return cachedMatchData(cache.fixtures[fixtureId]);
+      }
+
       const requestedEndpoint = final || isFinishedFixture(rawFixture)
         ? "stats"
         : "live-stats";
-      const [statsResult, shotMapResult] = await Promise.allSettled([
+      const [statsResult, shotMapResult, lineupResult] = await Promise.allSettled([
         fetchStats(matchId, requestedEndpoint, { allowConflictFallback: !final }),
         apiGet(`/football/matches/${encodeURIComponent(matchId)}/shotmap`),
+        lineupPromise,
       ]);
       if (statsResult.status === "rejected") {
         console.warn(`TheStatsAPI match stats failed for fixture ${fixtureId}: ${statsResult.reason?.message || statsResult.reason}`);
       }
       if (shotMapResult.status === "rejected") {
         console.warn(`TheStatsAPI shot map failed for fixture ${fixtureId}: ${shotMapResult.reason?.message || shotMapResult.reason}`);
+      }
+      if (lineupResult.status === "rejected") {
+        console.warn(`TheStatsAPI lineups failed for fixture ${fixtureId}: ${lineupResult.reason?.message || lineupResult.reason}`);
       }
 
       const result = statsResult.status === "fulfilled" ? statsResult.value : null;
@@ -455,16 +536,20 @@ export async function createTheStatsApiXgClient({
       const extractedShotMap = shotMapResult.status === "fulfilled"
         ? extractTheStatsApiShotMap(shotMapResult.value)
         : null;
+      const extractedLineups = lineupResult.status === "fulfilled" && lineupResult.value
+        ? extractTheStatsApiLineups(lineupResult.value)
+        : null;
       const xg = hasXg(extractedXg) ? extractedXg : cached?.xg;
       const insights = {
         ...(cached?.insights || {}),
         ...(extractedInsights || {}),
       };
       const shotMap = hasShotMap(extractedShotMap) ? extractedShotMap : cached?.shotMap;
+      const lineups = hasLineups(extractedLineups) ? extractedLineups : cached?.lineups;
       delete insights.tacklesWonPct;
       delete insights.shotsBlocked;
 
-      if (!hasXg(xg) && !hasInsights(insights) && !hasShotMap(shotMap)) {
+      if (!hasXg(xg) && !hasInsights(insights) && !hasShotMap(shotMap) && !hasLineups(lineups)) {
         console.log(`TheStatsAPI match stats not yet available for fixture ${fixtureId}.`);
         return cachedMatchData(cached);
       }
@@ -474,6 +559,7 @@ export async function createTheStatsApiXgClient({
         ...(hasXg(xg) ? { xg } : {}),
         ...(hasInsights(insights) ? { insights } : {}),
         ...(hasShotMap(shotMap) ? { shotMap } : {}),
+        ...(hasLineups(lineups) ? { lineups } : {}),
         fetchedAt: new Date(now()).toISOString(),
         matchStatus: rawFixture?.fixture?.status?.short || null,
         xgPhase: result?.endpoint === "stats" ? "final" : cached?.xgPhase || "live",
@@ -483,12 +569,14 @@ export async function createTheStatsApiXgClient({
         `TheStatsAPI ${result?.endpoint || requestedEndpoint} data ${fixtureId}: ` +
         `xG ${hasXg(xg) ? `${xg.home} / ${xg.away}` : "unavailable"}; ` +
         `insights ${hasInsights(insights) ? Object.keys(insights).length : 0}; ` +
-        `shots ${hasShotMap(shotMap) ? shotMap.shots.length : 0}`
+        `shots ${hasShotMap(shotMap) ? shotMap.shots.length : 0}; ` +
+        `lineups ${hasLineups(lineups) ? "confirmed" : "unavailable"}`
       );
       return {
         xg: hasXg(xg) ? xg : null,
         insights: hasInsights(insights) ? insights : null,
         shotMap: hasShotMap(shotMap) ? shotMap : null,
+        lineups: hasLineups(lineups) ? lineups : null,
       };
     } catch (error) {
       console.warn(`TheStatsAPI stats failed for fixture ${fixtureId}: ${error.message}`);
