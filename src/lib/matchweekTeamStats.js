@@ -1,5 +1,6 @@
 import { getMatchPagePath } from "./matchUrls.js";
 import { computePerfExec } from "./powerMeter.js";
+import { buildXPostButtonHtml, xHandlesForTeams } from "./xPostComposer.js";
 
 function escapeHtml(value) {
   return String(value ?? "")
@@ -173,6 +174,17 @@ export function buildMatchweekTeamStatsHtml({
   const totalMatches = matches.length;
   const statusText = `${completedMatches} of ${totalMatches} matches complete.`;
   const exportBase = `epl-${seasonPath}-matchweek-${round}-team-ratings`;
+  const highlightedTeamIds = [
+    ...rows.slice(0, 3).map((row) => row.teamId),
+    ...rows.slice(-3).map((row) => row.teamId),
+  ];
+  const postButton = buildXPostButtonHtml({
+    footer: `Full Matchweek ${round} ratings:`,
+    handles: xHandlesForTeams(highlightedTeamIds),
+    hashtags: ["#PremierLeague"],
+    heading: `Create a Matchweek ${round} ratings post`,
+    url: `https://timelinefootball.com/epl/${seasonPath}/matchweek/${round}/`,
+  });
 
   const body = rows.length
     ? `
@@ -246,6 +258,7 @@ export function buildMatchweekTeamStatsHtml({
                 ${downloadIcon()}
                 <span>Bottom 10</span>
               </button>
+              ${postButton}
             </div>
           ` : ""}
         </div>

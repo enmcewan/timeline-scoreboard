@@ -457,6 +457,30 @@ footer {
   padding: 0.3rem 0.55rem;
 }
 
+.x-post-compose-button {
+  align-items: center;
+  appearance: none;
+  background: #111;
+  border: 1px solid #111;
+  border-radius: 0.35rem;
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 800;
+  gap: 0.35rem;
+  min-height: 2rem;
+  padding: 0.3rem 0.6rem;
+}
+
+.x-post-compose-button:hover,
+.x-post-compose-button:focus-visible {
+  background: #333;
+  border-color: #333;
+  outline: 2px solid var(--accent-soft);
+}
+
 .matchweek-team-stats__export-button svg {
   height: 1rem;
   width: 1rem;
@@ -1005,10 +1029,196 @@ footer {
 }
 
 .match-page-export-row {
+  align-items: center;
   display: flex;
   gap: 0.4rem;
   justify-content: flex-end;
   margin-bottom: 0.35rem;
+}
+
+.x-post-composer {
+  background: var(--card-bg);
+  border: 1px solid var(--border-subtle);
+  border-radius: 0.5rem;
+  box-shadow: 0 18px 55px rgb(0 0 0 / 0.25);
+  color: var(--text-main);
+  max-height: min(760px, calc(100vh - 2rem));
+  padding: 0;
+  width: min(620px, calc(100vw - 2rem));
+}
+
+.x-post-composer::backdrop {
+  background: rgb(0 0 0 / 0.48);
+}
+
+.x-post-composer__header {
+  align-items: center;
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 1.1rem;
+}
+
+.x-post-composer__header h2 {
+  font-size: 1.15rem;
+  margin: 0;
+}
+
+.x-post-composer__close {
+  align-items: center;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  color: var(--text-main);
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 1.7rem;
+  height: 2rem;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
+  width: 2rem;
+}
+
+.x-post-composer__body {
+  display: grid;
+  gap: 0.55rem;
+  overflow-y: auto;
+  padding: 1rem 1.1rem;
+}
+
+.x-post-composer__label {
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.x-post-composer textarea,
+.x-post-composer select {
+  background: var(--page-bg);
+  border: 1px solid var(--border-subtle);
+  border-radius: 0.35rem;
+  box-sizing: border-box;
+  color: var(--text-main);
+  font: inherit;
+  padding: 0.65rem;
+  width: 100%;
+}
+
+.x-post-composer textarea:focus,
+.x-post-composer select:focus {
+  border-color: var(--accent);
+  outline: 2px solid var(--accent-soft);
+}
+
+.x-post-composer [data-x-post-preview] {
+  color: var(--text-muted);
+  resize: vertical;
+}
+
+.x-post-composer__handles {
+  align-items: flex-start;
+  display: flex;
+  font-size: 0.78rem;
+  gap: 0.55rem;
+}
+
+.x-post-composer__handles > span {
+  color: var(--text-muted);
+  flex: 0 0 auto;
+  padding-top: 0.3rem;
+}
+
+.x-post-composer__handles > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.x-post-composer__handles button {
+  background: var(--accent-soft);
+  border: 1px solid transparent;
+  border-radius: 1rem;
+  color: var(--accent);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  padding: 0.25rem 0.5rem;
+}
+
+.x-post-composer__handles button:hover,
+.x-post-composer__handles button:focus-visible {
+  border-color: var(--accent);
+}
+
+.x-post-composer__meta {
+  align-items: center;
+  display: grid;
+  gap: 0.45rem;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+}
+
+.x-post-composer__meta.has-no-image label,
+.x-post-composer__meta.has-no-image select {
+  display: none;
+}
+
+.x-post-composer__meta output {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+
+.x-post-composer__meta output.is-over {
+  color: #c73535;
+}
+
+.x-post-composer__status {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  min-height: 1.2em;
+  margin: 0;
+}
+
+.x-post-composer__actions {
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  gap: 0.55rem;
+  justify-content: flex-end;
+  padding: 0.85rem 1.1rem;
+}
+
+.x-post-composer__actions button {
+  appearance: none;
+  background: var(--card-bg);
+  border: 1px solid var(--accent);
+  border-radius: 0.35rem;
+  color: var(--accent);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 800;
+  padding: 0.55rem 0.8rem;
+}
+
+.x-post-composer__actions .x-post-composer__primary {
+  background: #111;
+  border-color: #111;
+  color: #fff;
+}
+
+@media (max-width: 520px) {
+  .x-post-composer__handles {
+    display: block;
+  }
+
+  .x-post-composer__handles > div {
+    margin-top: 0.35rem;
+  }
+
+  .x-post-composer__actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 .match-social-export-host {

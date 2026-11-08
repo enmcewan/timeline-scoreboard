@@ -8,6 +8,7 @@ import { getMatchPagePath } from "../lib/matchUrls.js";
 import { sortedEvents } from "../lib/utils.js";
 import { buildCompactSocialCardHtml, buildMatchPageSectionsHtml, downloadImageButton } from "../lib/matchPageSections.js";
 import { buildMatchweekTeamStatsHtml } from "../lib/matchweekTeamStats.js";
+import { buildXPostButtonHtml, matchHashtag, xHandlesForTeams } from "../lib/xPostComposer.js";
 
 import { computePerfExec } from "../lib/powerMeter.js";
 
@@ -2532,6 +2533,13 @@ function buildMatchPageHtml({ match, home, away, players, seasonPath, seasonLabe
         homeTeamId: match.homeTeamId,
         awayTeamId: match.awayTeamId,
     })}`;
+    const postButton = buildXPostButtonHtml({
+        footer: "Full ratings, stats & timeline:",
+        handles: xHandlesForTeams([match.homeTeamId, match.awayTeamId]),
+        hashtags: [matchHashtag(home, away), "#PremierLeague"],
+        heading: `Create an X post for ${home.display || home.name} v ${away.display || away.name}`,
+        url: pageUrl,
+    });
 
     return `
         <section class="match-page">
@@ -2561,6 +2569,7 @@ function buildMatchPageHtml({ match, home, away, players, seasonPath, seasonLabe
                         filename: `${exportBase}-match-card.png`,
                         target: "card",
                     })}
+                    ${postButton}
                 </div>
                 ${renderMatchweekHTML({
                     matches: [match],

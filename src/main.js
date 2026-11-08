@@ -7,6 +7,7 @@ import { esc, sortedEvents } from "./lib/utils.js";
 import { VIEW_MODES, isVisibleInMode, createRenderEventText, createRenderEventRow, createRenderMatchCard } from "./lib/sharedRenderer.js";
 import { buildCompactSocialCardHtml, buildMatchPageSectionsHtml } from "./lib/matchPageSections.js";
 import { buildMatchweekTeamStatsHtml } from "./lib/matchweekTeamStats.js";
+import { setupXPostComposer } from "./lib/xPostComposer.js";
 
 const season = getSeasonConfigFromPathname(window.location.pathname);
 const teamsBySeason = {
@@ -39,6 +40,8 @@ const MATCH_WINDOW_BEFORE_MS = 10 * 60 * 1000;
 const MATCH_WINDOW_AFTER_MS = 195 * 60 * 1000;
 const EXPECTED_MATCH_DURATION_MS = 2 * 60 * 60 * 1000;
 const COMPLETED_ROUND_HOLD_MS = 24 * 60 * 60 * 1000;
+
+setupXPostComposer();
 
 function canRecoverCompletedMatchFromStaleLiveData(matchday) {
   const matchId = document.querySelector(".match-page-card .match-card")?.dataset.matchId;
