@@ -3200,6 +3200,89 @@ thead tr {
   min-width: 40rem;
 }
 
+.team-stats-table {
+  --team-stats-name-width: 13rem;
+  --team-stats-rank-width: 3.5rem;
+  background: var(--card-bg);
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: var(--border-radius);
+  min-width: 50rem;
+  width: 100%;
+}
+
+.team-stats-table th,
+.team-stats-table td {
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 0.65rem 0.7rem;
+  white-space: nowrap;
+}
+
+.team-stats-table th {
+  color: var(--text-main);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+
+.team-stats-table tbody tr:hover {
+  background: color-mix(in srgb, var(--card-bg) 94%, var(--accent));
+}
+
+.team-stats-table .team-stats-rank {
+  background: var(--card-bg);
+  left: 0;
+  max-width: var(--team-stats-rank-width);
+  min-width: var(--team-stats-rank-width);
+  position: sticky;
+  width: var(--team-stats-rank-width);
+  z-index: 2;
+}
+
+.team-stats-table .team-stats-name {
+  background: var(--card-bg);
+  box-shadow: 2px 0 3px rgba(0, 0, 0, 0.08);
+  left: var(--team-stats-rank-width);
+  max-width: var(--team-stats-name-width);
+  min-width: var(--team-stats-name-width);
+  position: sticky;
+  width: var(--team-stats-name-width);
+  z-index: 2;
+}
+
+.team-stats-table tbody tr:hover .team-stats-rank,
+.team-stats-table tbody tr:hover .team-stats-name {
+  background: color-mix(in srgb, var(--card-bg) 94%, var(--accent));
+}
+
+.team-stats-table thead .team-stats-rank,
+.team-stats-table thead .team-stats-name {
+  z-index: 3;
+}
+
+.team-stats-team-link {
+  align-items: center;
+  display: inline-grid;
+  gap: 0.6rem;
+  grid-template-columns: 32px max-content;
+  vertical-align: middle;
+}
+
+.team-stats-badge {
+  height: 28px;
+  justify-self: center;
+  object-fit: contain;
+  width: 28px;
+}
+
+.team-stats-table .team-stat-highlight {
+  color: var(--accent);
+  font-weight: 800;
+}
+
+.team-stats-table--compact {
+  min-width: 46rem;
+}
+
 .player-stats-note {
   color: var(--text-muted);
   font-size: 0.82rem;
@@ -3361,6 +3444,7 @@ table {
 @media (max-width: 720px) {
   .league-table .team-name-full,
   .player-stats-table .team-name-full,
+  .team-stats-table .team-name-full,
   .team-matches .team-name-full,
   .matchweek-team-stats__table .team-name-full {
     display: none;
@@ -3368,6 +3452,7 @@ table {
 
   .league-table .team-name-short,
   .player-stats-table .team-name-short,
+  .team-stats-table .team-name-short,
   .team-matches .team-name-short,
   .matchweek-team-stats__table .team-name-short {
     display: inline;
@@ -3542,8 +3627,15 @@ table {
     --player-rank-width: 2.75rem;
   }
 
+  .team-stats-table {
+    --team-stats-name-width: 7.5rem;
+    --team-stats-rank-width: 2.75rem;
+  }
+
   .player-stats-table th,
-  .player-stats-table td {
+  .player-stats-table td,
+  .team-stats-table th,
+  .team-stats-table td {
     padding: 0.4rem 0.35rem;
   }
 

@@ -31,6 +31,13 @@ const PLAYER_STAT_PAGE_PATHS = [
   "players/goalkeeping",
   "players/discipline",
 ];
+const TEAM_STAT_PAGE_PATHS = [
+  "teams",
+  "teams/team-ratings",
+  "teams/attack",
+  "teams/defense",
+  "teams/discipline",
+];
 
 function xmlEscape(s) {
   return String(s)
@@ -203,6 +210,21 @@ async function main() {
         loc: `${SITE_ORIGIN}/${relativePath}/`,
         changefreq: liveChangefreq,
         priority: playerPath === "players" ? "0.8" : "0.7",
+        lastmod: await getPageLastmod(relativePath),
+      });
+    }
+
+    for (const teamStatsPath of TEAM_STAT_PAGE_PATHS) {
+      const relativePath = `epl/${season.seasonPath}/${teamStatsPath}`;
+      try {
+        await fs.access(path.join(DIST_DIR, relativePath, "index.html"));
+      } catch {
+        continue;
+      }
+      urls.push({
+        loc: `${SITE_ORIGIN}/${relativePath}/`,
+        changefreq: liveChangefreq,
+        priority: teamStatsPath === "teams" ? "0.8" : "0.7",
         lastmod: await getPageLastmod(relativePath),
       });
     }

@@ -401,32 +401,57 @@ function buildLeaguePerformance({ roundsData, teamsBySlug }) {
         goalsAgainst: 0,
         xg: 0,
         xgCount: 0,
+        xgAgainst: 0,
+        xgAgainstCount: 0,
         shots: 0,
+        shotsOnTarget: 0,
+        shotsAgainst: 0,
+        shotsOnTargetAgainst: 0,
         possTotal: 0,
         possCount: 0,
+        saves: 0,
+        fouls: 0,
         yellowCards: 0,
         redCards: 0,
+        cleanSheets: 0,
+        bigChances: 0,
+        bigChancesAgainst: 0,
         varEvents: 0,
     }));
     const bySlug = new Map(rows.map((row) => [row.slug, row]));
 
-    function addSide(match, side, slug, goalsFor, goalsAgainst) {
+    function addSide(match, side, opponentSide, slug, goalsFor, goalsAgainst) {
         const row = bySlug.get(slug);
         if (!row) return;
 
         const stats = match.statistics?.[side] || {};
+        const opponentStats = match.statistics?.[opponentSide] || {};
         const poss = parsePossession(stats.poss);
+        const xg = Number(stats.xg);
+        const xgAgainst = Number(opponentStats.xg);
 
         row.played += 1;
         row.goalsFor += Number(goalsFor) || 0;
         row.goalsAgainst += Number(goalsAgainst) || 0;
-        if (Number.isFinite(Number(stats.xg))) {
-            row.xg += Number(stats.xg);
+        row.cleanSheets += Number(goalsAgainst) === 0 ? 1 : 0;
+        if (Number.isFinite(xg)) {
+            row.xg += xg;
             row.xgCount += 1;
         }
+        if (Number.isFinite(xgAgainst)) {
+            row.xgAgainst += xgAgainst;
+            row.xgAgainstCount += 1;
+        }
         row.shots += Number(stats.shots) || 0;
+        row.shotsOnTarget += Number(stats.sot) || 0;
+        row.shotsAgainst += Number(opponentStats.shots) || 0;
+        row.shotsOnTargetAgainst += Number(opponentStats.sot) || 0;
+        row.saves += Number(stats.saves) || 0;
+        row.fouls += Number(stats.fouls) || 0;
         row.yellowCards += Number(stats.yc) || 0;
         row.redCards += Number(stats.rc) || 0;
+        row.bigChances += Number(match.insights?.bigChances?.[side]) || 0;
+        row.bigChancesAgainst += Number(match.insights?.bigChances?.[opponentSide]) || 0;
 
         if (poss != null) {
             row.possTotal += poss;
@@ -444,8 +469,8 @@ function buildLeaguePerformance({ roundsData, teamsBySlug }) {
             const homeGoals = Number(match?.score?.home ?? 0);
             const awayGoals = Number(match?.score?.away ?? 0);
 
-            addSide(match, "home", homeSlug, homeGoals, awayGoals);
-            addSide(match, "away", awaySlug, awayGoals, homeGoals);
+            addSide(match, "home", "away", homeSlug, homeGoals, awayGoals);
+            addSide(match, "away", "home", awaySlug, awayGoals, homeGoals);
 
             for (const evt of match.events || []) {
                 if (!isCountedVarEvent(evt)) continue;
@@ -477,6 +502,10 @@ function buildLeaguePerformance({ roundsData, teamsBySlug }) {
     const out = {};
     for (const row of rows) {
         out[row.slug] = {
+            summary: {
+                ...row,
+                possession: row.possession,
+            },
             rows: [
                 { label: "Goals scored", value: row.goalsFor, rank: ranks.goalsFor.get(row.slug) },
                 { label: "Goals conceded", value: row.goalsAgainst, rank: ranks.goalsAgainst.get(row.slug) },
@@ -747,8 +776,8 @@ const PLAYER_STAT_CATEGORIES = [
     {
         slug: "discipline",
         shortLabel: "Discipline",
-        title: "Premier League Discipline",
-        description: "Premier League players with the most disciplinary points, calculated as one point per yellow card and three points per red card, with fouls committed used as the primary tiebreaker.",
+        title: "Premier League Player Disciplinary Points",
+        description: "Premier League players ranked by disciplinary points, highest first. Points are calculated as one per yellow card and three per red card, with fouls committed used as the primary tiebreaker.",
         filter: (player) => player.discipline.yellowCards + player.discipline.redCards + player.discipline.fouls > 0,
         sort: disciplinaryPoints,
         compare: (a, b) =>
@@ -880,7 +909,7 @@ function playerStatsExportScript() {
             }
 
             async function exportPlayerStatsImage(button) {
-                var target = button.closest("[data-player-stats-export]");
+                var target = button.closest("[data-player-stats-export], [data-team-stats-export]");
                 if (!target || !window.html2canvas) return;
 
                 var originalLabel = button.getAttribute("aria-label") || "Download Top 10 image";
@@ -935,19 +964,19 @@ function playerStatsExportScript() {
                                 heading.insertAdjacentElement("afterend", subtitle);
                             }
 
-                            var scroll = clonedTarget.querySelector(".player-table-scroll");
+                            var scroll = clonedTarget.querySelector(".player-table-scroll, .team-stats-table-scroll");
                             if (scroll) {
                                 scroll.style.maxWidth = "none";
                                 scroll.style.overflow = "visible";
                             }
 
-                            var table = clonedTarget.querySelector(".player-stats-table");
+                            var table = clonedTarget.querySelector(".player-stats-table, .team-stats-table");
                             if (table) {
                                 table.style.minWidth = "0";
                                 table.style.width = "100%";
                             }
 
-                            clonedTarget.querySelectorAll(".player-rank, .player-name").forEach(function (cell) {
+                            clonedTarget.querySelectorAll(".player-rank, .player-name, .team-stats-rank, .team-stats-name").forEach(function (cell) {
                                 cell.style.position = "static";
                             });
 
@@ -985,7 +1014,7 @@ function playerStatsExportScript() {
             }
 
             document.addEventListener("click", function (event) {
-                var button = event.target.closest("[data-player-stats-download]");
+                var button = event.target.closest("[data-player-stats-download], [data-team-stats-download]");
                 if (!button) return;
                 exportPlayerStatsImage(button);
             });
@@ -1058,6 +1087,248 @@ function buildPlayerCategoryPageHtml({ playerStats, category, teamsBySlug, seaso
             ${buildPlayerCategoryNav(seasonPath, category.slug)}
             ${buildPlayerStatsTable({ players: playerStats.players, category, teamsBySlug, seasonPath })}
             <p class="player-stats-note">Rate statistics use minimum sample sizes: 180 minutes for player ratings and per-90 values, 10 shots for conversion, and 100 passes for pass accuracy.</p>
+        </section>
+    `.trim();
+}
+
+const TEAM_STAT_CATEGORIES = [
+    {
+        slug: "team-ratings",
+        shortLabel: "Team Ratings",
+        title: "Premier League Team Ratings",
+        description: "Premier League teams ranked by average match Rating, with average Performance Index (pX), accumulated execution (eX), recent form and rating trend.",
+        compare: (a, b) =>
+            b.avgRating - a.avgRating ||
+            b.avgPx - a.avgPx ||
+            b.totalEx - a.totalEx ||
+            a.team.name.localeCompare(b.team.name),
+        rankGroup: (row) => row.avgRating,
+        columns: [
+            ["P", (row) => row.played],
+            ["Avg pX", (row) => formatOneDecimal(row.avgPx)],
+            ["Total eX", (row) => formatSignedOneDecimal(row.totalEx)],
+            ["Rating", (row) => formatOneDecimal(row.avgRating), "team-stat-highlight"],
+            ["Last 5", (row) => formatOneDecimal(row.last5Rating)],
+            ["Trend", (row) => formatSignedOneDecimal(row.ratingTrend)],
+        ],
+    },
+    {
+        slug: "attack",
+        shortLabel: "Attack",
+        title: "Premier League Team Attack",
+        description: "Premier League attacking leaders ranked by goals, with expected goals (xG), finishing above or below expectation, shots and conversion rate.",
+        compare: (a, b) =>
+            b.goalsFor - a.goalsFor ||
+            b.xg - a.xg ||
+            b.shots - a.shots ||
+            a.team.name.localeCompare(b.team.name),
+        rankGroup: (row) => row.goalsFor,
+        columns: [
+            ["P", (row) => row.played],
+            ["xG", (row) => formatOneDecimal(row.xg)],
+            ["G-xG", (row) => formatSignedOneDecimal(row.goalsFor - row.xg)],
+            ["Shots", (row) => row.shots],
+            ["On Target", (row) => row.shotsOnTarget],
+            ["Conversion", (row) => formatOneDecimalPercent(row.conversion)],
+            ["Goals", (row) => row.goalsFor, "team-stat-highlight"],
+        ],
+    },
+    {
+        slug: "defense",
+        shortLabel: "Defense",
+        title: "Premier League Team Defense",
+        description: "Premier League defensive records ranked by fewest goals conceded, with expected goals against (xGA), shots faced, clean sheets and goalkeeper saves.",
+        compare: (a, b) =>
+            a.goalsAgainst - b.goalsAgainst ||
+            a.xgAgainst - b.xgAgainst ||
+            b.cleanSheets - a.cleanSheets ||
+            a.team.name.localeCompare(b.team.name),
+        rankGroup: (row) => row.goalsAgainst,
+        columns: [
+            ["P", (row) => row.played],
+            ["xGA", (row) => formatOneDecimal(row.xgAgainst)],
+            ["xGA-GA", (row) => formatSignedOneDecimal(row.xgAgainst - row.goalsAgainst)],
+            ["Shots Faced", (row) => row.shotsAgainst],
+            ["Clean Sheets", (row) => row.cleanSheets],
+            ["Saves", (row) => row.saves],
+            ["GA", (row) => row.goalsAgainst, "team-stat-highlight"],
+        ],
+    },
+    {
+        slug: "discipline",
+        shortLabel: "Discipline",
+        title: "Premier League Team Disciplinary Points",
+        description: "Premier League teams ranked by disciplinary points, highest first. Points are calculated as one per yellow card and three per red card, with fouls as the primary tiebreaker.",
+        compare: (a, b) =>
+            b.disciplinaryPoints - a.disciplinaryPoints ||
+            b.fouls - a.fouls ||
+            b.redCards - a.redCards ||
+            b.yellowCards - a.yellowCards ||
+            a.team.name.localeCompare(b.team.name),
+        rankGroup: (row) => `${row.disciplinaryPoints}|${row.fouls}|${row.redCards}|${row.yellowCards}`,
+        columns: [
+            ["P", (row) => row.played],
+            ["Fouls", (row) => row.fouls],
+            ["YC", (row) => row.yellowCards],
+            ["RC", (row) => row.redCards],
+            ["Disc. Pts", (row) => row.disciplinaryPoints, "team-stat-highlight"],
+        ],
+    },
+];
+
+function formatOneDecimal(value) {
+    return Number.isFinite(value) ? Number(value).toFixed(1) : "-";
+}
+
+function formatSignedOneDecimal(value) {
+    if (!Number.isFinite(value)) return "-";
+    const rounded = Number(value).toFixed(1);
+    return `${value > 0 ? "+" : ""}${rounded}`;
+}
+
+function formatOneDecimalPercent(value) {
+    return Number.isFinite(value) ? `${Number(value).toFixed(1)}%` : "-";
+}
+
+function buildTeamStatsRows({ teamsBySlug, teamSeasonBySlug, leaguePerformanceBySlug }) {
+    return Object.entries(teamsBySlug).map(([slug, team]) => {
+        const ratings = teamSeasonBySlug[slug]?.summary || {};
+        const stats = leaguePerformanceBySlug[slug]?.summary || {};
+        const goalsFor = Number(stats.goalsFor) || 0;
+        const shots = Number(stats.shots) || 0;
+
+        return {
+            slug,
+            team,
+            played: Number(ratings.played ?? stats.played) || 0,
+            avgPx: Number.isFinite(ratings.avgMx) ? ratings.avgMx : null,
+            totalEx: Number.isFinite(ratings.totalEx) ? ratings.totalEx : null,
+            avgRating: Number.isFinite(ratings.avgRating) ? ratings.avgRating : null,
+            last5Rating: Number.isFinite(ratings.last5Rating) ? ratings.last5Rating : null,
+            ratingTrend: Number.isFinite(ratings.ratingTrend) ? ratings.ratingTrend : null,
+            goalsFor,
+            goalsAgainst: Number(stats.goalsAgainst) || 0,
+            xg: Number(stats.xg) || 0,
+            xgAgainst: Number(stats.xgAgainst) || 0,
+            shots,
+            shotsOnTarget: Number(stats.shotsOnTarget) || 0,
+            shotsAgainst: Number(stats.shotsAgainst) || 0,
+            shotsOnTargetAgainst: Number(stats.shotsOnTargetAgainst) || 0,
+            possession: Number.isFinite(stats.possession) ? stats.possession : null,
+            saves: Number(stats.saves) || 0,
+            fouls: Number(stats.fouls) || 0,
+            yellowCards: Number(stats.yellowCards) || 0,
+            redCards: Number(stats.redCards) || 0,
+            cleanSheets: Number(stats.cleanSheets) || 0,
+            bigChances: Number(stats.bigChances) || 0,
+            bigChancesAgainst: Number(stats.bigChancesAgainst) || 0,
+            conversion: shots > 0 ? goalsFor / shots * 100 : null,
+            disciplinaryPoints: (Number(stats.yellowCards) || 0) + (Number(stats.redCards) || 0) * 3,
+        };
+    }).filter((row) => row.played > 0);
+}
+
+function sortedTeamStatsRows(rows, category, limit = null) {
+    const sorted = [...(rows || [])]
+        .filter((row) => row.played > 0)
+        .filter((row) => category.slug !== "team-ratings" || Number.isFinite(row.avgRating))
+        .sort(category.compare);
+    return limit ? sorted.slice(0, limit) : sorted;
+}
+
+function teamStatsLink(row, seasonPath) {
+    return `<a class="tbl-link team-stats-team-link" href="/epl/${seasonPath}/team/${row.slug}/" aria-label="${escapeAttr(row.team.name)}"><img class="team-stats-badge ${escapeAttr(row.slug)}" src="${escapeAttr(row.team.badge)}" alt="" aria-hidden="true" width="28" height="28" loading="lazy"><strong>${responsiveTeamName(row.team)}</strong></a>`;
+}
+
+function buildTeamStatsTable({ rows, category, seasonPath, limit = null, compact = false }) {
+    const sorted = sortedTeamStatsRows(rows, category, limit);
+    let previousGroup = null;
+    let previousRank = 0;
+    const ranked = sorted.map((row, index) => {
+        const group = category.rankGroup(row);
+        const rank = index > 0 && group === previousGroup ? previousRank : index + 1;
+        previousGroup = group;
+        previousRank = rank;
+        return { row, rank };
+    });
+
+    return `
+        <div class="table-scroll team-stats-table-scroll" role="region" aria-label="${escapeAttr(category.title)}" tabindex="0">
+            <table class="team-stats-table${compact ? " team-stats-table--compact" : ""}">
+                <thead><tr>
+                    <th class="team-stats-rank" scope="col">#</th>
+                    <th class="team-stats-name" scope="col">Team</th>
+                    ${category.columns.map(([label]) => `<th scope="col" class="text-center">${escapeHtml(label)}</th>`).join("")}
+                </tr></thead>
+                <tbody>
+                    ${ranked.map(({ row, rank }) => `
+                        <tr>
+                            <td class="team-stats-rank text-center">${rank}</td>
+                            <td class="team-stats-name">${teamStatsLink(row, seasonPath)}</td>
+                            ${category.columns.map(([, getter, className]) => `<td class="text-center${className ? ` ${className}` : ""}">${escapeHtml(getter(row))}</td>`).join("")}
+                        </tr>
+                    `.trim()).join("\n")}
+                </tbody>
+            </table>
+        </div>
+    `.trim();
+}
+
+function buildTeamStatsCategoryNav(seasonPath, activeSlug = null) {
+    return `<nav class="player-category-nav team-category-nav" aria-label="Team statistics categories" tabindex="0">
+        <a${activeSlug == null ? ' aria-current="page"' : ""} href="/epl/${seasonPath}/teams/">Overview</a>
+        ${TEAM_STAT_CATEGORIES.map((category) => `<a${activeSlug === category.slug ? ' aria-current="page"' : ""} href="/epl/${seasonPath}/teams/${category.slug}/">${escapeHtml(category.shortLabel)}</a>`).join("\n")}
+    </nav>`;
+}
+
+function buildTeamStatsHubHtml({ rows, seasonPath, seasonLabel, updatedLabel }) {
+    const matchesIncluded = Math.round(rows.reduce((sum, row) => sum + row.played, 0) / 2);
+    const exportSubtitle = `Premier League ${seasonLabel} · Updated ${updatedLabel || "this season"} · ${matchesIncluded} matches included`;
+
+    return `
+        <section class="player-stats-page team-stats-page">
+            <header class="player-stats-header">
+                <h1>Premier League Team Stats ${escapeHtml(seasonLabel)}</h1>
+                <p>Compare Premier League team ratings, attack, defense and discipline, including Timeline Football&rsquo;s Performance Index (pX), execution (eX) and match Rating.</p>
+                <p class="muted">${updatedLabel ? `Updated ${escapeHtml(updatedLabel)} · ` : ""}${matchesIncluded} matches included</p>
+            </header>
+            ${buildTeamStatsCategoryNav(seasonPath)}
+            <div class="player-leader-grid team-leader-grid">
+                ${TEAM_STAT_CATEGORIES.map((category) => `<section class="player-leader-section team-leader-section" data-team-stats-export data-export-subtitle="${escapeAttr(exportSubtitle)}">
+                    <div class="player-section-heading">
+                        <h2>${escapeHtml(category.title)}</h2>
+                        <div class="player-section-actions">
+                            <a class="text-link" href="/epl/${seasonPath}/teams/${category.slug}/">Full table &#9655;</a>
+                            ${downloadImageButton({
+                                label: `Download ${category.title} Top 10 image`,
+                                filename: `epl-${seasonPath}-${category.slug}-top-10.png`,
+                            }).replace("data-download-image", "data-download-image data-team-stats-download")}
+                        </div>
+                    </div>
+                    ${buildTeamStatsTable({ rows, category, seasonPath, limit: 10, compact: true })}
+                </section>`).join("\n")}
+            </div>
+        </section>
+        ${playerStatsExportScript()}
+    `.trim();
+}
+
+function buildTeamStatsCategoryPageHtml({ rows, category, seasonPath, seasonLabel, updatedLabel }) {
+    const matchesIncluded = Math.round(rows.reduce((sum, row) => sum + row.played, 0) / 2);
+    const tableNote = category.slug === "team-ratings"
+        ? "Season totals include completed matches only. pX and Rating are per-match averages; Total eX accumulates execution above or below the neutral 50-point baseline. Last 5 and Trend compare recent Rating with the season average."
+        : "Season totals include completed matches only, so teams can temporarily have played different numbers of matches during an active matchweek.";
+    return `
+        <section class="player-stats-page team-stats-page">
+            <header class="player-stats-header">
+                <p class="player-stats-kicker">Premier League ${escapeHtml(seasonLabel)}</p>
+                <h1>${escapeHtml(category.title)}</h1>
+                <p>${escapeHtml(category.description)}</p>
+                <p class="muted">${updatedLabel ? `Updated ${escapeHtml(updatedLabel)} · ` : ""}${matchesIncluded} matches included</p>
+            </header>
+            ${buildTeamStatsCategoryNav(seasonPath, category.slug)}
+            ${buildTeamStatsTable({ rows, category, seasonPath })}
+            <p class="player-stats-note">${escapeHtml(tableNote)}</p>
         </section>
     `.trim();
 }
@@ -1702,6 +1973,24 @@ function playerStatsJsonLd({ pageUrl, title, description, players, teamsBySlug }
     };
 }
 
+function teamStatsJsonLd({ pageUrl, title, description, rows }) {
+    return {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        name: title,
+        description,
+        url: pageUrl,
+        mainEntity: {
+            "@type": "ItemList",
+            itemListElement: (rows || []).slice(0, 20).map((row, index) => ({
+                "@type": "ListItem",
+                position: index + 1,
+                item: teamToJsonLd(row.team),
+            })),
+        },
+    };
+}
+
 function escapeAttr(s) {
     return String(s ?? "").replace(/"/g, "&quot;");
 }
@@ -1741,6 +2030,8 @@ function setSeasonChrome(html, { seasonPath, seasonLabel, leagueName }) {
             `<div class="site-tagline">${escapeHtml(leagueName)} ${escapeHtml(seasonLabel)}</div>`
         )
         .replace(/href="\/epl\/\d{4}-\d{2}\/table\/"/g, `href="/epl/${seasonPath}/table/"`)
+        .replace(/href="\/epl\/\d{4}-\d{2}\/teams\/"/g, `href="/epl/${seasonPath}/teams/"`)
+        .replace(/href="\/epl\/\d{4}-\d{2}\/players\/"/g, `href="/epl/${seasonPath}/players/"`)
         .replace(/href="\/epl\/\d{4}-\d{2}\/"/g, `href="/epl/${seasonPath}/"`);
 }
 
@@ -2164,6 +2455,7 @@ function buildNotFoundPageHtml({ seasonPath, seasonLabel }) {
             <nav class="not-found-page__links" aria-label="Helpful links">
                 <a href="/epl/${escapeAttr(seasonPath)}/">${escapeHtml(seasonLabel)} matchweeks</a>
                 <a href="/epl/${escapeAttr(seasonPath)}/table/">League table</a>
+                <a href="/epl/${escapeAttr(seasonPath)}/teams/">Team stats</a>
                 <a href="/epl/${escapeAttr(seasonPath)}/players/">Player stats</a>
                 <a href="/about/">About &amp; FAQ</a>
             </nav>
@@ -2751,7 +3043,7 @@ function seasonHubLiveScript({ seasonPath, liveDataBaseUrl }) {
     `;
 }
 
-function buildSeasonHubHtml({ seasonPath, seasonLabel, maxRound, matchweekMeta, hasPlayerStats = false, liveDataBaseUrl = null }) {
+function buildSeasonHubHtml({ seasonPath, seasonLabel, maxRound, matchweekMeta, hasPlayerStats = false, hasTeamStats = false, liveDataBaseUrl = null }) {
 
     const cards = Array.from({ length: maxRound }, (_, i) => {
         const round = i + 1;
@@ -2805,6 +3097,7 @@ function buildSeasonHubHtml({ seasonPath, seasonLabel, maxRound, matchweekMeta, 
 
         <div class="season-links">
             <a class="season-link" href="/epl/${seasonPath}/table/">League table &#9655;</a>
+            ${hasTeamStats ? `<a class="season-link" href="/epl/${seasonPath}/teams/">Team stats &#9655;</a>` : ""}
             ${hasPlayerStats ? `<a class="season-link" href="/epl/${seasonPath}/players/">Player stats &#9655;</a>` : ""}
         </div>
         <h1>EPL ${escapeHtml(seasonLabel)} Matchweeks</h1>
@@ -3099,6 +3392,17 @@ function buildTeamSeason({ roundsData, teamsBySlug }) {
             if (typeof m.rating === "number") ratingVals.push(m.rating);
         }
 
+        const avgMx = averageOrNull(mxVals);
+        const avgEx = averageOrNull(exVals);
+        const avgRating = averageOrNull(ratingVals);
+        const last5Rating = averageOrNull(
+            completedMatches
+                .slice(-5)
+                .map((match) => match.rating)
+                .filter((value) => Number.isFinite(value))
+        );
+        const totalEx = Number(exVals.reduce((sum, value) => sum + value - 50, 0).toFixed(1));
+
         out[slug].summary = {
             played: completedMatches.length,
             wins,
@@ -3108,15 +3412,15 @@ function buildTeamSeason({ roundsData, teamsBySlug }) {
             ga,
             gd: gf - ga,
             points: wins * 3 + draws,
-            avgMx: averageOrNull(mxVals),
-            avgEx: averageOrNull(exVals),
-            avgRating: averageOrNull(ratingVals),
+            avgMx,
+            avgEx,
+            totalEx,
+            avgRating,
+            last5Rating,
+            ratingTrend: avgRating != null && last5Rating != null
+                ? Number((last5Rating - avgRating).toFixed(1))
+                : null,
             last5: completedMatches.slice(-5).map((m) => m.result),
-
-            // TEMP DEBUG
-            mxVals,
-            exVals,
-            ratingVals
         };
     }
 
@@ -3354,6 +3658,7 @@ async function main() {
         maxRound,
         matchweekMeta,
         hasPlayerStats: Boolean(playerStats?.players?.some((player) => player.appearances > 0)),
+        hasTeamStats: Object.values(matchweekMeta).some((meta) => meta.status === "completed" || meta.status === "in-progress"),
         liveDataBaseUrl: season.isArchived ? null : season.liveDataBaseUrl,
     });
 
@@ -3400,6 +3705,11 @@ async function main() {
     const leaguePerformanceBySlug = buildLeaguePerformance({
         roundsData,
         teamsBySlug: teams
+    });
+    const teamStatsRows = buildTeamStatsRows({
+        teamsBySlug: teams,
+        teamSeasonBySlug,
+        leaguePerformanceBySlug,
     });
 
     // standings lookup
@@ -3468,6 +3778,117 @@ async function main() {
         await fs.writeFile(path.join(outDir, "index.html"), page, "utf8");
 
         console.log(`Prerendered ${pagePath}`);
+    }
+
+    // ---- Team statistics pages ----
+    if (teamStatsRows.length) {
+        const teamStatsHubPath = `/epl/${seasonPath}/teams/`;
+        const teamStatsHubCanonical = `https://timelinefootball.com${teamStatsHubPath}`;
+        const teamStatsHubTitle = `Premier League Team Stats ${seasonLabel} | Timeline Football`;
+        const teamStatsHubDesc = `Premier League ${seasonLabel} team statistics and rankings for ratings, Performance Index (pX), execution (eX), goals, expected goals, defense and discipline.`;
+        const ratingsCategory = TEAM_STAT_CATEGORIES[0];
+        let teamStatsPage = setSeasonChrome(template, {
+            seasonPath,
+            seasonLabel,
+            leagueName: season.leagueName,
+        });
+
+        teamStatsPage = setTitle(teamStatsPage, teamStatsHubTitle);
+        teamStatsPage = setDescription(teamStatsPage, teamStatsHubDesc);
+        teamStatsPage = setCanonical(teamStatsPage, teamStatsHubCanonical);
+        teamStatsPage = setOpenGraph(teamStatsPage, {
+            title: teamStatsHubTitle,
+            description: teamStatsHubDesc,
+            url: teamStatsHubCanonical,
+            image: OG_DEFAULT_IMAGE,
+            siteName: SITE_NAME,
+        });
+        teamStatsPage = setTwitterCard(teamStatsPage, {
+            title: teamStatsHubTitle,
+            description: teamStatsHubDesc,
+            image: TWITTER_SUMMARY_IMAGE,
+        });
+        teamStatsPage = setJsonLd(teamStatsPage, teamStatsJsonLd({
+            pageUrl: teamStatsHubCanonical,
+            title: teamStatsHubTitle,
+            description: teamStatsHubDesc,
+            rows: sortedTeamStatsRows(teamStatsRows, ratingsCategory),
+        }));
+        teamStatsPage = injectBeforeApp(teamStatsPage, `<nav class="mw-nav" aria-label="EPL navigation">
+            <a class="mw-nav__hub" href="/epl/${seasonPath}/">EPL ${seasonLabel} matchweeks &#9655;</a>
+            <div class="mw-nav__pager">
+                <a class="mw-nav__prev" href="/epl/${seasonPath}/table/">League table &#9655;</a>
+                <a class="mw-nav__next" href="/epl/${seasonPath}/players/">Player stats &#9655;</a>
+            </div>
+        </nav>`);
+        teamStatsPage = injectApp(teamStatsPage, buildTeamStatsHubHtml({
+            rows: teamStatsRows,
+            seasonPath,
+            seasonLabel,
+            updatedLabel,
+        }));
+        teamStatsPage = stripAppScripts(teamStatsPage);
+        teamStatsPage = stripMatchdayShell(teamStatsPage);
+
+        const teamStatsHubOutDir = path.join(ROOT, "dist", "epl", String(seasonPath), "teams");
+        await fs.mkdir(teamStatsHubOutDir, { recursive: true });
+        await fs.writeFile(path.join(teamStatsHubOutDir, "index.html"), teamStatsPage, "utf8");
+        console.log(`Prerendered ${teamStatsHubPath}`);
+
+        for (const category of TEAM_STAT_CATEGORIES) {
+            const categoryPath = `/epl/${seasonPath}/teams/${category.slug}/`;
+            const categoryCanonical = `https://timelinefootball.com${categoryPath}`;
+            const categoryTitle = `${category.title} ${seasonLabel} | Timeline Football`;
+            const categoryDesc = category.description;
+            const categoryRows = sortedTeamStatsRows(teamStatsRows, category);
+            let categoryPage = setSeasonChrome(template, {
+                seasonPath,
+                seasonLabel,
+                leagueName: season.leagueName,
+            });
+
+            categoryPage = setTitle(categoryPage, categoryTitle);
+            categoryPage = setDescription(categoryPage, categoryDesc);
+            categoryPage = setCanonical(categoryPage, categoryCanonical);
+            categoryPage = setOpenGraph(categoryPage, {
+                title: categoryTitle,
+                description: categoryDesc,
+                url: categoryCanonical,
+                image: OG_DEFAULT_IMAGE,
+                siteName: SITE_NAME,
+            });
+            categoryPage = setTwitterCard(categoryPage, {
+                title: categoryTitle,
+                description: categoryDesc,
+                image: TWITTER_SUMMARY_IMAGE,
+            });
+            categoryPage = setJsonLd(categoryPage, teamStatsJsonLd({
+                pageUrl: categoryCanonical,
+                title: categoryTitle,
+                description: categoryDesc,
+                rows: categoryRows,
+            }));
+            categoryPage = injectBeforeApp(categoryPage, `<nav class="mw-nav" aria-label="EPL navigation">
+                <a class="mw-nav__hub" href="/epl/${seasonPath}/teams/">Team stats overview &#9655;</a>
+                <div class="mw-nav__pager">
+                    <a class="mw-nav__prev" href="/epl/${seasonPath}/table/">League table &#9655;</a>
+                    <a class="mw-nav__next" href="/epl/${seasonPath}/players/">Player stats &#9655;</a>
+                </div>
+            </nav>`);
+            categoryPage = injectApp(categoryPage, buildTeamStatsCategoryPageHtml({
+                rows: teamStatsRows,
+                category,
+                seasonPath,
+                seasonLabel,
+                updatedLabel,
+            }));
+            categoryPage = stripAppScripts(categoryPage);
+            categoryPage = stripMatchdayShell(categoryPage);
+            const categoryOutDir = path.join(teamStatsHubOutDir, category.slug);
+            await fs.mkdir(categoryOutDir, { recursive: true });
+            await fs.writeFile(path.join(categoryOutDir, "index.html"), categoryPage, "utf8");
+            console.log(`Prerendered ${categoryPath}`);
+        }
     }
 
     // ---- Player statistics pages ----
