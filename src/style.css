@@ -2902,6 +2902,16 @@ thead tr {
   width: 88px;
 }
 
+.team-identity__badge-link {
+  display: inline-flex;
+}
+
+.team-identity__badge-link:focus-visible {
+  border-radius: 0.25rem;
+  outline: 3px solid var(--accent);
+  outline-offset: 4px;
+}
+
 .team-identity__copy {
   min-width: 0;
 }

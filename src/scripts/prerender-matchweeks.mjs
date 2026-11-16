@@ -1422,10 +1422,14 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
     const v = team.venue;
     const nickname = team.nicknames?.[0] ?? "";
     const hasVenue = Boolean(v?.name);
+    const teamBadgeHtml = `<img class="team-identity__badge slug ${slug}" src="${team.badge}" alt="${escapeAttr(team.name)} badge" width="88" height="88" loading="lazy">`;
+    const linkedTeamBadgeHtml = team.officialWebsite
+        ? `<a class="team-identity__badge-link" href="${escapeAttr(team.officialWebsite)}" aria-label="Visit the official ${escapeAttr(team.name)} website" title="Official ${escapeAttr(team.name)} website" target="_blank" rel="noopener">${teamBadgeHtml}</a>`
+        : teamBadgeHtml;
     const teamIntroHtml = `
         <section class="team-intro${hasVenue ? "" : " team-intro--identity-only"}" aria-labelledby="team-name">
             <div class="team-identity">
-                <img class="team-identity__badge slug ${slug}" src="${team.badge}" alt="${escapeAttr(team.name)} badge" width="88" height="88" loading="lazy">
+                ${linkedTeamBadgeHtml}
                 <div class="team-identity__copy">
                     <h1 id="team-name">${escapeHtml(team.name)}</h1>
                     ${nickname ? `<p class="team-nickname">${escapeHtml(nickname)}</p>` : ""}
@@ -2144,6 +2148,7 @@ function setJsonLd(html, jsonLdObject) {
 
 function teamToJsonLd(team) {
     const out = { "@type": "SportsTeam", name: team.name };
+    if (team.officialWebsite) out.sameAs = team.officialWebsite;
     if (Array.isArray(team.altNames) && team.altNames.length) {
 
         const filtered = team.altNames.filter(

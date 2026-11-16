@@ -6,6 +6,7 @@
     "altNames": ["Arsenal", "Arsenal FC", "AFC"],
     "nicknames": ["The Gunners"],
     "badge": "/img/badges/epl/arsenal.svg",
+    "officialWebsite": "https://www.arsenal.com/",
     "apiTeamId": 42,
     "venue": {
       "name": "Emirates Stadium",
@@ -22,6 +23,7 @@
     "altNames": ["Aston Villa", "Villa", "Aston Villa FC", "AVFC"],
     "nicknames": ["The Villans"],
     "badge": "/img/badges/epl/aston-villa.svg",
+    "officialWebsite": "https://www.avfc.co.uk/",
     "apiTeamId": 66,
     "venue": {
       "name": "Villa Park",
@@ -38,6 +40,7 @@
     "altNames": ["Bournemouth", "AFC Bournemouth", "A.F.C. Bournemouth"],
     "nicknames": ["The Cherries"],
     "badge": "/img/badges/epl/bournemouth.svg",
+    "officialWebsite": "https://www.afcb.co.uk/",
     "apiTeamId": 35,
     "venue": {
       "name": "Vitality Stadium",
@@ -54,6 +57,7 @@
     "altNames": ["Brentford", "Brentford FC"],
     "nicknames": ["The Bees"],
     "badge": "/img/badges/epl/brentford.svg",
+    "officialWebsite": "https://www.brentfordfc.com/",
     "apiTeamId": 55,
     "venue": {
       "name": "Gtech Community Stadium",
@@ -70,6 +74,7 @@
     "altNames": ["Brighton", "Brighton & Hove Albion", "Brighton and Hove Albion", "BHA", "BHAFC"],
     "nicknames": ["The Seagulls", "Albion"],
     "badge": "/img/badges/epl/brighton.svg",
+    "officialWebsite": "https://www.brightonandhovealbion.com/",
     "apiTeamId": 51,
     "venue": {
       "name": "American Express Stadium",
@@ -86,6 +91,7 @@
     "altNames": ["Chelsea", "Chelsea FC", "CFC"],
     "nicknames": ["The Blues"],
     "badge": "/img/badges/epl/chelsea.svg",
+    "officialWebsite": "https://www.chelseafc.com/",
     "apiTeamId": 49,
     "venue": {
       "name": "Stamford Bridge",
@@ -102,6 +108,7 @@
     "altNames": ["Crystal Palace", "Palace", "Crystal Palace FC", "CPFC"],
     "nicknames": ["The Eagles"],
     "badge": "/img/badges/epl/crystal-palace.svg",
+    "officialWebsite": "https://www.cpfc.co.uk/",
     "apiTeamId": 52,
     "venue": {
       "name": "Selhurst Park",
@@ -118,6 +125,7 @@
     "altNames": ["Everton", "Everton FC", "EFC"],
     "nicknames": ["The Toffees"],
     "badge": "/img/badges/epl/everton.svg",
+    "officialWebsite": "https://www.evertonfc.com/",
     "apiTeamId": 45,
     "venue": {
       "name": "Hill Dickinson Stadium",
@@ -134,6 +142,7 @@
     "altNames": ["Fulham", "Fulham FC"],
     "nicknames": ["The Cottagers"],
     "badge": "/img/badges/epl/fulham.svg",
+    "officialWebsite": "https://www.fulhamfc.com/",
     "apiTeamId": 36,
     "venue": {
       "name": "Craven Cottage",
@@ -150,6 +159,7 @@
     "altNames": ["Leeds", "Leeds Utd", "Leeds United", "LUFC"],
     "nicknames": ["The Whites"],
     "badge": "/img/badges/epl/leeds-united.svg",
+    "officialWebsite": "https://www.leedsunited.com/",
     "apiTeamId": 63,
     "venue": {
       "name": "Elland Road",
@@ -166,6 +176,7 @@
     "altNames": ["Liverpool", "Liverpool FC", "LFC"],
     "nicknames": ["The Reds"],
     "badge": "/img/badges/epl/liverpool.svg",
+    "officialWebsite": "https://www.liverpoolfc.com/",
     "apiTeamId": 40,
     "venue": {
       "name": "Anfield",
@@ -182,6 +193,7 @@
     "altNames": ["Man City", "Manchester City", "Manchester City FC", "MCFC"],
     "nicknames": ["The Citizens", "City"],
     "badge": "/img/badges/epl/manchester-city.svg",
+    "officialWebsite": "https://www.mancity.com/",
     "apiTeamId": 50,
     "venue": {
       "name": "Etihad Stadium",
@@ -198,6 +210,7 @@
     "altNames": ["Man U", "Man United", "Man Utd", "Manchester Utd", "Manchester United", "MUFC"],
     "nicknames": ["The Red Devils"],
     "badge": "/img/badges/epl/manchester-united.svg",
+    "officialWebsite": "https://www.manutd.com/",
     "apiTeamId": 33,
     "venue": {
       "name": "Old Trafford",
@@ -214,6 +227,7 @@
     "altNames": ["Newcastle", "Newcastle Utd", "Newcastle United", "NUFC"],
     "nicknames": ["The Magpies"],
     "badge": "/img/badges/epl/newcastle.svg",
+    "officialWebsite": "https://www.newcastleunited.com/",
     "apiTeamId": 34,
     "venue": {
       "name": "St. James' Park",
@@ -230,6 +244,7 @@
     "altNames": ["Nottingham Forest", "Forest", "Nott'm Forest", "NFFC"],
     "nicknames": ["The Tricky Trees", "Forest"],
     "badge": "/img/badges/epl/nottingham-forest.svg",
+    "officialWebsite": "https://www.nottinghamforest.co.uk/",
     "apiTeamId": 65,
     "venue": {
       "name": "The City Ground",
@@ -246,6 +261,7 @@
     "altNames": ["Sunderland", "Sunderland AFC", "SAFC"],
     "nicknames": ["The Black Cats"],
     "badge": "/img/badges/epl/sunderland.svg",
+    "officialWebsite": "https://www.safc.com/",
     "apiTeamId": 746,
     "venue": {
       "name": "Stadium of Light",
@@ -262,6 +278,7 @@
     "altNames": ["Tottenham", "Tottenham Hotspur", "Spurs", "THFC"],
     "nicknames": ["The Lilywhites"],
     "badge": "/img/badges/epl/tottenham.svg",
+    "officialWebsite": "https://www.tottenhamhotspur.com/",
     "apiTeamId": 47,
     "venue": {
       "name": "Tottenham Hotspur Stadium",
@@ -278,6 +295,7 @@
     "altNames": ["Coventry", "Coventry City", "The Sky Blues"],
     "nicknames": ["The Sky Blues"],
     "badge": "/img/badges/epl/coventry-city.svg",
+    "officialWebsite": "https://www.ccfc.co.uk/",
     "apiTeamId": 1346,
     "venue": {
       "name": "The Coventry Building Society Arena",
@@ -294,6 +312,7 @@
     "altNames": ["Hull", "Hull City", "The Black Cats"],
     "nicknames": ["The Tigers"],
     "badge": "/img/badges/epl/hull-city.svg",
+    "officialWebsite": "https://www.wearehullcity.co.uk/",
     "apiTeamId": 64,
     "venue": {
       "name": "The MKM Stadium",
@@ -310,6 +329,7 @@
     "altNames": ["Ipswich", "Ipswich Town", "The Tractor Boys"],
     "nicknames": ["The Tractor Boys"],
     "badge": "/img/badges/epl/ipswich.svg",
+    "officialWebsite": "https://www.itfc.co.uk/",
     "apiTeamId": 57,
     "venue": {
       "name": "Portman Road",
