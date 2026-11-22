@@ -479,21 +479,42 @@ export function computePerfExec(match, ctx) {
 
     // --- Dominance floor for eX (execution) ---
     // If you win comfortably and created enough, don't let xG delta make eX look mediocre.
-    function applyDominanceFloor(exec, goalsFor, goalsAgainst, xg) {
+    function earlyRedCount(minutes = []) {
+        return minutes.reduce((count, minute) => {
+            const value = Number(minute);
+            return count + (Number.isFinite(value) && value < 30 ? 1 : 0);
+        }, 0);
+    }
+
+    function hasEarlyNetManAdvantage(side) {
+        const homeEarlyReds = earlyRedCount(ctx?.homeCards?.rc);
+        const awayEarlyReds = earlyRedCount(ctx?.awayCards?.rc);
+
+        return side === "home"
+            ? awayEarlyReds > homeEarlyReds
+            : homeEarlyReds > awayEarlyReds;
+    }
+
+    function applyDominanceFloor(exec, goalsFor, goalsAgainst, xg, side) {
+        // A dominant scoreline is less meaningful when it was built with an
+        // early numerical advantage. Compare both teams' reds so matching
+        // dismissals cancel out and multiple reds are handled naturally.
+        if (hasEarlyNetManAdvantage(side)) return exec;
+
         const gd = goalsFor - goalsAgainst;
 
         // trigger: comfortable win + real chance creation
         if (gd >= 2 && goalsFor >= 2 && xg >= 1.8) {
             let floor = 60;          // GD = 2
             if (gd >= 3) floor = 70; // GD 3+
-            if (goalsFor >= 4) floor = Math.max(floor, 75);
+            if (goalsFor >= 4 && goalsFor >= xg) floor = Math.max(floor, 75);
             return Math.max(exec, floor);
         }
         return exec;
     }
 
-    homeExec = applyDominanceFloor(homeExec, homeGoals, awayGoals, hxg);
-    awayExec = applyDominanceFloor(awayExec, awayGoals, homeGoals, axg);
+    homeExec = applyDominanceFloor(homeExec, homeGoals, awayGoals, hxg, "home");
+    awayExec = applyDominanceFloor(awayExec, awayGoals, homeGoals, axg, "away");
 
     // extra penalty when you score but still under-hit xG
     function underHitPenalty(xg, goals) {
