@@ -733,6 +733,45 @@ export function computePerfExec(match, ctx) {
         homeSiegeLateLoss -
         awayOpponentRedWinAdjustment;
 
+    // In a completed draw, a clear execution advantage should distinguish an
+    // underdog that made more of its performance from a wasteful favorite.
+    // Keep the correction modest because eX already contributes to Rating.
+    const finalState = String(match?.status?.state ?? "").trim().toUpperCase();
+    const isCompletedDraw = ["FT", "AET", "PEN"].includes(finalState) &&
+        homeGoals === awayGoals;
+
+    if (isCompletedDraw) {
+        const FAVORITE_THRESHOLD = 0.15;
+        const EXECUTION_GAP_THRESHOLD = 10;
+        const MAX_DRAW_EXECUTION_ADJUSTMENT = 5;
+
+        let favoriteSide = null;
+        if (swing < -FAVORITE_THRESHOLD) favoriteSide = "home";
+        else if (swing > FAVORITE_THRESHOLD) favoriteSide = "away";
+
+        const executionGap = favoriteSide === "home"
+            ? awayExec - homeExec
+            : favoriteSide === "away"
+                ? homeExec - awayExec
+                : 0;
+
+        if (executionGap > EXECUTION_GAP_THRESHOLD) {
+            const adjustment = clamp(
+                Math.round((executionGap - EXECUTION_GAP_THRESHOLD) / 4),
+                1,
+                MAX_DRAW_EXECUTION_ADJUSTMENT
+            );
+
+            if (favoriteSide === "home") {
+                homePower -= adjustment;
+                awayPower += adjustment;
+            } else {
+                homePower += adjustment;
+                awayPower -= adjustment;
+            }
+        }
+    }
+
     // --- Winner guardrail for Rating ---
     // Winner should never finish below loser.
     const WINNER_TOLERANCE = 0;
