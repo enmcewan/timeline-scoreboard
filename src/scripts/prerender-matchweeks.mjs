@@ -60,6 +60,21 @@ const PLAYER_STATS_PATH = path.join(
     "player-stats.json"
 );
 
+const CHART_JS_SOURCE = path.join(
+    ROOT,
+    "node_modules",
+    "chart.js",
+    "dist",
+    "chart.umd.min.js"
+);
+
+const CHART_JS_DIST_PATH = path.join(
+    ROOT,
+    "dist",
+    "assets",
+    "chart.umd.min.js"
+);
+
 async function readJsonIfExists(filePath, fallback) {
     try {
         const text = await fs.readFile(filePath, "utf8");
@@ -125,6 +140,11 @@ async function writeDistOdds(oddsJson) {
     );
     await fs.mkdir(path.dirname(distOddsPath), { recursive: true });
     await fs.writeFile(distOddsPath, JSON.stringify(oddsJson, null, 2), "utf8");
+}
+
+async function copyChartJsAsset() {
+    await fs.mkdir(path.dirname(CHART_JS_DIST_PATH), { recursive: true });
+    await fs.copyFile(CHART_JS_SOURCE, CHART_JS_DIST_PATH);
 }
 
 function attachMatchData(matches, oddsByFixture, round, seasonPath) {
@@ -1486,7 +1506,7 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
     ` : "";
 
     const teamChartScript = teamSeason ? `
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/assets/chart.umd.min.js"></script>
     <script>
     (() => {
         const chartData = ${JSON.stringify(teamSeason.matches || [])};
@@ -1495,6 +1515,10 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
         const ratingCanvas = document.getElementById(${JSON.stringify(chartId + "-rating")});
         const perfCanvas = document.getElementById(${JSON.stringify(chartId + "-perf")});
         if (!ratingCanvas || !perfCanvas) return;
+        if (typeof window.Chart !== "function") {
+            console.error("Team charts unavailable: local Chart.js asset did not load.");
+            return;
+        }
 
         const themeQuery = window.matchMedia("(prefers-color-scheme: dark)");
 
@@ -1530,17 +1554,6 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
 
         let chartColors = getChartColors(themeQuery.matches);
 
-        console.log("ratingCanvas:", ratingCanvas);
-        console.log("perfCanvas:", perfCanvas);
-
-        ratingCanvas.addEventListener("click", () => {
-            console.log("RAW canvas click: rating");
-        });
-
-        perfCanvas.addEventListener("click", () => {
-            console.log("RAW canvas click: perf");
-        });
-
         const labels = chartData.map(m => m.mw);
         const ratingVals = chartData.map(m => m.rating ?? null);
         const mxVals = chartData.map(m => m.mx ?? null);
@@ -1554,15 +1567,6 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
             return matchweek === 1 || matchweek === 38 || matchweek % 5 === 0
                 ? matchweek
                 : "";
-        }
-
-        function rollingAvg(arr, window = 5) {
-            return arr.map((_, i) => {
-                const start = Math.max(0, i - window + 1);
-                const slice = arr.slice(start, i + 1).filter(v => typeof v === "number");
-                if (!slice.length) return null;
-                return slice.reduce((a, b) => a + b, 0) / slice.length;
-            });
         }
 
         const avgRating = ${JSON.stringify(teamSeason.summary.avgRating ?? 0)};
@@ -1634,8 +1638,6 @@ function buildTeamPageHtml({ seasonPath, seasonLabel, slug, team, standingsRow, 
         const seasonPath = ${JSON.stringify(seasonPath)};
 
         function openMatchFromChart(match) {
-            console.log("chart click match:", match);
-
             if (!match?.mw || !match?.fixtureId) {
                 console.warn("Missing mw or fixtureId on chart match:", match);
                 return;
@@ -3435,6 +3437,7 @@ function buildTeamSeason({ roundsData, teamsBySlug }) {
 async function main() {
 
     const template = await fs.readFile(DIST_INDEX, "utf8");
+    await copyChartJsAsset();
 
     const seasonStart = season.apiSeason;
     const seasonPath = season.seasonPath;
