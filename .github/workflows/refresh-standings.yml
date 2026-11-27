@@ -40,7 +40,8 @@ jobs:
       - name: Capture Lauris current matchweek
         run: |
           mkdir -p .tmp
-          if curl -fsSL "$LAURIS_CURRENT_URL" -o .tmp/lauris-current.json; then
+          if curl -fsSL "$LAURIS_CURRENT_URL" -o .tmp/lauris-current.json && \
+             jq -e 'type == "object"' .tmp/lauris-current.json >/dev/null 2>&1; then
             round=$(jq -r '.round // empty' .tmp/lauris-current.json)
             season_path=$(jq -r '.seasonPath // empty' .tmp/lauris-current.json)
             matches_type=$(jq -r '.matches | type' .tmp/lauris-current.json)
@@ -60,7 +61,12 @@ jobs:
               rm -f .tmp/lauris-current.json
             fi
           else
-            echo "Lauris current matchweek unavailable; API-Football can still refresh the site."
+            echo "Lauris current matchweek unavailable or not valid JSON; API-Football can still refresh the site."
+            if [ -s .tmp/lauris-current.json ]; then
+              response_prefix=$(head -c 200 .tmp/lauris-current.json | tr '\r\n' ' ')
+              echo "Lauris response prefix: $response_prefix"
+            fi
+            rm -f .tmp/lauris-current.json
           fi
 
       - name: Hydrate deployed fixture schedule
